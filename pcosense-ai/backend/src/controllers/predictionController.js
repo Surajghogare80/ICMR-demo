@@ -8,6 +8,7 @@ import {
   sendError,
 } from '../utils/responseHelper.js';
 import { MESSAGES } from '../constants/index.js';
+import logger from '../utils/logger.js';
 
 export const predictionController = {
   async create(req, res) {
@@ -23,6 +24,7 @@ export const predictionController = {
       );
       return sendCreated(res, MESSAGES.PREDICTION_CREATED, { prediction, aiResult });
     } catch (error) {
+      logger.error('Error in predictionController.create:', error.stack || error);
       return sendError(res, error.message, error.statusCode || 500);
     }
   },

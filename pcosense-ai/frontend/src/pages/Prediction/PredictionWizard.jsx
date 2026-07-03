@@ -45,10 +45,80 @@ const PredictionWizard = () => {
     setFormData((prev) => ({ ...prev, [section]: { ...prev[section], [field]: value } }));
   };
 
+  const validateStep = (step) => {
+    if (step === 0) {
+      const age = Number(formData.personal.age);
+      const weight = Number(formData.personal.weight);
+      const height = Number(formData.personal.height);
+
+      if (!formData.personal.age || isNaN(age) || age < 10 || age > 80) {
+        toast.error('Age must be between 10 and 80 years.');
+        return false;
+      }
+      if (!formData.personal.weight || isNaN(weight) || weight < 20 || weight > 300) {
+        toast.error('Weight must be between 20 and 300 kg.');
+        return false;
+      }
+      if (!formData.personal.height || isNaN(height) || height < 100 || height > 250) {
+        toast.error('Height must be between 100 and 250 cm.');
+        return false;
+      }
+    }
+
+    if (step === 1) {
+      const cycleLength = Number(formData.menstrual.cycleLength);
+      const periodDuration = formData.menstrual.periodDuration ? Number(formData.menstrual.periodDuration) : null;
+
+      if (!formData.menstrual.cycleLength || isNaN(cycleLength) || cycleLength < 15 || cycleLength > 90) {
+        toast.error('Average Cycle Length must be between 15 and 90 days.');
+        return false;
+      }
+      if (periodDuration !== null && (isNaN(periodDuration) || periodDuration < 1 || periodDuration > 15)) {
+        toast.error('Period Duration must be between 1 and 15 days.');
+        return false;
+      }
+    }
+
+    if (step === 3) {
+      const sleepHours = formData.lifestyle.sleepHours ? Number(formData.lifestyle.sleepHours) : null;
+      if (sleepHours !== null && (isNaN(sleepHours) || sleepHours < 3 || sleepHours > 12)) {
+        toast.error('Sleep hours must be between 3 and 12 hours.');
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const handleNext = () => {
+    if (validateStep(activeStep)) {
+      setActiveStep((s) => s + 1);
+    }
+  };
+
   const handleSubmit = async () => {
+    if (!validateStep(activeStep)) return;
     setIsSubmitting(true);
     try {
-      const payload = { ...formData, personal: { ...formData.personal, age: Number(formData.personal.age), weight: Number(formData.personal.weight), height: Number(formData.personal.height), bmi: Number(formData.personal.bmi) }, menstrual: { ...formData.menstrual, cycleLength: Number(formData.menstrual.cycleLength), periodDuration: Number(formData.menstrual.periodDuration) }, lifestyle: { ...formData.lifestyle, sleepHours: Number(formData.lifestyle.sleepHours) } };
+      const payload = {
+        ...formData,
+        personal: {
+          ...formData.personal,
+          age: Number(formData.personal.age),
+          weight: Number(formData.personal.weight),
+          height: Number(formData.personal.height),
+          bmi: Number(formData.personal.bmi)
+        },
+        menstrual: {
+          ...formData.menstrual,
+          cycleLength: Number(formData.menstrual.cycleLength),
+          periodDuration: formData.menstrual.periodDuration ? Number(formData.menstrual.periodDuration) : undefined
+        },
+        lifestyle: {
+          ...formData.lifestyle,
+          sleepHours: formData.lifestyle.sleepHours ? Number(formData.lifestyle.sleepHours) : undefined
+        }
+      };
       const res = await predictionService.create(payload);
       toast.success('Prediction completed!');
       navigate('/prediction/result', { state: { result: res.data.aiResult, prediction: res.data.prediction } });
@@ -111,10 +181,10 @@ const PredictionWizard = () => {
           <Grid container spacing={3}>
             <Grid item xs={12}><Typography variant="h6" fontWeight={700} gutterBottom>Menstrual History</Typography></Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label="Average Cycle Length (days)" type="number" value={formData.menstrual.cycleLength} onChange={(e) => updateField('menstrual', 'cycleLength', e.target.value)} helperText="Days from start of one period to the next" required />
+              <TextField fullWidth label="Average Cycle Length (days)" type="number" value={formData.menstrual.cycleLength} onChange={(e) => updateField('menstrual', 'cycleLength', e.target.value)} inputProps={{ min: 15, max: 90 }} helperText="Days from start of one period to the next (15 - 90 days)" required />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label="Period Duration (days)" type="number" value={formData.menstrual.periodDuration} onChange={(e) => updateField('menstrual', 'periodDuration', e.target.value)} />
+              <TextField fullWidth label="Period Duration (days)" type="number" value={formData.menstrual.periodDuration} onChange={(e) => updateField('menstrual', 'periodDuration', e.target.value)} inputProps={{ min: 1, max: 15 }} helperText="Days per period (1 - 15 days)" />
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth required>
@@ -289,7 +359,7 @@ const PredictionWizard = () => {
               <Button
                 variant="contained"
                 endIcon={<ArrowForward />}
-                onClick={() => setActiveStep((s) => s + 1)}
+                onClick={handleNext}
               >
                 Next Step
               </Button>
