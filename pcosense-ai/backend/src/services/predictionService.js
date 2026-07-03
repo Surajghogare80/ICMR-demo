@@ -2,13 +2,14 @@
 /**
  * PREDICTION SERVICE
  *
- * Currently returns DUMMY prediction responses.
- * This is the ONLY file that needs to be changed when integrating real AI/ML model.
- * The AI integration point is clearly marked below.
+ * Integrates real R Random Forest model execution.
+ * Fallback to rule-based dummy generation is triggered if R is not installed.
  */
 import { predictionRepository } from '../repositories/predictionRepository.js';
 import { activityLogRepository } from '../repositories/activityLogRepository.js';
 import logger from '../utils/logger.js';
+import { exec } from 'child_process';
+import path from 'path';
 
 /**
  * AI INTEGRATION POINT
@@ -63,6 +64,27 @@ const generateDummyPrediction = (inputs) => {
   return { result, probability, confidence, recommendation: recommendations };
 };
 
+const runRModel = (inputs) => {
+  return new Promise((resolve, reject) => {
+    // Relative path because R script runs from the backend directory
+    const scriptPath = path.join(process.cwd(), 'ai/predict.R');
+    const inputString = JSON.stringify(inputs).replace(/"/g, '\\"');
+    const command = `Rscript "${scriptPath}" "${inputString}"`;
+
+    exec(command, (error, stdout, stderr) => {
+      if (error) {
+        return reject(error);
+      }
+      try {
+        const result = JSON.parse(stdout);
+        resolve(result);
+      } catch (parseError) {
+        reject(new Error(`Failed to parse R output: ${stdout}`));
+      }
+    });
+  });
+};
+
 export const predictionService = {
   async createPrediction({ userId, personal, menstrual, symptoms, lifestyle }, ip) {
     // Save each section to its own collection
@@ -73,8 +95,15 @@ export const predictionService = {
       predictionRepository.createLifestyleHabit({ userId, ...lifestyle }),
     ]);
 
-    // Generate prediction (dummy until AI model integrated)
-    const aiResult = generateDummyPrediction({ personal, menstrual, symptoms, lifestyle });
+    // Generate prediction using real R model, falling back to dummy if Rscript is not installed
+    let aiResult;
+    try {
+      aiResult = await runRModel({ personal, menstrual, symptoms, lifestyle });
+      logger.info(`Prediction generated using Random Forest RDS model for user ${userId}: ${aiResult.result}`);
+    } catch (err) {
+      logger.warn(`Failed to execute ML R model, falling back to rule-based engine. Reason: ${err.message}`);
+      aiResult = generateDummyPrediction({ personal, menstrual, symptoms, lifestyle });
+    }
 
     // Save the prediction referencing all 4 collections
     const prediction = await predictionRepository.createPrediction({

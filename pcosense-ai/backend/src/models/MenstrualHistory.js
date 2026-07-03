@@ -35,6 +35,13 @@ const menstrualHistorySchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    // Optional Ultrasound Scan parameters
+    follicleNoL: { type: Number, default: null },
+    follicleNoR: { type: Number, default: null },
+    avgFsizeL: { type: Number, default: null },
+    avgFsizeR: { type: Number, default: null },
+    ovaryVolume: { type: Number, default: null },
+    endometrium: { type: Number, default: null },
   },
   { timestamps: true }
 );

@@ -37,6 +37,18 @@ const personalMetricSchema = new mongoose.Schema(
       enum: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'],
       default: null,
     },
+    // Optional blood report & body metrics
+    fsh: { type: Number, default: null },
+    lh: { type: Number, default: null },
+    tsh: { type: Number, default: null },
+    amh: { type: Number, default: null },
+    prl: { type: Number, default: null },
+    hb: { type: Number, default: null },
+    rbs: { type: Number, default: null },
+    vitD3: { type: Number, default: null },
+    prg: { type: Number, default: null },
+    hip: { type: Number, default: null },
+    waist: { type: Number, default: null },
   },
   { timestamps: true }
 );
