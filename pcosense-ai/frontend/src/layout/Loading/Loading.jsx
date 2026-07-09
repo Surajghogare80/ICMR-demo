@@ -13,7 +13,10 @@ const Loading = ({ fullScreen = false, message = 'Loading...' }) => {
         gap: 2,
         ...(fullScreen && {
           minHeight: '100vh',
-          background: 'linear-gradient(135deg, #0A0E1A 0%, #111827 100%)',
+          background: (theme) =>
+            theme.palette.mode === 'dark'
+              ? 'linear-gradient(135deg, #1A0A0F 0%, #2D1C22 100%)'
+              : 'linear-gradient(135deg, #FFF8FB 0%, #FFEAF0 100%)',
         }),
       }}
     >
@@ -32,7 +35,7 @@ const Loading = ({ fullScreen = false, message = 'Loading...' }) => {
       </motion.div>
       <Typography
         variant="body2"
-        sx={{ color: fullScreen ? 'rgba(255,255,255,0.6)' : 'text.secondary', fontWeight: 500 }}
+        sx={{ color: (theme) => fullScreen ? (theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.6)' : 'text.secondary') : 'text.secondary', fontWeight: 500 }}
       >
         {message}
       </Typography>

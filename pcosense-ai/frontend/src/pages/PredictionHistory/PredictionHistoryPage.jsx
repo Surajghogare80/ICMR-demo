@@ -5,7 +5,7 @@ import {
   Box, Container, Typography, Card, Table, TableBody, TableCell,
   TableContainer, TableHead, TableRow, IconButton, Chip, Button,
   TablePagination, Dialog, DialogTitle, DialogContent, DialogActions,
-  Alert, Tooltip,
+  Alert, Tooltip, alpha,
 } from '@mui/material';
 import { Delete, Visibility, Science } from '@mui/icons-material';
 import { motion } from 'framer-motion';
@@ -47,8 +47,8 @@ const PredictionHistoryPage = () => {
         label={result}
         size="small"
         sx={{
-          bgcolor: isHigh ? '#FFEBEE' : '#E8F5E9',
-          color: isHigh ? '#C62828' : '#2E7D32',
+          bgcolor: (theme) => alpha(isHigh ? theme.palette.error.main : theme.palette.success.main, 0.12),
+          color: isHigh ? 'error.main' : 'success.main',
           fontWeight: 700,
         }}
       />

@@ -124,6 +124,7 @@ const WheelPicker = ({ value, onChange, min, max, unit }) => {
                     color: isActive ? 'primary.main' : 'text.secondary',
                     opacity: isActive ? 1 : 0.45,
                     transition: 'all 0.15s ease',
+                    whiteSpace: 'nowrap',
                   }}
                 >
                   {val} {unit}

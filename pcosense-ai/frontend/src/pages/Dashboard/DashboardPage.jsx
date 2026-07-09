@@ -70,7 +70,7 @@ const DashboardPage = () => {
         {/* Stats */}
         <Grid container spacing={3} sx={{ mb: 5 }}>
           <Grid item xs={12} sm={6} md={3}>
-            <StatCard title="Total Screenings" value={total} subtitle="All time" icon={<Science />} color="#1565C0" delay={0} />
+            <StatCard title="Total Screenings" value={total} subtitle="All time" icon={<Science />} color="#E91E63" delay={0} />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <StatCard
@@ -78,7 +78,7 @@ const DashboardPage = () => {
               value={predictions[0]?.result || '—'}
               subtitle={predictions[0] ? new Date(predictions[0].createdAt).toLocaleDateString() : 'No predictions yet'}
               icon={<TrendingUp />}
-              color={predictions[0]?.result === 'High Risk' ? '#C62828' : '#2E7D32'}
+              color={predictions[0]?.result === 'High Risk' ? '#EF5350' : '#66BB6A'}
               delay={0.1}
             />
           </Grid>
@@ -88,7 +88,7 @@ const DashboardPage = () => {
               value={predictions[0] ? `${predictions[0].probability}%` : '—'}
               subtitle="Risk probability score"
               icon={<Warning />}
-              color="#F57F17"
+              color="#FFA726"
               delay={0.2}
             />
           </Grid>
@@ -98,7 +98,7 @@ const DashboardPage = () => {
               value={predictions[0] ? `${predictions[0].confidence}%` : '—'}
               subtitle="Model confidence"
               icon={<CheckCircle />}
-              color="#00897B"
+              color="#F06292"
               delay={0.3}
             />
           </Grid>
@@ -116,14 +116,14 @@ const DashboardPage = () => {
                     onClick={() => navigate(ROUTES.PREDICTION)}
                     sx={{
                       p: 2.5, borderRadius: 3, cursor: 'pointer',
-                      background: 'linear-gradient(135deg, #1565C0, #00897B)',
+                      background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
                       mb: 2, transition: 'opacity 0.2s', '&:hover': { opacity: 0.9 },
                     }}
                   >
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                       <Box>
                         <Typography variant="subtitle1" fontWeight={700} color="white">New Screening</Typography>
-                        <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>Start PCOS assessment</Typography>
+                        <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.85)' }}>Start PCOS assessment</Typography>
                       </Box>
                       <ArrowForward sx={{ color: 'white' }} />
                     </Box>
@@ -171,7 +171,7 @@ const DashboardPage = () => {
                       {predictions.map((p, i) => (
                         <ListItem key={p._id} sx={{ px: 0, py: 1.5, borderBottom: i < predictions.length - 1 ? '1px solid' : 'none', borderColor: 'divider' }}>
                           <ListItemAvatar>
-                            <Avatar sx={{ bgcolor: p.result === 'High Risk' ? '#FFEBEE' : '#E8F5E9', color: p.result === 'High Risk' ? '#C62828' : '#2E7D32' }}>
+                            <Avatar sx={{ bgcolor: (theme) => alpha(p.result === 'High Risk' ? theme.palette.error.main : theme.palette.success.main, 0.12), color: p.result === 'High Risk' ? 'error.main' : 'success.main' }}>
                               <FiberManualRecord fontSize="small" />
                             </Avatar>
                           </ListItemAvatar>
@@ -181,7 +181,7 @@ const DashboardPage = () => {
                                 <Chip
                                   label={p.result}
                                   size="small"
-                                  sx={{ bgcolor: p.result === 'High Risk' ? '#FFEBEE' : '#E8F5E9', color: p.result === 'High Risk' ? '#C62828' : '#2E7D32', fontWeight: 700 }}
+                                  sx={{ bgcolor: (theme) => alpha(p.result === 'High Risk' ? theme.palette.error.main : theme.palette.success.main, 0.12), color: p.result === 'High Risk' ? 'error.main' : 'success.main', fontWeight: 700 }}
                                 />
                                 <Typography variant="body2" fontWeight={600}>Probability: {p.probability}%</Typography>
                               </Box>
@@ -191,7 +191,7 @@ const DashboardPage = () => {
                                 <LinearProgress
                                   variant="determinate"
                                   value={p.probability}
-                                  sx={{ height: 4, borderRadius: 2, bgcolor: 'action.hover', '& .MuiLinearProgress-bar': { bgcolor: p.result === 'High Risk' ? '#C62828' : '#2E7D32' } }}
+                                  sx={{ height: 4, borderRadius: 2, bgcolor: 'action.hover', '& .MuiLinearProgress-bar': { bgcolor: p.result === 'High Risk' ? 'error.main' : 'success.main' } }}
                                 />
                                 <Typography variant="caption" color="text.secondary">{new Date(p.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</Typography>
                               </Box>

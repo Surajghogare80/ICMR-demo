@@ -59,7 +59,7 @@ const ProfilePage = () => {
           <Card sx={{ mb: 3 }}>
             <CardContent sx={{ p: 4 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 4 }}>
-                <Avatar sx={{ width: 72, height: 72, background: 'linear-gradient(135deg, #1976D2, #00897B)', fontSize: '1.8rem', fontWeight: 700 }}>
+                <Avatar sx={{ width: 72, height: 72, background: 'linear-gradient(135deg, #EC407A, #F48FB1)', fontSize: '1.8rem', fontWeight: 700 }}>
                   {user?.name?.charAt(0)?.toUpperCase()}
                 </Avatar>
                 <Box>

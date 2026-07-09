@@ -49,7 +49,7 @@ const Navbar = ({ onThemeToggle, isDark }) => {
             <Box
               sx={{
                 width: 36, height: 36, borderRadius: '10px',
-                background: 'linear-gradient(135deg, #1976D2, #00897B)',
+                background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
@@ -59,7 +59,7 @@ const Navbar = ({ onThemeToggle, isDark }) => {
               variant="h6"
               fontWeight={800}
               sx={{
-                background: 'linear-gradient(135deg, #1565C0, #00897B)',
+                background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
               }}
@@ -95,7 +95,7 @@ const Navbar = ({ onThemeToggle, isDark }) => {
             <Tooltip title={user?.name}>
               <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
                 <Avatar
-                  sx={{ width: 36, height: 36, background: 'linear-gradient(135deg, #1976D2, #00897B)', fontSize: '0.9rem', fontWeight: 700 }}
+                  sx={{ width: 36, height: 36, background: 'linear-gradient(135deg, #EC407A, #F48FB1)', fontSize: '0.9rem', fontWeight: 700 }}
                 >
                   {user?.name?.charAt(0)?.toUpperCase()}
                 </Avatar>

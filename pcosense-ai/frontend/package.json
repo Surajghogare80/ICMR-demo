@@ -24,7 +24,10 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.2.1",
-    "vite": "^5.2.6"
+  "@vitejs/plugin-react": "^4.2.1",
+  "vite": "^6.4.2"
+},
+  "overrides": {
+    "esbuild": "^0.25.0"
   }
 }

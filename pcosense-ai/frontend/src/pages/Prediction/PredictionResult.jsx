@@ -23,8 +23,8 @@ const PredictionResult = () => {
   }
 
   const isHighRisk = result.result === 'High Risk';
-  const color = isHighRisk ? '#C62828' : '#2E7D32';
-  const bgColor = isHighRisk ? '#FFEBEE' : '#E8F5E9';
+  const color = isHighRisk ? '#EF5350' : '#66BB6A';
+  const bgColor = isHighRisk ? 'rgba(239, 83, 80, 0.12)' : 'rgba(102, 187, 106, 0.12)';
 
   return (
     <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', py: 6 }}>
@@ -106,7 +106,7 @@ const PredictionResult = () => {
                   <motion.div key={i} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 + i * 0.1 }}>
                     <ListItem sx={{ px: 0, py: 1 }}>
                       <ListItemIcon sx={{ minWidth: 36 }}>
-                        <CheckCircle sx={{ color: '#2E7D32', fontSize: 20 }} />
+                        <CheckCircle sx={{ color: 'success.main', fontSize: 20 }} />
                       </ListItemIcon>
                       <ListItemText primary={<Typography variant="body2" fontWeight={500}>{rec}</Typography>} />
                     </ListItem>

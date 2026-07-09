@@ -585,12 +585,12 @@ const PredictionWizard = () => {
                         border: '2px solid',
                         borderColor: isSelected ? 'primary.main' : 'divider',
                         bgcolor: isSelected
-                          ? (theme) => theme.palette.mode === 'dark' ? 'rgba(21, 101, 192, 0.15)' : 'rgba(21, 101, 192, 0.04)'
+                          ? (theme) => theme.palette.mode === 'dark' ? 'rgba(233, 30, 99, 0.15)' : 'rgba(233, 30, 99, 0.04)'
                           : 'background.paper',
                         transition: 'all 0.2s ease',
                         '&:hover': {
                           transform: 'translateY(-2px)',
-                          boxShadow: (theme) => theme.palette.mode === 'dark' ? '0 12px 40px rgba(0,0,0,0.4)' : '0 12px 32px rgba(21,101,192,0.12)',
+                          boxShadow: (theme) => theme.palette.mode === 'dark' ? '0 12px 40px rgba(0,0,0,0.4)' : '0 12px 32px rgba(233,30,99,0.12)',
                         }
                       }}
                     >
@@ -599,11 +599,11 @@ const PredictionWizard = () => {
                           {option.icon}
                         </Box>
                         <Box sx={{ flexGrow: 1 }}>
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5, flexWrap: 'wrap' }}>
-                            <Typography variant="subtitle1" fontWeight={700}>
+                          <Box sx={{ mb: 0.5 }}>
+                            <Typography variant="subtitle1" fontWeight={700} component="span" sx={{ display: 'inline', mr: 1.5, verticalAlign: 'middle' }}>
                               {option.title}
                             </Typography>
-                            <Chip label={option.tag} size="small" color={option.color} variant="outlined" sx={{ height: 20, fontSize: '0.7rem', fontWeight: 600 }} />
+                            <Chip label={option.tag} size="small" color={option.color} variant="outlined" sx={{ height: 20, fontSize: '0.7rem', fontWeight: 600, verticalAlign: 'middle' }} />
                           </Box>
                           <Typography variant="body2" color="text.secondary">
                             {option.desc}
@@ -641,7 +641,7 @@ const PredictionWizard = () => {
                   py: 1.8,
                   fontSize: '1rem',
                   borderRadius: 3,
-                  background: selectedMode ? 'linear-gradient(135deg, #1565C0 0%, #00897B 100%)' : undefined,
+                  background: selectedMode ? 'linear-gradient(135deg, #EC407A 0%, #F48FB1 100%)' : undefined,
                 }}
               >
                 Start screening →
@@ -738,7 +738,7 @@ const PredictionWizard = () => {
                 startIcon={<Science />}
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                sx={{ background: 'linear-gradient(135deg, #1565C0 0%, #00897B 100%)', px: 4 }}
+                sx={{ background: 'linear-gradient(135deg, #EC407A 0%, #F48FB1 100%)', px: 4 }}
               >
                 {isSubmitting ? 'Analyzing...' : 'Get My Result'}
               </Button>

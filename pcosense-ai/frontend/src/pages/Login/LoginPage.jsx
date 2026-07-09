@@ -39,11 +39,11 @@ const LoginPage = () => {
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'background.default', py: 4 }}>
       {/* Background */}
-      <Box sx={{ position: 'fixed', inset: 0, background: 'radial-gradient(ellipse at 20% 50%, rgba(21,101,192,0.08), transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(0,137,123,0.07), transparent 60%)', pointerEvents: 'none' }} />
+      <Box sx={{ position: 'fixed', inset: 0, background: 'radial-gradient(ellipse at 20% 50%, rgba(233,30,99,0.06), transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(240,98,146,0.05), transparent 60%)', pointerEvents: 'none' }} />
       <Container maxWidth="sm">
         <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <Box sx={{ textAlign: 'center', mb: 4 }}>
-            <Box sx={{ width: 56, height: 56, borderRadius: '16px', background: 'linear-gradient(135deg, #1976D2, #00897B)', display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 'auto', mb: 2, fontSize: '1.6rem' }}>🧬</Box>
+            <Box sx={{ width: 56, height: 56, borderRadius: '16px', background: 'linear-gradient(135deg, #EC407A, #F48FB1)', display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 'auto', mb: 2, fontSize: '1.6rem' }}>🧬</Box>
             <Typography variant="h4" fontWeight={800} gutterBottom>Welcome Back</Typography>
             <Typography color="text.secondary">Sign in to your PCOSense AI account</Typography>
           </Box>

@@ -19,7 +19,7 @@ const Footer = () => (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
             <Typography sx={{ fontSize: '1.2rem' }}>🧬</Typography>
             <Typography variant="h6" fontWeight={800} sx={{
-              background: 'linear-gradient(135deg, #1565C0, #00897B)',
+              background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
             }}>
               PCOSense AI

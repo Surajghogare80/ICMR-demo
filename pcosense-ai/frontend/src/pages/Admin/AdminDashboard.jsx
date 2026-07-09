@@ -43,10 +43,10 @@ const AdminDashboard = () => {
   const logs = stats?.recentLogs || [];
 
   const statCards = stats ? [
-    { title: 'Total Users', value: stats.totalUsers, icon: <People />, color: '#1565C0' },
-    { title: 'Total Predictions', value: stats.totalPredictions, icon: <Science />, color: '#00897B' },
-    { title: 'High Risk Cases', value: stats.highRiskCount, icon: <Warning />, color: '#C62828' },
-    { title: 'Low Risk Cases', value: stats.lowRiskCount, icon: <CheckCircle />, color: '#2E7D32' },
+    { title: 'Total Users', value: stats.totalUsers, icon: <People />, color: '#E91E63' },
+    { title: 'Total Predictions', value: stats.totalPredictions, icon: <Science />, color: '#F06292' },
+    { title: 'High Risk Cases', value: stats.highRiskCount, icon: <Warning />, color: '#EF5350' },
+    { title: 'Low Risk Cases', value: stats.lowRiskCount, icon: <CheckCircle />, color: '#66BB6A' },
   ] : [];
 
   return (
