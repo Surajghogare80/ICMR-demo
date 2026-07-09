@@ -10,6 +10,7 @@ import {
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { ROUTES } from '../../constants/index.js';
+import { useAuth } from '../../contexts/AuthContext.jsx';
 
 const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } };
 
@@ -37,6 +38,7 @@ const faqs = [
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
@@ -74,32 +76,64 @@ const LandingPage = () => {
                 <Typography variant="h6" sx={{ color: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.65)' : 'text.secondary', fontWeight: 400, lineHeight: 1.8, mb: 5, maxWidth: 520 }}>
                   PCOSense AI analyzes your clinical symptoms, menstrual history, and lifestyle factors to provide a comprehensive PCOS risk assessment — powered by advanced AI.
                 </Typography>
-                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                  <Button
-                    variant="contained"
-                    size="large"
-                    endIcon={<ArrowForward />}
-                    onClick={() => navigate(ROUTES.REGISTER)}
-                    sx={{ px: 4, py: 1.5, fontSize: '1rem', background: 'linear-gradient(135deg, #EC407A, #F48FB1)', boxShadow: '0 8px 24px rgba(233,30,99,0.3)' }}
-                  >
-                    Start Free Screening
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    size="large"
-                    onClick={() => navigate(ROUTES.LOGIN)}
-                    sx={{
-                      px: 4, py: 1.5, fontSize: '1rem',
-                      borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(233,30,99,0.4)',
-                      color: (theme) => theme.palette.mode === 'dark' ? '#FFF' : 'primary.main',
-                      '&:hover': {
-                        borderColor: 'primary.main',
-                        bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(233,30,99,0.04)'
-                      }
-                    }}
-                  >
-                    Login
-                  </Button>
+                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                  {isAuthenticated ? (
+                    <>
+                      <Button
+                        variant="contained"
+                        size="large"
+                        endIcon={<ArrowForward />}
+                        onClick={() => navigate(ROUTES.PREDICTION)}
+                        sx={{ px: 4, py: 1.5, fontSize: '1rem', background: 'linear-gradient(135deg, #EC407A, #F48FB1)', boxShadow: '0 8px 24px rgba(233,30,99,0.3)' }}
+                      >
+                        Start Screening
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        size="large"
+                        onClick={() => navigate(ROUTES.DASHBOARD)}
+                        sx={{
+                          px: 4, py: 1.5, fontSize: '1rem',
+                          borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(233,30,99,0.4)',
+                          color: (theme) => theme.palette.mode === 'dark' ? '#FFF' : 'primary.main',
+                          '&:hover': {
+                            borderColor: 'primary.main',
+                            bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(233,30,99,0.04)'
+                          }
+                        }}
+                      >
+                        Dashboard
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        variant="contained"
+                        size="large"
+                        endIcon={<ArrowForward />}
+                        onClick={() => navigate(ROUTES.REGISTER)}
+                        sx={{ px: 4, py: 1.5, fontSize: '1rem', background: 'linear-gradient(135deg, #EC407A, #F48FB1)', boxShadow: '0 8px 24px rgba(233,30,99,0.3)' }}
+                      >
+                        Start Free Screening
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        size="large"
+                        onClick={() => navigate(ROUTES.LOGIN)}
+                        sx={{
+                          px: 4, py: 1.5, fontSize: '1rem',
+                          borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(233,30,99,0.4)',
+                          color: (theme) => theme.palette.mode === 'dark' ? '#FFF' : 'primary.main',
+                          '&:hover': {
+                            borderColor: 'primary.main',
+                            bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(233,30,99,0.04)'
+                          }
+                        }}
+                      >
+                        Login
+                      </Button>
+                    </>
+                  )}
                 </Box>
                 <Box sx={{ mt: 4, display: 'flex', gap: 3, flexWrap: 'wrap' }}>
                   {['Free to use', 'Private & secure', 'Instant results'].map((t) => (
@@ -231,10 +265,10 @@ const LandingPage = () => {
           <Button
             variant="contained"
             size="large"
-            onClick={() => navigate(ROUTES.REGISTER)}
+            onClick={() => navigate(isAuthenticated ? ROUTES.PREDICTION : ROUTES.REGISTER)}
             sx={{ px: 6, py: 1.8, fontSize: '1.1rem', bgcolor: 'white', color: '#E91E63', fontWeight: 700, '&:hover': { bgcolor: 'rgba(255,255,255,0.9)' } }}
           >
-            Start Free Screening →
+            {isAuthenticated ? 'Start Screening →' : 'Start Free Screening →'}
           </Button>
         </Container>
       </Box>
