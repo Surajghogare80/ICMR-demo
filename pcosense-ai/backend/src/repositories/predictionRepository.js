@@ -184,6 +184,10 @@ export const predictionRepository = {
 
     return Prediction.find()
       .populate('userId', 'name email')
+      .populate('personalMetricId')
+      .populate('menstrualHistoryId')
+      .populate('clinicalSymptomId')
+      .populate('lifestyleHabitId')
       .sort({ createdAt: -1 })
       .limit(limit);
   },

@@ -4,18 +4,155 @@ import {
   Box, Container, Typography, Grid, Card, CardContent, Avatar,
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
   IconButton, Chip, Button, Dialog, DialogTitle, DialogContent,
-  DialogActions, List, ListItem, ListItemText, Divider, LinearProgress, Tooltip,
+  DialogActions, List, ListItem, ListItemText, Divider, LinearProgress,
+  Tooltip, alpha,
 } from '@mui/material';
-import { People, Science, Warning, CheckCircle, Delete, Refresh } from '@mui/icons-material';
+import { People, Science, Warning, CheckCircle, Delete, Refresh, Visibility, Close } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { adminService } from '../../services/predictionService.js';
 import Loading from '../../layout/Loading/Loading.jsx';
 import toast from 'react-hot-toast';
 
+// ─── Reusable info row ─────────────────────────────────────────────────────
+const InfoRow = ({ label, value, unit = '' }) => (
+  <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 0.7, borderBottom: '1px solid', borderColor: 'divider' }}>
+    <Typography variant="body2" color="text.secondary">{label}</Typography>
+    <Typography variant="body2" fontWeight={600}>
+      {value !== null && value !== undefined && value !== '' ? `${value}${unit ? ' ' + unit : ''}` : '—'}
+    </Typography>
+  </Box>
+);
+
+// ─── Admin Prediction Detail Dialog ───────────────────────────────────────
+const AdminPredictionDetail = ({ prediction, onClose }) => {
+  if (!prediction) return null;
+  const pm  = prediction.personalMetricId  || {};
+  const mh  = prediction.menstrualHistoryId || {};
+  const cs  = prediction.clinicalSymptomId  || {};
+  const lhd = prediction.lifestyleHabitId  || {};
+  const isHighRisk = prediction.result === 'High Risk';
+  const resultColor = isHighRisk ? 'error.main' : 'success.main';
+
+  return (
+    <Dialog
+      open={!!prediction}
+      onClose={onClose}
+      maxWidth="sm"
+      fullWidth
+      PaperProps={{ sx: { borderRadius: 3, maxHeight: '90vh' } }}
+    >
+      <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pb: 1 }}>
+        <Box>
+          <Typography variant="h6" fontWeight={700}>Prediction Details (Admin)</Typography>
+          <Typography variant="caption" color="text.secondary">
+            {prediction.createdAt ? new Date(prediction.createdAt).toLocaleString('en-IN') : ''}
+          </Typography>
+        </Box>
+        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+          <Chip
+            label={prediction.result}
+            size="small"
+            sx={{
+              bgcolor: (theme) => alpha(isHighRisk ? theme.palette.error.main : theme.palette.success.main, 0.12),
+              color: resultColor,
+              fontWeight: 700,
+            }}
+          />
+          <IconButton onClick={onClose} size="small"><Close fontSize="small" /></IconButton>
+        </Box>
+      </DialogTitle>
+
+      <DialogContent dividers sx={{ px: 3, py: 2 }}>
+        <Grid container spacing={2.5}>
+          {/* Risk Summary */}
+          <Grid item xs={12}>
+            <Box sx={{ display: 'flex', gap: 3, mb: 0.5 }}>
+              <Box>
+                <Typography variant="caption" color="text.secondary">Probability</Typography>
+                <Typography variant="h5" fontWeight={800} color={resultColor}>{prediction.probability}%</Typography>
+              </Box>
+              <Box>
+                <Typography variant="caption" color="text.secondary">Confidence</Typography>
+                <Typography variant="h5" fontWeight={800}>{prediction.confidence}%</Typography>
+              </Box>
+            </Box>
+            <Divider />
+          </Grid>
+
+          {/* Personal */}
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>👤 Personal</Typography>
+            <InfoRow label="Age" value={pm.age} unit="yrs" />
+            <InfoRow label="Weight" value={pm.weight} unit="kg" />
+            <InfoRow label="Height" value={pm.height} unit="cm" />
+            <InfoRow label="BMI" value={pm.bmi} />
+            <InfoRow label="Blood Group" value={pm.bloodGroup} />
+          </Grid>
+
+          {/* Menstrual */}
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>🩸 Menstrual</Typography>
+            <InfoRow label="Cycle Length" value={mh.cycleLength} unit="days" />
+            <InfoRow label="Period Duration" value={mh.periodDuration} unit="days" />
+            <InfoRow label="Regularity" value={mh.cycleRegularity} />
+            <InfoRow label="Flow" value={mh.flowIntensity} />
+          </Grid>
+
+          {/* Standard Blood */}
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>🔬 Blood Report (Standard)</Typography>
+            <InfoRow label="FSH" value={pm.fsh} unit="mIU/mL" />
+            <InfoRow label="LH" value={pm.lh} unit="mIU/mL" />
+            <InfoRow label="TSH" value={pm.tsh} unit="mIU/L" />
+            <InfoRow label="AMH" value={pm.amh} unit="ng/mL" />
+            <InfoRow label="Haemoglobin" value={pm.hb} unit="g/dL" />
+            <InfoRow label="Prolactin" value={pm.prl} unit="ng/mL" />
+          </Grid>
+
+          {/* Extended Blood — 4 new parameters */}
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'secondary.main' }}>💉 Blood Report (Extended)</Typography>
+            <InfoRow label="Vitamin D3" value={pm.vitD3} unit="ng/mL" />
+            <InfoRow label="SHBG" value={pm.shbg} unit="nmol/L" />
+            <InfoRow label="Fasting Insulin" value={pm.fastingInsulin} unit="µIU/mL" />
+            <InfoRow label="HOMA-IR" value={pm.insulinResistance} />
+          </Grid>
+
+          {/* Ultrasound (if available) */}
+          {(mh.follicleNo || mh.avgFsize || mh.ovaryVolume || mh.endometrium) && (
+            <Grid item xs={12} sm={6}>
+              <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>🔍 Ultrasound</Typography>
+              <InfoRow label="Follicle No." value={mh.follicleNo} />
+              <InfoRow label="Avg Follicle Size" value={mh.avgFsize} unit="mm" />
+              <InfoRow label="Ovary Volume" value={mh.ovaryVolume} unit="mL" />
+              <InfoRow label="Endometrium" value={mh.endometrium} unit="mm" />
+            </Grid>
+          )}
+
+          {/* Lifestyle */}
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>🏃 Lifestyle</Typography>
+            <InfoRow label="Fast Food" value={lhd.fastFoodFreq} />
+            <InfoRow label="Exercise" value={lhd.exerciseFreq} />
+            <InfoRow label="Stress" value={lhd.stressLevel} />
+            <InfoRow label="Sleep" value={lhd.sleepHours} unit="hrs" />
+          </Grid>
+        </Grid>
+      </DialogContent>
+
+      <DialogActions sx={{ px: 3, pb: 2 }}>
+        <Button onClick={onClose} variant="outlined" size="small">Close</Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+// ─── Main Dashboard ────────────────────────────────────────────────────────
 const AdminDashboard = () => {
   const queryClient = useQueryClient();
   const [deleteId, setDeleteId] = useState(null);
+  const [viewPrediction, setViewPrediction] = useState(null);
 
   const { data: statsData, isLoading: statsLoading, refetch } = useQuery({
     queryKey: ['admin-dashboard'],
@@ -40,13 +177,14 @@ const AdminDashboard = () => {
 
   const stats = statsData?.data;
   const users = usersData?.data?.users || [];
-  const logs = stats?.recentLogs || [];
+  const logs  = stats?.recentLogs || [];
+  const recentPredictions = stats?.recentPredictions || [];
 
   const statCards = stats ? [
-    { title: 'Total Users', value: stats.totalUsers, icon: <People />, color: '#E91E63' },
-    { title: 'Total Predictions', value: stats.totalPredictions, icon: <Science />, color: '#F06292' },
-    { title: 'High Risk Cases', value: stats.highRiskCount, icon: <Warning />, color: '#EF5350' },
-    { title: 'Low Risk Cases', value: stats.lowRiskCount, icon: <CheckCircle />, color: '#66BB6A' },
+    { title: 'Total Users',       value: stats.totalUsers,       icon: <People />,      color: '#E91E63' },
+    { title: 'Total Predictions', value: stats.totalPredictions, icon: <Science />,     color: '#F06292' },
+    { title: 'High Risk Cases',   value: stats.highRiskCount,    icon: <Warning />,     color: '#EF5350' },
+    { title: 'Low Risk Cases',    value: stats.lowRiskCount,     icon: <CheckCircle />, color: '#66BB6A' },
   ] : [];
 
   return (
@@ -191,9 +329,79 @@ const AdminDashboard = () => {
                 </CardContent>
               </Card>
             </Grid>
+
+            {/* Recent Predictions with detail viewer */}
+            {recentPredictions.length > 0 && (
+              <Grid item xs={12}>
+                <Card>
+                  <CardContent sx={{ p: 3 }}>
+                    <Typography variant="h6" fontWeight={700} gutterBottom>Recent Predictions</Typography>
+                    <TableContainer>
+                      <Table size="small">
+                        <TableHead>
+                          <TableRow sx={{ bgcolor: 'action.hover' }}>
+                            <TableCell><strong>User</strong></TableCell>
+                            <TableCell><strong>Date</strong></TableCell>
+                            <TableCell><strong>Result</strong></TableCell>
+                            <TableCell><strong>Probability</strong></TableCell>
+                            <TableCell align="center"><strong>Details</strong></TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {recentPredictions.map((p) => {
+                            const isHigh = p.result === 'High Risk';
+                            return (
+                              <TableRow key={p._id} hover sx={{ '&:last-child td': { border: 0 } }}>
+                                <TableCell>
+                                  <Typography variant="body2" fontWeight={500}>
+                                    {p.userId?.name || 'Anonymous'}
+                                  </Typography>
+                                  <Typography variant="caption" color="text.secondary">{p.userId?.email}</Typography>
+                                </TableCell>
+                                <TableCell>
+                                  <Typography variant="caption">
+                                    {new Date(p.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                  </Typography>
+                                </TableCell>
+                                <TableCell>
+                                  <Chip
+                                    label={p.result}
+                                    size="small"
+                                    sx={{
+                                      bgcolor: (theme) => alpha(isHigh ? theme.palette.error.main : theme.palette.success.main, 0.12),
+                                      color: isHigh ? 'error.main' : 'success.main',
+                                      fontWeight: 700,
+                                    }}
+                                  />
+                                </TableCell>
+                                <TableCell>
+                                  <Typography variant="body2" fontWeight={700} color={isHigh ? 'error.main' : 'success.main'}>
+                                    {p.probability}%
+                                  </Typography>
+                                </TableCell>
+                                <TableCell align="center">
+                                  <Tooltip title="View prediction details">
+                                    <IconButton size="small" color="primary" onClick={() => setViewPrediction(p)}>
+                                      <Visibility fontSize="small" />
+                                    </IconButton>
+                                  </Tooltip>
+                                </TableCell>
+                              </TableRow>
+                            );
+                          })}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </CardContent>
+                </Card>
+              </Grid>
+            )}
           </Grid>
         </motion.div>
       </Container>
+
+      {/* Prediction Detail Dialog */}
+      <AdminPredictionDetail prediction={viewPrediction} onClose={() => setViewPrediction(null)} />
 
       {/* Delete confirmation */}
       <Dialog open={!!deleteId} onClose={() => setDeleteId(null)} PaperProps={{ sx: { borderRadius: 3 } }}>

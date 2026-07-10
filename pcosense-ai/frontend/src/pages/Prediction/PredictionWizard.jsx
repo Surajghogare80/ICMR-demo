@@ -45,9 +45,19 @@ const PredictionWizard = () => {
   const [selectedMode, setSelectedMode] = useState(null);
   const [activeStep, setActiveStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // Blood test card page (1 = standard markers, 2 = extended markers)
+  const [bloodPage, setBloodPage] = useState(1);
+  // Slide direction for blood page animation
+  const [bloodSlideDir, setBloodSlideDir] = useState(1); // 1 = slide left, -1 = slide right
   
   const [formData, setFormData] = useState({
-    personal: { age: 25, weight: 60, height: '', bmi: '', bloodGroup: '', fsh: '', lh: '', tsh: '', amh: '', hb: '', prl: '' },
+    personal: {
+      age: 25, weight: 60, height: '', bmi: '', bloodGroup: '',
+      // Page 1 blood markers
+      fsh: '', lh: '', tsh: '', amh: '', hb: '', prl: '',
+      // Page 2 extended markers (used by RF model)
+      vitaminD3: '', shbg: '', fastingInsulin: '', insulinResistance: '',
+    },
     menstrual: { cycleLength: '', cycleRegularity: 'Regular', periodDuration: '', flowIntensity: 'Normal', follicleNo: '', avgFsize: '', ovaryVolume: '', endometrium: '' },
     symptoms: { weightGain: false, hairGrowth: false, skinDarkening: false, pimples: false, hairLoss: false },
     lifestyle: { fastFoodFreq: 'Never', exerciseFreq: '1-2 times/week', stressLevel: 'Moderate', sleepHours: '' },
@@ -122,12 +132,18 @@ const PredictionWizard = () => {
         }
         return true;
       };
+      // Page 1 markers
       if (!checkPositive(formData.personal.fsh, 'FSH')) return false;
       if (!checkPositive(formData.personal.lh, 'LH')) return false;
       if (!checkPositive(formData.personal.tsh, 'TSH')) return false;
       if (!checkPositive(formData.personal.amh, 'AMH')) return false;
       if (!checkPositive(formData.personal.hb, 'Haemoglobin')) return false;
       if (!checkPositive(formData.personal.prl, 'Prolactin')) return false;
+      // Page 2 extended markers
+      if (!checkPositive(formData.personal.vitaminD3, 'Vitamin D3')) return false;
+      if (!checkPositive(formData.personal.shbg, 'SHBG')) return false;
+      if (!checkPositive(formData.personal.fastingInsulin, 'Fasting Insulin')) return false;
+      if (!checkPositive(formData.personal.insulinResistance, 'Insulin Resistance (HOMA-IR)')) return false;
     }
 
     if (stepId === 'ultrasound_scan') {
@@ -149,6 +165,8 @@ const PredictionWizard = () => {
 
   const handleNext = () => {
     if (validateStep(activeStep)) {
+      // Reset blood card to page 1 when leaving the blood step
+      if (currentStepId === 'blood_report') setBloodPage(1);
       setActiveStep((s) => s + 1);
     }
   };
@@ -159,9 +177,11 @@ const PredictionWizard = () => {
         ...prev,
         personal: {
           ...prev.personal,
-          fsh: '', lh: '', tsh: '', amh: '', hb: '', prl: ''
+          fsh: '', lh: '', tsh: '', amh: '', hb: '', prl: '',
+          vitaminD3: '', shbg: '', fastingInsulin: '', insulinResistance: '',
         }
       }));
+      setBloodPage(1);
       toast.success('Blood report page skipped.');
     } else if (currentStepId === 'ultrasound_scan') {
       setFormData((prev) => ({
@@ -207,6 +227,11 @@ const PredictionWizard = () => {
         if (formData.personal.amh !== '') personalData.amh = Number(formData.personal.amh);
         if (formData.personal.hb !== '') personalData.hb = Number(formData.personal.hb);
         if (formData.personal.prl !== '') personalData.prl = Number(formData.personal.prl);
+        // Extended blood markers (Page 2)
+        if (formData.personal.vitaminD3 !== '') personalData.vitaminD3 = Number(formData.personal.vitaminD3);
+        if (formData.personal.shbg !== '') personalData.shbg = Number(formData.personal.shbg);
+        if (formData.personal.fastingInsulin !== '') personalData.fastingInsulin = Number(formData.personal.fastingInsulin);
+        if (formData.personal.insulinResistance !== '') personalData.insulinResistance = Number(formData.personal.insulinResistance);
       }
 
       if (screeningMode === 'ultrasound' || screeningMode === 'both') {
@@ -427,38 +452,137 @@ const PredictionWizard = () => {
           </Grid>
         );
 
-      case 'blood_report':
+      case 'blood_report': {
+        // ── Page 1 fields ──────────────────────────────────────────────────
+        const bloodPage1Fields = [
+          { key: 'fsh', label: 'FSH (mIU/mL)', desc: 'Follicle-Stimulating Hormone' },
+          { key: 'lh',  label: 'LH (mIU/mL)',  desc: 'Luteinizing Hormone' },
+          { key: 'tsh', label: 'TSH (mIU/L)',  desc: 'Thyroid-Stimulating Hormone' },
+          { key: 'amh', label: 'AMH (ng/mL)',  desc: 'Anti-Müllerian Hormone' },
+          { key: 'hb',  label: 'Haemoglobin (g/dL)', desc: 'Oxygen-carrying protein' },
+          { key: 'prl', label: 'Prolactin (ng/mL)',  desc: 'Pituitary gland hormone' },
+        ];
+        // ── Page 2 fields ──────────────────────────────────────────────────
+        const bloodPage2Fields = [
+          { key: 'vitaminD3',       label: 'Vitamin D3 (ng/mL)',        desc: 'Cholecalciferol level' },
+          { key: 'shbg',           label: 'SHBG (nmol/L)',             desc: 'Sex Hormone-Binding Globulin' },
+          { key: 'fastingInsulin', label: 'Fasting Insulin (µIU/mL)',  desc: 'Baseline insulin level' },
+          { key: 'insulinResistance', label: 'Insulin Resistance (HOMA-IR)', desc: 'HOMA-IR index (fasting glucose × fasting insulin ÷ 405)' },
+        ];
+
+        const slideVariants = {
+          enter: (dir) => ({ opacity: 0, x: dir > 0 ? 60 : -60 }),
+          center: { opacity: 1, x: 0 },
+          exit:  (dir) => ({ opacity: 0, x: dir > 0 ? -60 : 60 }),
+        };
+
+        const goToPage2 = () => { setBloodSlideDir(1);  setBloodPage(2); };
+        const goToPage1 = () => { setBloodSlideDir(-1); setBloodPage(1); };
+
+        const activeFields = bloodPage === 1 ? bloodPage1Fields : bloodPage2Fields;
+
         return (
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
+          <Box>
+            {/* Header */}
+            <Box sx={{ mb: 2 }}>
               <Typography variant="h6" fontWeight={700}>Recent Blood Test Results (Optional)</Typography>
               <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5, fontWeight: 500 }}>
-                Optional – improves prediction accuracy.
+                Optional – improves prediction accuracy. &nbsp;
+                <Box component="span" sx={{ color: 'primary.main', fontWeight: 600 }}>
+                  Page {bloodPage} of 2
+                </Box>
               </Typography>
-            </Grid>
-            {[
-              { key: 'fsh', label: 'FSH (mIU/mL)', desc: 'Follicle-Stimulating Hormone' },
-              { key: 'lh', label: 'LH (mIU/mL)', desc: 'Luteinizing Hormone' },
-              { key: 'tsh', label: 'TSH (mIU/L)', desc: 'Thyroid-Stimulating Hormone' },
-              { key: 'amh', label: 'AMH (ng/mL)', desc: 'Anti-Mullerian Hormone' },
-              { key: 'hb', label: 'Haemoglobin (g/dL)', desc: 'Oxygen-carrying protein' },
-              { key: 'prl', label: 'Prolactin (ng/mL)', desc: 'Pituitary gland hormone' },
-            ].map((f) => (
-              <Grid item xs={12} sm={6} key={f.key}>
-                <TextField
-                  fullWidth
-                  label={f.label}
-                  type="number"
-                  placeholder="e.g. 4.5"
-                  value={formData.personal[f.key]}
-                  onChange={(e) => updateField('personal', f.key, e.target.value)}
-                  helperText={f.desc}
-                  inputProps={{ step: 'any', min: 0 }}
-                />
-              </Grid>
-            ))}
-          </Grid>
+            </Box>
+
+            {/* Animated field area */}
+            <Box sx={{ overflow: 'hidden', position: 'relative' }}>
+              <AnimatePresence mode="wait" custom={bloodSlideDir}>
+                <motion.div
+                  key={`blood-page-${bloodPage}`}
+                  custom={bloodSlideDir}
+                  variants={slideVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.28, ease: 'easeInOut' }}
+                >
+                  <Grid container spacing={3}>
+                    {activeFields.map((f) => (
+                      <Grid item xs={12} sm={6} key={f.key}>
+                        <TextField
+                          fullWidth
+                          label={f.label}
+                          type="number"
+                          placeholder="e.g. 4.5"
+                          value={formData.personal[f.key]}
+                          onChange={(e) => updateField('personal', f.key, e.target.value)}
+                          helperText={f.desc}
+                          inputProps={{ step: 'any', min: 0 }}
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
+                </motion.div>
+              </AnimatePresence>
+            </Box>
+
+            {/* View More / Previous Blood Tests — centered below fields */}
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+              {bloodPage === 1 ? (
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={goToPage2}
+                  sx={{
+                    borderRadius: '20px',
+                    borderColor: '#E91E63',
+                    color: '#E91E63',
+                    px: 2.5,
+                    fontSize: '0.78rem',
+                    fontWeight: 600,
+                    letterSpacing: 0.3,
+                    transition: 'all 0.22s',
+                    '&:hover': {
+                      bgcolor: 'rgba(233,30,99,0.08)',
+                      borderColor: '#C2185B',
+                      color: '#C2185B',
+                      transform: 'translateY(-1px)',
+                      boxShadow: '0 4px 14px rgba(233,30,99,0.22)',
+                    },
+                  }}
+                >
+                  View More ›
+                </Button>
+              ) : (
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={goToPage1}
+                  sx={{
+                    borderRadius: '20px',
+                    borderColor: '#E91E63',
+                    color: '#E91E63',
+                    px: 2.5,
+                    fontSize: '0.78rem',
+                    fontWeight: 600,
+                    letterSpacing: 0.3,
+                    transition: 'all 0.22s',
+                    '&:hover': {
+                      bgcolor: 'rgba(233,30,99,0.08)',
+                      borderColor: '#C2185B',
+                      color: '#C2185B',
+                      transform: 'translateY(-1px)',
+                      boxShadow: '0 4px 14px rgba(233,30,99,0.22)',
+                    },
+                  }}
+                >
+                  ‹ Previous Blood Tests
+                </Button>
+              )}
+            </Box>
+          </Box>
         );
+      }
 
       case 'ultrasound_scan':
         return (
@@ -546,33 +670,29 @@ const PredictionWizard = () => {
                   id: 'symptoms',
                   title: 'Just my symptoms',
                   tag: 'No reports needed',
-                  color: 'default',
                   desc: "I don't have any test reports — just answer questions about my body.",
-                  icon: <ListAlt color="primary" />
+                  icon: <ListAlt sx={{ color: (theme) => theme.palette.mode === 'dark' ? '#E2E8F0' : '#64748B' }} />
                 },
                 {
                   id: 'blood',
                   title: 'I have a blood test report',
                   tag: 'Have blood report',
-                  color: 'secondary',
                   desc: 'From a lab or hospital visit. I can enter the numbers from the report.',
-                  icon: <Science color="secondary" />
+                  icon: <Science sx={{ color: '#E91E63' }} />
                 },
                 {
                   id: 'ultrasound',
                   title: 'I have an ultrasound scan',
                   tag: 'Have ultrasound',
-                  color: 'info',
                   desc: 'A pelvic or transvaginal scan from a clinic or hospital.',
-                  icon: <Biotech color="info" />
+                  icon: <Biotech sx={{ color: '#1976D2' }} />
                 },
                 {
                   id: 'both',
                   title: 'Blood report + ultrasound scan',
                   tag: 'Most complete',
-                  color: 'error',
                   desc: 'I have both. This gives the most complete picture.',
-                  icon: <Assignment color="error" />
+                  icon: <Assignment sx={{ color: '#EF5350' }} />
                 }
               ].map((option) => {
                 const isSelected = selectedMode === option.id;
@@ -587,23 +707,88 @@ const PredictionWizard = () => {
                         bgcolor: isSelected
                           ? (theme) => theme.palette.mode === 'dark' ? 'rgba(233, 30, 99, 0.15)' : 'rgba(233, 30, 99, 0.04)'
                           : 'background.paper',
-                        transition: 'all 0.2s ease',
+                        boxShadow: isSelected 
+                          ? (theme) => theme.palette.mode === 'dark' ? '0 8px 24px rgba(233,30,99,0.25)' : '0 8px 20px rgba(233,30,99,0.06)'
+                          : 'none',
+                        transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
                         '&:hover': {
-                          transform: 'translateY(-2px)',
-                          boxShadow: (theme) => theme.palette.mode === 'dark' ? '0 12px 40px rgba(0,0,0,0.4)' : '0 12px 32px rgba(233,30,99,0.12)',
+                          transform: 'translateY(-3px)',
+                          borderColor: isSelected ? 'primary.main' : 'primary.light',
+                          boxShadow: (theme) => theme.palette.mode === 'dark' ? '0 12px 40px rgba(233,30,99,0.3)' : '0 12px 32px rgba(233,30,99,0.08)',
                         }
                       }}
                     >
                       <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2, p: '20px !important' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', p: 1.5, borderRadius: 3, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)' }}>
+                        <Box sx={{ 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          justifyContent: 'center', 
+                          p: 1.5, 
+                          borderRadius: 3, 
+                          bgcolor: (theme) => {
+                            const isDark = theme.palette.mode === 'dark';
+                            switch (option.id) {
+                              case 'symptoms':
+                                return isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)';
+                              case 'blood':
+                                return isDark ? 'rgba(233, 30, 99, 0.15)' : 'rgba(233, 30, 99, 0.08)';
+                              case 'ultrasound':
+                                return isDark ? 'rgba(33, 150, 243, 0.15)' : 'rgba(33, 150, 243, 0.08)';
+                              case 'both':
+                                return isDark ? 'rgba(239, 83, 80, 0.15)' : 'rgba(239, 83, 80, 0.08)';
+                              default:
+                                return 'divider';
+                            }
+                          }
+                        }}>
                           {option.icon}
                         </Box>
                         <Box sx={{ flexGrow: 1 }}>
-                          <Box sx={{ mb: 0.5 }}>
-                            <Typography variant="subtitle1" fontWeight={700} component="span" sx={{ display: 'inline', mr: 1.5, verticalAlign: 'middle' }}>
+                          <Box sx={{ mb: 0.5, display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1 }}>
+                            <Typography variant="subtitle1" fontWeight={700} sx={{ display: 'inline', verticalAlign: 'middle' }}>
                               {option.title}
                             </Typography>
-                            <Chip label={option.tag} size="small" color={option.color} variant="outlined" sx={{ height: 20, fontSize: '0.7rem', fontWeight: 600, verticalAlign: 'middle' }} />
+                            <Chip 
+                              label={option.tag} 
+                              size="small" 
+                              sx={{ 
+                                height: 20, 
+                                fontSize: '0.7rem', 
+                                fontWeight: 600, 
+                                verticalAlign: 'middle',
+                                border: 'none',
+                                bgcolor: (theme) => {
+                                  const isDark = theme.palette.mode === 'dark';
+                                  switch (option.id) {
+                                    case 'symptoms':
+                                      return isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)';
+                                    case 'blood':
+                                      return isDark ? 'rgba(233, 30, 99, 0.18)' : 'rgba(233, 30, 99, 0.08)';
+                                    case 'ultrasound':
+                                      return isDark ? 'rgba(33, 150, 243, 0.18)' : 'rgba(33, 150, 243, 0.08)';
+                                    case 'both':
+                                      return isDark ? 'rgba(239, 83, 80, 0.18)' : 'rgba(239, 83, 80, 0.08)';
+                                    default:
+                                      return 'divider';
+                                  }
+                                },
+                                color: (theme) => {
+                                  const isDark = theme.palette.mode === 'dark';
+                                  switch (option.id) {
+                                    case 'symptoms':
+                                      return isDark ? '#E2E8F0' : '#475569';
+                                    case 'blood':
+                                      return isDark ? '#F48FB1' : '#C2185B';
+                                    case 'ultrasound':
+                                      return isDark ? '#90CAF9' : '#1565C0';
+                                    case 'both':
+                                      return isDark ? '#EF5350' : '#C62828';
+                                    default:
+                                      return 'text.primary';
+                                  }
+                                }
+                              }} 
+                            />
                           </Box>
                           <Typography variant="body2" color="text.secondary">
                             {option.desc}

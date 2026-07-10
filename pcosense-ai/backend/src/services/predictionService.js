@@ -87,22 +87,42 @@ const runRModel = (inputs) => {
 
 export const predictionService = {
   async createPrediction({ userId, personal, menstrual, symptoms, lifestyle }, ip) {
+    // Destructure extended blood markers so they reach the DB as `vitD3`, `shbg`, etc.
+    const { vitaminD3, shbg, fastingInsulin, insulinResistance, ...corePersonal } = personal;
+
+    const extendedPersonal = {
+      ...corePersonal,
+      ...(vitaminD3 !== undefined && vitaminD3 !== '' ? { vitD3: Number(vitaminD3) } : {}),
+      ...(shbg !== undefined && shbg !== '' ? { shbg: Number(shbg) } : {}),
+      ...(fastingInsulin !== undefined && fastingInsulin !== '' ? { fastingInsulin: Number(fastingInsulin) } : {}),
+      ...(insulinResistance !== undefined && insulinResistance !== '' ? { insulinResistance: Number(insulinResistance) } : {}),
+    };
+
     // Save each section to its own collection
     const [personalMetric, menstrualHistory, clinicalSymptom, lifestyleHabit] = await Promise.all([
-      predictionRepository.createPersonalMetric({ userId, ...personal }),
+      predictionRepository.createPersonalMetric({ userId, ...extendedPersonal }),
       predictionRepository.createMenstrualHistory({ userId, ...menstrual }),
       predictionRepository.createClinicalSymptom({ userId, ...symptoms }),
       predictionRepository.createLifestyleHabit({ userId, ...lifestyle }),
     ]);
 
+    // Build the full inputs object for the R model — include 4 new markers
+    const rInputPersonal = {
+      ...personal,
+      vitaminD3: vitaminD3 !== undefined && vitaminD3 !== '' ? Number(vitaminD3) : undefined,
+      shbg: shbg !== undefined && shbg !== '' ? Number(shbg) : undefined,
+      fastingInsulin: fastingInsulin !== undefined && fastingInsulin !== '' ? Number(fastingInsulin) : undefined,
+      insulinResistance: insulinResistance !== undefined && insulinResistance !== '' ? Number(insulinResistance) : undefined,
+    };
+
     // Generate prediction using real R model, falling back to dummy if Rscript is not installed
     let aiResult;
     try {
-      aiResult = await runRModel({ personal, menstrual, symptoms, lifestyle });
+      aiResult = await runRModel({ personal: rInputPersonal, menstrual, symptoms, lifestyle });
       logger.info(`Prediction generated using Random Forest RDS model for user ${userId}: ${aiResult.result}`);
     } catch (err) {
       logger.warn(`Failed to execute ML R model, falling back to rule-based engine. Reason: ${err.message}`);
-      aiResult = generateDummyPrediction({ personal, menstrual, symptoms, lifestyle });
+      aiResult = generateDummyPrediction({ personal: rInputPersonal, menstrual, symptoms, lifestyle });
     }
 
     // Save the prediction referencing all 4 collections
@@ -125,7 +145,11 @@ export const predictionService = {
     logger.info(`Prediction created for user ${userId}: ${aiResult.result}`);
 
     return {
-      prediction,
+      prediction: {
+        ...prediction.toObject ? prediction.toObject() : prediction,
+        // Embed the full personalMetric so the result page can render the blood report card
+        personalMetricId: personalMetric,
+      },
       aiResult, // Return AI result separately for immediate display
     };
   },

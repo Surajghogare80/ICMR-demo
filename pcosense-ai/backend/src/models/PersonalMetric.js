@@ -46,6 +46,9 @@ const personalMetricSchema = new mongoose.Schema(
     hb: { type: Number, default: null },
     rbs: { type: Number, default: null },
     vitD3: { type: Number, default: null },
+    shbg: { type: Number, default: null },           // nmol/L
+    fastingInsulin: { type: Number, default: null }, // µIU/mL
+    insulinResistance: { type: Number, default: null }, // HOMA-IR
     prg: { type: Number, default: null },
     hip: { type: Number, default: null },
     waist: { type: Number, default: null },
