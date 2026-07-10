@@ -87,6 +87,9 @@ const AdminPredictionDetail = ({ prediction, onClose }) => {
             <InfoRow label="Weight" value={pm.weight} unit="kg" />
             <InfoRow label="Height" value={pm.height} unit="cm" />
             <InfoRow label="BMI" value={pm.bmi} />
+            <InfoRow label="Waist Size" value={pm.waist} unit="inch" />
+            <InfoRow label="Hip Size" value={pm.hip} unit="inch" />
+            <InfoRow label="Waist : Hip Ratio" value={pm.waistHipRatio} />
             <InfoRow label="Blood Group" value={pm.bloodGroup} />
           </Grid>
 
@@ -97,6 +100,7 @@ const AdminPredictionDetail = ({ prediction, onClose }) => {
             <InfoRow label="Period Duration" value={mh.periodDuration} unit="days" />
             <InfoRow label="Regularity" value={mh.cycleRegularity} />
             <InfoRow label="Flow" value={mh.flowIntensity} />
+            <InfoRow label="Family History of PCOS" value={mh.familyHistory !== undefined && mh.familyHistory !== null ? (mh.familyHistory ? 'Yes' : 'No') : '—'} />
           </Grid>
 
           {/* Standard Blood */}
@@ -107,7 +111,7 @@ const AdminPredictionDetail = ({ prediction, onClose }) => {
             <InfoRow label="TSH" value={pm.tsh} unit="mIU/L" />
             <InfoRow label="AMH" value={pm.amh} unit="ng/mL" />
             <InfoRow label="Haemoglobin" value={pm.hb} unit="g/dL" />
-            <InfoRow label="Prolactin" value={pm.prl} unit="ng/mL" />
+            <InfoRow label="Random Blood Sugar" value={pm.rbs} unit="mg/dL" />
           </Grid>
 
           {/* Extended Blood — 4 new parameters */}

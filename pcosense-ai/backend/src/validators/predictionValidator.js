@@ -25,6 +25,11 @@ export const predictionValidator = [
     .optional({ nullable: true })
     .isFloat({ min: 0 }).withMessage('BMI must be a non-negative number'),
 
+  // Body measurements (new)
+  optPositive('waist'),         // inch
+  optPositive('hip'),           // inch
+  optPositive('waistHipRatio'), // ratio
+
   body('personal.bloodGroup')
     .optional({ nullable: true })
     .isIn(['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'])
@@ -36,12 +41,12 @@ export const predictionValidator = [
   optPositive('tsh'),
   optPositive('amh'),
   optPositive('hb'),
-  optPositive('prl'),
+  optPositive('rbs'),           // Random Blood Sugar (replaces prl in UI)
 
   // ── Extended blood markers (Page 2 — used by RF model) ───────────────────
-  optPositive('vitaminD3'), // ng/mL
-  optPositive('shbg'),      // nmol/L
-  optPositive('fastingInsulin'),   // µIU/mL
+  optPositive('vitaminD3'),         // ng/mL
+  optPositive('shbg'),              // nmol/L
+  optPositive('fastingInsulin'),    // µIU/mL
   optPositive('insulinResistance'), // HOMA-IR
 
   // ── Menstrual ─────────────────────────────────────────────────────────────
@@ -59,7 +64,11 @@ export const predictionValidator = [
 
   body('menstrual.flowIntensity')
     .optional()
-    .isIn(['Light', 'Normal', 'Heavy']).withMessage('Invalid flow intensity'),
+    .isIn(['Light', 'Normal', 'Heavy', 'Very Heavy']).withMessage('Invalid flow intensity'),
+
+  body('menstrual.familyHistory')
+    .optional()
+    .isBoolean().withMessage('Family history must be true or false'),
 
   // ── Ultrasound (optional) ─────────────────────────────────────────────────
   optPositive('follicleNo', 'menstrual'),

@@ -32,26 +32,30 @@ const personalMetricSchema = new mongoose.Schema(
       type: Number,
       comment: 'Auto-calculated: weight(kg) / (height(m))^2',
     },
+    // Body measurements
+    waist: { type: Number, default: null, comment: 'inch' },
+    hip: { type: Number, default: null, comment: 'inch' },
+    waistHipRatio: { type: Number, default: null, comment: 'waist / hip' },
+    // Blood group stored here; displayed in Blood Test step
     bloodGroup: {
       type: String,
       enum: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'],
       default: null,
     },
-    // Optional blood report & body metrics
+    // Standard blood markers (Page 1)
     fsh: { type: Number, default: null },
     lh: { type: Number, default: null },
     tsh: { type: Number, default: null },
     amh: { type: Number, default: null },
-    prl: { type: Number, default: null },
     hb: { type: Number, default: null },
-    rbs: { type: Number, default: null },
+    rbs: { type: Number, default: null },    // Random Blood Sugar (replaces prl in UI)
+    prl: { type: Number, default: null },    // Prolactin — kept for legacy records
+    // Extended blood markers (Page 2 — used by RF model)
     vitD3: { type: Number, default: null },
     shbg: { type: Number, default: null },           // nmol/L
     fastingInsulin: { type: Number, default: null }, // µIU/mL
     insulinResistance: { type: Number, default: null }, // HOMA-IR
     prg: { type: Number, default: null },
-    hip: { type: Number, default: null },
-    waist: { type: Number, default: null },
   },
   { timestamps: true }
 );

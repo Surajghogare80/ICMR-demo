@@ -31,18 +31,6 @@ model_list <- readRDS(model_path)
 model <- model_list[[1]]
 
 # 5. Extract features from inputs to match the 35 columns of the Kaggle dataset.
-# Impute median values from the dataset for missing clinical/ultrasound/lab parameters.
-cycle_regularity_val <- 2 # Default: Regular
-if (input_data$menstrual$cycleRegularity == "Irregular") {
-  cycle_regularity_val <- 4
-} else if (input_data$menstrual$cycleRegularity == "Absent") {
-  cycle_regularity_val <- 5
-}
-
-reg_exercise_val <- 1 # Default: Yes (has physical activity)
-if (input_data$lifestyle$exerciseFreq == "Never") {
-  reg_exercise_val <- 0
-}
 
 # Helper function to safely extract a numeric value from the nested input list
 safe_num <- function(val, default_val) {
@@ -52,15 +40,46 @@ safe_num <- function(val, default_val) {
   return(default_val)
 }
 
+# Cycle regularity encoding
+cycle_regularity_val <- 2 # Default: Regular
+if (!is.null(input_data$menstrual$cycleRegularity)) {
+  if (input_data$menstrual$cycleRegularity == "Irregular") {
+    cycle_regularity_val <- 4
+  } else if (input_data$menstrual$cycleRegularity == "Absent") {
+    cycle_regularity_val <- 5
+  }
+}
+
+# Exercise encoding
+reg_exercise_val <- 1 # Default: Yes (has physical activity)
+if (!is.null(input_data$lifestyle$exerciseFreq) && input_data$lifestyle$exerciseFreq == "Never") {
+  reg_exercise_val <- 0
+}
+
+# Family history encoding (new)
+family_history_val <- 0
+if (!is.null(input_data$menstrual$familyHistory) && isTRUE(input_data$menstrual$familyHistory)) {
+  family_history_val <- 1
+}
+
+# FSH / LH values and ratio
 fsh_val <- safe_num(input_data$personal$fsh, 4.86)
 lh_val  <- safe_num(input_data$personal$lh, 2.33)
 fsh_lh_ratio <- if (lh_val > 0) fsh_val / lh_val else 2.13
 
 # Extended blood markers — use live user values, fall back to population medians
-vitd3_val          <- safe_num(input_data$personal$vitaminD3, 26.10)
-shbg_val           <- safe_num(input_data$personal$shbg, 52.0)       # nmol/L median
+vitd3_val           <- safe_num(input_data$personal$vitaminD3, 26.10)
+shbg_val            <- safe_num(input_data$personal$shbg, 52.0)       # nmol/L median
 fasting_insulin_val <- safe_num(input_data$personal$fastingInsulin, 10.5) # µIU/mL median
-homa_ir_val        <- safe_num(input_data$personal$insulinResistance, 2.2) # HOMA-IR median
+homa_ir_val         <- safe_num(input_data$personal$insulinResistance, 2.2) # HOMA-IR median
+
+# Body measurements — use live user values (TRAINED FEATURES)
+waist_val    <- safe_num(input_data$personal$waist, 34.0)       # inch median
+hip_val      <- safe_num(input_data$personal$hip, 38.0)         # inch median
+whr_val      <- safe_num(input_data$personal$waistHipRatio, 0.89)
+
+# Random Blood Sugar — live value (TRAINED FEATURE)
+rbs_val <- safe_num(input_data$personal$rbs, 100.0)             # mg/dL median
 
 features <- data.frame(
   `Age..yrs.` = as.numeric(input_data$personal$age),
@@ -78,13 +97,13 @@ features <- data.frame(
   `FSH.LH` = fsh_lh_ratio,
   `TSH..mIU.L.` = safe_num(input_data$personal$tsh, 2.285),
   `AMH.ng.mL.` = safe_num(input_data$personal$amh, 3.90),
-  `PRL.ng.mL.` = safe_num(input_data$personal$prl, 21.78),
+  `PRL.ng.mL.` = 21.78, # Prolactin removed from UI — use population median
   `Vit.D3..ng.mL.` = vitd3_val,
   `PRG.ng.mL.` = 0.32, # Imputed median
-  `Hip.inch.` = 38.0, # Imputed median
-  `Waist.inch.` = 34.0, # Imputed median
-  `Waist.Hip.Ratio` = 0.89, # Imputed median
-  `RBS.mg.dl.` = 100.0, # Imputed median
+  `Hip.inch.` = hip_val,               # LIVE VALUE
+  `Waist.inch.` = waist_val,           # LIVE VALUE
+  `Waist.Hip.Ratio` = whr_val,         # LIVE VALUE (auto-calculated)
+  `RBS.mg.dl.` = rbs_val,             # LIVE VALUE (Random Blood Sugar)
   `Weight.gain.Y.N.` = as.integer(ifelse(input_data$symptoms$weightGain, 1, 0)),
   `hair.growth.Y.N.` = as.integer(ifelse(input_data$symptoms$hairGrowth, 1, 0)),
   `Skin.darkening..Y.N.` = as.integer(ifelse(input_data$symptoms$skinDarkening, 1, 0)),
@@ -101,9 +120,13 @@ features <- data.frame(
   check.names = FALSE # Prevent R from converting dots to spaces/underscores
 )
 
-# Log the extended blood markers for traceability
-message(sprintf("[PCOSense] Vit D3=%.2f, SHBG=%.2f, Fasting Insulin=%.2f, HOMA-IR=%.2f",
-                vitd3_val, shbg_val, fasting_insulin_val, homa_ir_val))
+# Log all key inputs for traceability
+message(sprintf(
+  "[PCOSense] Waist=%.1f\" Hip=%.1f\" WHR=%.2f | RBS=%.1f | Vit D3=%.2f SHBG=%.2f FI=%.2f HOMA-IR=%.2f | FamilyHx=%d",
+  waist_val, hip_val, whr_val, rbs_val,
+  vitd3_val, shbg_val, fasting_insulin_val, homa_ir_val,
+  family_history_val
+))
 
 # 6. Run prediction
 prediction_class <- predict(model, features)

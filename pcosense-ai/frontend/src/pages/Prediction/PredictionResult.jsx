@@ -43,7 +43,7 @@ const PredictionResult = () => {
   const pm = prediction?.personalMetricId || {};
 
   // Check if any blood values were submitted (page 1)
-  const hasStandardBlood = pm.fsh || pm.lh || pm.tsh || pm.amh || pm.hb || pm.prl;
+  const hasStandardBlood = pm.fsh || pm.lh || pm.tsh || pm.amh || pm.hb || pm.rbs;
   // Check if any extended blood values were submitted (page 2)
   const hasExtendedBlood = pm.vitD3 || pm.shbg || pm.fastingInsulin || pm.insulinResistance;
   const hasAnyBlood = hasStandardBlood || hasExtendedBlood;
@@ -141,7 +141,7 @@ const PredictionResult = () => {
                         <BloodRow label="TSH"         value={pm.tsh}  unit="mIU/L"  />
                         <BloodRow label="AMH"         value={pm.amh}  unit="ng/mL"  />
                         <BloodRow label="Haemoglobin" value={pm.hb}   unit="g/dL"   />
-                        <BloodRow label="Prolactin"   value={pm.prl}  unit="ng/mL"  />
+                        <BloodRow label="Random Blood Sugar" value={pm.rbs} unit="mg/dL" />
                       </Grid>
                     )}
 
