@@ -342,7 +342,7 @@ const PredictionWizard = () => {
         return (
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Typography variant="h6" fontWeight={700} gutterBottom>Personal Information</Typography>
+              <Typography variant="h6" fontWeight={700} gutterBottom>How old are you ?</Typography>
             </Grid>
 
             {/* Row 1 — Age & Weight WheelPickers (unchanged) */}
