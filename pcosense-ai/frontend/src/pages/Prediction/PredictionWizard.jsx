@@ -17,6 +17,7 @@ import {
 } from '../../constants/index.js';
 import toast from 'react-hot-toast';
 import WheelPicker from '../../components/ui/WheelPicker.jsx';
+import PersonalInfoSection from './components/PersonalInfoSection.jsx';
 
 // ─── Shared pink outlined button style ────────────────────────────────────────
 const PINK_BTN_SX = {
@@ -87,6 +88,9 @@ const PredictionWizard = () => {
   const [selectedMode, setSelectedMode]   = useState(null);
   const [activeStep, setActiveStep]       = useState(0);
   const [isSubmitting, setIsSubmitting]   = useState(false);
+  // Personal Info sub-card pagination
+  const [personalSubStep, setPersonalSubStep] = useState(1);
+  const [personalSlideDir, setPersonalSlideDir] = useState(1);
   // Blood test card pagination
   const [bloodPage, setBloodPage]         = useState(1);
   const [bloodSlideDir, setBloodSlideDir] = useState(1); // 1 = slide left, -1 = slide right
@@ -228,9 +232,109 @@ const PredictionWizard = () => {
 
   // ─── Navigation ──────────────────────────────────────────────────────────────
   const handleNext = () => {
+    if (currentStepId === 'personal') {
+      if (personalSubStep === 1) {
+        const age = Number(formData.personal.age);
+        if (!formData.personal.age || isNaN(age) || age < 10 || age > 60) {
+          toast.error('Please select or enter an age between 10 and 60 years.');
+          return;
+        }
+        setPersonalSlideDir(1);
+        setPersonalSubStep(2);
+        return;
+      }
+      if (personalSubStep === 2) {
+        const weight = Number(formData.personal.weight);
+        const height = Number(formData.personal.height);
+        if (!formData.personal.weight || isNaN(weight) || weight <= 0) {
+          toast.error('Please enter a valid weight.');
+          return;
+        }
+        if (!formData.personal.height || isNaN(height) || height <= 0) {
+          toast.error('Please enter a valid height.');
+          return;
+        }
+        setPersonalSlideDir(1);
+        setPersonalSubStep(3);
+        return;
+      }
+      if (personalSubStep === 3) {
+        const waist = Number(formData.personal.waist);
+        const hip = Number(formData.personal.hip);
+        if (!formData.personal.waist || isNaN(waist) || waist <= 0) {
+          toast.error('Please enter a valid waist measurement.');
+          return;
+        }
+        if (!formData.personal.hip || isNaN(hip) || hip <= 0) {
+          toast.error('Please enter a valid hip measurement.');
+          return;
+        }
+
+        // Normalize all values right before advancing to keep backend & ML model 100% compatible
+        const weightUnit = formData.personal.weightUnit || 'kg';
+        const heightUnit = formData.personal.heightUnit || 'cm';
+        const waistUnit  = formData.personal.waistUnit || 'cm';
+        const hipUnit    = formData.personal.hipUnit || 'cm';
+
+        const normalizedWeight = weightUnit === 'lbs' ? Number((Number(formData.personal.weight) / 2.20462).toFixed(1)) : Number(formData.personal.weight);
+        const normalizedHeight = heightUnit === 'inch' ? Number((Number(formData.personal.height) * 2.54).toFixed(1)) : Number(formData.personal.height);
+        const normalizedWaist  = waistUnit === 'inch' ? Number((Number(formData.personal.waist) * 2.54).toFixed(1)) : Number(formData.personal.waist);
+        const normalizedHip    = hipUnit === 'inch' ? Number((Number(formData.personal.hip) * 2.54).toFixed(1)) : Number(formData.personal.hip);
+
+        const hM = normalizedHeight / 100;
+        const finalBmi = Number((normalizedWeight / (hM * hM)).toFixed(1));
+        const finalWhr = Number((normalizedWaist / normalizedHip).toFixed(2));
+
+        setFormData((prev) => ({
+          ...prev,
+          personal: {
+            ...prev.personal,
+            age: Number(formData.personal.age),
+            weight: normalizedWeight,
+            height: normalizedHeight,
+            waist: normalizedWaist,
+            hip: normalizedHip,
+            bmi: finalBmi,
+            waistHipRatio: finalWhr,
+          },
+        }));
+
+        if (validateStep(activeStep)) {
+          if (currentStepId === 'blood_report') setBloodPage(1);
+          setActiveStep((s) => s + 1);
+        }
+        return;
+      }
+    }
+
     if (validateStep(activeStep)) {
       if (currentStepId === 'blood_report') setBloodPage(1);
       setActiveStep((s) => s + 1);
+    }
+  };
+
+  const handleBack = () => {
+    if (currentStepId === 'personal') {
+      if (personalSubStep > 1) {
+        setPersonalSlideDir(-1);
+        setPersonalSubStep((s) => s - 1);
+        return;
+      }
+      if (personalSubStep === 1) {
+        if (activeStep > 0) {
+          setActiveStep((s) => s - 1);
+        }
+        return;
+      }
+    }
+
+    if (activeStep > 0) {
+      const prevStep = steps[activeStep - 1];
+      if (prevStep && prevStep.id === 'personal') {
+        setPersonalSlideDir(-1);
+        setPersonalSubStep(3);
+      }
+      setActiveStep((s) => s - 1);
     }
   };
 
@@ -335,155 +439,13 @@ const PredictionWizard = () => {
 
       // ── Personal Information ─────────────────────────────────────────────────
       case 'personal': {
-        const bmiColor = getBMIColor(formData.personal.bmi);
-        const whrColor = getWHRColor(formData.personal.waistHipRatio);
-        const showBar  = formData.personal.bmi || formData.personal.waistHipRatio;
-
         return (
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Typography variant="h6" fontWeight={700} gutterBottom>How old are you ?</Typography>
-            </Grid>
-
-            {/* Row 1 — Age & Weight WheelPickers (unchanged) */}
-            <Grid item xs={12} sm={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Typography variant="body2" fontWeight={600} color="text.secondary">Age Selection</Typography>
-              <WheelPicker
-                value={formData.personal.age}
-                onChange={(val) => updateField('personal', 'age', val)}
-                min={10} max={70} unit="years"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Typography variant="body2" fontWeight={600} color="text.secondary">Weight Selection</Typography>
-              <WheelPicker
-                value={formData.personal.weight}
-                onChange={(val) => updateField('personal', 'weight', val)}
-                min={20} max={200} unit="kg"
-              />
-            </Grid>
-
-            {/* Row 2 — Height | Waist | Hip — 3 equal columns */}
-            <Grid item xs={12} sm={6} md={4}>
-              <TextField
-                fullWidth label="Height (cm)" type="number" required
-                value={formData.personal.height}
-                onChange={(e) => updateField('personal', 'height', e.target.value)}
-                inputProps={{ min: 100, max: 250, step: 'any' }}
-                placeholder="e.g. 165" helperText="100 – 250 cm"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <TextField
-                fullWidth label="Waist Size (inch)" type="number"
-                value={formData.personal.waist}
-                onChange={(e) => updateField('personal', 'waist', e.target.value)}
-                inputProps={{ min: 0, step: 'any' }}
-                placeholder="e.g. 30" helperText="Measured at navel level"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <TextField
-                fullWidth label="Hip Size (inch)" type="number"
-                value={formData.personal.hip}
-                onChange={(e) => updateField('personal', 'hip', e.target.value)}
-                inputProps={{ min: 0, step: 'any' }}
-                placeholder="e.g. 37" helperText="Widest part of hips"
-              />
-            </Grid>
-
-            {/* BMI + WHR Info Bar — color-only, no text labels */}
-            {showBar && (
-              <Grid item xs={12}>
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      borderRadius: 3,
-                      overflow: 'hidden',
-                      border: '1px solid',
-                      borderColor: 'divider',
-                      bgcolor: (t) =>
-                        t.palette.mode === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)',
-                    }}
-                  >
-                    {/* BMI panel */}
-                    {formData.personal.bmi && (
-                      <Box
-                        sx={{
-                          flex: 1, px: 3, py: 2.5,
-                          ...(formData.personal.waistHipRatio
-                            ? { borderRight: '1px solid', borderColor: 'divider' }
-                            : {}),
-                        }}
-                      >
-                        <Typography
-                          variant="caption"
-                          color="text.secondary"
-                          fontWeight={600}
-                          sx={{ textTransform: 'uppercase', letterSpacing: 0.6, display: 'block' }}
-                        >
-                          Calculated BMI
-                        </Typography>
-                        <AnimatePresence mode="wait">
-                          <motion.div
-                            key={formData.personal.bmi}
-                            initial={{ opacity: 0, scale: 0.82 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.82 }}
-                            transition={{ duration: 0.22 }}
-                          >
-                            <Typography
-                              variant="h3"
-                              fontWeight={900}
-                              sx={{ color: bmiColor || 'text.primary', lineHeight: 1.2, mt: 0.5 }}
-                            >
-                              {formData.personal.bmi}
-                            </Typography>
-                          </motion.div>
-                        </AnimatePresence>
-                      </Box>
-                    )}
-
-                    {/* WHR panel */}
-                    {formData.personal.waistHipRatio && (
-                      <Box sx={{ flex: 1, px: 3, py: 2.5 }}>
-                        <Typography
-                          variant="caption"
-                          color="text.secondary"
-                          fontWeight={600}
-                          sx={{ textTransform: 'uppercase', letterSpacing: 0.6, display: 'block' }}
-                        >
-                          Waist : Hip Ratio
-                        </Typography>
-                        <AnimatePresence mode="wait">
-                          <motion.div
-                            key={formData.personal.waistHipRatio}
-                            initial={{ opacity: 0, scale: 0.82 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.82 }}
-                            transition={{ duration: 0.22 }}
-                          >
-                            <Typography
-                              variant="h3"
-                              fontWeight={900}
-                              sx={{ color: whrColor || 'text.primary', lineHeight: 1.2, mt: 0.5 }}
-                            >
-                              {formData.personal.waistHipRatio}
-                            </Typography>
-                          </motion.div>
-                        </AnimatePresence>
-                      </Box>
-                    )}
-                  </Box>
-                </motion.div>
-              </Grid>
-            )}
-          </Grid>
+          <PersonalInfoSection
+            formData={formData}
+            setFormData={setFormData}
+            subStep={personalSubStep}
+            slideDir={personalSlideDir}
+          />
         );
       }
 
@@ -1045,25 +1007,25 @@ const PredictionWizard = () => {
     currentStepId === 'ultrasound_scan';
 
   return (
-    <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', py: 4 }}>
+    <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', py: { xs: 1.5, md: 2 } }}>
       <Container maxWidth="md">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
-          <Box sx={{ textAlign: 'center', mb: 5 }}>
-            <Typography variant="h4" fontWeight={800} gutterBottom>🧬 PCOS Screening Wizard</Typography>
-            <Typography color="text.secondary">Complete the sections for an accurate risk assessment</Typography>
+          <Box sx={{ textAlign: 'center', mb: { xs: 1.5, md: 2 } }}>
+            <Typography variant="h4" fontWeight={800} gutterBottom sx={{ fontSize: { xs: '1.75rem', md: '2rem' } }}>🧬 PCOS Screening Wizard</Typography>
+            <Typography color="text.secondary" variant="body2">Complete the sections for an accurate risk assessment</Typography>
           </Box>
 
           {/* Progress Bar */}
-          <Box sx={{ mb: 4 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+          <Box sx={{ mb: { xs: 1.5, md: 2 } }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
               <Typography variant="caption" color="text.secondary">Step {activeStep + 1} of {steps.length}</Typography>
               <Typography variant="caption" color="primary" fontWeight={700}>{Math.round(progress)}% Complete</Typography>
             </Box>
-            <LinearProgress variant="determinate" value={progress} sx={{ height: 8, borderRadius: 4 }} />
+            <LinearProgress variant="determinate" value={progress} sx={{ height: 6, borderRadius: 3 }} />
           </Box>
 
           {/* Step Labels */}
-          <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 4, display: { xs: 'none', md: 'flex' } }}>
+          <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: { xs: 1.5, md: 2 }, display: { xs: 'none', md: 'flex' } }}>
             {steps.map((s) => (
               <Step key={s.id}>
                 <StepLabel><Typography variant="caption" fontWeight={600}>{s.label}</Typography></StepLabel>
@@ -1072,8 +1034,8 @@ const PredictionWizard = () => {
           </Stepper>
 
           {/* Step Content */}
-          <Card sx={{ mb: 3 }}>
-            <CardContent sx={{ p: 4 }}>
+          <Card sx={{ mb: 2 }}>
+            <CardContent sx={{ p: { xs: 2, sm: 2.5, md: 3 } }}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeStep}
@@ -1092,8 +1054,8 @@ const PredictionWizard = () => {
           <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
             <Button
               variant="outlined" startIcon={<ArrowBack />}
-              onClick={() => setActiveStep((s) => s - 1)}
-              disabled={activeStep === 0}
+              onClick={handleBack}
+              disabled={activeStep === 0 && personalSubStep === 1}
             >
               Back
             </Button>
