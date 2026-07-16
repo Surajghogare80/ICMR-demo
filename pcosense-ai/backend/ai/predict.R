@@ -31,23 +31,55 @@ model_list <- readRDS(model_path)
 model <- model_list[[1]]
 
 # 5. Extract features from inputs to match the 35 columns of the Kaggle dataset.
-# Impute median values from the dataset for missing clinical/ultrasound/lab parameters.
-cycle_regularity_val <- 2 # Default: Regular
-if (input_data$menstrual$cycleRegularity == "Irregular") {
-  cycle_regularity_val <- 4
-} else if (input_data$menstrual$cycleRegularity == "Absent") {
-  cycle_regularity_val <- 5
+
+# Helper function to safely extract a numeric value from the nested input list
+safe_num <- function(val, default_val) {
+  if (!is.null(val) && length(val) > 0 && !is.na(suppressWarnings(as.numeric(val)))) {
+    return(as.numeric(val))
+  }
+  return(default_val)
 }
 
+# Cycle regularity encoding
+cycle_regularity_val <- 2 # Default: Regular
+if (!is.null(input_data$menstrual$cycleRegularity)) {
+  if (input_data$menstrual$cycleRegularity == "Irregular") {
+    cycle_regularity_val <- 4
+  } else if (input_data$menstrual$cycleRegularity == "Absent") {
+    cycle_regularity_val <- 5
+  }
+}
+
+# Exercise encoding
 reg_exercise_val <- 1 # Default: Yes (has physical activity)
-if (input_data$lifestyle$exerciseFreq == "Never") {
+if (!is.null(input_data$lifestyle$exerciseFreq) && input_data$lifestyle$exerciseFreq == "Never") {
   reg_exercise_val <- 0
 }
 
-# Construct dataframe matching the 35 features in the model exactly
-fsh_val <- if (!is.null(input_data$personal$fsh) && !is.na(as.numeric(input_data$personal$fsh))) as.numeric(input_data$personal$fsh) else 4.86
-lh_val <- if (!is.null(input_data$personal$lh) && !is.na(as.numeric(input_data$personal$lh))) as.numeric(input_data$personal$lh) else 2.33
+# Family history encoding (new)
+family_history_val <- 0
+if (!is.null(input_data$menstrual$familyHistory) && isTRUE(input_data$menstrual$familyHistory)) {
+  family_history_val <- 1
+}
+
+# FSH / LH values and ratio
+fsh_val <- safe_num(input_data$personal$fsh, 4.86)
+lh_val  <- safe_num(input_data$personal$lh, 2.33)
 fsh_lh_ratio <- if (lh_val > 0) fsh_val / lh_val else 2.13
+
+# Extended blood markers — use live user values, fall back to population medians
+vitd3_val           <- safe_num(input_data$personal$vitaminD3, 26.10)
+shbg_val            <- safe_num(input_data$personal$shbg, 52.0)       # nmol/L median
+fasting_insulin_val <- safe_num(input_data$personal$fastingInsulin, 10.5) # µIU/mL median
+homa_ir_val         <- safe_num(input_data$personal$insulinResistance, 2.2) # HOMA-IR median
+
+# Body measurements — use live user values (TRAINED FEATURES)
+waist_val    <- safe_num(input_data$personal$waist, 34.0)       # inch median
+hip_val      <- safe_num(input_data$personal$hip, 38.0)         # inch median
+whr_val      <- safe_num(input_data$personal$waistHipRatio, 0.89)
+
+# Random Blood Sugar — live value (TRAINED FEATURE)
+rbs_val <- safe_num(input_data$personal$rbs, 100.0)             # mg/dL median
 
 features <- data.frame(
   `Age..yrs.` = as.numeric(input_data$personal$age),
@@ -56,22 +88,22 @@ features <- data.frame(
   `BMI` = as.numeric(input_data$personal$bmi),
   `Pulse.rate.bpm.` = 72, # Imputed median
   `RR..breaths.min.` = 18, # Imputed median
-  `Hb.g.dl.` = if (!is.null(input_data$personal$hb) && !is.na(as.numeric(input_data$personal$hb))) as.numeric(input_data$personal$hb) else 11.0,
+  `Hb.g.dl.` = safe_num(input_data$personal$hb, 11.0),
   `Cycle.R.I.` = as.integer(cycle_regularity_val),
-  `Cycle.length.days.` = as.numeric(input_data$menstrual$periodDuration), # Kaggle dataset misnomer (stores period duration in this column)
+  `Cycle.length.days.` = as.numeric(input_data$menstrual$periodDuration), # Kaggle dataset misnomer
   `Pregnant.Y.N.` = 0, # Imputed median
   `FSH.mIU.mL.` = fsh_val,
   `LH.mIU.mL.` = lh_val,
   `FSH.LH` = fsh_lh_ratio,
-  `TSH..mIU.L.` = if (!is.null(input_data$personal$tsh) && !is.na(as.numeric(input_data$personal$tsh))) as.numeric(input_data$personal$tsh) else 2.285,
-  `AMH.ng.mL.` = if (!is.null(input_data$personal$amh) && !is.na(as.numeric(input_data$personal$amh))) as.numeric(input_data$personal$amh) else 3.90,
-  `PRL.ng.mL.` = if (!is.null(input_data$personal$prl) && !is.na(as.numeric(input_data$personal$prl))) as.numeric(input_data$personal$prl) else 21.78,
-  `Vit.D3..ng.mL.` = 26.10, # Imputed median
+  `TSH..mIU.L.` = safe_num(input_data$personal$tsh, 2.285),
+  `AMH.ng.mL.` = safe_num(input_data$personal$amh, 3.90),
+  `PRL.ng.mL.` = 21.78, # Prolactin removed from UI — use population median
+  `Vit.D3..ng.mL.` = vitd3_val,
   `PRG.ng.mL.` = 0.32, # Imputed median
-  `Hip.inch.` = 38.0, # Imputed median
-  `Waist.inch.` = 34.0, # Imputed median
-  `Waist.Hip.Ratio` = 0.89, # Imputed median
-  `RBS.mg.dl.` = 100.0, # Imputed median
+  `Hip.inch.` = hip_val,               # LIVE VALUE
+  `Waist.inch.` = waist_val,           # LIVE VALUE
+  `Waist.Hip.Ratio` = whr_val,         # LIVE VALUE (auto-calculated)
+  `RBS.mg.dl.` = rbs_val,             # LIVE VALUE (Random Blood Sugar)
   `Weight.gain.Y.N.` = as.integer(ifelse(input_data$symptoms$weightGain, 1, 0)),
   `hair.growth.Y.N.` = as.integer(ifelse(input_data$symptoms$hairGrowth, 1, 0)),
   `Skin.darkening..Y.N.` = as.integer(ifelse(input_data$symptoms$skinDarkening, 1, 0)),
@@ -80,13 +112,21 @@ features <- data.frame(
   `Reg.Exercise.Y.N.` = as.integer(reg_exercise_val),
   `BP._Systolic..mmHg.` = 115.0, # Imputed median
   `BP._Diastolic..mmHg.` = 78.0, # Imputed median
-  `Follicle.No...L.` = if (!is.null(input_data$menstrual$follicleNo) && !is.na(as.numeric(input_data$menstrual$follicleNo))) as.numeric(input_data$menstrual$follicleNo) else 5.0,
-  `Follicle.No...R.` = if (!is.null(input_data$menstrual$follicleNo) && !is.na(as.numeric(input_data$menstrual$follicleNo))) as.numeric(input_data$menstrual$follicleNo) else 6.0,
-  `Avg..F.size..L...mm.` = if (!is.null(input_data$menstrual$avgFsize) && !is.na(as.numeric(input_data$menstrual$avgFsize))) as.numeric(input_data$menstrual$avgFsize) else 15.0,
-  `Avg..F.size..R...mm.` = if (!is.null(input_data$menstrual$avgFsize) && !is.na(as.numeric(input_data$menstrual$avgFsize))) as.numeric(input_data$menstrual$avgFsize) else 16.0,
-  `Endometrium..mm.` = if (!is.null(input_data$menstrual$endometrium) && !is.na(as.numeric(input_data$menstrual$endometrium))) as.numeric(input_data$menstrual$endometrium) else 8.43,
+  `Follicle.No...L.` = safe_num(input_data$menstrual$follicleNo, 5.0),
+  `Follicle.No...R.` = safe_num(input_data$menstrual$follicleNo, 6.0),
+  `Avg..F.size..L...mm.` = safe_num(input_data$menstrual$avgFsize, 15.0),
+  `Avg..F.size..R...mm.` = safe_num(input_data$menstrual$avgFsize, 16.0),
+  `Endometrium..mm.` = safe_num(input_data$menstrual$endometrium, 8.43),
   check.names = FALSE # Prevent R from converting dots to spaces/underscores
 )
+
+# Log all key inputs for traceability
+message(sprintf(
+  "[PCOSense] Waist=%.1f\" Hip=%.1f\" WHR=%.2f | RBS=%.1f | Vit D3=%.2f SHBG=%.2f FI=%.2f HOMA-IR=%.2f | FamilyHx=%d",
+  waist_val, hip_val, whr_val, rbs_val,
+  vitd3_val, shbg_val, fasting_insulin_val, homa_ir_val,
+  family_history_val
+))
 
 # 6. Run prediction
 prediction_class <- predict(model, features)

@@ -23,6 +23,7 @@ const generateDummyPrediction = (inputs) => {
 
   if (inputs.menstrual?.cycleRegularity === 'Irregular') riskScore += 30;
   if (inputs.menstrual?.cycleRegularity === 'Absent') riskScore += 50;
+  if (inputs.menstrual?.familyHistory) riskScore += 15; // Family history bonus
   if (inputs.symptoms?.weightGain) riskScore += 15;
   if (inputs.symptoms?.hairGrowth) riskScore += 15;
   if (inputs.symptoms?.skinDarkening) riskScore += 10;
@@ -30,6 +31,8 @@ const generateDummyPrediction = (inputs) => {
   if (inputs.lifestyle?.fastFoodFreq === 'Daily') riskScore += 10;
   if (inputs.lifestyle?.exerciseFreq === 'Never') riskScore += 10;
   if (inputs.personal?.bmi > 30) riskScore += 20;
+  // WHR risk factor
+  if (inputs.personal?.waistHipRatio >= 0.85) riskScore += 15;
 
   riskScore = Math.min(riskScore, 100);
   const probability = Math.max(5, Math.min(95, riskScore));
@@ -87,22 +90,57 @@ const runRModel = (inputs) => {
 
 export const predictionService = {
   async createPrediction({ userId, personal, menstrual, symptoms, lifestyle }, ip) {
+    // Destructure extended blood markers + new fields so they map correctly to DB fields
+    const {
+      vitaminD3, shbg, fastingInsulin, insulinResistance,
+      waist, hip, waistHipRatio, rbs,
+      ...corePersonal
+    } = personal;
+
+    const extendedPersonal = {
+      ...corePersonal,
+      // Body measurements
+      ...(waist !== undefined && waist !== '' ? { waist: Number(waist) } : {}),
+      ...(hip !== undefined && hip !== '' ? { hip: Number(hip) } : {}),
+      ...(waistHipRatio !== undefined && waistHipRatio !== '' ? { waistHipRatio: Number(waistHipRatio) } : {}),
+      // Standard blood markers
+      ...(rbs !== undefined && rbs !== '' ? { rbs: Number(rbs) } : {}),
+      // Extended blood markers — DB field names match schema
+      ...(vitaminD3 !== undefined && vitaminD3 !== '' ? { vitD3: Number(vitaminD3) } : {}),
+      ...(shbg !== undefined && shbg !== '' ? { shbg: Number(shbg) } : {}),
+      ...(fastingInsulin !== undefined && fastingInsulin !== '' ? { fastingInsulin: Number(fastingInsulin) } : {}),
+      ...(insulinResistance !== undefined && insulinResistance !== '' ? { insulinResistance: Number(insulinResistance) } : {}),
+    };
+
     // Save each section to its own collection
     const [personalMetric, menstrualHistory, clinicalSymptom, lifestyleHabit] = await Promise.all([
-      predictionRepository.createPersonalMetric({ userId, ...personal }),
+      predictionRepository.createPersonalMetric({ userId, ...extendedPersonal }),
       predictionRepository.createMenstrualHistory({ userId, ...menstrual }),
       predictionRepository.createClinicalSymptom({ userId, ...symptoms }),
       predictionRepository.createLifestyleHabit({ userId, ...lifestyle }),
     ]);
 
+    // Build the full inputs object for the R model — all live values included
+    const rInputPersonal = {
+      ...personal,
+      waist: waist !== undefined && waist !== '' ? Number(waist) : undefined,
+      hip: hip !== undefined && hip !== '' ? Number(hip) : undefined,
+      waistHipRatio: waistHipRatio !== undefined && waistHipRatio !== '' ? Number(waistHipRatio) : undefined,
+      rbs: rbs !== undefined && rbs !== '' ? Number(rbs) : undefined,
+      vitaminD3: vitaminD3 !== undefined && vitaminD3 !== '' ? Number(vitaminD3) : undefined,
+      shbg: shbg !== undefined && shbg !== '' ? Number(shbg) : undefined,
+      fastingInsulin: fastingInsulin !== undefined && fastingInsulin !== '' ? Number(fastingInsulin) : undefined,
+      insulinResistance: insulinResistance !== undefined && insulinResistance !== '' ? Number(insulinResistance) : undefined,
+    };
+
     // Generate prediction using real R model, falling back to dummy if Rscript is not installed
     let aiResult;
     try {
-      aiResult = await runRModel({ personal, menstrual, symptoms, lifestyle });
+      aiResult = await runRModel({ personal: rInputPersonal, menstrual, symptoms, lifestyle });
       logger.info(`Prediction generated using Random Forest RDS model for user ${userId}: ${aiResult.result}`);
     } catch (err) {
       logger.warn(`Failed to execute ML R model, falling back to rule-based engine. Reason: ${err.message}`);
-      aiResult = generateDummyPrediction({ personal, menstrual, symptoms, lifestyle });
+      aiResult = generateDummyPrediction({ personal: rInputPersonal, menstrual, symptoms, lifestyle });
     }
 
     // Save the prediction referencing all 4 collections
@@ -125,7 +163,12 @@ export const predictionService = {
     logger.info(`Prediction created for user ${userId}: ${aiResult.result}`);
 
     return {
-      prediction,
+      prediction: {
+        ...prediction.toObject ? prediction.toObject() : prediction,
+        // Embed the full personalMetric so the result page can render the blood report card
+        personalMetricId: personalMetric,
+        menstrualHistoryId: menstrualHistory,
+      },
       aiResult, // Return AI result separately for immediate display
     };
   },

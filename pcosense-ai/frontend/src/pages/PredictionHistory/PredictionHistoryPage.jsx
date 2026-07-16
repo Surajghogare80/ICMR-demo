@@ -5,9 +5,9 @@ import {
   Box, Container, Typography, Card, Table, TableBody, TableCell,
   TableContainer, TableHead, TableRow, IconButton, Chip, Button,
   TablePagination, Dialog, DialogTitle, DialogContent, DialogActions,
-  Alert, Tooltip, alpha,
+  Alert, Tooltip, alpha, Divider, Grid,
 } from '@mui/material';
-import { Delete, Visibility, Science } from '@mui/icons-material';
+import { Delete, Visibility, Science, Close } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { predictionService } from '../../services/predictionService.js';
@@ -15,12 +15,177 @@ import { ROUTES } from '../../constants/index.js';
 import Loading from '../../layout/Loading/Loading.jsx';
 import toast from 'react-hot-toast';
 
+// ─── Helper: a single labelled value row ─────────────────────────────────────
+const InfoRow = ({ label, value, unit = '' }) => (
+  <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 0.8, borderBottom: '1px solid', borderColor: 'divider' }}>
+    <Typography variant="body2" color="text.secondary">{label}</Typography>
+    <Typography variant="body2" fontWeight={600}>
+      {value !== null && value !== undefined && value !== '' ? `${value}${unit ? ' ' + unit : ''}` : '—'}
+    </Typography>
+  </Box>
+);
+
+// ─── Prediction Details Dialog ────────────────────────────────────────────────
+const PredictionDetailDialog = ({ prediction, onClose }) => {
+  if (!prediction) return null;
+
+  const pm = prediction.personalMetricId || {};
+  const mh = prediction.menstrualHistoryId || {};
+  const cs = prediction.clinicalSymptomId || {};
+  const lh = prediction.lifestyleHabitId || {};
+  const isHighRisk = prediction.result === 'High Risk';
+  const resultColor = isHighRisk ? 'error.main' : 'success.main';
+
+  return (
+    <Dialog
+      open={!!prediction}
+      onClose={onClose}
+      maxWidth="sm"
+      fullWidth
+      PaperProps={{ sx: { borderRadius: 3, maxHeight: '90vh' } }}
+    >
+      <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pb: 1 }}>
+        <Box>
+          <Typography variant="h6" fontWeight={700}>Prediction Details</Typography>
+          <Typography variant="caption" color="text.secondary">
+            {prediction.createdAt ? new Date(prediction.createdAt).toLocaleString('en-IN') : ''}
+          </Typography>
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Chip
+            label={prediction.result}
+            size="small"
+            sx={{
+              bgcolor: (theme) => alpha(isHighRisk ? theme.palette.error.main : theme.palette.success.main, 0.12),
+              color: resultColor,
+              fontWeight: 700,
+            }}
+          />
+          <IconButton onClick={onClose} size="small"><Close fontSize="small" /></IconButton>
+        </Box>
+      </DialogTitle>
+
+      <DialogContent dividers sx={{ px: 3, py: 2 }}>
+        <Grid container spacing={2.5}>
+          {/* Risk Summary */}
+          <Grid item xs={12}>
+            <Box sx={{ display: 'flex', gap: 3, mb: 0.5 }}>
+              <Box>
+                <Typography variant="caption" color="text.secondary">Risk Probability</Typography>
+                <Typography variant="h5" fontWeight={800} color={resultColor}>{prediction.probability}%</Typography>
+              </Box>
+              <Box>
+                <Typography variant="caption" color="text.secondary">Model Confidence</Typography>
+                <Typography variant="h5" fontWeight={800}>{prediction.confidence}%</Typography>
+              </Box>
+            </Box>
+            <Divider />
+          </Grid>
+
+          {/* Personal Info */}
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>
+              👤 Personal Info
+            </Typography>
+            <InfoRow label="Age" value={pm.age} unit="yrs" />
+            <InfoRow label="Weight" value={pm.weight} unit="kg" />
+            <InfoRow label="Height" value={pm.height} unit="cm" />
+            <InfoRow label="BMI" value={pm.bmi} />
+            <InfoRow label="Waist Size" value={pm.waist} unit="inch" />
+            <InfoRow label="Hip Size" value={pm.hip} unit="inch" />
+            <InfoRow label="Waist : Hip Ratio" value={pm.waistHipRatio} />
+            <InfoRow label="Blood Group" value={pm.bloodGroup} />
+          </Grid>
+
+          {/* Menstrual */}
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>
+              🩸 Menstrual
+            </Typography>
+            <InfoRow label="Cycle Length" value={mh.cycleLength} unit="days" />
+            <InfoRow label="Period Duration" value={mh.periodDuration} unit="days" />
+            <InfoRow label="Regularity" value={mh.cycleRegularity} />
+            <InfoRow label="Flow Intensity" value={mh.flowIntensity} />
+            <InfoRow label="Family History of PCOS" value={mh.familyHistory !== undefined && mh.familyHistory !== null ? (mh.familyHistory ? 'Yes' : 'No') : '—'} />
+          </Grid>
+
+          {/* Blood Report — Page 1 */}
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>
+              🔬 Blood Report (Standard)
+            </Typography>
+            <InfoRow label="FSH" value={pm.fsh} unit="mIU/mL" />
+            <InfoRow label="LH" value={pm.lh} unit="mIU/mL" />
+            <InfoRow label="TSH" value={pm.tsh} unit="mIU/L" />
+            <InfoRow label="AMH" value={pm.amh} unit="ng/mL" />
+            <InfoRow label="Haemoglobin" value={pm.hb} unit="g/dL" />
+            <InfoRow label="Random Blood Sugar" value={pm.rbs} unit="mg/dL" />
+          </Grid>
+
+          {/* Blood Report — Page 2 (Extended) */}
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'secondary.main' }}>
+              💉 Blood Report (Extended)
+            </Typography>
+            <InfoRow label="Vitamin D3" value={pm.vitD3} unit="ng/mL" />
+            <InfoRow label="SHBG" value={pm.shbg} unit="nmol/L" />
+            <InfoRow label="Fasting Insulin" value={pm.fastingInsulin} unit="µIU/mL" />
+            <InfoRow label="Insulin Resistance (HOMA-IR)" value={pm.insulinResistance} />
+          </Grid>
+
+          {/* Symptoms */}
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>
+              🩺 Symptoms
+            </Typography>
+            {[
+              ['Weight Gain', cs.weightGain],
+              ['Excessive Hair Growth', cs.hairGrowth],
+              ['Skin Darkening', cs.skinDarkening],
+              ['Acne / Pimples', cs.pimples],
+              ['Hair Loss', cs.hairLoss],
+            ].map(([label, val]) => (
+              <Box key={label} sx={{ display: 'flex', justifyContent: 'space-between', py: 0.8, borderBottom: '1px solid', borderColor: 'divider' }}>
+                <Typography variant="body2" color="text.secondary">{label}</Typography>
+                <Chip label={val ? 'Yes' : 'No'} size="small"
+                  sx={{
+                    height: 20, fontSize: '0.7rem', fontWeight: 600,
+                    bgcolor: (theme) => alpha(val ? theme.palette.error.main : theme.palette.success.main, 0.1),
+                    color: val ? 'error.main' : 'success.main',
+                  }}
+                />
+              </Box>
+            ))}
+          </Grid>
+
+          {/* Lifestyle */}
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>
+              🏃 Lifestyle
+            </Typography>
+            <InfoRow label="Fast Food" value={lh.fastFoodFreq} />
+            <InfoRow label="Exercise" value={lh.exerciseFreq} />
+            <InfoRow label="Stress Level" value={lh.stressLevel} />
+            <InfoRow label="Sleep Hours" value={lh.sleepHours} unit="hrs" />
+          </Grid>
+        </Grid>
+      </DialogContent>
+
+      <DialogActions sx={{ px: 3, pb: 2 }}>
+        <Button onClick={onClose} variant="outlined" size="small">Close</Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+// ─── Main Page ────────────────────────────────────────────────────────────────
 const PredictionHistoryPage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [deleteId, setDeleteId] = useState(null);
+  const [viewPrediction, setViewPrediction] = useState(null);
 
   const { data, isLoading } = useQuery({
     queryKey: ['predictions', page, rowsPerPage],
@@ -99,7 +264,12 @@ const PredictionHistoryPage = () => {
                     </TableHead>
                     <TableBody>
                       {predictions.map((p, i) => (
-                        <TableRow key={p._id} hover sx={{ '&:last-child td': { border: 0 } }}>
+                        <TableRow
+                          key={p._id}
+                          hover
+                          sx={{ '&:last-child td': { border: 0 }, cursor: 'pointer' }}
+                          onClick={() => setViewPrediction(p)}
+                        >
                           <TableCell>{page * rowsPerPage + i + 1}</TableCell>
                           <TableCell>
                             <Typography variant="body2" fontWeight={500}>
@@ -118,12 +288,21 @@ const PredictionHistoryPage = () => {
                           <TableCell>
                             <Typography variant="body2">{p.confidence}%</Typography>
                           </TableCell>
-                          <TableCell align="center">
+                          <TableCell align="center" onClick={(e) => e.stopPropagation()}>
+                            <Tooltip title="View details">
+                              <IconButton
+                                size="small"
+                                color="primary"
+                                onClick={(e) => { e.stopPropagation(); setViewPrediction(p); }}
+                              >
+                                <Visibility fontSize="small" />
+                              </IconButton>
+                            </Tooltip>
                             <Tooltip title="Delete prediction">
                               <IconButton
                                 size="small"
                                 color="error"
-                                onClick={() => setDeleteId(p._id)}
+                                onClick={(e) => { e.stopPropagation(); setDeleteId(p._id); }}
                               >
                                 <Delete fontSize="small" />
                               </IconButton>
@@ -153,6 +332,9 @@ const PredictionHistoryPage = () => {
           </Alert>
         </motion.div>
       </Container>
+
+      {/* Prediction Detail Dialog */}
+      <PredictionDetailDialog prediction={viewPrediction} onClose={() => setViewPrediction(null)} />
 
       {/* Delete confirmation dialog */}
       <Dialog open={!!deleteId} onClose={() => setDeleteId(null)} maxWidth="xs" fullWidth PaperProps={{ sx: { borderRadius: 3 } }}>
