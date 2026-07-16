@@ -47,7 +47,7 @@ const getWHRInfo = (whr) => {
   return { status: 'High Risk', color: '#F44336', desc: '≥ 0.85' };            // Red
 };
 
-const PersonalInfoSection = ({ formData, setFormData }) => {
+const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
   const { t } = useTranslation();
   const personal = formData?.personal || {};
   const menstrual = formData?.menstrual || {};
@@ -184,43 +184,6 @@ const PersonalInfoSection = ({ formData, setFormData }) => {
   const displayedWaist = waistUnit === 'inch' ? Number((waistCm / 2.54).toFixed(2)) : Number(waistCm.toFixed(2));
   const displayedHip = hipUnit === 'inch' ? Number((hipCm / 2.54).toFixed(2)) : Number(hipCm.toFixed(2));
 
-  // WheelPicker change handlers (convert UI unit choice to canonical kg/cm and update both weightKg and weight)
-  const handleWeightPickerChange = (val) => {
-    const numVal = Number(val);
-    if (isNaN(numVal)) return;
-    const kgVal = weightUnit === 'lbs'
-      ? Number((numVal / 2.20462).toFixed(2))
-      : Number(numVal.toFixed(2));
-    updateMultiplePersonal({ weightKg: kgVal, weight: kgVal });
-  };
-
-  const handleHeightPickerChange = (val) => {
-    const numVal = Number(val);
-    if (isNaN(numVal)) return;
-    const cmVal = heightUnit === 'inch'
-      ? Number((numVal * 2.54).toFixed(2))
-      : Number(numVal.toFixed(2));
-    updateMultiplePersonal({ heightCm: cmVal, height: cmVal });
-  };
-
-  const handleWaistPickerChange = (val) => {
-    const numVal = Number(val);
-    if (isNaN(numVal)) return;
-    const cmVal = waistUnit === 'inch'
-      ? Number((numVal * 2.54).toFixed(2))
-      : Number(numVal.toFixed(2));
-    updateMultiplePersonal({ waistCm: cmVal, waist: cmVal });
-  };
-
-  const handleHipPickerChange = (val) => {
-    const numVal = Number(val);
-    if (isNaN(numVal)) return;
-    const cmVal = hipUnit === 'inch'
-      ? Number((numVal * 2.54).toFixed(2))
-      : Number(numVal.toFixed(2));
-    updateMultiplePersonal({ hipCm: cmVal, hip: cmVal });
-  };
-
   // Plus/Minus step handlers
   const handleWeightStep = (isPlus) => {
     if (weightUnit === 'lbs') {
@@ -294,115 +257,143 @@ const PersonalInfoSection = ({ formData, setFormData }) => {
     alignItems: 'center',
     justifyContent: 'space-between',
     height: '100%',
+    minHeight: { xs: '115px', md: '125px' },
   };
 
   const bmiInfo = getBMIInfo(personal.bmi);
   const whrInfo = getWHRInfo(personal.waistHipRatio);
 
   return (
-    <Box sx={{ width: '100%', py: 2 }}>
-      {/* ==========================================================
-          1. AGE SECTION
-          Heading: "How old are you?" centered above Age controls.
-          No internal borders.
-         ========================================================== */}
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 6 }}>
-        <Typography
-          variant="h5"
-          fontWeight={800}
-          sx={{ color: 'text.primary', textAlign: 'center', mb: 1.5 }}
-        >
-          {t('how_old_are_you', 'How old are you?')}
-        </Typography>
+    <Box sx={{ width: '100%' }}>
+      {subStep === 1 ? (
+        /* ==========================================================
+           INTERNAL STEP 1 OF 2: Age & Family History
+           (Begins directly with section heading, no internal header, no inside buttons)
+           ========================================================== */
+        <Box sx={{ py: 1 }}>
+          {/* Age Section */}
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 4 }}>
+            <Typography
+              variant="h5"
+              fontWeight={800}
+              sx={{ color: 'text.primary', textAlign: 'center', mb: 2 }}
+            >
+              {t('how_old_are_you', 'How old are you?')}
+            </Typography>
 
-        <Typography
-          variant="subtitle2"
-          fontWeight={700}
-          color="text.secondary"
-          sx={{ textAlign: 'center', mb: 2, textTransform: 'uppercase', letterSpacing: 0.8 }}
-        >
-          {t('age', 'Age')}
-        </Typography>
+            {/* Wheel Picker (~20% smaller via scaled container, overflow visible so border is never cut) */}
+            <Box
+              sx={{
+                width: '100%',
+                maxWidth: '260px',
+                height: '202px',
+                overflow: 'visible',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                py: 1,
+              }}
+            >
+              <Box sx={{ width: '300px', transform: 'scale(0.8)', transformOrigin: 'center center' }}>
+                <WheelPicker
+                  value={age}
+                  onChange={(val) => updatePersonal('age', Number(val))}
+                  min={10}
+                  max={60}
+                  step={1}
+                  unit={t('years', 'Years')}
+                />
+              </Box>
+            </Box>
+          </Box>
 
-        {/* Selected age large above picker exactly like Weight and Height */}
-        <Stack direction="row" alignItems="center" justifyContent="center" spacing={2.5} sx={{ mb: 1.5 }}>
-          <IconButton
-            size="small"
-            onClick={() => updatePersonal('age', Math.max(10, age - 1))}
-            disabled={age <= 10}
+          {/* Family History Section */}
+          <Box
             sx={{
-              bgcolor: 'rgba(233, 30, 99, 0.1)',
-              color: '#E91E63',
-              width: 38,
-              height: 38,
-              '&:hover': { bgcolor: '#E91E63', color: '#fff' },
-              '&.Mui-disabled': { bgcolor: 'rgba(0,0,0,0.04)', color: 'text.disabled' },
+              p: { xs: 2.5, sm: 3 },
+              borderRadius: '20px',
+              bgcolor: 'rgba(233, 30, 99, 0.03)',
+              border: '1px solid rgba(233, 30, 99, 0.15)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textAlign: 'center',
+              maxWidth: '480px',
+              mx: 'auto',
+              mb: 1,
             }}
           >
-            <RemoveIcon fontSize="small" />
-          </IconButton>
+            <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
+              <FamilyRestroomIcon sx={{ fontSize: 24, color: '#E91E63' }} />
+              <Typography variant="h6" fontWeight={800} color="text.primary">
+                {t('family_history_of_pcos', 'Family History of PCOS')}
+              </Typography>
+            </Stack>
 
-          <Typography
-            variant="h3"
-            fontWeight={900}
-            sx={{ color: '#E91E63', minWidth: '140px', textAlign: 'center', letterSpacing: '-0.5px' }}
-          >
-            {age}{' '}
-            <Typography component="span" variant="h6" fontWeight={700} color="text.secondary">
-              {t('years', 'Years')}
+            <Typography variant="body2" color="text.secondary" fontWeight={600} sx={{ mb: 2.5 }}>
+              {t('mother_aunt_sister_grandmother_cousin', 'Mother / Aunt / Sister / Cousin / Grandmother')}
             </Typography>
+
+            {/* Yes / No Toggle */}
+            <ToggleButtonGroup
+              value={familyHistory ? 'yes' : 'no'}
+              exclusive
+              onChange={(_, val) => {
+                if (val !== null) {
+                  handleFamilyHistoryChange(val === 'yes');
+                }
+              }}
+              sx={{
+                gap: 2,
+                '& .MuiToggleButton-root': {
+                  px: 4.5,
+                  py: 1,
+                  borderRadius: '24px !important',
+                  fontWeight: 800,
+                  fontSize: '0.92rem',
+                  border: '2px solid rgba(233, 30, 99, 0.35) !important',
+                  color: '#E91E63',
+                  transition: 'all 0.22s cubic-bezier(0.4, 0, 0.2, 1)',
+                  minWidth: '125px',
+                  '&.Mui-selected': {
+                    bgcolor: '#E91E63',
+                    color: '#fff',
+                    borderColor: '#E91E63 !important',
+                    boxShadow: '0 4px 16px rgba(233, 30, 99, 0.35)',
+                    '&:hover': { bgcolor: '#C2185B' },
+                  },
+                  '&:hover': {
+                    bgcolor: 'rgba(233, 30, 99, 0.08)',
+                    transform: 'translateY(-1px)',
+                  },
+                },
+              }}
+            >
+              <ToggleButton value="yes">{t('yes', 'Yes')}</ToggleButton>
+              <ToggleButton value="no">{t('no', 'No')}</ToggleButton>
+            </ToggleButtonGroup>
+          </Box>
+        </Box>
+      ) : (
+        /* ==========================================================
+           INTERNAL STEP 2 OF 2: Personal Health Measurements
+           (Begins directly with section heading, no internal header, no inside buttons)
+           ========================================================== */
+        <Box sx={{ py: 1 }}>
+          <Typography
+            variant="h5"
+            fontWeight={800}
+            sx={{ color: 'text.primary', textAlign: 'center', mb: 3 }}
+          >
+            {t('personal_health_measurements', 'Personal Health Measurements')}
           </Typography>
 
-          <IconButton
-            size="small"
-            onClick={() => updatePersonal('age', Math.min(60, age + 1))}
-            disabled={age >= 60}
-            sx={{
-              bgcolor: 'rgba(233, 30, 99, 0.1)',
-              color: '#E91E63',
-              width: 38,
-              height: 38,
-              '&:hover': { bgcolor: '#E91E63', color: '#fff' },
-              '&.Mui-disabled': { bgcolor: 'rgba(0,0,0,0.04)', color: 'text.disabled' },
-            }}
-          >
-            <AddIcon fontSize="small" />
-          </IconButton>
-        </Stack>
-
-        {/* Wheel Picker */}
-        <Box sx={{ width: '100%', maxWidth: '300px' }}>
-          <WheelPicker
-            value={age}
-            onChange={(val) => updatePersonal('age', Number(val))}
-            min={10}
-            max={60}
-            step={1}
-            unit={t('years', 'Years')}
-          />
-        </Box>
-      </Box>
-
-      {/* ==========================================================
-          2. WEIGHT & HEIGHT SECTION
-          Heading: "What is your weight and height?" centered above row.
-          No internal borders.
-         ========================================================== */}
-      <Box sx={{ mb: 6 }}>
-        <Typography
-          variant="h5"
-          fontWeight={800}
-          sx={{ color: 'text.primary', textAlign: 'center', mb: 3.5 }}
-        >
-          {t('what_is_your_weight_and_height', 'What is your weight and height?')}
-        </Typography>
-
-        <Grid container spacing={3} alignItems="stretch">
-          {/* WEIGHT COLUMN */}
-          <Grid item xs={12} sm={6} md={4}>
-            <Box sx={columnStyle}>
-              <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%', maxWidth: '250px', mb: 1 }}>
+          {/* Row 1: Weight | Height | BMI Card */}
+          <Grid container spacing={2} alignItems="stretch" sx={{ mb: 2 }}>
+            {/* WEIGHT COLUMN */}
+            <Grid item xs={12} sm={6} md={4}>
+              <Box sx={columnStyle}>
+                <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%', maxWidth: '220px', mb: 0.5 }}>
                   <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
                     {t('weight', 'Weight')}
                   </Typography>
@@ -411,54 +402,44 @@ const PersonalInfoSection = ({ formData, setFormData }) => {
                     exclusive
                     onChange={(e, val) => handleWeightUnitChange(val)}
                     size="small"
-                    sx={{ '& .MuiToggleButton-root': { py: 0.25, px: 1.3, borderRadius: '12px', fontWeight: 700, fontSize: '0.72rem' } }}
+                    sx={{ '& .MuiToggleButton-root': { py: 0.2, px: 1.1, borderRadius: '12px', fontWeight: 700, fontSize: '0.7rem' } }}
                   >
                     <ToggleButton value="kg">{t('kg', 'kg')}</ToggleButton>
                     <ToggleButton value="lbs">{t('lbs', 'lbs')}</ToggleButton>
                   </ToggleButtonGroup>
                 </Stack>
 
-                {/* Value + Buttons */}
-                <Stack direction="row" alignItems="center" justifyContent="center" spacing={1.5} sx={{ my: 0.5 }}>
+                <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} sx={{ my: 'auto', py: 0.5, width: '100%' }}>
                   <IconButton
                     size="small"
                     onClick={() => handleWeightStep(false)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34 }}
+                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
                   >
                     <RemoveIcon fontSize="small" />
                   </IconButton>
-                  <Typography variant="h4" fontWeight={900} sx={{ color: '#E91E63', minWidth: '135px', textAlign: 'center' }}>
-                    {displayedWeight} <Typography component="span" variant="subtitle1" fontWeight={600} color="text.secondary">{t(weightUnit)}</Typography>
-                  </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 0.6, whiteSpace: 'nowrap', px: 0.5 }}>
+                    <Typography variant="h4" fontWeight={900} sx={{ color: '#E91E63', lineHeight: 1, whiteSpace: 'nowrap' }}>
+                      {displayedWeight}
+                    </Typography>
+                    <Typography variant="subtitle1" fontWeight={700} color="text.secondary" sx={{ whiteSpace: 'nowrap', lineHeight: 1 }}>
+                      {t(weightUnit)}
+                    </Typography>
+                  </Box>
                   <IconButton
                     size="small"
                     onClick={() => handleWeightStep(true)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34 }}
+                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
                   >
                     <AddIcon fontSize="small" />
                   </IconButton>
                 </Stack>
-
-                {/* Wheel Picker */}
-                <Box sx={{ width: '100%', maxWidth: '250px' }}>
-                  <WheelPicker
-                    value={displayedWeight}
-                    onChange={(val) => handleWeightPickerChange(val)}
-                    min={weightUnit === 'lbs' ? 44 : 20}
-                    max={weightUnit === 'lbs' ? 440 : 200}
-                    step={weightUnit === 'lbs' ? 1 : 0.5}
-                    unit={t(weightUnit)}
-                  />
-                </Box>
               </Box>
-            </Box>
-          </Grid>
+            </Grid>
 
-          {/* HEIGHT COLUMN */}
-          <Grid item xs={12} sm={6} md={4}>
-            <Box sx={columnStyle}>
-              <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%', maxWidth: '250px', mb: 1 }}>
+            {/* HEIGHT COLUMN */}
+            <Grid item xs={12} sm={6} md={4}>
+              <Box sx={columnStyle}>
+                <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%', maxWidth: '220px', mb: 0.5 }}>
                   <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
                     {t('height', 'Height')}
                   </Typography>
@@ -467,128 +448,89 @@ const PersonalInfoSection = ({ formData, setFormData }) => {
                     exclusive
                     onChange={(e, val) => handleHeightUnitChange(val)}
                     size="small"
-                    sx={{ '& .MuiToggleButton-root': { py: 0.25, px: 1.3, borderRadius: '12px', fontWeight: 700, fontSize: '0.72rem' } }}
+                    sx={{ '& .MuiToggleButton-root': { py: 0.2, px: 1.1, borderRadius: '12px', fontWeight: 700, fontSize: '0.7rem' } }}
                   >
                     <ToggleButton value="cm">{t('cm', 'cm')}</ToggleButton>
                     <ToggleButton value="inch">{t('inch', 'inch')}</ToggleButton>
                   </ToggleButtonGroup>
                 </Stack>
 
-                {/* Value + Buttons */}
-                <Stack direction="row" alignItems="center" justifyContent="center" spacing={1.5} sx={{ my: 0.5 }}>
+                <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} sx={{ my: 'auto', py: 0.5, width: '100%' }}>
                   <IconButton
                     size="small"
                     onClick={() => handleHeightStep(false)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34 }}
+                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
                   >
                     <RemoveIcon fontSize="small" />
                   </IconButton>
-                  <Typography variant="h4" fontWeight={900} sx={{ color: '#E91E63', minWidth: '135px', textAlign: 'center' }}>
-                    {displayedHeight} <Typography component="span" variant="subtitle1" fontWeight={600} color="text.secondary">{t(heightUnit)}</Typography>
-                  </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 0.6, whiteSpace: 'nowrap', px: 0.5 }}>
+                    <Typography variant="h4" fontWeight={900} sx={{ color: '#E91E63', lineHeight: 1, whiteSpace: 'nowrap' }}>
+                      {displayedHeight}
+                    </Typography>
+                    <Typography variant="subtitle1" fontWeight={700} color="text.secondary" sx={{ whiteSpace: 'nowrap', lineHeight: 1 }}>
+                      {t(heightUnit)}
+                    </Typography>
+                  </Box>
                   <IconButton
                     size="small"
                     onClick={() => handleHeightStep(true)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34 }}
+                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
                   >
                     <AddIcon fontSize="small" />
                   </IconButton>
                 </Stack>
-
-                {/* Wheel Picker */}
-                <Box sx={{ width: '100%', maxWidth: '250px' }}>
-                  <WheelPicker
-                    value={displayedHeight}
-                    onChange={(val) => handleHeightPickerChange(val)}
-                    min={heightUnit === 'inch' ? 39 : 100}
-                    max={heightUnit === 'inch' ? 98 : 250}
-                    step={0.5}
-                    unit={t(heightUnit)}
-                  />
-                </Box>
               </Box>
-            </Box>
-          </Grid>
+            </Grid>
 
-          {/* BMI COLUMN (Borderless, aligned beside Weight & Height) */}
-          <Grid item xs={12} sm={12} md={4}>
-            <Box
-              sx={{
-                ...columnStyle,
-                justifyContent: 'center',
-                py: { xs: 2, sm: 3 },
-              }}
-            >
-              <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} sx={{ mb: 1 }}>
-                <FavoriteIcon sx={{ fontSize: 20, color: '#E91E63' }} />
-                <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
-                  {t('bmi', 'BMI')}
-                </Typography>
-              </Stack>
-              <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ mb: 2, textAlign: 'center' }}>
-                {t('body_mass_index', 'Body Mass Index')}
-              </Typography>
-
-              {/* Huge Realtime Numeric BMI */}
-              <Box sx={{ my: 2, textAlign: 'center', width: '100%' }}>
-                <Typography
-                  variant="h2"
-                  fontWeight={900}
-                  sx={{
-                    color: bmiInfo.color,
-                    letterSpacing: '-1.5px',
-                    lineHeight: 1,
-                  }}
-                >
-                  {personal.bmi || '--'}
-                </Typography>
-              </Box>
-
-              {/* Color-Coded Status Badge + Scale Helper */}
-              <Box sx={{ width: '100%', textAlign: 'center', mt: 2 }}>
-                <Box
-                  sx={{
-                    display: 'inline-block',
-                    px: 2.5,
-                    py: 0.6,
-                    borderRadius: '20px',
-                    bgcolor: `${bmiInfo.color}1E`,
-                    mb: 1,
-                  }}
-                >
-                  <Typography variant="subtitle2" fontWeight={800} sx={{ color: bmiInfo.color, textTransform: 'uppercase', letterSpacing: 0.5 }}>
-                    {bmiInfo.status}
+            {/* BMI COLUMN */}
+            <Grid item xs={12} sm={12} md={4}>
+              <Box
+                sx={{
+                  ...columnStyle,
+                  justifyContent: 'space-between',
+                }}
+              >
+                <Stack direction="row" alignItems="center" justifyContent="center" spacing={0.8} sx={{ width: '100%', mb: 0.5 }}>
+                  <FavoriteIcon sx={{ fontSize: 18, color: '#E91E63' }} />
+                  <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
+                    {t('bmi', 'BMI')} · {t('body_mass_index', 'Body Mass Index')}
                   </Typography>
-                </Box>
-                <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ display: 'block' }}>
+                </Stack>
+
+                <Stack direction="row" alignItems="center" justifyContent="center" spacing={2} sx={{ my: 'auto', py: 0.5 }}>
+                  <Typography variant="h4" fontWeight={900} color="text.primary" sx={{ whiteSpace: 'nowrap' }}>
+                    {Number(personal.bmi) > 0 ? Number(personal.bmi).toFixed(1) : '--'}
+                  </Typography>
+                  <Box
+                    sx={{
+                      px: 2,
+                      py: 0.5,
+                      borderRadius: '16px',
+                      bgcolor: `${bmiInfo.color}15`,
+                      border: `1px solid ${bmiInfo.color}40`,
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Typography variant="subtitle2" fontWeight={800} sx={{ color: bmiInfo.color, whiteSpace: 'nowrap' }}>
+                      {bmiInfo.status}
+                    </Typography>
+                  </Box>
+                </Stack>
+
+                <Typography variant="caption" color="text.secondary" fontWeight={500} sx={{ mt: 0.5, textAlign: 'center' }}>
                   {bmiInfo.desc}
                 </Typography>
               </Box>
-            </Box>
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
 
-      {/* ==========================================================
-          3. WAIST & HIP SECTION
-          Heading: "What is your waist and hip size?" centered above row.
-          No internal borders.
-         ========================================================== */}
-      <Box sx={{ mb: 6 }}>
-        <Typography
-          variant="h5"
-          fontWeight={800}
-          sx={{ color: 'text.primary', textAlign: 'center', mb: 3.5 }}
-        >
-          {t('what_is_your_waist_and_hip_size', 'What is your waist and hip size?')}
-        </Typography>
-
-        <Grid container spacing={3} alignItems="stretch">
-          {/* WAIST COLUMN */}
-          <Grid item xs={12} sm={6} md={4}>
-            <Box sx={columnStyle}>
-              <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%', maxWidth: '250px', mb: 1 }}>
+          {/* Row 2: Waist | Hip | Waist-to-Hip Ratio Card */}
+          <Grid container spacing={2} alignItems="stretch" sx={{ mb: 1 }}>
+            {/* WAIST COLUMN */}
+            <Grid item xs={12} sm={6} md={4}>
+              <Box sx={columnStyle}>
+                <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%', maxWidth: '220px', mb: 0.5 }}>
                   <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
                     {t('waist', 'Waist')}
                   </Typography>
@@ -597,54 +539,44 @@ const PersonalInfoSection = ({ formData, setFormData }) => {
                     exclusive
                     onChange={(e, val) => handleWaistUnitChange(val)}
                     size="small"
-                    sx={{ '& .MuiToggleButton-root': { py: 0.25, px: 1.3, borderRadius: '12px', fontWeight: 700, fontSize: '0.72rem' } }}
+                    sx={{ '& .MuiToggleButton-root': { py: 0.2, px: 1.1, borderRadius: '12px', fontWeight: 700, fontSize: '0.7rem' } }}
                   >
                     <ToggleButton value="cm">{t('cm', 'cm')}</ToggleButton>
                     <ToggleButton value="inch">{t('inch', 'inch')}</ToggleButton>
                   </ToggleButtonGroup>
                 </Stack>
 
-                {/* Value + Buttons */}
-                <Stack direction="row" alignItems="center" justifyContent="center" spacing={1.5} sx={{ my: 0.5 }}>
+                <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} sx={{ my: 'auto', py: 0.5, width: '100%' }}>
                   <IconButton
                     size="small"
                     onClick={() => handleWaistStep(false)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34 }}
+                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
                   >
                     <RemoveIcon fontSize="small" />
                   </IconButton>
-                  <Typography variant="h4" fontWeight={900} sx={{ color: '#E91E63', minWidth: '135px', textAlign: 'center' }}>
-                    {displayedWaist} <Typography component="span" variant="subtitle1" fontWeight={600} color="text.secondary">{t(waistUnit)}</Typography>
-                  </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 0.6, whiteSpace: 'nowrap', px: 0.5 }}>
+                    <Typography variant="h4" fontWeight={900} sx={{ color: '#E91E63', lineHeight: 1, whiteSpace: 'nowrap' }}>
+                      {displayedWaist}
+                    </Typography>
+                    <Typography variant="subtitle1" fontWeight={700} color="text.secondary" sx={{ whiteSpace: 'nowrap', lineHeight: 1 }}>
+                      {t(waistUnit)}
+                    </Typography>
+                  </Box>
                   <IconButton
                     size="small"
                     onClick={() => handleWaistStep(true)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34 }}
+                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
                   >
                     <AddIcon fontSize="small" />
                   </IconButton>
                 </Stack>
-
-                {/* Wheel Picker */}
-                <Box sx={{ width: '100%', maxWidth: '250px' }}>
-                  <WheelPicker
-                    value={displayedWaist}
-                    onChange={(val) => handleWaistPickerChange(val)}
-                    min={waistUnit === 'inch' ? 15 : 40}
-                    max={waistUnit === 'inch' ? 70 : 180}
-                    step={0.5}
-                    unit={t(waistUnit)}
-                  />
-                </Box>
               </Box>
-            </Box>
-          </Grid>
+            </Grid>
 
-          {/* HIP COLUMN */}
-          <Grid item xs={12} sm={6} md={4}>
-            <Box sx={columnStyle}>
-              <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%', maxWidth: '250px', mb: 1 }}>
+            {/* HIP COLUMN */}
+            <Grid item xs={12} sm={6} md={4}>
+              <Box sx={columnStyle}>
+                <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%', maxWidth: '220px', mb: 0.5 }}>
                   <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
                     {t('hip', 'Hip')}
                   </Typography>
@@ -653,181 +585,84 @@ const PersonalInfoSection = ({ formData, setFormData }) => {
                     exclusive
                     onChange={(e, val) => handleHipUnitChange(val)}
                     size="small"
-                    sx={{ '& .MuiToggleButton-root': { py: 0.25, px: 1.3, borderRadius: '12px', fontWeight: 700, fontSize: '0.72rem' } }}
+                    sx={{ '& .MuiToggleButton-root': { py: 0.2, px: 1.1, borderRadius: '12px', fontWeight: 700, fontSize: '0.7rem' } }}
                   >
                     <ToggleButton value="cm">{t('cm', 'cm')}</ToggleButton>
                     <ToggleButton value="inch">{t('inch', 'inch')}</ToggleButton>
                   </ToggleButtonGroup>
                 </Stack>
 
-                {/* Value + Buttons */}
-                <Stack direction="row" alignItems="center" justifyContent="center" spacing={1.5} sx={{ my: 0.5 }}>
+                <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} sx={{ my: 'auto', py: 0.5, width: '100%' }}>
                   <IconButton
                     size="small"
                     onClick={() => handleHipStep(false)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34 }}
+                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
                   >
                     <RemoveIcon fontSize="small" />
                   </IconButton>
-                  <Typography variant="h4" fontWeight={900} sx={{ color: '#E91E63', minWidth: '135px', textAlign: 'center' }}>
-                    {displayedHip} <Typography component="span" variant="subtitle1" fontWeight={600} color="text.secondary">{t(hipUnit)}</Typography>
-                  </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 0.6, whiteSpace: 'nowrap', px: 0.5 }}>
+                    <Typography variant="h4" fontWeight={900} sx={{ color: '#E91E63', lineHeight: 1, whiteSpace: 'nowrap' }}>
+                      {displayedHip}
+                    </Typography>
+                    <Typography variant="subtitle1" fontWeight={700} color="text.secondary" sx={{ whiteSpace: 'nowrap', lineHeight: 1 }}>
+                      {t(hipUnit)}
+                    </Typography>
+                  </Box>
                   <IconButton
                     size="small"
                     onClick={() => handleHipStep(true)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34 }}
+                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
                   >
                     <AddIcon fontSize="small" />
                   </IconButton>
                 </Stack>
-
-                {/* Wheel Picker */}
-                <Box sx={{ width: '100%', maxWidth: '250px' }}>
-                  <WheelPicker
-                    value={displayedHip}
-                    onChange={(val) => handleHipPickerChange(val)}
-                    min={hipUnit === 'inch' ? 20 : 50}
-                    max={hipUnit === 'inch' ? 80 : 200}
-                    step={0.5}
-                    unit={t(hipUnit)}
-                  />
-                </Box>
               </Box>
-            </Box>
-          </Grid>
+            </Grid>
 
-          {/* WAIST-HIP RATIO COLUMN (Borderless, aligned beside Waist & Hip) */}
-          <Grid item xs={12} sm={12} md={4}>
-            <Box
-              sx={{
-                ...columnStyle,
-                justifyContent: 'center',
-                py: { xs: 2, sm: 3 },
-              }}
-            >
-              <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} sx={{ mb: 1 }}>
-                <MonitorHeartIcon sx={{ fontSize: 20, color: '#E91E63' }} />
-                <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
-                  {t('waist_hip_ratio', 'Waist-Hip Ratio')}
-                </Typography>
-              </Stack>
-              <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ mb: 2, textAlign: 'center' }}>
-                {t('body_fat_distribution', 'Body Fat Distribution')}
-              </Typography>
-
-              {/* Huge Realtime Numeric WHR */}
-              <Box sx={{ my: 2, textAlign: 'center', width: '100%' }}>
-                <Typography
-                  variant="h2"
-                  fontWeight={900}
-                  sx={{
-                    color: whrInfo.color,
-                    letterSpacing: '-1.5px',
-                    lineHeight: 1,
-                  }}
-                >
-                  {personal.waistHipRatio || '--'}
-                </Typography>
-              </Box>
-
-              {/* Color-Coded Status Badge + Scale Helper */}
-              <Box sx={{ width: '100%', textAlign: 'center', mt: 2 }}>
-                <Box
-                  sx={{
-                    display: 'inline-block',
-                    px: 2.5,
-                    py: 0.6,
-                    borderRadius: '20px',
-                    bgcolor: `${whrInfo.color}1E`,
-                    mb: 1,
-                  }}
-                >
-                  <Typography variant="subtitle2" fontWeight={800} sx={{ color: whrInfo.color, textTransform: 'uppercase', letterSpacing: 0.5 }}>
-                    {whrInfo.status}
+            {/* WAIST-HIP RATIO COLUMN */}
+            <Grid item xs={12} sm={12} md={4}>
+              <Box
+                sx={{
+                  ...columnStyle,
+                  justifyContent: 'space-between',
+                }}
+              >
+                <Stack direction="row" alignItems="center" justifyContent="center" spacing={0.8} sx={{ width: '100%', mb: 0.5 }}>
+                  <MonitorHeartIcon sx={{ fontSize: 18, color: '#E91E63' }} />
+                  <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
+                    {t('waist_hip_ratio', 'WHR')} · {t('body_fat_distribution', 'Ratio')}
                   </Typography>
-                </Box>
-                <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ display: 'block' }}>
+                </Stack>
+
+                <Stack direction="row" alignItems="center" justifyContent="center" spacing={2} sx={{ my: 'auto', py: 0.5 }}>
+                  <Typography variant="h4" fontWeight={900} color="text.primary" sx={{ whiteSpace: 'nowrap' }}>
+                    {Number(personal.waistHipRatio) > 0 ? Number(personal.waistHipRatio).toFixed(2) : '--'}
+                  </Typography>
+                  <Box
+                    sx={{
+                      px: 2,
+                      py: 0.5,
+                      borderRadius: '16px',
+                      bgcolor: `${whrInfo.color}15`,
+                      border: `1px solid ${whrInfo.color}40`,
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Typography variant="subtitle2" fontWeight={800} sx={{ color: whrInfo.color, whiteSpace: 'nowrap' }}>
+                      {whrInfo.status}
+                    </Typography>
+                  </Box>
+                </Stack>
+
+                <Typography variant="caption" color="text.secondary" fontWeight={500} sx={{ mt: 0.5, textAlign: 'center' }}>
                   {whrInfo.desc}
                 </Typography>
               </Box>
-            </Box>
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
-
-      {/* ==========================================================
-          4. FAMILY HISTORY SECTION
-          No internal borders.
-         ========================================================== */}
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          textAlign: 'center',
-          mt: 2,
-          mb: 2,
-        }}
-      >
-        <Stack direction="row" alignItems="center" justifyContent="center" spacing={1.5} sx={{ mb: 1.5 }}>
-          <FamilyRestroomIcon sx={{ fontSize: 26, color: '#E91E63' }} />
-          <Typography variant="h5" fontWeight={800} sx={{ color: 'text.primary', textAlign: 'center' }}>
-            {t('family_history_of_pcos', 'Family History of PCOS')}
-          </Typography>
-        </Stack>
-
-        <Typography variant="body2" color="text.secondary" fontWeight={600} sx={{ mb: 3 }}>
-          {t('does_anyone_in_family_have_pcos', 'Does anyone in your family have PCOS?')}
-        </Typography>
-
-        {/* Apple Health / iOS style Pill Toggle Buttons (Yes / No) */}
-        <ToggleButtonGroup
-          value={familyHistory ? 'yes' : 'no'}
-          exclusive
-          onChange={(_, val) => {
-            if (val !== null) {
-              handleFamilyHistoryChange(val === 'yes');
-            }
-          }}
-          sx={{
-            gap: 2,
-            '& .MuiToggleButton-root': {
-              px: 4.5,
-              py: 1,
-              borderRadius: '24px !important',
-              fontWeight: 800,
-              fontSize: '0.92rem',
-              border: '2px solid rgba(233, 30, 99, 0.35) !important',
-              color: '#E91E63',
-              transition: 'all 0.22s cubic-bezier(0.4, 0, 0.2, 1)',
-              minWidth: '125px',
-              '&.Mui-selected': {
-                bgcolor: '#E91E63',
-                color: '#fff',
-                borderColor: '#E91E63 !important',
-                boxShadow: '0 4px 16px rgba(233, 30, 99, 0.35)',
-                '&:hover': { bgcolor: '#C2185B' },
-              },
-              '&:hover': {
-                bgcolor: 'rgba(233, 30, 99, 0.08)',
-                transform: 'translateY(-1px)',
-              },
-            },
-          }}
-        >
-          <ToggleButton value="yes">{t('yes', 'Yes')}</ToggleButton>
-          <ToggleButton value="no">{t('no', 'No')}</ToggleButton>
-        </ToggleButtonGroup>
-
-        <Typography
-          variant="caption"
-          color="text.secondary"
-          fontWeight={600}
-          sx={{ mt: 2.5, letterSpacing: 0.3, fontSize: '0.78rem' }}
-        >
-          {t('mother_aunt_sister_grandmother_cousin', 'Mother · Aunt · Sister · Grandmother · Cousin')}
-        </Typography>
-      </Box>
+        </Box>
+      )}
     </Box>
   );
 };

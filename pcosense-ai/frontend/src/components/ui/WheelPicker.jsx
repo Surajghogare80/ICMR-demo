@@ -89,10 +89,24 @@ const WheelPicker = ({ value, onChange, min = 0, max = 100, step = 1, unit = '' 
           maxWidth: '320px',
           bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(30, 41, 59, 0.45)' : 'rgba(255, 248, 251, 0.95)',
           borderRadius: 5,
-          border: '1px solid',
-          borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(233, 30, 99, 0.2)' : 'rgba(233, 30, 99, 0.15)',
-          boxShadow: (theme) => theme.palette.mode === 'dark' ? 'inset 0 0 24px rgba(0,0,0,0.4)' : 'inset 0 0 24px rgba(233,30,99,0.04)',
+          border: '1.5px solid',
+          borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(233, 30, 99, 0.25)' : 'rgba(233, 30, 99, 0.2)',
+          boxShadow: (theme) => theme.palette.mode === 'dark' ? '0 4px 20px rgba(0,0,0,0.4), inset 0 0 24px rgba(0,0,0,0.4)' : '0 4px 20px rgba(233,30,99,0.06), inset 0 0 24px rgba(233,30,99,0.04)',
           overflow: 'hidden',
+          // Ensure rounded border is rendered crisp right on top of overflow clipping mask
+          '&::after': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            borderRadius: 5,
+            border: '1.5px solid',
+            borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(233, 30, 99, 0.3)' : 'rgba(233, 30, 99, 0.22)',
+            pointerEvents: 'none',
+            zIndex: 4,
+          },
         }}
       >
         {/* Pink Center Selection Indicator Overlay (row 3 of 5) */}

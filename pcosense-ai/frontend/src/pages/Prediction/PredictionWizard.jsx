@@ -88,6 +88,7 @@ const PredictionWizard = () => {
   const [selectedMode, setSelectedMode]   = useState(null);
   const [activeStep, setActiveStep]       = useState(0);
   const [isSubmitting, setIsSubmitting]   = useState(false);
+  const [personalSubStep, setPersonalSubStep] = useState(1);
   // Blood test card pagination
   const [bloodPage, setBloodPage]         = useState(1);
   const [bloodSlideDir, setBloodSlideDir] = useState(1); // 1 = slide left, -1 = slide right
@@ -212,6 +213,11 @@ const PredictionWizard = () => {
   // ─── Navigation ──────────────────────────────────────────────────────────────
   const handleNext = () => {
     if (currentStepId === 'personal') {
+      if (personalSubStep === 1) {
+        setPersonalSubStep(2);
+        return;
+      }
+
       const rawAge = Number(formData.personal.age) || 25;
       const rawWeight = Number(formData.personal.weight) || 60;
       const rawHeight = Number(formData.personal.height) || 165;
@@ -264,7 +270,14 @@ const PredictionWizard = () => {
   };
 
   const handleBack = () => {
+    if (currentStepId === 'personal' && personalSubStep === 2) {
+      setPersonalSubStep(1);
+      return;
+    }
     if (activeStep > 0) {
+      if (steps[activeStep - 1]?.id === 'personal') {
+        setPersonalSubStep(2);
+      }
       setActiveStep((s) => s - 1);
     }
   };
@@ -374,6 +387,8 @@ const PredictionWizard = () => {
           <PersonalInfoSection
             formData={formData}
             setFormData={setFormData}
+            subStep={personalSubStep}
+            onNext={handleNext}
           />
         );
       }
@@ -922,12 +937,12 @@ const PredictionWizard = () => {
             </CardContent>
           </Card>
 
-          {/* Navigation Buttons */}
+          {/* Navigation Buttons (handled uniformly outside Card for all steps) */}
           <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
             <Button
               variant="outlined" startIcon={<ArrowBack />}
               onClick={handleBack}
-              disabled={activeStep === 0}
+              disabled={activeStep === 0 && (currentStepId !== 'personal' || personalSubStep === 1)}
             >
               Back
             </Button>
@@ -940,7 +955,7 @@ const PredictionWizard = () => {
 
             {!isSubmissionStep ? (
               <Button variant="contained" endIcon={<ArrowForward />} onClick={handleNext}>
-                Next Step
+                {currentStepId === 'personal' && personalSubStep === 1 ? 'Next' : 'Next Step'}
               </Button>
             ) : (
               <Button
