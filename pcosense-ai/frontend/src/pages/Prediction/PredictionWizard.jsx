@@ -41,8 +41,8 @@ const PINK_BTN_SX = {
 // ─── Step list builder ────────────────────────────────────────────────────────
 const getStepsList = (mode) => {
   const list = [
-    { id: 'personal',   label: 'Personal Info',      description: 'Age, Weight, Height, Waist & Hip' },
-    { id: 'menstrual',  label: 'Menstrual History',  description: 'Cycle, Regularity, Flow & Family History' },
+    { id: 'personal',   label: 'Personal Info',      description: 'Age, Measurements & Family History' },
+    { id: 'menstrual',  label: 'Menstrual History',  description: 'Cycle, Regularity & Flow Intensity' },
     { id: 'symptoms',   label: 'Clinical Symptoms',  description: 'Physical Symptoms & Signs' },
     { id: 'lifestyle',  label: 'Lifestyle Habits',   description: 'Diet, Exercise & Stress Levels' },
   ];
@@ -88,18 +88,15 @@ const PredictionWizard = () => {
   const [selectedMode, setSelectedMode]   = useState(null);
   const [activeStep, setActiveStep]       = useState(0);
   const [isSubmitting, setIsSubmitting]   = useState(false);
-  // Personal Info sub-card pagination
-  const [personalSubStep, setPersonalSubStep] = useState(1);
-  const [personalSlideDir, setPersonalSlideDir] = useState(1);
   // Blood test card pagination
   const [bloodPage, setBloodPage]         = useState(1);
   const [bloodSlideDir, setBloodSlideDir] = useState(1); // 1 = slide left, -1 = slide right
 
   const [formData, setFormData] = useState({
     personal: {
-      age: 25, weight: 60, height: '', bmi: '',
+      age: 25, weight: 60, weightUnit: 'kg', height: 165, heightUnit: 'cm', bmi: 22.0,
       // Body measurements (new — displayed in Personal step)
-      waist: '', hip: '', waistHipRatio: '',
+      waist: 75, waistUnit: 'cm', hip: 95, hipUnit: 'cm', waistHipRatio: 0.79, familyHistory: false,
       // Blood group (moved to Blood Test step UI but stored in personal)
       bloodGroup: '',
       // Page 1 blood markers
@@ -151,25 +148,7 @@ const PredictionWizard = () => {
     const stepId = steps[stepIdx]?.id;
 
     if (stepId === 'personal') {
-      const age    = Number(formData.personal.age);
-      const weight = Number(formData.personal.weight);
-      const height = Number(formData.personal.height);
-
-      if (!formData.personal.age || isNaN(age) || age < 10 || age > 70) {
-        toast.error('Age must be between 10 and 70 years.'); return false;
-      }
-      if (!formData.personal.weight || isNaN(weight) || weight < 20 || weight > 200) {
-        toast.error('Weight must be between 20 and 200 kg.'); return false;
-      }
-      if (!formData.personal.height || isNaN(height) || height < 100 || height > 250) {
-        toast.error('Height must be between 100 and 250 cm.'); return false;
-      }
-      if (formData.personal.waist && (isNaN(Number(formData.personal.waist)) || Number(formData.personal.waist) <= 0)) {
-        toast.error('Waist size must be a positive number.'); return false;
-      }
-      if (formData.personal.hip && (isNaN(Number(formData.personal.hip)) || Number(formData.personal.hip) <= 0)) {
-        toast.error('Hip size must be a positive number.'); return false;
-      }
+      return true;
     }
 
     if (stepId === 'menstrual') {
@@ -233,78 +212,49 @@ const PredictionWizard = () => {
   // ─── Navigation ──────────────────────────────────────────────────────────────
   const handleNext = () => {
     if (currentStepId === 'personal') {
-      if (personalSubStep === 1) {
-        const age = Number(formData.personal.age);
-        if (!formData.personal.age || isNaN(age) || age < 10 || age > 60) {
-          toast.error('Please select or enter an age between 10 and 60 years.');
-          return;
-        }
-        setPersonalSlideDir(1);
-        setPersonalSubStep(2);
-        return;
-      }
-      if (personalSubStep === 2) {
-        const weight = Number(formData.personal.weight);
-        const height = Number(formData.personal.height);
-        if (!formData.personal.weight || isNaN(weight) || weight <= 0) {
-          toast.error('Please enter a valid weight.');
-          return;
-        }
-        if (!formData.personal.height || isNaN(height) || height <= 0) {
-          toast.error('Please enter a valid height.');
-          return;
-        }
-        setPersonalSlideDir(1);
-        setPersonalSubStep(3);
-        return;
-      }
-      if (personalSubStep === 3) {
-        const waist = Number(formData.personal.waist);
-        const hip = Number(formData.personal.hip);
-        if (!formData.personal.waist || isNaN(waist) || waist <= 0) {
-          toast.error('Please enter a valid waist measurement.');
-          return;
-        }
-        if (!formData.personal.hip || isNaN(hip) || hip <= 0) {
-          toast.error('Please enter a valid hip measurement.');
-          return;
-        }
+      const rawAge = Number(formData.personal.age) || 25;
+      const rawWeight = Number(formData.personal.weight) || 60;
+      const rawHeight = Number(formData.personal.height) || 165;
+      const rawWaist = Number(formData.personal.waist) || 75;
+      const rawHip = Number(formData.personal.hip) || 95;
 
-        // Normalize all values right before advancing to keep backend & ML model 100% compatible
-        const weightUnit = formData.personal.weightUnit || 'kg';
-        const heightUnit = formData.personal.heightUnit || 'cm';
-        const waistUnit  = formData.personal.waistUnit || 'cm';
-        const hipUnit    = formData.personal.hipUnit || 'cm';
+      const weightUnit = formData.personal.weightUnit || 'kg';
+      const heightUnit = formData.personal.heightUnit || 'cm';
+      const waistUnit  = formData.personal.waistUnit || 'cm';
+      const hipUnit    = formData.personal.hipUnit || 'cm';
 
-        const normalizedWeight = weightUnit === 'lbs' ? Number((Number(formData.personal.weight) / 2.20462).toFixed(1)) : Number(formData.personal.weight);
-        const normalizedHeight = heightUnit === 'inch' ? Number((Number(formData.personal.height) * 2.54).toFixed(1)) : Number(formData.personal.height);
-        const normalizedWaist  = waistUnit === 'inch' ? Number((Number(formData.personal.waist) * 2.54).toFixed(1)) : Number(formData.personal.waist);
-        const normalizedHip    = hipUnit === 'inch' ? Number((Number(formData.personal.hip) * 2.54).toFixed(1)) : Number(formData.personal.hip);
+      const normalizedWeight = weightUnit === 'lbs' ? Number((rawWeight / 2.20462).toFixed(1)) : rawWeight;
+      const normalizedHeight = heightUnit === 'inch' ? Number((rawHeight * 2.54).toFixed(1)) : rawHeight;
+      const normalizedWaist  = waistUnit === 'inch' ? Number((rawWaist * 2.54).toFixed(1)) : rawWaist;
+      const normalizedHip    = hipUnit === 'inch' ? Number((rawHip * 2.54).toFixed(1)) : rawHip;
 
-        const hM = normalizedHeight / 100;
-        const finalBmi = Number((normalizedWeight / (hM * hM)).toFixed(1));
-        const finalWhr = Number((normalizedWaist / normalizedHip).toFixed(2));
+      const hM = normalizedHeight / 100;
+      const finalBmi = Number((normalizedWeight / (hM * hM)).toFixed(1));
+      const finalWhr = Number((normalizedWaist / normalizedHip).toFixed(2));
+      const familyHistory = formData.personal.familyHistory !== undefined ? formData.personal.familyHistory : false;
 
-        setFormData((prev) => ({
-          ...prev,
-          personal: {
-            ...prev.personal,
-            age: Number(formData.personal.age),
-            weight: normalizedWeight,
-            height: normalizedHeight,
-            waist: normalizedWaist,
-            hip: normalizedHip,
-            bmi: finalBmi,
-            waistHipRatio: finalWhr,
-          },
-        }));
+      setFormData((prev) => ({
+        ...prev,
+        personal: {
+          ...prev.personal,
+          age: rawAge,
+          weight: normalizedWeight,
+          height: normalizedHeight,
+          waist: normalizedWaist,
+          hip: normalizedHip,
+          bmi: finalBmi,
+          waistHipRatio: finalWhr,
+          familyHistory,
+        },
+        menstrual: {
+          ...prev.menstrual,
+          familyHistory,
+        },
+      }));
 
-        if (validateStep(activeStep)) {
-          if (currentStepId === 'blood_report') setBloodPage(1);
-          setActiveStep((s) => s + 1);
-        }
-        return;
-      }
+      if (currentStepId === 'blood_report') setBloodPage(1);
+      setActiveStep((s) => s + 1);
+      return;
     }
 
     if (validateStep(activeStep)) {
@@ -314,26 +264,7 @@ const PredictionWizard = () => {
   };
 
   const handleBack = () => {
-    if (currentStepId === 'personal') {
-      if (personalSubStep > 1) {
-        setPersonalSlideDir(-1);
-        setPersonalSubStep((s) => s - 1);
-        return;
-      }
-      if (personalSubStep === 1) {
-        if (activeStep > 0) {
-          setActiveStep((s) => s - 1);
-        }
-        return;
-      }
-    }
-
     if (activeStep > 0) {
-      const prevStep = steps[activeStep - 1];
-      if (prevStep && prevStep.id === 'personal') {
-        setPersonalSlideDir(-1);
-        setPersonalSubStep(3);
-      }
       setActiveStep((s) => s - 1);
     }
   };
@@ -443,8 +374,6 @@ const PredictionWizard = () => {
           <PersonalInfoSection
             formData={formData}
             setFormData={setFormData}
-            subStep={personalSubStep}
-            slideDir={personalSlideDir}
           />
         );
       }
@@ -496,63 +425,6 @@ const PredictionWizard = () => {
                   {FLOW_INTENSITY_OPTIONS.map((o) => <MenuItem key={o} value={o}>{o}</MenuItem>)}
                 </Select>
               </FormControl>
-            </Grid>
-
-            {/* ── Family History Section ──────────────────────────────────── */}
-            <Grid item xs={12}>
-              <Divider sx={{ mt: 1, mb: 2 }} />
-              <Typography variant="h6" fontWeight={700} gutterBottom>Family History</Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                Family History of PCOS
-              </Typography>
-
-              <ToggleButtonGroup
-                value={formData.menstrual.familyHistory ? 'yes' : 'no'}
-                exclusive
-                onChange={(_, val) => {
-                  if (val !== null) updateField('menstrual', 'familyHistory', val === 'yes');
-                }}
-                sx={{
-                  '& .MuiToggleButton-root': {
-                    px: 3.5, py: 0.8,
-                    borderRadius: '20px !important',
-                    fontWeight: 700,
-                    fontSize: '0.85rem',
-                    border: '1.5px solid #E91E63 !important',
-                    color: '#E91E63',
-                    transition: 'all 0.2s',
-                    '&.Mui-selected': {
-                      bgcolor: '#E91E63', color: '#fff',
-                      '&:hover': { bgcolor: '#C2185B' },
-                    },
-                    '&:hover': { bgcolor: 'rgba(233,30,99,0.08)' },
-                  },
-                  gap: 1,
-                }}
-              >
-                <ToggleButton value="yes">YES</ToggleButton>
-                <ToggleButton value="no">NO</ToggleButton>
-              </ToggleButtonGroup>
-
-              <AnimatePresence>
-                {formData.menstrual.familyHistory && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.22 }}
-                  >
-                    <Alert severity="info" icon={false} sx={{ mt: 2, borderRadius: 2 }}>
-                      <Typography variant="body2" fontWeight={600} gutterBottom>
-                        Applies when PCOS has been diagnosed in:
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Mother · Aunt · Siblings · Cousins · Grandmother
-                      </Typography>
-                    </Alert>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </Grid>
           </Grid>
         );
@@ -1055,7 +927,7 @@ const PredictionWizard = () => {
             <Button
               variant="outlined" startIcon={<ArrowBack />}
               onClick={handleBack}
-              disabled={activeStep === 0 && personalSubStep === 1}
+              disabled={activeStep === 0}
             >
               Back
             </Button>
