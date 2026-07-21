@@ -11,6 +11,7 @@ import {
 import { motion } from 'framer-motion';
 import { ROUTES } from '../../constants/index.js';
 import { useAuth } from '../../contexts/AuthContext.jsx';
+import { APP_NAME, APP_TAGLINE, APP_DESCRIPTION } from '../../config/appConfig.js';
 
 const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } };
 
@@ -30,7 +31,7 @@ const steps = [
 
 const faqs = [
   { q: 'What is PCOS?', a: 'Polycystic Ovary Syndrome (PCOS) is a common hormonal disorder affecting women of reproductive age. It causes irregular periods, excess androgen, and polycystic ovaries.' },
-  { q: 'Is this a medical diagnosis?', a: 'No. PCOSense AI is a screening tool only. Results are for educational purposes and should be discussed with a qualified gynecologist or endocrinologist.' },
+  { q: 'Is this a medical diagnosis?', a: `No. ${APP_NAME} is a screening tool only. Results are for educational purposes and should be discussed with a qualified gynecologist or endocrinologist.` },
   { q: 'How accurate is the prediction?', a: 'Our model is trained on clinical datasets and uses multiple risk factors. However, only a licensed medical professional can provide a formal PCOS diagnosis.' },
   { q: 'Is my data safe?', a: 'Yes. All data is encrypted in transit and at rest. We do not share your health information with third parties.' },
   { q: 'Can I delete my data?', a: 'Yes. You can delete your prediction history at any time from your dashboard.' },
@@ -74,7 +75,7 @@ const LandingPage = () => {
                   </Box>
                 </Typography>
                 <Typography variant="h6" sx={{ color: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.65)' : 'text.secondary', fontWeight: 400, lineHeight: 1.8, mb: 5, maxWidth: 520 }}>
-                  PCOSense AI analyzes your clinical symptoms, menstrual history, and lifestyle factors to provide a comprehensive PCOS risk assessment — powered by advanced AI.
+                  {APP_DESCRIPTION}
                 </Typography>
                  <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                   {isAuthenticated ? (
@@ -178,7 +179,7 @@ const LandingPage = () => {
       {/* Features */}
       <Container maxWidth="lg" sx={{ py: 10 }}>
         <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.6 }}>
-          <Typography variant="h3" fontWeight={800} textAlign="center" gutterBottom>Why PCOSense AI?</Typography>
+          <Typography variant="h3" fontWeight={800} textAlign="center" gutterBottom>Why {APP_NAME}?</Typography>
           <Typography variant="h6" color="text.secondary" textAlign="center" sx={{ mb: 7, fontWeight: 400, maxWidth: 600, mx: 'auto' }}>
             A comprehensive, evidence-based approach to PCOS risk assessment
           </Typography>

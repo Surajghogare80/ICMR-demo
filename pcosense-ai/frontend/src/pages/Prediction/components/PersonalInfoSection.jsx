@@ -21,15 +21,12 @@ const getBMIInfo = (bmi) => {
     return { status: '--', color: '#9E9E9E', desc: 'Enter weight & height' };
   }
   if (b < 18.5) {
-    return { status: 'Underweight', color: '#FBC02D', desc: '< 18.5' }; // Yellow
+    return { status: 'Underweight', color: '#2196F3', desc: '≤ 18.4' }; // Blue
   }
   if (b < 25) {
     return { status: 'Normal', color: '#4CAF50', desc: '18.5 – 24.9' };   // Green
   }
-  if (b < 30) {
-    return { status: 'Overweight', color: '#FF9800', desc: '25.0 – 29.9' }; // Orange
-  }
-  return { status: 'Obesity', color: '#F44336', desc: '≥ 30.0' };          // Red
+  return { status: 'Overweight / Obese', color: '#FF9800', desc: '≥ 25.0' }; // Orange
 };
 
 // Color & Status helpers for Waist-Hip Ratio
@@ -39,12 +36,12 @@ const getWHRInfo = (whr) => {
     return { status: '--', color: '#9E9E9E', desc: 'Enter waist & hip' };
   }
   if (w < 0.80) {
-    return { status: 'Healthy', color: '#4CAF50', desc: '< 0.80 Low Risk' };    // Green
+    return { status: 'Low', color: '#4CAF50', desc: '< 0.80 Low Risk' };    // Green
   }
   if (w < 0.85) {
-    return { status: 'Moderate Risk', color: '#FF9800', desc: '0.80 – 0.84' }; // Orange
+    return { status: 'Moderate', color: '#FF9800', desc: '0.80 – 0.84 Moderate Risk' }; // Orange
   }
-  return { status: 'High Risk', color: '#F44336', desc: '≥ 0.85' };            // Red
+  return { status: 'High', color: '#F44336', desc: '≥ 0.85 High Risk' };            // Red
 };
 
 const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
@@ -491,7 +488,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                 }}
               >
                 <Stack direction="row" alignItems="center" justifyContent="center" spacing={0.8} sx={{ width: '100%', mb: 0.5 }}>
-                  <FavoriteIcon sx={{ fontSize: 18, color: '#E91E63' }} />
+                  {/* <FavoriteIcon sx={{ fontSize: 18, color: '#E91E63' }} /> */}
                   <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
                     {t('bmi', 'BMI')} · {t('body_mass_index', 'Body Mass Index')}
                   </Typography>
@@ -628,7 +625,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                 }}
               >
                 <Stack direction="row" alignItems="center" justifyContent="center" spacing={0.8} sx={{ width: '100%', mb: 0.5 }}>
-                  <MonitorHeartIcon sx={{ fontSize: 18, color: '#E91E63' }} />
+                  {/* <MonitorHeartIcon sx={{ fontSize: 18, color: '#E91E63' }} /> */}
                   <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
                     {t('waist_hip_ratio', 'WHR')} · {t('body_fat_distribution', 'Ratio')}
                   </Typography>

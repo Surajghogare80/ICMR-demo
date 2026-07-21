@@ -1,6 +1,6 @@
 // src/utils/responseHelper.js
 /**
- * Standard API response format for PCOSense AI
+ * Standard API response format for PRABHA
  * { success, message, data, timestamp }
  */
 

@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import { predictionService } from '../../services/predictionService.js';
 import { useAuth } from '../../contexts/AuthContext.jsx';
 import { ROUTES } from '../../constants/index.js';
+import { APP_NAME } from '../../config/appConfig.js';
 
 // Sub-components
 import HeroSlider from './components/HeroSlider.jsx';
@@ -208,7 +209,7 @@ const DashboardPage = () => {
                   }}
                 >
                   Welcome back to{' '}
-                  <Box component="span" sx={{ color: '#EC407A', fontWeight: 700 }}>PCOSense AI</Box>
+                  <Box component="span" sx={{ color: '#EC407A', fontWeight: 700 }}>{APP_NAME}</Box>
                   . Your health journey starts with awareness and early detection.
                 </Typography>
               </Box>

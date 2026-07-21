@@ -18,6 +18,7 @@ import {
 import toast from 'react-hot-toast';
 import WheelPicker from '../../components/ui/WheelPicker.jsx';
 import PersonalInfoSection from './components/PersonalInfoSection.jsx';
+import MenstrualHistorySection from './components/MenstrualHistorySection.jsx';
 
 // ─── Shared pink outlined button style ────────────────────────────────────────
 const PINK_BTN_SX = {
@@ -106,7 +107,7 @@ const PredictionWizard = () => {
       vitaminD3: '', shbg: '', fastingInsulin: '', insulinResistance: '',
     },
     menstrual: {
-      cycleLength: '', cycleRegularity: 'Regular', periodDuration: '',
+      cycleLength: 28, cycleRegularity: 'Regular', periodDuration: 5,
       flowIntensity: 'Normal', follicleNo: '', avgFsize: '', ovaryVolume: '',
       endometrium: '',
       familyHistory: false, // new
@@ -396,52 +397,7 @@ const PredictionWizard = () => {
       // ── Menstrual History ────────────────────────────────────────────────────
       case 'menstrual':
         return (
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Typography variant="h6" fontWeight={700} gutterBottom>Menstrual History</Typography>
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth label="Average Cycle Length (days)" type="number" required
-                value={formData.menstrual.cycleLength}
-                onChange={(e) => updateField('menstrual', 'cycleLength', e.target.value)}
-                inputProps={{ min: 15, max: 90 }} placeholder="e.g. 28"
-                helperText="Days from start of one period to the next (15 – 90 days)"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth label="Period Duration (days)" type="number"
-                value={formData.menstrual.periodDuration}
-                onChange={(e) => updateField('menstrual', 'periodDuration', e.target.value)}
-                inputProps={{ min: 1, max: 15 }} placeholder="e.g. 5"
-                helperText="Days per period (1 – 15 days)"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth required>
-                <InputLabel>Cycle Regularity</InputLabel>
-                <Select
-                  value={formData.menstrual.cycleRegularity} label="Cycle Regularity"
-                  onChange={(e) => updateField('menstrual', 'cycleRegularity', e.target.value)}
-                >
-                  {CYCLE_REGULARITY_OPTIONS.map((o) => <MenuItem key={o} value={o}>{o}</MenuItem>)}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <InputLabel>Flow Intensity</InputLabel>
-                <Select
-                  value={formData.menstrual.flowIntensity} label="Flow Intensity"
-                  onChange={(e) => updateField('menstrual', 'flowIntensity', e.target.value)}
-                >
-                  {FLOW_INTENSITY_OPTIONS.map((o) => <MenuItem key={o} value={o}>{o}</MenuItem>)}
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
+          <MenstrualHistorySection formData={formData} updateField={updateField} />
         );
 
       // ── Clinical Symptoms ─────────────────────────────────────────────────

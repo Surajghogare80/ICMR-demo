@@ -12,6 +12,7 @@ import { Person, Email, Lock, Visibility, VisibilityOff } from '@mui/icons-mater
 import { motion } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext.jsx';
 import { ROUTES } from '../../constants/index.js';
+import { APP_NAME } from '../../config/appConfig.js';
 
 const schema = yup.object({
   name: yup.string().min(2, 'Name must be at least 2 characters').required('Name is required'),
@@ -51,7 +52,7 @@ const RegisterPage = () => {
           <Box sx={{ textAlign: 'center', mb: 4 }}>
             <Box sx={{ width: 56, height: 56, borderRadius: '16px', background: 'linear-gradient(135deg, #EC407A, #F48FB1)', display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 'auto', mb: 2, fontSize: '1.6rem' }}>🧬</Box>
             <Typography variant="h4" fontWeight={800} gutterBottom>Create Account</Typography>
-            <Typography color="text.secondary">Join PCOSense AI for free</Typography>
+            <Typography color="text.secondary">Join {APP_NAME} for free</Typography>
           </Box>
 
           <Card sx={{ p: 1 }}>

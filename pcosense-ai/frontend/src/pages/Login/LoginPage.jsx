@@ -12,6 +12,7 @@ import { Email, Lock, Visibility, VisibilityOff } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext.jsx';
 import { ROUTES } from '../../constants/index.js';
+import { APP_NAME } from '../../config/appConfig.js';
 
 const schema = yup.object({
   email: yup.string().email('Enter a valid email').required('Email is required'),
@@ -45,7 +46,7 @@ const LoginPage = () => {
           <Box sx={{ textAlign: 'center', mb: 4 }}>
             <Box sx={{ width: 56, height: 56, borderRadius: '16px', background: 'linear-gradient(135deg, #EC407A, #F48FB1)', display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 'auto', mb: 2, fontSize: '1.6rem' }}>🧬</Box>
             <Typography variant="h4" fontWeight={800} gutterBottom>Welcome Back</Typography>
-            <Typography color="text.secondary">Sign in to your PCOSense AI account</Typography>
+            <Typography color="text.secondary">Sign in to your {APP_NAME} account</Typography>
           </Box>
 
           <Card sx={{ p: 1 }}>

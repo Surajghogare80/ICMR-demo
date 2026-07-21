@@ -1,4 +1,4 @@
-# PCOSense AI 🩺
+# PRABHA 🩺
 
 > **AI-Based PCOS Prediction Web Application**  
 > A production-ready MERN Stack healthcare platform with AI integration-ready architecture.
@@ -121,4 +121,4 @@ To integrate a real AI/ML model, simply replace the `predictionService.generateP
 
 ## 📄 License
 
-MIT © PCOSense AI Team
+MIT © PRABHA Team
