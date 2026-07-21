@@ -3,12 +3,13 @@ import { useState, useEffect } from 'react';
 import { Box, Typography, useTheme, alpha } from '@mui/material';
 import { FormatQuote } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
+import { APP_NAME } from '../../../config/appConfig.js';
 
 const QUOTES = [
-  { text: 'Small healthy habits create lifelong wellness.', author: 'PCOSense AI', color: '#EC407A' },
+  { text: 'Small healthy habits create lifelong wellness.', author: APP_NAME, color: '#EC407A' },
   { text: 'Early awareness empowers better healthcare decisions.', author: 'Women\'s Health', color: '#7E57C2' },
   { text: 'Taking care of yourself is the first step toward a healthier future.', author: 'Wellness', color: '#26C6DA' },
-  { text: 'Your health journey is unique — honor it every single day.', author: 'PCOSense AI', color: '#66BB6A' },
+  { text: 'Your health journey is unique — honor it every single day.', author: APP_NAME, color: '#66BB6A' },
   { text: 'Every woman deserves to understand her body and feel empowered.', author: 'Women\'s Health', color: '#FFA726' },
   { text: 'Progress, not perfection, is what leads to lasting health.', author: 'Wellness', color: '#F06292' },
 ];

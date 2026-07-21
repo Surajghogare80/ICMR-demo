@@ -12,6 +12,7 @@ import {
 import { motion } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext.jsx';
 import { ROUTES } from '../../constants/index.js';
+import { APP_NAME } from '../../config/appConfig.js';
 
 const Navbar = ({ onThemeToggle, isDark }) => {
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
@@ -64,7 +65,7 @@ const Navbar = ({ onThemeToggle, isDark }) => {
                 WebkitTextFillColor: 'transparent',
               }}
             >
-              PCOSense AI
+              {APP_NAME}
             </Typography>
           </Box>
         </motion.div>

@@ -107,7 +107,7 @@ const PredictionWizard = () => {
       vitaminD3: '', shbg: '', fastingInsulin: '', insulinResistance: '',
     },
     menstrual: {
-      cycleLength: '', cycleRegularity: 'Regular', periodDuration: '',
+      cycleLength: 28, cycleRegularity: 'Regular', periodDuration: 5,
       flowIntensity: 'Normal', follicleNo: '', avgFsize: '', ovaryVolume: '',
       endometrium: '',
       familyHistory: false, // new

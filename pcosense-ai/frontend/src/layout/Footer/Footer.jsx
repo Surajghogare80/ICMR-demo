@@ -1,6 +1,7 @@
 // src/layout/Footer/Footer.jsx
 import { Box, Container, Typography, Link as MUILink, Divider, Grid } from '@mui/material';
 import { Favorite } from '@mui/icons-material';
+import { APP_NAME, APP_TAGLINE } from '../../config/appConfig.js';
 
 const Footer = () => (
   <Box
@@ -22,11 +23,11 @@ const Footer = () => (
               background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
             }}>
-              PCOSense AI
+              {APP_NAME}
             </Typography>
           </Box>
           <Typography variant="body2" color="text.secondary">
-            AI-powered PCOS screening and prediction platform for women's health.
+            {APP_TAGLINE}
           </Typography>
         </Grid>
         <Grid item xs={12} md={4}>
@@ -40,7 +41,7 @@ const Footer = () => (
             Made with <Favorite sx={{ fontSize: 14, color: 'error.main' }} /> for women's health
           </Typography>
           <Typography variant="caption" color="text.secondary">
-            © {new Date().getFullYear()} PCOSense AI. All rights reserved.
+            © {new Date().getFullYear()} {APP_NAME}. All rights reserved.
           </Typography>
         </Grid>
       </Grid>

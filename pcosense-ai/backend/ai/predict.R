@@ -122,7 +122,7 @@ features <- data.frame(
 
 # Log all key inputs for traceability
 message(sprintf(
-  "[PCOSense] Waist=%.1f\" Hip=%.1f\" WHR=%.2f | RBS=%.1f | Vit D3=%.2f SHBG=%.2f FI=%.2f HOMA-IR=%.2f | FamilyHx=%d",
+  "[PRABHA] Waist=%.1f\" Hip=%.1f\" WHR=%.2f | RBS=%.1f | Vit D3=%.2f SHBG=%.2f FI=%.2f HOMA-IR=%.2f | FamilyHx=%d",
   waist_val, hip_val, whr_val, rbs_val,
   vitd3_val, shbg_val, fasting_insulin_val, homa_ir_val,
   family_history_val
