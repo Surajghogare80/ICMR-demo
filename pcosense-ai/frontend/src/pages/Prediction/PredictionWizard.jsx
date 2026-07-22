@@ -419,12 +419,12 @@ const PredictionWizard = () => {
             </Box>
             <Grid container spacing={3}>
               {[
-                { key: 'hairGrowth',    icon: '👱', label: 'Excessive Hair Growth (Hirsutism)', desc: 'Extra hair on face or body' },
-                { key: 'skinDarkening', icon: '⚫', label: 'Dark Patches of Skin',                   desc: 'Dark patches on neck, armpits or groin' },
-                { key: 'pimples',       icon: '🔴', label: 'Acne / Skin Problems',                   desc: 'Persistent acne or skin problems' },
-                { key: 'weightGain',    icon: '⚖️', label: 'Unexplained Weight Gain',           desc: 'Sudden weight gain without obvious reason' },
-                { key: 'hairLoss',      icon: '🧑‍🦲', label: 'Hair Thinning / Hair Loss',             desc: 'Hair thinning or loss from scalp' },
-                { key: 'noneOfAbove',   icon: '✋', label: 'None of the Above',                      desc: 'No symptoms listed above' },
+                { key: 'hairGrowth',    icon: '👱', label: 'Extra hair on body or face'}, //desc: 'Extra hair on face or body (Hirsutism)' },
+                { key: 'skinDarkening', icon: '⚫', label: 'Dark Patches of Skin (neck,armpits)'},                   //desc: 'Dark patches on neck, armpits or groin' },
+                { key: 'pimples',       icon: '🔴', label: 'Acne or Skin Problems'},                   //desc: 'Persistent acne or skin problems' },
+                { key: 'weightGain',    icon: '⚖️', label: 'Unexplained Weight Gain'},           //desc: 'Sudden weight gain without obvious reason' },
+                { key: 'hairLoss',      icon: '🧑‍🦲', label: 'Hair Thinning or loss from scalp'},            // desc: 'Hair thinning or loss from scalp' },
+                { key: 'noneOfAbove',   icon: '✋', label: 'None of the Above'},                      //desc: 'No symptoms listed above' },
               ].map((sym) => {
                 const isChecked = formData.symptoms[sym.key];
                 return (
