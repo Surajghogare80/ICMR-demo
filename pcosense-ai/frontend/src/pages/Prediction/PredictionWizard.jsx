@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import {
   Box, Container, Card, CardContent, Typography, Stepper, Step,
   StepLabel, Button, TextField, Grid, FormControl, InputLabel,
-  Select, MenuItem, Switch, LinearProgress,
+  Select, MenuItem, Switch, LinearProgress, Checkbox,
   Alert, Chip, ToggleButton, ToggleButtonGroup, Divider,
 } from '@mui/material';
-import { ArrowBack, ArrowForward, Science, ListAlt, Biotech, Assignment } from '@mui/icons-material';
+import { ArrowBack, ArrowForward, Science, ListAlt, Biotech, Assignment, RadioButtonUnchecked, CheckCircle } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { predictionService } from '../../services/predictionService.js';
 import { useAuth } from '../../contexts/AuthContext.jsx';
@@ -112,7 +112,7 @@ const PredictionWizard = () => {
       endometrium: '',
       familyHistory: false, // new
     },
-    symptoms:  { weightGain: false, hairGrowth: false, skinDarkening: false, pimples: false, hairLoss: false },
+    symptoms:  { weightGain: false, hairGrowth: false, skinDarkening: false, pimples: false, hairLoss: false, noneOfAbove: false },
     lifestyle: { fastFoodFreq: 'Never', exerciseFreq: '1-2 times/week', stressLevel: 'Moderate', sleepHours: '' },
   });
 
@@ -162,6 +162,14 @@ const PredictionWizard = () => {
       }
       if (periodDuration !== null && (isNaN(periodDuration) || periodDuration < 1 || periodDuration > 15)) {
         toast.error('Period Duration must be between 1 and 15 days.'); return false;
+      }
+    }
+
+    if (stepId === 'symptoms') {
+      const hasSelection = Object.values(formData.symptoms).some(val => val === true);
+      if (!hasSelection) {
+        toast.error('Please select at least one symptom or "None of the Above".');
+        return false;
       }
     }
 
@@ -403,47 +411,92 @@ const PredictionWizard = () => {
       // ── Clinical Symptoms ─────────────────────────────────────────────────
       case 'symptoms':
         return (
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h6" fontWeight={700} gutterBottom>Clinical Symptoms</Typography>
-              <Typography variant="body2" color="text.secondary">
-                Select all symptoms you have experienced in the last 6 months.
-              </Typography>
+          <Box>
+            <Box textAlign="center" mb={4}>
+              <Typography variant="h5" fontWeight={700} gutterBottom>Clinical Symptoms</Typography>
+              <Typography variant="body1" color="text.secondary">Do you have any of these?</Typography>
+              <Typography variant="body2" color="text.secondary" fontWeight={500}>Select all that apply.</Typography>
+            </Box>
+            <Grid container spacing={3}>
+              {[
+                { key: 'hairGrowth',    icon: '👱', label: 'Extra hair on body or face'}, //desc: 'Extra hair on face or body (Hirsutism)' },
+                { key: 'skinDarkening', icon: '⚫', label: 'Dark Patches of Skin (neck,armpits)'},                   //desc: 'Dark patches on neck, armpits or groin' },
+                { key: 'pimples',       icon: '🔴', label: 'Acne or Skin Problems'},                   //desc: 'Persistent acne or skin problems' },
+                { key: 'weightGain',    icon: '⚖️', label: 'Unexplained Weight Gain'},           //desc: 'Sudden weight gain without obvious reason' },
+                { key: 'hairLoss',      icon: '🧑‍🦲', label: 'Hair Thinning or loss from scalp'},            // desc: 'Hair thinning or loss from scalp' },
+                { key: 'noneOfAbove',   icon: '✋', label: 'None of the Above'},                      //desc: 'No symptoms listed above' },
+              ].map((sym) => {
+                const isChecked = formData.symptoms[sym.key];
+                return (
+                  <Grid key={sym.key} item xs={12} sm={6}>
+                    <Card
+                      variant="outlined"
+                      onClick={() => {
+                        setFormData((prev) => {
+                          const currentSym = prev.symptoms;
+                          if (sym.key === 'noneOfAbove') {
+                            return {
+                              ...prev,
+                              symptoms: {
+                                ...currentSym,
+                                weightGain: false, hairGrowth: false, skinDarkening: false, pimples: false, hairLoss: false,
+                                noneOfAbove: !currentSym.noneOfAbove,
+                              }
+                            };
+                          } else {
+                            return {
+                              ...prev,
+                              symptoms: {
+                                ...currentSym,
+                                [sym.key]: !currentSym[sym.key],
+                                noneOfAbove: false,
+                              }
+                            };
+                          }
+                        });
+                      }}
+                      sx={{
+                        p: 2,
+                        height: '100%',
+                        cursor: 'pointer',
+                        borderRadius: 3,
+                        borderColor: isChecked ? '#E91E63' : 'divider',
+                        bgcolor: isChecked
+                          ? (t) => t.palette.mode === 'dark' ? 'rgba(233, 30, 99, 0.12)' : 'rgba(233, 30, 99, 0.04)'
+                          : 'background.paper',
+                        transform: isChecked ? 'scale(1.02)' : 'scale(1)',
+                        transition: 'all 0.2s ease-in-out',
+                        '&:hover': {
+                          borderColor: isChecked ? '#E91E63' : 'text.secondary',
+                        }
+                      }}
+                    >
+                      <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                        <Typography sx={{ fontSize: '2rem', mr: 2, lineHeight: 1, filter: isChecked ? 'drop-shadow(0px 0px 4px rgba(233,30,99,0.4))' : 'none', transition: 'all 0.2s' }}>
+                          {sym.icon}
+                        </Typography>
+                        <Box sx={{ flexGrow: 1 }}>
+                          <Typography variant="subtitle2" fontWeight={600} color={isChecked ? '#E91E63' : 'text.primary'} sx={{ transition: 'color 0.2s' }}>
+                            {sym.label}
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            {sym.desc}
+                          </Typography>
+                        </Box>
+                        <Checkbox
+                          checked={isChecked}
+                          disableRipple
+                          icon={<RadioButtonUnchecked color="action" />}
+                          checkedIcon={<CheckCircle sx={{ color: '#E91E63' }} />}
+                          sx={{ p: 0, ml: 2 }}
+                        />
+                      </Box>
+                    </Card>
+                  </Grid>
+                );
+              })}
             </Grid>
-            {[
-              { key: 'weightGain',    label: 'Unexplained Weight Gain',           desc: 'Sudden or progressive weight gain without dietary changes' },
-              { key: 'hairGrowth',    label: 'Excessive Hair Growth (Hirsutism)', desc: 'Unwanted facial or body hair growth' },
-              { key: 'skinDarkening', label: 'Skin Darkening',                   desc: 'Dark patches on neck, groin, or underarms (acanthosis nigricans)' },
-              { key: 'pimples',       label: 'Acne / Pimples',                   desc: 'Persistent or severe acne on face, chest, or back' },
-              { key: 'hairLoss',      label: 'Hair Thinning / Loss',             desc: 'Thinning of scalp hair or hair loss (alopecia)' },
-            ].map((sym) => (
-              <Grid key={sym.key} item xs={12} sm={6}>
-                <Card
-                  variant="outlined"
-                  sx={{
-                    p: 2,
-                    borderColor: formData.symptoms[sym.key] ? 'primary.main' : 'divider',
-                    bgcolor: formData.symptoms[sym.key]
-                      ? (t) => t.palette.mode === 'dark' ? 'rgba(21,101,192,0.15)' : 'rgba(21,101,192,0.04)'
-                      : 'transparent',
-                    transition: 'all 0.2s',
-                  }}
-                >
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                    <Box>
-                      <Typography variant="subtitle2" fontWeight={600}>{sym.label}</Typography>
-                      <Typography variant="caption" color="text.secondary">{sym.desc}</Typography>
-                    </Box>
-                    <Switch
-                      checked={formData.symptoms[sym.key]}
-                      onChange={(e) => updateField('symptoms', sym.key, e.target.checked)}
-                      color="primary"
-                    />
-                  </Box>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
+          </Box>
         );
 
       // ── Lifestyle Habits ──────────────────────────────────────────────────
