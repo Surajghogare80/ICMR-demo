@@ -504,7 +504,7 @@ const PredictionWizard = () => {
         return (
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Typography variant="h6" fontWeight={700} gutterBottom>Lifestyle Habits</Typography>
+              <Typography variant="h6" fontWeight={700} gutterBottom>Lifestyle </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
