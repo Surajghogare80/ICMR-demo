@@ -9,6 +9,8 @@ export const ROUTES = {
   PREDICTION: '/prediction',
   PREDICTION_RESULT: '/prediction/result',
   HISTORY: '/history',
+  LIFESTYLE: '/lifestyle',
+  LIFESTYLE_ARTICLE: '/lifestyle/:id',
   PROFILE: '/profile',
   ADMIN: '/admin',
   ADMIN_USERS: '/admin/users',
