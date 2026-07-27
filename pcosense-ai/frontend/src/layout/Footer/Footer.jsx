@@ -30,12 +30,12 @@ const Footer = () => (
             {APP_TAGLINE}
           </Typography>
         </Grid>
-        <Grid item xs={12} md={4}>
+        {/* <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" fontWeight={700} gutterBottom>Medical Disclaimer</Typography>
           <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1.7 }}>
             This tool is for educational purposes only and does NOT replace professional medical advice. Always consult a qualified healthcare provider.
           </Typography>
-        </Grid>
+        </Grid> */}
         <Grid item xs={12} md={4} sx={{ textAlign: { md: 'right' } }}>
           <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 0.5, justifyContent: { md: 'flex-end' } }}>
             Made with <Favorite sx={{ fontSize: 14, color: 'error.main' }} /> for women's health
