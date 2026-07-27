@@ -1,13 +1,14 @@
 // src/pages/Prediction/PredictionWizard.jsx
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import {
   Box, Container, Card, CardContent, Typography, Stepper, Step,
   StepLabel, Button, TextField, Grid, FormControl, InputLabel,
   Select, MenuItem, Switch, LinearProgress, Checkbox,
-  Alert, Chip, ToggleButton, ToggleButtonGroup, Divider,
+  Alert, Chip, ToggleButton, ToggleButtonGroup, Divider, Stack, IconButton,
 } from '@mui/material';
-import { ArrowBack, ArrowForward, Science, ListAlt, Biotech, Assignment, RadioButtonUnchecked, CheckCircle } from '@mui/icons-material';
+import { ArrowBack, ArrowForward, Science, ListAlt, Biotech, Assignment, RadioButtonUnchecked, CheckCircle, Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { predictionService } from '../../services/predictionService.js';
 import { useAuth } from '../../contexts/AuthContext.jsx';
@@ -42,10 +43,10 @@ const PINK_BTN_SX = {
 // ─── Step list builder ────────────────────────────────────────────────────────
 const getStepsList = (mode) => {
   const list = [
-    { id: 'personal',   label: 'Personal Info',      description: 'Age, Measurements & Family History' },
-    { id: 'menstrual',  label: 'Menstrual History',  description: 'Cycle, Regularity & Flow Intensity' },
-    { id: 'symptoms',   label: 'Clinical Symptoms',  description: 'Physical Symptoms & Signs' },
-    { id: 'lifestyle',  label: 'Lifestyle Habits',   description: 'Diet, Exercise & Stress Levels' },
+    { id: 'personal',   label: 'Personal Info',     description: 'Age, Measurements & Family History' },
+    { id: 'menstrual',  label: 'Menstrual History', description: 'Cycle, Regularity & Flow Intensity' },
+    { id: 'symptoms',   label: 'Clinical Symptoms', description: 'Physical Symptoms & Signs' },
+    { id: 'lifestyle',  label: 'Lifestyle',          description: 'Diet, Exercise & Stress Levels' },
   ];
 
   if (mode === 'blood' || mode === 'both') {
@@ -85,6 +86,7 @@ const getWHRColor = (whr) => {
 const PredictionWizard = () => {
   const navigate      = useNavigate();
   const { user }      = useAuth();
+  const { t }         = useTranslation();
   const [screeningMode, setScreeningMode] = useState(null);
   const [selectedMode, setSelectedMode]   = useState(null);
   const [activeStep, setActiveStep]       = useState(0);
@@ -113,7 +115,7 @@ const PredictionWizard = () => {
       familyHistory: false, // new
     },
     symptoms:  { weightGain: false, hairGrowth: false, skinDarkening: false, pimples: false, hairLoss: false, noneOfAbove: false },
-    lifestyle: { fastFoodFreq: 'Never', exerciseFreq: '1-2 times/week', stressLevel: 'Moderate', sleepHours: '' },
+    lifestyle: { fastFoodFreq: 'No', exerciseFreq: 'Yes', stressLevel: 'Moderate', sleepHours: 7 },
   });
 
   const steps         = getStepsList(screeningMode || 'symptoms');
@@ -143,6 +145,12 @@ const PredictionWizard = () => {
 
   const updateField = (section, field, value) => {
     setFormData((prev) => ({ ...prev, [section]: { ...prev[section], [field]: value } }));
+  };
+
+  const handleSleepStep = (isPlus) => {
+    const current = Number(formData.lifestyle.sleepHours) || 7;
+    const next = isPlus ? Math.min(12, current + 1) : Math.max(3, current - 1);
+    updateField('lifestyle', 'sleepHours', next);
   };
 
   // ─── Validation ─────────────────────────────────────────────────────────────
@@ -371,8 +379,10 @@ const PredictionWizard = () => {
         menstrual: menstrualData,
         symptoms:  formData.symptoms,
         lifestyle: {
-          ...formData.lifestyle,
-          sleepHours: formData.lifestyle.sleepHours ? Number(formData.lifestyle.sleepHours) : undefined,
+          fastFoodFreq: formData.lifestyle.fastFoodFreq || 'No',
+          exerciseFreq: formData.lifestyle.exerciseFreq || 'Yes',
+          stressLevel:  formData.lifestyle.stressLevel  || 'Moderate',
+          sleepHours:   Number(formData.lifestyle.sleepHours) || 7,
         },
       };
 
@@ -499,47 +509,130 @@ const PredictionWizard = () => {
           </Box>
         );
 
-      // ── Lifestyle Habits ──────────────────────────────────────────────────
-      case 'lifestyle':
+      // ── Lifestyle ──────────────────────────────────────────────────
+      case 'lifestyle': {
+        const toggleStyle = {
+          gap: 2,
+          display: 'flex',
+          justifyContent: 'center',
+          '& .MuiToggleButton-root': {
+            px: 4.5,
+            py: 1,
+            borderRadius: '24px !important',
+            fontWeight: 800,
+            fontSize: '0.92rem',
+            border: '2px solid rgba(233, 30, 99, 0.35) !important',
+            color: '#E91E63',
+            transition: 'all 0.22s cubic-bezier(0.4, 0, 0.2, 1)',
+            minWidth: '125px',
+            '&.Mui-selected': {
+              bgcolor: '#E91E63',
+              color: '#fff',
+              borderColor: '#E91E63 !important',
+              boxShadow: '0 4px 16px rgba(233, 30, 99, 0.35)',
+              '&:hover': { bgcolor: '#C2185B' },
+            },
+            '&:hover': {
+              bgcolor: 'rgba(233, 30, 99, 0.08)',
+              transform: 'translateY(-1px)',
+            },
+          },
+        };
+
         return (
           <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Typography variant="h6" fontWeight={700} gutterBottom>Lifestyle </Typography>
+            <Grid item xs={12} sx={{ textAlign: 'center', mb: 2 }}>
+              <Typography variant="h5" fontWeight={800} gutterBottom>{t('lifestyle', 'Lifestyle')}</Typography>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <InputLabel>Fast Food Frequency</InputLabel>
-                <Select value={formData.lifestyle.fastFoodFreq} label="Fast Food Frequency" onChange={(e) => updateField('lifestyle', 'fastFoodFreq', e.target.value)}>
-                  {FAST_FOOD_OPTIONS.map((o) => <MenuItem key={o} value={o}>{o}</MenuItem>)}
-                </Select>
-              </FormControl>
+
+            {/* Fast Food */}
+            <Grid item xs={12} md={6}>
+              <Box sx={{ p: 3, borderRadius: '20px', bgcolor: 'rgba(233, 30, 99, 0.03)', border: '1px solid rgba(233, 30, 99, 0.15)', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <Typography variant="subtitle1" fontWeight={700} color="text.primary" sx={{ mb: 2 }}>
+                  {t('eat_fast_food_regularly', 'Do you eat fast food regularly?')}
+                </Typography>
+                <ToggleButtonGroup
+                  value={formData.lifestyle.fastFoodFreq}
+                  exclusive
+                  onChange={(_, val) => { if (val) updateField('lifestyle', 'fastFoodFreq', val) }}
+                  sx={toggleStyle}
+                >
+                  <ToggleButton value="Yes">{t('yes', 'Yes')}</ToggleButton>
+                  <ToggleButton value="No">{t('no', 'No')}</ToggleButton>
+                </ToggleButtonGroup>
+              </Box>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <InputLabel>Exercise Frequency</InputLabel>
-                <Select value={formData.lifestyle.exerciseFreq} label="Exercise Frequency" onChange={(e) => updateField('lifestyle', 'exerciseFreq', e.target.value)}>
-                  {EXERCISE_OPTIONS.map((o) => <MenuItem key={o} value={o}>{o}</MenuItem>)}
-                </Select>
-              </FormControl>
+
+            {/* Exercise */}
+            <Grid item xs={12} md={6}>
+              <Box sx={{ p: 3, borderRadius: '20px', bgcolor: 'rgba(233, 30, 99, 0.03)', border: '1px solid rgba(233, 30, 99, 0.15)', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <Typography variant="subtitle1" fontWeight={700} color="text.primary" sx={{ mb: 2 }}>
+                  {t('exercise_regularly', 'Do you exercise regularly?')}
+                </Typography>
+                <ToggleButtonGroup
+                  value={formData.lifestyle.exerciseFreq}
+                  exclusive
+                  onChange={(_, val) => { if (val) updateField('lifestyle', 'exerciseFreq', val) }}
+                  sx={toggleStyle}
+                >
+                  <ToggleButton value="Yes">{t('yes', 'Yes')}</ToggleButton>
+                  <ToggleButton value="No">{t('no', 'No')}</ToggleButton>
+                </ToggleButtonGroup>
+              </Box>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <InputLabel>Stress Level</InputLabel>
-                <Select value={formData.lifestyle.stressLevel} label="Stress Level" onChange={(e) => updateField('lifestyle', 'stressLevel', e.target.value)}>
-                  {STRESS_OPTIONS.map((o) => <MenuItem key={o} value={o}>{o}</MenuItem>)}
-                </Select>
-              </FormControl>
+
+            {/* Stress Level */}
+            <Grid item xs={12} md={6}>
+              <Box sx={{ p: 3, borderRadius: '20px', bgcolor: 'rgba(233, 30, 99, 0.03)', border: '1px solid rgba(233, 30, 99, 0.15)', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <Typography variant="subtitle1" fontWeight={700} color="text.primary" sx={{ mb: 2 }}>
+                  {t('stress_level', 'Stress Level')}
+                </Typography>
+                <ToggleButtonGroup
+                  value={formData.lifestyle.stressLevel}
+                  exclusive
+                  onChange={(_, val) => { if (val) updateField('lifestyle', 'stressLevel', val) }}
+                  sx={{ ...toggleStyle, '& .MuiToggleButton-root': { ...toggleStyle['& .MuiToggleButton-root'], minWidth: '90px', px: 2 } }}
+                >
+                  <ToggleButton value="Low">{t('low', 'Low')}</ToggleButton>
+                  <ToggleButton value="Moderate">{t('moderate', 'Moderate')}</ToggleButton>
+                  <ToggleButton value="High">{t('high', 'High')}</ToggleButton>
+                </ToggleButtonGroup>
+              </Box>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth label="Sleep Hours per Night" type="number"
-                value={formData.lifestyle.sleepHours}
-                onChange={(e) => updateField('lifestyle', 'sleepHours', e.target.value)}
-                inputProps={{ min: 3, max: 12 }} placeholder="e.g. 8"
-              />
+
+            {/* Sleep Hours */}
+            <Grid item xs={12} md={6}>
+              <Box sx={{ p: 3, borderRadius: '20px', bgcolor: 'rgba(233, 30, 99, 0.03)', border: '1px solid rgba(233, 30, 99, 0.15)', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <Typography variant="subtitle1" fontWeight={700} color="text.primary" sx={{ mb: 2 }}>
+                  {t('sleep_hours_per_night', 'Sleep Hours per Night')}
+                </Typography>
+                <Stack direction="row" alignItems="center" justifyContent="center" spacing={2}>
+                  <IconButton
+                    onClick={() => handleSleepStep(false)}
+                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 40, height: 40 }}
+                  >
+                    <RemoveIcon />
+                  </IconButton>
+                  <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
+                    <Typography variant="h3" fontWeight={900} sx={{ color: '#E91E63', lineHeight: 1 }}>
+                      {formData.lifestyle.sleepHours || 7}
+                    </Typography>
+                    <Typography variant="subtitle1" fontWeight={700} color="text.secondary">
+                      {t('hours', 'hours')}
+                    </Typography>
+                  </Box>
+                  <IconButton
+                    onClick={() => handleSleepStep(true)}
+                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 40, height: 40 }}
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </Stack>
+              </Box>
             </Grid>
           </Grid>
         );
+      }
 
       // ── Blood Test Results ────────────────────────────────────────────────
       case 'blood_report': {

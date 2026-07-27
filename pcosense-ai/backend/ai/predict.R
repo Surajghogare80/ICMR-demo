@@ -50,11 +50,26 @@ if (!is.null(input_data$menstrual$cycleRegularity)) {
   }
 }
 
-# Exercise encoding
-reg_exercise_val <- 1 # Default: Yes (has physical activity)
-if (!is.null(input_data$lifestyle$exerciseFreq) && input_data$lifestyle$exerciseFreq == "Never") {
+# Exercise encoding — Yes = 1 (regular), No = 0 (not regular)
+reg_exercise_val <- 1 # Default: Yes (exercises regularly)
+if (!is.null(input_data$lifestyle$exerciseFreq) && input_data$lifestyle$exerciseFreq == "No") {
   reg_exercise_val <- 0
 }
+
+# Fast Food encoding — Yes = 1, No = 0
+fast_food_val <- 0 # Default: No
+if (!is.null(input_data$lifestyle$fastFoodFreq) && input_data$lifestyle$fastFoodFreq == "Yes") {
+  fast_food_val <- 1
+}
+
+# Stress Level encoding
+stress_level_val <- input_data$lifestyle$stressLevel
+if (is.null(stress_level_val) || !stress_level_val %in% c("Low", "Moderate", "High")) {
+  stress_level_val <- "Moderate" # Safe default
+}
+
+# Sleep Hours
+sleep_hours_val <- safe_num(input_data$lifestyle$sleepHours, 7)
 
 # Family history encoding (new)
 family_history_val <- 0
@@ -117,15 +132,19 @@ features <- data.frame(
   `Avg..F.size..L...mm.` = safe_num(input_data$menstrual$avgFsize, 15.0),
   `Avg..F.size..R...mm.` = safe_num(input_data$menstrual$avgFsize, 16.0),
   `Endometrium..mm.` = safe_num(input_data$menstrual$endometrium, 8.43),
+  # Lifestyle features — exact column names as expected by the trained model
+  `Fast food (Y/N)` = as.integer(fast_food_val),
+  `Reg.Exercise(Y/N)` = as.integer(reg_exercise_val),
+  `Stress Levels` = stress_level_val,
   check.names = FALSE # Prevent R from converting dots to spaces/underscores
 )
 
 # Log all key inputs for traceability
 message(sprintf(
-  "[PRABHA] Waist=%.1f\" Hip=%.1f\" WHR=%.2f | RBS=%.1f | Vit D3=%.2f SHBG=%.2f FI=%.2f HOMA-IR=%.2f | FamilyHx=%d",
+  "[PRABHA] Waist=%.1f\" Hip=%.1f\" WHR=%.2f | RBS=%.1f | Vit D3=%.2f SHBG=%.2f FI=%.2f HOMA-IR=%.2f | FamilyHx=%d | FastFood=%d Exercise=%d Stress=%s Sleep=%.1f",
   waist_val, hip_val, whr_val, rbs_val,
   vitd3_val, shbg_val, fasting_insulin_val, homa_ir_val,
-  family_history_val
+  family_history_val, fast_food_val, reg_exercise_val, stress_level_val, sleep_hours_val
 ))
 
 # 6. Run prediction

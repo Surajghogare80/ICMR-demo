@@ -23,13 +23,13 @@ const generateDummyPrediction = (inputs) => {
 
   if (inputs.menstrual?.cycleRegularity === 'Irregular') riskScore += 30;
   if (inputs.menstrual?.cycleRegularity === 'Absent') riskScore += 50;
-  if (inputs.menstrual?.familyHistory) riskScore += 15; // Family history bonus
+  if (inputs.menstrual?.familyHistory) riskScore += 15;
   if (inputs.symptoms?.weightGain) riskScore += 15;
   if (inputs.symptoms?.hairGrowth) riskScore += 15;
   if (inputs.symptoms?.skinDarkening) riskScore += 10;
   if (inputs.symptoms?.pimples) riskScore += 10;
-  if (inputs.lifestyle?.fastFoodFreq === 'Daily') riskScore += 10;
-  if (inputs.lifestyle?.exerciseFreq === 'Never') riskScore += 10;
+  if (inputs.lifestyle?.fastFoodFreq === 'Yes') riskScore += 10;
+  if (inputs.lifestyle?.exerciseFreq === 'No') riskScore += 10;
   if (inputs.personal?.bmi > 30) riskScore += 20;
   // WHR risk factor
   if (inputs.personal?.waistHipRatio >= 0.85) riskScore += 15;
@@ -112,12 +112,20 @@ export const predictionService = {
       ...(insulinResistance !== undefined && insulinResistance !== '' ? { insulinResistance: Number(insulinResistance) } : {}),
     };
 
+    // Normalize and apply defaults to lifestyle fields before saving
+    const normalizedLifestyle = {
+      fastFoodFreq: lifestyle?.fastFoodFreq || 'No',
+      exerciseFreq: lifestyle?.exerciseFreq || 'Yes',
+      stressLevel:  lifestyle?.stressLevel  || 'Moderate',
+      sleepHours:   Number(lifestyle?.sleepHours) || 7,
+    };
+
     // Save each section to its own collection
     const [personalMetric, menstrualHistory, clinicalSymptom, lifestyleHabit] = await Promise.all([
       predictionRepository.createPersonalMetric({ userId, ...extendedPersonal }),
       predictionRepository.createMenstrualHistory({ userId, ...menstrual }),
       predictionRepository.createClinicalSymptom({ userId, ...symptoms }),
-      predictionRepository.createLifestyleHabit({ userId, ...lifestyle }),
+      predictionRepository.createLifestyleHabit({ userId, ...normalizedLifestyle }),
     ]);
 
     // Build the full inputs object for the R model — all live values included
@@ -133,14 +141,16 @@ export const predictionService = {
       insulinResistance: insulinResistance !== undefined && insulinResistance !== '' ? Number(insulinResistance) : undefined,
     };
 
+    const rInputs = { personal: rInputPersonal, menstrual, symptoms, lifestyle: normalizedLifestyle };
+
     // Generate prediction using real R model, falling back to dummy if Rscript is not installed
     let aiResult;
     try {
-      aiResult = await runRModel({ personal: rInputPersonal, menstrual, symptoms, lifestyle });
+      aiResult = await runRModel(rInputs);
       logger.info(`Prediction generated using Random Forest RDS model for user ${userId}: ${aiResult.result}`);
     } catch (err) {
       logger.warn(`Failed to execute ML R model, falling back to rule-based engine. Reason: ${err.message}`);
-      aiResult = generateDummyPrediction({ personal: rInputPersonal, menstrual, symptoms, lifestyle });
+      aiResult = generateDummyPrediction(rInputs);
     }
 
     // Save the prediction referencing all 4 collections
