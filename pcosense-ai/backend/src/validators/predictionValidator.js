@@ -84,10 +84,22 @@ export const predictionValidator = [
   body('symptoms.hairLoss').optional().isBoolean(),
 
   // ── Lifestyle ─────────────────────────────────────────────────────────────
-  body('lifestyle.fastFoodFreq').optional().isString(),
-  body('lifestyle.exerciseFreq').optional().isString(),
-  body('lifestyle.stressLevel').optional().isString(),
+  body('lifestyle.fastFoodFreq')
+    .optional()
+    .isIn(['Yes', 'No'])
+    .withMessage('Fast food must be Yes or No'),
+
+  body('lifestyle.exerciseFreq')
+    .optional()
+    .isIn(['Yes', 'No'])
+    .withMessage('Exercise must be Yes or No'),
+
+  body('lifestyle.stressLevel')
+    .optional()
+    .isIn(['Low', 'Moderate', 'High'])
+    .withMessage('Stress level must be Low, Moderate, or High'),
+
   body('lifestyle.sleepHours')
     .optional({ nullable: true })
-    .isFloat({ min: 3, max: 12 }).withMessage('Sleep hours must be 3–12'),
+    .isFloat({ min: 3, max: 12 }).withMessage('Sleep hours must be between 3 and 12'),
 ];

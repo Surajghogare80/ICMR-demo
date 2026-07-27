@@ -10,34 +10,26 @@ const lifestyleHabitSchema = new mongoose.Schema(
     },
     fastFoodFreq: {
       type: String,
-      required: [true, 'Fast food frequency is required'],
-      enum: ['Never', 'Rarely', '1-2 times/week', '3-4 times/week', 'Daily'],
+      required: [true, 'Fast food selection is required'],
+      enum: ['Yes', 'No'],
+      default: 'No',
     },
     exerciseFreq: {
       type: String,
-      required: [true, 'Exercise frequency is required'],
-      enum: ['Never', '1-2 times/week', '3-4 times/week', '5-6 times/week', 'Daily'],
+      required: [true, 'Exercise selection is required'],
+      enum: ['Yes', 'No'],
+      default: 'Yes',
     },
     stressLevel: {
       type: String,
-      enum: ['Low', 'Moderate', 'High', 'Very High'],
+      enum: ['Low', 'Moderate', 'High'],
       default: 'Moderate',
     },
     sleepHours: {
       type: Number,
       min: [3, 'Sleep hours must be at least 3'],
       max: [12, 'Sleep hours cannot exceed 12'],
-      comment: 'hours per night',
-    },
-    smokingStatus: {
-      type: String,
-      enum: ['Never', 'Former', 'Current'],
-      default: 'Never',
-    },
-    alcoholConsumption: {
-      type: String,
-      enum: ['Never', 'Occasional', 'Moderate', 'Heavy'],
-      default: 'Never',
+      default: 7,
     },
   },
   { timestamps: true }
