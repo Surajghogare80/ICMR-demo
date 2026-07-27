@@ -35,6 +35,19 @@ const menstrualHistorySchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    // Family History of PCOS
+    familyHistory: {
+      type: Boolean,
+      default: false,
+      comment: 'Has PCOS been diagnosed in mother, aunt, siblings, cousins, or grandmother',
+    },
+    // Optional Ultrasound Scan parameters
+    follicleNoL: { type: Number, default: null },
+    follicleNoR: { type: Number, default: null },
+    avgFsizeL: { type: Number, default: null },
+    avgFsizeR: { type: Number, default: null },
+    ovaryVolume: { type: Number, default: null },
+    endometrium: { type: Number, default: null },
   },
   { timestamps: true }
 );

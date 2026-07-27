@@ -10,14 +10,16 @@ import {
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { ROUTES } from '../../constants/index.js';
+import { useAuth } from '../../contexts/AuthContext.jsx';
+import { APP_NAME, APP_TAGLINE, APP_DESCRIPTION } from '../../config/appConfig.js';
 
 const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } };
 
 const features = [
-  { icon: <Psychology />, title: 'AI-Powered Screening', desc: 'Advanced multi-factor analysis using clinical and lifestyle data for accurate PCOS risk assessment.', color: '#1565C0' },
-  { icon: <Security />, title: 'Secure & Private', desc: 'Your health data is encrypted and protected with enterprise-grade security. We take privacy seriously.', color: '#00897B' },
-  { icon: <Speed />, title: 'Instant Results', desc: 'Get your PCOS risk assessment in seconds with detailed recommendations and next steps.', color: '#7C4DFF' },
-  { icon: <Analytics />, title: 'Track History', desc: 'Monitor your health journey over time with prediction history and visual trend analysis.', color: '#F57F17' },
+  { icon: <Psychology />, title: 'AI-Powered Screening', desc: 'Advanced multi-factor analysis using clinical and lifestyle data for accurate PCOS risk assessment.', color: '#E91E63' },
+  { icon: <Security />, title: 'Secure & Private', desc: 'Your health data is encrypted and protected with enterprise-grade security. We take privacy seriously.', color: '#F06292' },
+  { icon: <Speed />, title: 'Instant Results', desc: 'Get your PCOS risk assessment in seconds with detailed recommendations and next steps.', color: '#FFA726' },
+  { icon: <Analytics />, title: 'Track History', desc: 'Monitor your health journey over time with prediction history and visual trend analysis.', color: '#66BB6A' },
 ];
 
 const steps = [
@@ -29,7 +31,7 @@ const steps = [
 
 const faqs = [
   { q: 'What is PCOS?', a: 'Polycystic Ovary Syndrome (PCOS) is a common hormonal disorder affecting women of reproductive age. It causes irregular periods, excess androgen, and polycystic ovaries.' },
-  { q: 'Is this a medical diagnosis?', a: 'No. PCOSense AI is a screening tool only. Results are for educational purposes and should be discussed with a qualified gynecologist or endocrinologist.' },
+  { q: 'Is this a medical diagnosis?', a: `No. ${APP_NAME} is a screening tool only. Results are for educational purposes and should be discussed with a qualified gynecologist or endocrinologist.` },
   { q: 'How accurate is the prediction?', a: 'Our model is trained on clinical datasets and uses multiple risk factors. However, only a licensed medical professional can provide a formal PCOS diagnosis.' },
   { q: 'Is my data safe?', a: 'Yes. All data is encrypted in transit and at rest. We do not share your health information with third parties.' },
   { q: 'Can I delete my data?', a: 'Yes. You can delete your prediction history at any time from your dashboard.' },
@@ -37,6 +39,7 @@ const faqs = [
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
@@ -45,15 +48,17 @@ const LandingPage = () => {
         sx={{
           position: 'relative',
           overflow: 'hidden',
-          background: 'linear-gradient(135deg, #0A0E1A 0%, #0D1B3E 50%, #0A2518 100%)',
+          background: (theme) => theme.palette.mode === 'dark'
+            ? 'linear-gradient(135deg, #1A0A0F 0%, #2D1D23 50%, #1F0D15 100%)'
+            : 'linear-gradient(135deg, #FFF0F5 0%, #FFF8FB 50%, #FFE4EC 100%)',
           py: { xs: 10, md: 14 },
         }}
       >
         {/* Background glow */}
         {[
-          { top: '10%', left: '10%', color: 'rgba(21,101,192,0.15)' },
-          { top: '60%', right: '5%', color: 'rgba(0,137,123,0.12)' },
-          { top: '30%', left: '60%', color: 'rgba(124,77,255,0.08)' },
+          { top: '10%', left: '10%', color: 'rgba(233,30,99,0.12)' },
+          { top: '60%', right: '5%', color: 'rgba(240,98,146,0.10)' },
+          { top: '30%', left: '60%', color: 'rgba(248,187,208,0.08)' },
         ].map((g, i) => (
           <Box key={i} sx={{ position: 'absolute', width: 400, height: 400, borderRadius: '50%', background: `radial-gradient(circle, ${g.color} 0%, transparent 70%)`, ...g, filter: 'blur(60px)', pointerEvents: 'none' }} />
         ))}
@@ -62,40 +67,80 @@ const LandingPage = () => {
           <Grid container spacing={6} alignItems="center">
             <Grid item xs={12} md={7}>
               <motion.div variants={fadeUp} initial="hidden" animate="visible" transition={{ duration: 0.7 }}>
-                <Chip label="🧬 AI-Powered Healthcare" size="small" sx={{ mb: 3, bgcolor: 'rgba(21,101,192,0.2)', color: '#90CAF9', border: '1px solid rgba(21,101,192,0.3)' }} />
-                <Typography variant="h1" sx={{ fontSize: { xs: '2.5rem', md: '3.8rem' }, fontWeight: 900, color: '#FFFFFF', lineHeight: 1.1, mb: 3 }}>
+                 <Chip label="🧬 AI-Powered Healthcare" size="small" sx={{ mb: 3, bgcolor: 'rgba(233,30,99,0.12)', color: 'primary.main', border: '1px solid rgba(233,30,99,0.2)' }} />
+                <Typography variant="h1" sx={{ fontSize: { xs: '2.5rem', md: '3.8rem' }, fontWeight: 900, color: (theme) => theme.palette.mode === 'dark' ? '#FFFFFF' : '#2D2D2D', lineHeight: 1.1, mb: 3 }}>
                   Understand Your
-                  <Box component="span" sx={{ display: 'block', background: 'linear-gradient(135deg, #42A5F5, #26C6DA, #66BB6A)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                  <Box component="span" sx={{ display: 'block', background: 'linear-gradient(135deg, #EC407A, #F48FB1, #FFA726)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                     PCOS Risk Today
                   </Box>
                 </Typography>
-                <Typography variant="h6" sx={{ color: 'rgba(255,255,255,0.65)', fontWeight: 400, lineHeight: 1.8, mb: 5, maxWidth: 520 }}>
-                  PCOSense AI analyzes your clinical symptoms, menstrual history, and lifestyle factors to provide a comprehensive PCOS risk assessment — powered by advanced AI.
+                <Typography variant="h6" sx={{ color: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.65)' : 'text.secondary', fontWeight: 400, lineHeight: 1.8, mb: 5, maxWidth: 520 }}>
+                  {APP_DESCRIPTION}
                 </Typography>
-                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                  <Button
-                    variant="contained"
-                    size="large"
-                    endIcon={<ArrowForward />}
-                    onClick={() => navigate(ROUTES.REGISTER)}
-                    sx={{ px: 4, py: 1.5, fontSize: '1rem', background: 'linear-gradient(135deg, #1976D2, #00897B)', boxShadow: '0 8px 24px rgba(21,101,192,0.4)' }}
-                  >
-                    Start Free Screening
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    size="large"
-                    onClick={() => navigate(ROUTES.LOGIN)}
-                    sx={{ px: 4, py: 1.5, fontSize: '1rem', borderColor: 'rgba(255,255,255,0.3)', color: '#FFF', '&:hover': { borderColor: '#FFF', bgcolor: 'rgba(255,255,255,0.05)' } }}
-                  >
-                    Login
-                  </Button>
+                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                  {isAuthenticated ? (
+                    <>
+                      <Button
+                        variant="contained"
+                        size="large"
+                        endIcon={<ArrowForward />}
+                        onClick={() => navigate(ROUTES.PREDICTION)}
+                        sx={{ px: 4, py: 1.5, fontSize: '1rem', background: 'linear-gradient(135deg, #EC407A, #F48FB1)', boxShadow: '0 8px 24px rgba(233,30,99,0.3)' }}
+                      >
+                        Start Screening
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        size="large"
+                        onClick={() => navigate(ROUTES.DASHBOARD)}
+                        sx={{
+                          px: 4, py: 1.5, fontSize: '1rem',
+                          borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(233,30,99,0.4)',
+                          color: (theme) => theme.palette.mode === 'dark' ? '#FFF' : 'primary.main',
+                          '&:hover': {
+                            borderColor: 'primary.main',
+                            bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(233,30,99,0.04)'
+                          }
+                        }}
+                      >
+                        Dashboard
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        variant="contained"
+                        size="large"
+                        endIcon={<ArrowForward />}
+                        onClick={() => navigate(ROUTES.REGISTER)}
+                        sx={{ px: 4, py: 1.5, fontSize: '1rem', background: 'linear-gradient(135deg, #EC407A, #F48FB1)', boxShadow: '0 8px 24px rgba(233,30,99,0.3)' }}
+                      >
+                        Start Free Screening
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        size="large"
+                        onClick={() => navigate(ROUTES.LOGIN)}
+                        sx={{
+                          px: 4, py: 1.5, fontSize: '1rem',
+                          borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(233,30,99,0.4)',
+                          color: (theme) => theme.palette.mode === 'dark' ? '#FFF' : 'primary.main',
+                          '&:hover': {
+                            borderColor: 'primary.main',
+                            bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(233,30,99,0.04)'
+                          }
+                        }}
+                      >
+                        Login
+                      </Button>
+                    </>
+                  )}
                 </Box>
                 <Box sx={{ mt: 4, display: 'flex', gap: 3, flexWrap: 'wrap' }}>
                   {['Free to use', 'Private & secure', 'Instant results'].map((t) => (
                     <Box key={t} sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
                       <CheckCircle sx={{ fontSize: 16, color: '#66BB6A' }} />
-                      <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>{t}</Typography>
+                      <Typography variant="body2" sx={{ color: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'text.secondary' }}>{t}</Typography>
                     </Box>
                   ))}
                 </Box>
@@ -103,24 +148,24 @@ const LandingPage = () => {
             </Grid>
             <Grid item xs={12} md={5}>
               <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }}>
-                <Card sx={{ bgcolor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 4, p: 3, backdropFilter: 'blur(20px)' }}>
-                  <Typography variant="h6" sx={{ color: '#FFF', mb: 3, fontWeight: 700 }}>🔬 Sample Prediction Result</Typography>
+                <Card sx={{ borderRadius: 4, p: 3, bgcolor: 'background.paper', border: '1px solid', borderColor: 'divider' }}>
+                  <Typography variant="h6" sx={{ mb: 3, fontWeight: 700 }}>🔬 Sample Prediction Result</Typography>
                   {[
                     { label: 'Risk Level', value: 'Low Risk', color: '#66BB6A' },
-                    { label: 'Probability', value: '26%', color: '#42A5F5' },
-                    { label: 'Confidence', value: '98%', color: '#26C6DA' },
+                    { label: 'Probability', value: '26%', color: 'primary.main' },
+                    { label: 'Confidence', value: '98%', color: 'info.main' },
                   ].map((item) => (
-                    <Box key={item.label} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', py: 1.2, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                      <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)' }}>{item.label}</Typography>
+                    <Box key={item.label} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', py: 1.2, borderBottom: '1px solid', borderColor: 'divider' }}>
+                      <Typography variant="body2" color="text.secondary">{item.label}</Typography>
                       <Typography variant="subtitle2" fontWeight={700} sx={{ color: item.color }}>{item.value}</Typography>
                     </Box>
                   ))}
                   <Box sx={{ mt: 2 }}>
-                    <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.5)' }}>Recommendations</Typography>
+                    <Typography variant="caption" color="text.secondary">Recommendations</Typography>
                     {['Maintain healthy lifestyle', 'Exercise regularly', 'Consult doctor if symptoms increase'].map((r) => (
                       <Box key={r} sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
                         <CheckCircle sx={{ fontSize: 14, color: '#66BB6A' }} />
-                        <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)' }}>{r}</Typography>
+                        <Typography variant="caption" color="text.secondary">{r}</Typography>
                       </Box>
                     ))}
                   </Box>
@@ -134,7 +179,7 @@ const LandingPage = () => {
       {/* Features */}
       <Container maxWidth="lg" sx={{ py: 10 }}>
         <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.6 }}>
-          <Typography variant="h3" fontWeight={800} textAlign="center" gutterBottom>Why PCOSense AI?</Typography>
+          <Typography variant="h3" fontWeight={800} textAlign="center" gutterBottom>Why {APP_NAME}?</Typography>
           <Typography variant="h6" color="text.secondary" textAlign="center" sx={{ mb: 7, fontWeight: 400, maxWidth: 600, mx: 'auto' }}>
             A comprehensive, evidence-based approach to PCOS risk assessment
           </Typography>
@@ -212,19 +257,19 @@ const LandingPage = () => {
       </Box>
 
       {/* CTA */}
-      <Box sx={{ background: 'linear-gradient(135deg, #1565C0, #00897B)', py: 10, textAlign: 'center' }}>
+      <Box sx={{ background: 'linear-gradient(135deg, #EC407A, #F48FB1)', py: 10, textAlign: 'center' }}>
         <Container maxWidth="md">
           <Typography variant="h3" fontWeight={800} color="white" gutterBottom>Take the First Step Today</Typography>
-          <Typography variant="h6" sx={{ color: 'rgba(255,255,255,0.8)', mb: 4, fontWeight: 400 }}>
+          <Typography variant="h6" sx={{ color: 'rgba(255,255,255,0.9)', mb: 4, fontWeight: 400 }}>
             Early awareness can make all the difference. Start your free screening now.
           </Typography>
           <Button
             variant="contained"
             size="large"
-            onClick={() => navigate(ROUTES.REGISTER)}
-            sx={{ px: 6, py: 1.8, fontSize: '1.1rem', bgcolor: 'white', color: '#1565C0', fontWeight: 700, '&:hover': { bgcolor: 'rgba(255,255,255,0.9)' } }}
+            onClick={() => navigate(isAuthenticated ? ROUTES.PREDICTION : ROUTES.REGISTER)}
+            sx={{ px: 6, py: 1.8, fontSize: '1.1rem', bgcolor: 'white', color: '#E91E63', fontWeight: 700, '&:hover': { bgcolor: 'rgba(255,255,255,0.9)' } }}
           >
-            Start Free Screening →
+            {isAuthenticated ? 'Start Screening →' : 'Start Free Screening →'}
           </Button>
         </Container>
       </Box>

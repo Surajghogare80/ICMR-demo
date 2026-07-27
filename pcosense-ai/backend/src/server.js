@@ -1,3 +1,4 @@
+
 // src/server.js
 import 'dotenv/config';
 import app from './app.js';
@@ -13,7 +14,7 @@ const startServer = async () => {
 
     // Start HTTP server
     const server = app.listen(PORT, () => {
-      logger.info(`🚀 PCOSense AI API Server running on port ${PORT}`);
+      logger.info(`🚀 PRABHA API Server running on port ${PORT}`);
       logger.info(`📋 Environment: ${process.env.NODE_ENV}`);
       logger.info(`🌐 Health check: http://localhost:${PORT}/health`);
     });

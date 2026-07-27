@@ -33,7 +33,7 @@ export const predictionController = {
     try {
       const { page = 1, limit = 10 } = req.query;
       const result = await predictionService.getUserPredictions(req.user._id, {
-        page: parseInt(page),
+        page: parseInt(page),  
         limit: parseInt(limit),
       });
       return sendSuccess(res, MESSAGES.PREDICTIONS_FETCHED, result);

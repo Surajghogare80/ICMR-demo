@@ -7,11 +7,12 @@ import {
 } from '@mui/material';
 import {
   DarkMode, LightMode, Notifications, AccountCircle,
-  Dashboard, History, AdminPanelSettings, Logout, Person,
+  Dashboard, History, AdminPanelSettings, Logout, Person, Favorite
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext.jsx';
 import { ROUTES } from '../../constants/index.js';
+import { APP_NAME } from '../../config/appConfig.js';
 
 const Navbar = ({ onThemeToggle, isDark }) => {
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
@@ -49,7 +50,7 @@ const Navbar = ({ onThemeToggle, isDark }) => {
             <Box
               sx={{
                 width: 36, height: 36, borderRadius: '10px',
-                background: 'linear-gradient(135deg, #1976D2, #00897B)',
+                background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
@@ -59,12 +60,12 @@ const Navbar = ({ onThemeToggle, isDark }) => {
               variant="h6"
               fontWeight={800}
               sx={{
-                background: 'linear-gradient(135deg, #1565C0, #00897B)',
+                background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
               }}
             >
-              PCOSense AI
+              {APP_NAME}
             </Typography>
           </Box>
         </motion.div>
@@ -75,6 +76,7 @@ const Navbar = ({ onThemeToggle, isDark }) => {
         {isAuthenticated && (
           <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 0.5 }}>
             <Button startIcon={<Dashboard />} onClick={() => navigate(ROUTES.DASHBOARD)} size="small">Dashboard</Button>
+            <Button startIcon={<Favorite />} onClick={() => navigate(ROUTES.LIFESTYLE)} size="small">Lifestyle</Button>
             <Button startIcon={<History />} onClick={() => navigate(ROUTES.HISTORY)} size="small">History</Button>
             {isAdmin && (
               <Button startIcon={<AdminPanelSettings />} onClick={() => navigate(ROUTES.ADMIN)} size="small" color="secondary">Admin</Button>
@@ -95,7 +97,7 @@ const Navbar = ({ onThemeToggle, isDark }) => {
             <Tooltip title={user?.name}>
               <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
                 <Avatar
-                  sx={{ width: 36, height: 36, background: 'linear-gradient(135deg, #1976D2, #00897B)', fontSize: '0.9rem', fontWeight: 700 }}
+                  sx={{ width: 36, height: 36, background: 'linear-gradient(135deg, #EC407A, #F48FB1)', fontSize: '0.9rem', fontWeight: 700 }}
                 >
                   {user?.name?.charAt(0)?.toUpperCase()}
                 </Avatar>

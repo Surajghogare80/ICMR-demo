@@ -2,11 +2,12 @@
 import { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import { authService } from '../services/authService.js';
 import toast from 'react-hot-toast';
+import { APP_NAME } from '../config/appConfig.js';
 
 const AuthContext = createContext(null);
 
-const TOKEN_KEY = 'pcosense_token';
-const USER_KEY = 'pcosense_user';
+const TOKEN_KEY = 'prabha_token';
+const USER_KEY = 'prabha_user';
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
@@ -58,7 +59,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const { data, message } = await authService.register(formData);
       saveAuth(data.user, data.token);
-      toast.success(message || 'Registration successful! Welcome to PCOSense AI.');
+      toast.success(message || `Registration successful! Welcome to ${APP_NAME}.`);
       return { success: true };
     } catch (error) {
       toast.error(error.message || 'Registration failed.');

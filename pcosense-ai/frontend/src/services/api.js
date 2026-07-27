@@ -11,7 +11,7 @@ const api = axios.create({
 // Request interceptor — attach JWT token
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('pcosense_token');
+    const token = localStorage.getItem('prabha_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -28,8 +28,8 @@ api.interceptors.response.use(
     const status = error.response?.status;
 
     if (status === 401) {
-      localStorage.removeItem('pcosense_token');
-      localStorage.removeItem('pcosense_user');
+      localStorage.removeItem('prabha_token');
+      localStorage.removeItem('prabha_user');
       // Redirect to login if not already there
       if (!window.location.pathname.includes('/login')) {
         window.location.href = '/login';

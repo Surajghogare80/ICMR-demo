@@ -2,16 +2,29 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Box, Container, Card, CardContent, Typography, Grid, Button,
-  LinearProgress, Chip, Alert, List, ListItem, ListItemIcon, ListItemText, Divider,
+  LinearProgress, Chip, Alert, List, ListItem, ListItemIcon, ListItemText,
+  Divider,
 } from '@mui/material';
-import { CheckCircle, Home, History, Science, Warning, Cancel } from '@mui/icons-material';
+import { CheckCircle, Home, History, Science, Warning } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { ROUTES } from '../../constants/index.js';
 
+// ─── Helper: one labelled blood value row ─────────────────────────────────
+const BloodRow = ({ label, value, unit }) => {
+  if (value === null || value === undefined || value === '') return null;
+  return (
+    <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 0.75, borderBottom: '1px solid', borderColor: 'divider' }}>
+      <Typography variant="body2" color="text.secondary">{label}</Typography>
+      <Typography variant="body2" fontWeight={600}>{value}{unit ? ` ${unit}` : ''}</Typography>
+    </Box>
+  );
+};
+
 const PredictionResult = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const result = location.state?.result;
+  const location  = useLocation();
+  const navigate  = useNavigate();
+  const result     = location.state?.result;
+  const prediction = location.state?.prediction; // full DB record with populated personalMetricId
 
   if (!result) {
     return (
@@ -23,8 +36,17 @@ const PredictionResult = () => {
   }
 
   const isHighRisk = result.result === 'High Risk';
-  const color = isHighRisk ? '#C62828' : '#2E7D32';
-  const bgColor = isHighRisk ? '#FFEBEE' : '#E8F5E9';
+  const color      = isHighRisk ? '#EF5350' : '#66BB6A';
+  const bgColor    = isHighRisk ? 'rgba(239, 83, 80, 0.12)' : 'rgba(102, 187, 106, 0.12)';
+
+  // Personal metric data for blood report section
+  const pm = prediction?.personalMetricId || {};
+
+  // Check if any blood values were submitted (page 1)
+  const hasStandardBlood = pm.fsh || pm.lh || pm.tsh || pm.amh || pm.hb || pm.rbs;
+  // Check if any extended blood values were submitted (page 2)
+  const hasExtendedBlood = pm.vitD3 || pm.shbg || pm.fastingInsulin || pm.insulinResistance;
+  const hasAnyBlood = hasStandardBlood || hasExtendedBlood;
 
   return (
     <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', py: 6 }}>
@@ -96,6 +118,51 @@ const PredictionResult = () => {
             </CardContent>
           </Card>
 
+          {/* Blood Report Card — shown only when blood values were submitted */}
+          {hasAnyBlood && (
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35, duration: 0.4 }}
+            >
+              <Card sx={{ mb: 4 }}>
+                <CardContent sx={{ p: 4 }}>
+                  <Typography variant="h6" fontWeight={700} gutterBottom>🔬 Blood Report Summary</Typography>
+                  <Divider sx={{ mb: 2 }} />
+                  <Grid container spacing={3}>
+                    {/* Standard markers */}
+                    {hasStandardBlood && (
+                      <Grid item xs={12} sm={6}>
+                        <Typography variant="subtitle2" fontWeight={700} color="primary.main" sx={{ mb: 1 }}>
+                          Standard Markers
+                        </Typography>
+                        <BloodRow label="FSH"         value={pm.fsh}  unit="mIU/mL" />
+                        <BloodRow label="LH"          value={pm.lh}   unit="mIU/mL" />
+                        <BloodRow label="TSH"         value={pm.tsh}  unit="mIU/L"  />
+                        <BloodRow label="AMH"         value={pm.amh}  unit="ng/mL"  />
+                        <BloodRow label="Haemoglobin" value={pm.hb}   unit="g/dL"   />
+                        <BloodRow label="Random Blood Sugar" value={pm.rbs} unit="mg/dL" />
+                      </Grid>
+                    )}
+
+                    {/* Extended markers (Page 2) */}
+                    {hasExtendedBlood && (
+                      <Grid item xs={12} sm={6}>
+                        <Typography variant="subtitle2" fontWeight={700} color="secondary.main" sx={{ mb: 1 }}>
+                          Extended Markers
+                        </Typography>
+                        <BloodRow label="Vitamin D3"              value={pm.vitD3}            unit="ng/mL"  />
+                        <BloodRow label="SHBG"                    value={pm.shbg}             unit="nmol/L" />
+                        <BloodRow label="Fasting Insulin"         value={pm.fastingInsulin}   unit="µIU/mL" />
+                        <BloodRow label="Insulin Resistance (HOMA-IR)" value={pm.insulinResistance} />
+                      </Grid>
+                    )}
+                  </Grid>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+
           {/* Recommendations */}
           <Card sx={{ mb: 4 }}>
             <CardContent sx={{ p: 4 }}>
@@ -106,7 +173,7 @@ const PredictionResult = () => {
                   <motion.div key={i} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 + i * 0.1 }}>
                     <ListItem sx={{ px: 0, py: 1 }}>
                       <ListItemIcon sx={{ minWidth: 36 }}>
-                        <CheckCircle sx={{ color: '#2E7D32', fontSize: 20 }} />
+                        <CheckCircle sx={{ color: 'success.main', fontSize: 20 }} />
                       </ListItemIcon>
                       <ListItemText primary={<Typography variant="body2" fontWeight={500}>{rec}</Typography>} />
                     </ListItem>

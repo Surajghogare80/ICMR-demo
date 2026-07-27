@@ -12,6 +12,7 @@ import { Person, Email, Lock, Visibility, VisibilityOff } from '@mui/icons-mater
 import { motion } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext.jsx';
 import { ROUTES } from '../../constants/index.js';
+import { APP_NAME } from '../../config/appConfig.js';
 
 const schema = yup.object({
   name: yup.string().min(2, 'Name must be at least 2 characters').required('Name is required'),
@@ -45,13 +46,13 @@ const RegisterPage = () => {
 
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'background.default', py: 4 }}>
-      <Box sx={{ position: 'fixed', inset: 0, background: 'radial-gradient(ellipse at 80% 50%, rgba(21,101,192,0.08), transparent 60%), radial-gradient(ellipse at 20% 80%, rgba(0,137,123,0.07), transparent 60%)', pointerEvents: 'none' }} />
+      <Box sx={{ position: 'fixed', inset: 0, background: 'radial-gradient(ellipse at 80% 50%, rgba(233,30,99,0.06), transparent 60%), radial-gradient(ellipse at 20% 80%, rgba(240,98,146,0.05), transparent 60%)', pointerEvents: 'none' }} />
       <Container maxWidth="sm">
         <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <Box sx={{ textAlign: 'center', mb: 4 }}>
-            <Box sx={{ width: 56, height: 56, borderRadius: '16px', background: 'linear-gradient(135deg, #1976D2, #00897B)', display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 'auto', mb: 2, fontSize: '1.6rem' }}>🧬</Box>
+            <Box sx={{ width: 56, height: 56, borderRadius: '16px', background: 'linear-gradient(135deg, #EC407A, #F48FB1)', display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 'auto', mb: 2, fontSize: '1.6rem' }}>🧬</Box>
             <Typography variant="h4" fontWeight={800} gutterBottom>Create Account</Typography>
-            <Typography color="text.secondary">Join PCOSense AI for free</Typography>
+            <Typography color="text.secondary">Join {APP_NAME} for free</Typography>
           </Box>
 
           <Card sx={{ p: 1 }}>
@@ -127,7 +128,7 @@ const RegisterPage = () => {
                 <Box sx={{ textAlign: 'center', mt: 3 }}>
                   <Typography variant="body2" color="text.secondary">
                     Already have an account?{' '}
-                    <Link to={ROUTES.LOGIN} style={{ color: '#1976D2', fontWeight: 600 }}>Sign in</Link>
+                    <Link to={ROUTES.LOGIN} style={{ color: '#E91E63', fontWeight: 600 }}>Sign in</Link>
                   </Typography>
                 </Box>
               </Box>

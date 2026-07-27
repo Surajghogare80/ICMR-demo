@@ -5,11 +5,12 @@ import { activityLogRepository } from '../repositories/activityLogRepository.js'
 
 export const adminService = {
   async getDashboardStats() {
-    const [totalUsers, totalPredictions, predictionStats, recentLogs] = await Promise.all([
+    const [totalUsers, totalPredictions, predictionStats, recentLogs, recentPredictions] = await Promise.all([
       userRepository.countAll(),
       predictionRepository.countAll(),
       predictionRepository.getStatsByResult(),
       activityLogRepository.findRecent(20),
+      predictionRepository.getRecentPredictions(10),
     ]);
 
     const statsMap = predictionStats.reduce((acc, s) => {
@@ -23,6 +24,7 @@ export const adminService = {
       highRiskCount: statsMap['High Risk'] || 0,
       lowRiskCount: statsMap['Low Risk'] || 0,
       recentLogs,
+      recentPredictions,
     };
   },
 

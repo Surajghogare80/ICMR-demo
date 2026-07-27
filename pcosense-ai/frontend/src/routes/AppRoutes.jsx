@@ -15,6 +15,8 @@ import PredictionHistoryPage from '../pages/PredictionHistory/PredictionHistoryP
 import ProfilePage from '../pages/Profile/ProfilePage.jsx';
 import AdminDashboard from '../pages/Admin/AdminDashboard.jsx';
 import NotFoundPage from '../pages/NotFound/NotFoundPage.jsx';
+import LifestylePage from '../pages/Lifestyle/LifestylePage.jsx';
+import ArticlePage from '../pages/Lifestyle/ArticlePage.jsx';
 
 // Protected route wrapper
 const ProtectedRoute = ({ children, adminOnly = false }) => {
@@ -50,6 +52,8 @@ const AppRoutes = () => {
       <Route path={ROUTES.PREDICTION} element={<ProtectedRoute><PredictionWizard /></ProtectedRoute>} />
       <Route path={ROUTES.PREDICTION_RESULT} element={<ProtectedRoute><PredictionResult /></ProtectedRoute>} />
       <Route path={ROUTES.HISTORY} element={<ProtectedRoute><PredictionHistoryPage /></ProtectedRoute>} />
+      <Route path={ROUTES.LIFESTYLE} element={<ProtectedRoute><LifestylePage /></ProtectedRoute>} />
+      <Route path={ROUTES.LIFESTYLE_ARTICLE} element={<ProtectedRoute><ArticlePage /></ProtectedRoute>} />
       <Route path={ROUTES.PROFILE} element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
 
       {/* Admin-only routes */}

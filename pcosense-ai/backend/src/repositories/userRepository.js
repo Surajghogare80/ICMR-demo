@@ -3,11 +3,11 @@ import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 
 const mockUsers = [
-  // Seed admin user: admin@pcosense.com / Admin1234
+  // Seed admin user: admin@prabha.com / Admin1234
   {
     _id: '6584f23b8f1c8b21c4b9d001',
     name: 'Admin User',
-    email: 'admin@pcosense.com',
+    email: 'admin@prabha.com',
     password: '', // Will be updated on first load or checked directly
     role: 'admin',
     isActive: true,
