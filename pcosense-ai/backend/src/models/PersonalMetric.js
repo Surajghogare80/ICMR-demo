@@ -45,17 +45,17 @@ const personalMetricSchema = new mongoose.Schema(
     // Standard blood markers (Page 1)
     fsh: { type: Number, default: null },
     lh: { type: Number, default: null },
+    lhFshRatio: { type: Number, default: null },
     tsh: { type: Number, default: null },
     amh: { type: Number, default: null },
-    hb: { type: Number, default: null },
-    rbs: { type: Number, default: null },    // Random Blood Sugar (replaces prl in UI)
-    prl: { type: Number, default: null },    // Prolactin — kept for legacy records
+    testosterone: { type: Number, default: null },
+    shbg: { type: Number, default: null },           // nmol/L
+    prl: { type: Number, default: null },            // Prolactin
+    prg: { type: Number, default: null },            // Progesterone
     // Extended blood markers (Page 2 — used by RF model)
     vitD3: { type: Number, default: null },
-    shbg: { type: Number, default: null },           // nmol/L
     fastingInsulin: { type: Number, default: null }, // µIU/mL
     insulinResistance: { type: Number, default: null }, // HOMA-IR
-    prg: { type: Number, default: null },
   },
   { timestamps: true }
 );

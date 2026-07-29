@@ -38,10 +38,12 @@ export const predictionValidator = [
   // ── Standard blood markers (Page 1) ──────────────────────────────────────
   optPositive('fsh'),
   optPositive('lh'),
+  optPositive('lhFshRatio'),
   optPositive('tsh'),
   optPositive('amh'),
-  optPositive('hb'),
-  optPositive('rbs'),           // Random Blood Sugar (replaces prl in UI)
+  optPositive('testosterone'),
+  optPositive('prl'),
+  optPositive('prg'),
 
   // ── Extended blood markers (Page 2 — used by RF model) ───────────────────
   optPositive('vitaminD3'),         // ng/mL

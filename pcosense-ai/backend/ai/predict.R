@@ -80,21 +80,38 @@ if (!is.null(input_data$menstrual$familyHistory) && isTRUE(input_data$menstrual$
 # FSH / LH values and ratio
 fsh_val <- safe_num(input_data$personal$fsh, 4.86)
 lh_val  <- safe_num(input_data$personal$lh, 2.33)
-fsh_lh_ratio <- if (lh_val > 0) fsh_val / lh_val else 2.13
+fsh_lh_ratio <- safe_num(input_data$personal$lhFshRatio, if (lh_val > 0) fsh_val / lh_val else 2.13)
+
+# Blood Group encoding
+blood_group_val <- 15 # Default: O+
+if (!is.null(input_data$personal$bloodGroup)) {
+  bg <- input_data$personal$bloodGroup
+  if (bg == "A+") blood_group_val <- 11
+  else if (bg == "A-") blood_group_val <- 12
+  else if (bg == "B+") blood_group_val <- 13
+  else if (bg == "B-") blood_group_val <- 14
+  else if (bg == "O+") blood_group_val <- 15
+  else if (bg == "O-") blood_group_val <- 16
+  else if (bg == "AB+") blood_group_val <- 17
+  else if (bg == "AB-") blood_group_val <- 18
+}
 
 # Extended blood markers — use live user values, fall back to population medians
 vitd3_val           <- safe_num(input_data$personal$vitaminD3, 26.10)
 shbg_val            <- safe_num(input_data$personal$shbg, 52.0)       # nmol/L median
 fasting_insulin_val <- safe_num(input_data$personal$fastingInsulin, 10.5) # µIU/mL median
 homa_ir_val         <- safe_num(input_data$personal$insulinResistance, 2.2) # HOMA-IR median
+testosterone_val    <- safe_num(input_data$personal$testosterone, 40.0)
+prl_val             <- safe_num(input_data$personal$prl, 21.78)
+prg_val             <- safe_num(input_data$personal$prg, 0.32)
 
 # Body measurements — use live user values (TRAINED FEATURES)
 waist_val    <- safe_num(input_data$personal$waist, 34.0)       # inch median
 hip_val      <- safe_num(input_data$personal$hip, 38.0)         # inch median
 whr_val      <- safe_num(input_data$personal$waistHipRatio, 0.89)
 
-# Random Blood Sugar — live value (TRAINED FEATURE)
-rbs_val <- safe_num(input_data$personal$rbs, 100.0)             # mg/dL median
+# Random Blood Sugar — removed from UI, use population median
+rbs_val <- 100.0
 
 features <- data.frame(
   `Age..yrs.` = as.numeric(input_data$personal$age),
@@ -103,7 +120,7 @@ features <- data.frame(
   `BMI` = as.numeric(input_data$personal$bmi),
   `Pulse.rate.bpm.` = 72, # Imputed median
   `RR..breaths.min.` = 18, # Imputed median
-  `Hb.g.dl.` = safe_num(input_data$personal$hb, 11.0),
+  `Hb.g.dl.` = 11.0, # Imputed median
   `Cycle.R.I.` = as.integer(cycle_regularity_val),
   `Cycle.length.days.` = as.numeric(input_data$menstrual$periodDuration), # Kaggle dataset misnomer
   `Pregnant.Y.N.` = 0, # Imputed median
@@ -112,13 +129,14 @@ features <- data.frame(
   `FSH.LH` = fsh_lh_ratio,
   `TSH..mIU.L.` = safe_num(input_data$personal$tsh, 2.285),
   `AMH.ng.mL.` = safe_num(input_data$personal$amh, 3.90),
-  `PRL.ng.mL.` = 21.78, # Prolactin removed from UI — use population median
+  `PRL.ng.mL.` = prl_val,
   `Vit.D3..ng.mL.` = vitd3_val,
-  `PRG.ng.mL.` = 0.32, # Imputed median
+  `PRG.ng.mL.` = prg_val,
+  `Blood Group` = as.integer(blood_group_val),
+  `Testosterone_Level(ng/dL)` = testosterone_val,
   `Hip.inch.` = hip_val,               # LIVE VALUE
   `Waist.inch.` = waist_val,           # LIVE VALUE
   `Waist.Hip.Ratio` = whr_val,         # LIVE VALUE (auto-calculated)
-  `RBS.mg.dl.` = rbs_val,             # LIVE VALUE (Random Blood Sugar)
   `Weight.gain.Y.N.` = as.integer(ifelse(input_data$symptoms$weightGain, 1, 0)),
   `hair.growth.Y.N.` = as.integer(ifelse(input_data$symptoms$hairGrowth, 1, 0)),
   `Skin.darkening..Y.N.` = as.integer(ifelse(input_data$symptoms$skinDarkening, 1, 0)),

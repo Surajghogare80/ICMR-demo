@@ -102,11 +102,11 @@ const PredictionWizard = () => {
       // Body measurements (new — displayed in Personal step)
       waist: 75, waistUnit: 'cm', hip: 95, hipUnit: 'cm', waistHipRatio: 0.79, familyHistory: false,
       // Blood group (moved to Blood Test step UI but stored in personal)
-      bloodGroup: '',
+      bloodGroup: 'O+',
       // Page 1 blood markers
-      fsh: '', lh: '', tsh: '', amh: '', hb: '', rbs: '',
+      fsh: '', lh: '', tsh: '', amh: '', testosterone: '', shbg: '', prl: '', prg: '',
       // Page 2 extended markers (RF model features)
-      vitaminD3: '', shbg: '', fastingInsulin: '', insulinResistance: '',
+      vitaminD3: '', fastingInsulin: '', insulinResistance: '',
     },
     menstrual: {
       cycleLength: 28, cycleRegularity: 'Regular', periodDuration: 5,
@@ -201,11 +201,12 @@ const PredictionWizard = () => {
       if (!checkPositive(formData.personal.lh,   'LH'))                           return false;
       if (!checkPositive(formData.personal.tsh,  'TSH'))                          return false;
       if (!checkPositive(formData.personal.amh,  'AMH'))                          return false;
-      if (!checkPositive(formData.personal.hb,   'Haemoglobin'))                  return false;
-      if (!checkPositive(formData.personal.rbs,  'Random Blood Sugar'))            return false;
+      if (!checkPositive(formData.personal.testosterone, 'Testosterone'))         return false;
+      if (!checkPositive(formData.personal.shbg,         'SHBG'))                 return false;
+      if (!checkPositive(formData.personal.prl,          'Prolactin (PRL)'))      return false;
+      if (!checkPositive(formData.personal.prg,          'Progesterone (PRG)'))   return false;
       // Page 2 extended markers
       if (!checkPositive(formData.personal.vitaminD3,       'Vitamin D3'))        return false;
-      if (!checkPositive(formData.personal.shbg,            'SHBG'))              return false;
       if (!checkPositive(formData.personal.fastingInsulin,  'Fasting Insulin'))   return false;
       if (!checkPositive(formData.personal.insulinResistance, 'Insulin Resistance (HOMA-IR)')) return false;
     }
@@ -305,9 +306,9 @@ const PredictionWizard = () => {
         ...prev,
         personal: {
           ...prev.personal,
-          bloodGroup: '',
-          fsh: '', lh: '', tsh: '', amh: '', hb: '', rbs: '',
-          vitaminD3: '', shbg: '', fastingInsulin: '', insulinResistance: '',
+          bloodGroup: 'O+',
+          fsh: '', lh: '', tsh: '', amh: '', testosterone: '', shbg: '', prl: '', prg: '',
+          vitaminD3: '', fastingInsulin: '', insulinResistance: '',
         },
       }));
       setBloodPage(1);
@@ -356,13 +357,20 @@ const PredictionWizard = () => {
         if (formData.personal.bloodGroup)             personalData.bloodGroup      = formData.personal.bloodGroup;
         if (formData.personal.fsh         !== '')     personalData.fsh             = Number(formData.personal.fsh);
         if (formData.personal.lh          !== '')     personalData.lh              = Number(formData.personal.lh);
+        
+        // Auto calculate and send lhFshRatio if both exist and FSH != 0
+        if (formData.personal.lh !== '' && formData.personal.fsh !== '' && Number(formData.personal.fsh) !== 0) {
+          personalData.lhFshRatio = Number((Number(formData.personal.lh) / Number(formData.personal.fsh)).toFixed(2));
+        }
+
         if (formData.personal.tsh         !== '')     personalData.tsh             = Number(formData.personal.tsh);
         if (formData.personal.amh         !== '')     personalData.amh             = Number(formData.personal.amh);
-        if (formData.personal.hb          !== '')     personalData.hb              = Number(formData.personal.hb);
-        if (formData.personal.rbs         !== '')     personalData.rbs             = Number(formData.personal.rbs);
+        if (formData.personal.testosterone !== '')    personalData.testosterone    = Number(formData.personal.testosterone);
+        if (formData.personal.shbg        !== '')     personalData.shbg            = Number(formData.personal.shbg);
+        if (formData.personal.prl         !== '')     personalData.prl             = Number(formData.personal.prl);
+        if (formData.personal.prg         !== '')     personalData.prg             = Number(formData.personal.prg);
         // Extended blood markers (Page 2)
         if (formData.personal.vitaminD3       !== '') personalData.vitaminD3       = Number(formData.personal.vitaminD3);
-        if (formData.personal.shbg            !== '') personalData.shbg            = Number(formData.personal.shbg);
         if (formData.personal.fastingInsulin  !== '') personalData.fastingInsulin  = Number(formData.personal.fastingInsulin);
         if (formData.personal.insulinResistance !== '') personalData.insulinResistance = Number(formData.personal.insulinResistance);
       }
@@ -636,17 +644,8 @@ const PredictionWizard = () => {
 
       // ── Blood Test Results ────────────────────────────────────────────────
       case 'blood_report': {
-        const bloodPage1Fields = [
-          { key: 'fsh', label: 'FSH (mIU/mL)',                  desc: 'Follicle-Stimulating Hormone' },
-          { key: 'lh',  label: 'LH (mIU/mL)',                   desc: 'Luteinizing Hormone' },
-          { key: 'tsh', label: 'TSH (mIU/L)',                   desc: 'Thyroid-Stimulating Hormone' },
-          { key: 'amh', label: 'AMH (ng/mL)',                   desc: 'Anti-Müllerian Hormone' },
-          { key: 'hb',  label: 'Haemoglobin (g/dL)',            desc: 'Oxygen-carrying protein' },
-          { key: 'rbs', label: 'Random Blood Sugar (mg/dL)',     desc: 'Random Blood Sugar' },
-        ];
         const bloodPage2Fields = [
           { key: 'vitaminD3',         label: 'Vitamin D3 (ng/mL)',          desc: 'Cholecalciferol level' },
-          { key: 'shbg',              label: 'SHBG (nmol/L)',               desc: 'Sex Hormone-Binding Globulin' },
           { key: 'fastingInsulin',    label: 'Fasting Insulin (µIU/mL)',    desc: 'Baseline insulin level' },
           { key: 'insulinResistance', label: 'Insulin Resistance (HOMA-IR)',desc: 'HOMA-IR index (fasting glucose × fasting insulin ÷ 405)' },
         ];
@@ -659,7 +658,17 @@ const PredictionWizard = () => {
 
         const goToPage2 = () => { setBloodSlideDir(1);  setBloodPage(2); };
         const goToPage1 = () => { setBloodSlideDir(-1); setBloodPage(1); };
-        const activeFields = bloodPage === 1 ? bloodPage1Fields : bloodPage2Fields;
+
+        let calculatedRatio = '--';
+        if (formData.personal.lh !== '' && formData.personal.fsh !== '') {
+          const fshNum = Number(formData.personal.fsh);
+          const lhNum = Number(formData.personal.lh);
+          if (fshNum === 0) {
+            calculatedRatio = '--';
+          } else {
+            calculatedRatio = (lhNum / fshNum).toFixed(2);
+          }
+        }
 
         return (
           <Box>
@@ -672,20 +681,6 @@ const PredictionWizard = () => {
                   Page {bloodPage} of 2
                 </Box>
               </Typography>
-            </Box>
-
-            {/* Blood Group — always visible on both pages */}
-            <Box sx={{ mb: 3 }}>
-              <FormControl fullWidth>
-                <InputLabel>Blood Group</InputLabel>
-                <Select
-                  value={formData.personal.bloodGroup || ''}
-                  label="Blood Group"
-                  onChange={(e) => updateField('personal', 'bloodGroup', e.target.value)}
-                >
-                  {BLOOD_GROUP_OPTIONS.map((o) => <MenuItem key={o} value={o}>{o}</MenuItem>)}
-                </Select>
-              </FormControl>
             </Box>
 
             {/* Animated field area */}
@@ -701,17 +696,70 @@ const PredictionWizard = () => {
                   transition={{ duration: 0.28, ease: 'easeInOut' }}
                 >
                   <Grid container spacing={3}>
-                    {activeFields.map((f) => (
-                      <Grid item xs={12} sm={6} key={f.key}>
-                        <TextField
-                          fullWidth label={f.label} type="number" placeholder="e.g. 4.5"
-                          value={formData.personal[f.key]}
-                          onChange={(e) => updateField('personal', f.key, e.target.value)}
-                          helperText={f.desc}
-                          inputProps={{ step: 'any', min: 0 }}
-                        />
-                      </Grid>
-                    ))}
+                    {bloodPage === 1 ? (
+                      <>
+                        {/* Row 1 */}
+                        <Grid item xs={12} sm={6}>
+                          <FormControl fullWidth>
+                            <InputLabel>Blood Group</InputLabel>
+                            <Select
+                              value={formData.personal.bloodGroup || 'O+'}
+                              label="Blood Group"
+                              onChange={(e) => updateField('personal', 'bloodGroup', e.target.value)}
+                            >
+                              {BLOOD_GROUP_OPTIONS.map((o) => <MenuItem key={o} value={o}>{o}</MenuItem>)}
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TextField fullWidth label="FSH (mIU/mL)" type="number" value={formData.personal.fsh} onChange={(e) => updateField('personal', 'fsh', e.target.value)} inputProps={{ step: 'any', min: 0 }} />
+                        </Grid>
+                        
+                        {/* Row 2 */}
+                        <Grid item xs={12} sm={6}>
+                          <TextField fullWidth label="LH (mIU/mL)" type="number" value={formData.personal.lh} onChange={(e) => updateField('personal', 'lh', e.target.value)} inputProps={{ step: 'any', min: 0 }} />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TextField fullWidth label="LH : FSH Ratio" value={calculatedRatio} InputProps={{ readOnly: true }} disabled sx={{ '& .MuiInputBase-input.Mui-disabled': { WebkitTextFillColor: 'rgba(233, 30, 99, 0.8)', fontWeight: 600 } }} />
+                        </Grid>
+
+                        {/* Row 3 */}
+                        <Grid item xs={12} sm={6}>
+                          <TextField fullWidth label="TSH (mIU/L)" type="number" value={formData.personal.tsh} onChange={(e) => updateField('personal', 'tsh', e.target.value)} inputProps={{ step: 'any', min: 0 }} />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TextField fullWidth label="AMH (ng/mL)" type="number" value={formData.personal.amh} onChange={(e) => updateField('personal', 'amh', e.target.value)} inputProps={{ step: 'any', min: 0 }} />
+                        </Grid>
+
+                        {/* Row 4 */}
+                        <Grid item xs={12} sm={6}>
+                          <TextField fullWidth label="Testosterone" type="number" value={formData.personal.testosterone} onChange={(e) => updateField('personal', 'testosterone', e.target.value)} inputProps={{ step: 'any', min: 0 }} />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TextField fullWidth label="SHBG" type="number" value={formData.personal.shbg} onChange={(e) => updateField('personal', 'shbg', e.target.value)} inputProps={{ step: 'any', min: 0 }} />
+                        </Grid>
+
+                        {/* Row 5 */}
+                        <Grid item xs={12} sm={6}>
+                          <TextField fullWidth label="PRL (Prolactin)" type="number" value={formData.personal.prl} onChange={(e) => updateField('personal', 'prl', e.target.value)} inputProps={{ step: 'any', min: 0 }} />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TextField fullWidth label="PRG (Progesterone)" type="number" value={formData.personal.prg} onChange={(e) => updateField('personal', 'prg', e.target.value)} inputProps={{ step: 'any', min: 0 }} />
+                        </Grid>
+                      </>
+                    ) : (
+                      bloodPage2Fields.map((f) => (
+                        <Grid item xs={12} sm={6} key={f.key}>
+                          <TextField
+                            fullWidth label={f.label} type="number" placeholder="e.g. 4.5"
+                            value={formData.personal[f.key]}
+                            onChange={(e) => updateField('personal', f.key, e.target.value)}
+                            helperText={f.desc}
+                            inputProps={{ step: 'any', min: 0 }}
+                          />
+                        </Grid>
+                      ))
+                    )}
                   </Grid>
                 </motion.div>
               </AnimatePresence>
