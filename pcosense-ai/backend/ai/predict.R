@@ -100,30 +100,33 @@ if (!is.null(input_data$personal$bloodGroup)) {
 vitd3_val           <- safe_num(input_data$personal$vitaminD3, 26.10)
 shbg_val            <- safe_num(input_data$personal$shbg, 52.0)       # nmol/L median
 fasting_insulin_val <- safe_num(input_data$personal$fastingInsulin, 10.5) # µIU/mL median
-homa_ir_val         <- safe_num(input_data$personal$insulinResistance, 2.2) # HOMA-IR median
+homa_ir_val         <- 2.2 # HOMA-IR removed
 testosterone_val    <- safe_num(input_data$personal$testosterone, 40.0)
 prl_val             <- safe_num(input_data$personal$prl, 21.78)
 prg_val             <- safe_num(input_data$personal$prg, 0.32)
+haemoglobin_val     <- safe_num(input_data$personal$haemoglobin, 11.0)
+bp_sys_val          <- safe_num(input_data$personal$bpSystolic, 115.0)
+bp_dia_val          <- safe_num(input_data$personal$bpDiastolic, 78.0)
 
 # Body measurements — use live user values (TRAINED FEATURES)
 waist_val    <- safe_num(input_data$personal$waist, 34.0)       # inch median
 hip_val      <- safe_num(input_data$personal$hip, 38.0)         # inch median
 whr_val      <- safe_num(input_data$personal$waistHipRatio, 0.89)
 
-# Random Blood Sugar — removed from UI, use population median
-rbs_val <- 100.0
+# Random Blood Sugar — use live value from user, fall back to population median
+rbs_val <- safe_num(input_data$personal$rbs, 100.0)
 
 features <- data.frame(
-  `Age..yrs.` = as.numeric(input_data$personal$age),
-  `Weight..Kg.` = as.numeric(input_data$personal$weight),
-  `Height.Cm.` = as.numeric(input_data$personal$height),
-  `BMI` = as.numeric(input_data$personal$bmi),
-  `Pulse.rate.bpm.` = 72, # Imputed median
-  `RR..breaths.min.` = 18, # Imputed median
-  `Hb.g.dl.` = 11.0, # Imputed median
+  `Age..yrs.` = safe_num(input_data$personal$age, 28.0),
+  `Weight..Kg.` = safe_num(input_data$personal$weight, 60.0),
+  `Height.Cm.` = safe_num(input_data$personal$height, 162.0),
+  `BMI` = safe_num(input_data$personal$bmi, 22.0),
+  `Pulse.rate.bpm.` = safe_num(input_data$personal$pulseRate, 72.0),
+  `RR..breaths.min.` = safe_num(input_data$personal$respiratoryRate, 18.0),
+  `Hb.g.dl.` = haemoglobin_val,
   `Cycle.R.I.` = as.integer(cycle_regularity_val),
-  `Cycle.length.days.` = as.numeric(input_data$menstrual$periodDuration), # Kaggle dataset misnomer
-  `Pregnant.Y.N.` = 0, # Imputed median
+  `Cycle.length.days.` = safe_num(input_data$menstrual$periodDuration, 5.0),
+  `Pregnant.Y.N.` = as.integer(ifelse(isTRUE(input_data$personal$pregnant), 1, 0)),
   `FSH.mIU.mL.` = fsh_val,
   `LH.mIU.mL.` = lh_val,
   `FSH.LH` = fsh_lh_ratio,
@@ -132,29 +135,24 @@ features <- data.frame(
   `PRL.ng.mL.` = prl_val,
   `Vit.D3..ng.mL.` = vitd3_val,
   `PRG.ng.mL.` = prg_val,
-  `Blood Group` = as.integer(blood_group_val),
-  `Testosterone_Level(ng/dL)` = testosterone_val,
-  `Hip.inch.` = hip_val,               # LIVE VALUE
-  `Waist.inch.` = waist_val,           # LIVE VALUE
-  `Waist.Hip.Ratio` = whr_val,         # LIVE VALUE (auto-calculated)
-  `Weight.gain.Y.N.` = as.integer(ifelse(input_data$symptoms$weightGain, 1, 0)),
-  `hair.growth.Y.N.` = as.integer(ifelse(input_data$symptoms$hairGrowth, 1, 0)),
-  `Skin.darkening..Y.N.` = as.integer(ifelse(input_data$symptoms$skinDarkening, 1, 0)),
-  `Hair.loss.Y.N.` = as.integer(ifelse(input_data$symptoms$hairLoss, 1, 0)),
-  `Pimples.Y.N.` = as.integer(ifelse(input_data$symptoms$pimples, 1, 0)),
+  `Hip.inch.` = hip_val,
+  `Waist.inch.` = waist_val,
+  `Waist.Hip.Ratio` = whr_val,
+  `RBS.mg.dl.` = safe_num(input_data$personal$rbs, 100.0),
+  `Weight.gain.Y.N.` = as.integer(ifelse(isTRUE(input_data$symptoms$weightGain), 1, 0)),
+  `hair.growth.Y.N.` = as.integer(ifelse(isTRUE(input_data$symptoms$hairGrowth), 1, 0)),
+  `Skin.darkening..Y.N.` = as.integer(ifelse(isTRUE(input_data$symptoms$skinDarkening), 1, 0)),
+  `Hair.loss.Y.N.` = as.integer(ifelse(isTRUE(input_data$symptoms$hairLoss), 1, 0)),
+  `Pimples.Y.N.` = as.integer(ifelse(isTRUE(input_data$symptoms$pimples), 1, 0)),
   `Reg.Exercise.Y.N.` = as.integer(reg_exercise_val),
-  `BP._Systolic..mmHg.` = 115.0, # Imputed median
-  `BP._Diastolic..mmHg.` = 78.0, # Imputed median
-  `Follicle.No...L.` = safe_num(input_data$menstrual$follicleNo, 5.0),
-  `Follicle.No...R.` = safe_num(input_data$menstrual$follicleNo, 6.0),
-  `Avg..F.size..L...mm.` = safe_num(input_data$menstrual$avgFsize, 15.0),
-  `Avg..F.size..R...mm.` = safe_num(input_data$menstrual$avgFsize, 16.0),
+  `BP._Systolic..mmHg.` = bp_sys_val,
+  `BP._Diastolic..mmHg.` = bp_dia_val,
+  `Follicle.No...L.` = safe_num(input_data$menstrual$follicleNoL, safe_num(input_data$menstrual$follicleNo, 5.0)),
+  `Follicle.No...R.` = safe_num(input_data$menstrual$follicleNoR, safe_num(input_data$menstrual$follicleNo, 6.0)),
+  `Avg..F.size..L...mm.` = safe_num(input_data$menstrual$avgFsizeL, safe_num(input_data$menstrual$avgFsize, 15.0)),
+  `Avg..F.size..R...mm.` = safe_num(input_data$menstrual$avgFsizeR, safe_num(input_data$menstrual$avgFsize, 16.0)),
   `Endometrium..mm.` = safe_num(input_data$menstrual$endometrium, 8.43),
-  # Lifestyle features — exact column names as expected by the trained model
-  `Fast food (Y/N)` = as.integer(fast_food_val),
-  `Reg.Exercise(Y/N)` = as.integer(reg_exercise_val),
-  `Stress Levels` = stress_level_val,
-  check.names = FALSE # Prevent R from converting dots to spaces/underscores
+  check.names = FALSE
 )
 
 # Log all key inputs for traceability
@@ -202,11 +200,14 @@ recommendations <- if (ui_result == "High Risk") {
   )
 }
 
+# Calculate dynamic confidence based on the model's winning probability
+confidence_val <- round(max(prediction_prob[1, ]) * 100, 1)
+
 # 8. Output JSON string to console
 output <- list(
   result = ui_result,
   probability = prob_val,
-  confidence = 95.0,
+  confidence = confidence_val,
   recommendation = recommendations
 )
 

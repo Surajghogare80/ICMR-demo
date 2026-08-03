@@ -10,6 +10,7 @@ import { activityLogRepository } from '../repositories/activityLogRepository.js'
 import logger from '../utils/logger.js';
 import { exec } from 'child_process';
 import path from 'path';
+import fs from 'fs';
 
 /**
  * AI INTEGRATION POINT
@@ -36,7 +37,7 @@ const generateDummyPrediction = (inputs) => {
 
   riskScore = Math.min(riskScore, 100);
   const probability = Math.max(5, Math.min(95, riskScore));
-  const confidence = Math.floor(Math.random() * 10) + 90; // 90-99%
+  const confidence = Math.max(probability, 100 - probability);
   const result = probability >= 50 ? 'High Risk' : 'Low Risk';
 
   const highRiskRecs = [
@@ -69,20 +70,38 @@ const generateDummyPrediction = (inputs) => {
 
 const runRModel = (inputs) => {
   return new Promise((resolve, reject) => {
-    // Relative path because R script runs from the backend directory
     const scriptPath = path.join(process.cwd(), 'ai/predict.R');
-    const inputString = JSON.stringify(inputs).replace(/"/g, '\\"');
-    const command = `Rscript "${scriptPath}" "${inputString}"`;
+    const tempInputPath = path.join(process.cwd(), `ai/temp_input_${Date.now()}.json`);
+
+    try {
+      fs.writeFileSync(tempInputPath, JSON.stringify(inputs));
+    } catch (err) {
+      return reject(new Error(`Failed to write temporary R input file: ${err.message}`));
+    }
+
+    // Default to Rscript in PATH, fallback to Windows installed path if not found
+    let rCmd = 'Rscript';
+    const fallbackPath = 'C:\\Program Files\\R\\R-4.6.1\\bin\\Rscript.exe';
+    if (fs.existsSync(fallbackPath)) {
+      rCmd = `"${fallbackPath}"`;
+    }
+
+    const command = `${rCmd} "${scriptPath}" "${tempInputPath}"`;
 
     exec(command, (error, stdout, stderr) => {
+      // Clean up temp file
+      if (fs.existsSync(tempInputPath)) {
+        try { fs.unlinkSync(tempInputPath); } catch (_) {}
+      }
+
       if (error) {
-        return reject(error);
+        return reject(new Error(`R script execution failed: ${stderr || error.message}`));
       }
       try {
         const result = JSON.parse(stdout);
         resolve(result);
       } catch (parseError) {
-        reject(new Error(`Failed to parse R output: ${stdout}`));
+        reject(new Error(`Failed to parse R output: ${stdout || stderr}`));
       }
     });
   });
@@ -104,12 +123,12 @@ export const predictionService = {
       ...(hip !== undefined && hip !== '' ? { hip: Number(hip) } : {}),
       ...(waistHipRatio !== undefined && waistHipRatio !== '' ? { waistHipRatio: Number(waistHipRatio) } : {}),
       // Standard blood markers
-      ...(rbs !== undefined && rbs !== '' ? { rbs: Number(rbs) } : {}),
+      ...(rbs !== undefined && rbs !== '' ? { rbs: Number(rbs)} : {}),
       // Extended blood markers — DB field names match schema
       ...(vitaminD3 !== undefined && vitaminD3 !== '' ? { vitD3: Number(vitaminD3) } : {}),
       ...(shbg !== undefined && shbg !== '' ? { shbg: Number(shbg) } : {}),
       ...(fastingInsulin !== undefined && fastingInsulin !== '' ? { fastingInsulin: Number(fastingInsulin) } : {}),
-      ...(insulinResistance !== undefined && insulinResistance !== '' ? { insulinResistance: Number(insulinResistance) } : {}),
+      ...(insulinResistance !== undefined && insulinResistance !== null ? { insulinResistance } : {}),
     };
 
     // Normalize and apply defaults to lifestyle fields before saving
@@ -138,7 +157,7 @@ export const predictionService = {
       vitaminD3: vitaminD3 !== undefined && vitaminD3 !== '' ? Number(vitaminD3) : undefined,
       shbg: shbg !== undefined && shbg !== '' ? Number(shbg) : undefined,
       fastingInsulin: fastingInsulin !== undefined && fastingInsulin !== '' ? Number(fastingInsulin) : undefined,
-      insulinResistance: insulinResistance !== undefined && insulinResistance !== '' ? Number(insulinResistance) : undefined,
+      insulinResistance: insulinResistance !== undefined && insulinResistance !== null ? insulinResistance : undefined,
     };
 
     const rInputs = { personal: rInputPersonal, menstrual, symptoms, lifestyle: normalizedLifestyle };
@@ -147,10 +166,29 @@ export const predictionService = {
     let aiResult;
     try {
       aiResult = await runRModel(rInputs);
-      logger.info(`Prediction generated using Random Forest RDS model for user ${userId}: ${aiResult.result}`);
+      aiResult.engine = 'REAL_R_MODEL';
+      
+      console.log(`\n======================================================`);
+      console.log(`🤖 [PREDICTION ENGINE] REAL R RDS MODEL PREDICTION`);
+      console.log(`   User ID     : ${userId}`);
+      console.log(`   Result      : ${aiResult.result}`);
+      console.log(`   Probability : ${aiResult.probability}%`);
+      console.log(`   Confidence  : ${aiResult.confidence}%`);
+      console.log(`======================================================\n`);
+
+      logger.info(`[REAL_R_MODEL] Prediction generated using Random Forest RDS model for user ${userId}: ${aiResult.result} (${aiResult.probability}%)`);
     } catch (err) {
       logger.warn(`Failed to execute ML R model, falling back to rule-based engine. Reason: ${err.message}`);
       aiResult = generateDummyPrediction(rInputs);
+      aiResult.engine = 'DUMMY_FALLBACK';
+
+      console.log(`\n======================================================`);
+      console.log(`⚠️ [PREDICTION ENGINE] FALLBACK DUMMY RULE PREDICTION`);
+      console.log(`   User ID     : ${userId}`);
+      console.log(`   Result      : ${aiResult.result}`);
+      console.log(`   Probability : ${aiResult.probability}%`);
+      console.log(`   Fallback Cause: ${err.message}`);
+      console.log(`======================================================\n`);
     }
 
     // Save the prediction referencing all 4 collections

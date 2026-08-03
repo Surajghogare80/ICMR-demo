@@ -52,10 +52,18 @@ const personalMetricSchema = new mongoose.Schema(
     shbg: { type: Number, default: null },           // nmol/L
     prl: { type: Number, default: null },            // Prolactin
     prg: { type: Number, default: null },            // Progesterone
-    // Extended blood markers (Page 2 — used by RF model)
+    // Extended blood markers (Page 2)
     vitD3: { type: Number, default: null },
+    haemoglobin: { type: Number, default: null }, // g/dL
+    bpSystolic: { type: Number, default: null }, // mmHg
+    bpDiastolic: { type: Number, default: null }, // mmHg
+    fastingBloodGlucose: { type: Number, default: null }, // mg/dL
     fastingInsulin: { type: Number, default: null }, // µIU/mL
-    insulinResistance: { type: Number, default: null }, // HOMA-IR
+    // Added extended clinical markers
+    pulseRate: { type: Number, default: null },
+    respiratoryRate: { type: Number, default: null },
+    rbs: { type: Number, default: null },
+    insulinResistance: { type: String, enum: ['Yes', 'No'], default: null },
   },
   { timestamps: true }
 );

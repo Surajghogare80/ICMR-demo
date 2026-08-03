@@ -45,11 +45,20 @@ export const predictionValidator = [
   optPositive('prl'),
   optPositive('prg'),
 
-  // ── Extended blood markers (Page 2 — used by RF model) ───────────────────
+  // ── Extended blood markers (Page 2) ───────────────────
   optPositive('vitaminD3'),         // ng/mL
-  optPositive('shbg'),              // nmol/L
+  optPositive('haemoglobin'),       // g/dL
+  optPositive('bpSystolic'),        // mmHg
+  optPositive('bpDiastolic'),       // mmHg
+  optPositive('fastingBloodGlucose'), // mg/dL
   optPositive('fastingInsulin'),    // µIU/mL
-  optPositive('insulinResistance'), // HOMA-IR
+  optPositive('pulseRate'),         // bpm
+  optPositive('respiratoryRate'),   // breaths/min
+  optPositive('rbs'),               // mg/dL
+  body('personal.insulinResistance')
+    .optional({ nullable: true })
+    .isIn(['Yes', 'No'])
+    .withMessage('Insulin resistance must be Yes or No'),
 
   // ── Menstrual ─────────────────────────────────────────────────────────────
   body('menstrual.cycleLength')

@@ -105,8 +105,9 @@ const PredictionWizard = () => {
       bloodGroup: 'O+',
       // Page 1 blood markers
       fsh: '', lh: '', tsh: '', amh: '', testosterone: '', shbg: '', prl: '', prg: '',
-      // Page 2 extended markers (RF model features)
-      vitaminD3: '', fastingInsulin: '', insulinResistance: '',
+      // Page 2 extended markers
+      vitaminD3: '', haemoglobin: '', bpSystolic: '', bpDiastolic: '', fastingBloodGlucose: '', fastingInsulin: '',
+      pulseRate: '', respiratoryRate: '', rbs: '', insulinResistance: null,
     },
     menstrual: {
       cycleLength: 28, cycleRegularity: 'Regular', periodDuration: 5,
@@ -206,9 +207,15 @@ const PredictionWizard = () => {
       if (!checkPositive(formData.personal.prl,          'Prolactin (PRL)'))      return false;
       if (!checkPositive(formData.personal.prg,          'Progesterone (PRG)'))   return false;
       // Page 2 extended markers
-      if (!checkPositive(formData.personal.vitaminD3,       'Vitamin D3'))        return false;
-      if (!checkPositive(formData.personal.fastingInsulin,  'Fasting Insulin'))   return false;
-      if (!checkPositive(formData.personal.insulinResistance, 'Insulin Resistance (HOMA-IR)')) return false;
+      if (!checkPositive(formData.personal.vitaminD3,       'Vitamin D3'))                return false;
+      if (!checkPositive(formData.personal.haemoglobin,     'Haemoglobin'))               return false;
+      if (!checkPositive(formData.personal.bpSystolic,      'Blood Pressure (Systolic)')) return false;
+      if (!checkPositive(formData.personal.bpDiastolic,     'Blood Pressure (Diastolic)'))return false;
+      if (!checkPositive(formData.personal.fastingBloodGlucose, 'Fasting Blood Glucose')) return false;
+      if (!checkPositive(formData.personal.fastingInsulin,  'Fasting Insulin'))           return false;
+      if (!checkPositive(formData.personal.pulseRate,       'Pulse Rate'))                return false;
+      if (!checkPositive(formData.personal.respiratoryRate, 'Respiratory Rate'))          return false;
+      if (!checkPositive(formData.personal.rbs,             'RBS'))                       return false;
     }
 
     if (stepId === 'ultrasound_scan') {
@@ -308,7 +315,8 @@ const PredictionWizard = () => {
           ...prev.personal,
           bloodGroup: 'O+',
           fsh: '', lh: '', tsh: '', amh: '', testosterone: '', shbg: '', prl: '', prg: '',
-          vitaminD3: '', fastingInsulin: '', insulinResistance: '',
+          vitaminD3: '', haemoglobin: '', bpSystolic: '', bpDiastolic: '', fastingBloodGlucose: '', fastingInsulin: '',
+          pulseRate: '', respiratoryRate: '', rbs: '', insulinResistance: null,
         },
       }));
       setBloodPage(1);
@@ -370,9 +378,16 @@ const PredictionWizard = () => {
         if (formData.personal.prl         !== '')     personalData.prl             = Number(formData.personal.prl);
         if (formData.personal.prg         !== '')     personalData.prg             = Number(formData.personal.prg);
         // Extended blood markers (Page 2)
-        if (formData.personal.vitaminD3       !== '') personalData.vitaminD3       = Number(formData.personal.vitaminD3);
-        if (formData.personal.fastingInsulin  !== '') personalData.fastingInsulin  = Number(formData.personal.fastingInsulin);
-        if (formData.personal.insulinResistance !== '') personalData.insulinResistance = Number(formData.personal.insulinResistance);
+        if (formData.personal.vitaminD3           !== '') personalData.vitaminD3           = Number(formData.personal.vitaminD3);
+        if (formData.personal.haemoglobin         !== '') personalData.haemoglobin         = Number(formData.personal.haemoglobin);
+        if (formData.personal.bpSystolic          !== '') personalData.bpSystolic          = Number(formData.personal.bpSystolic);
+        if (formData.personal.bpDiastolic         !== '') personalData.bpDiastolic         = Number(formData.personal.bpDiastolic);
+        if (formData.personal.fastingBloodGlucose !== '') personalData.fastingBloodGlucose = Number(formData.personal.fastingBloodGlucose);
+        if (formData.personal.fastingInsulin      !== '') personalData.fastingInsulin      = Number(formData.personal.fastingInsulin);
+        if (formData.personal.pulseRate           !== '') personalData.pulseRate           = Number(formData.personal.pulseRate);
+        if (formData.personal.respiratoryRate     !== '') personalData.respiratoryRate     = Number(formData.personal.respiratoryRate);
+        if (formData.personal.rbs                 !== '') personalData.rbs                 = Number(formData.personal.rbs);
+        if (formData.personal.insulinResistance   !== null) personalData.insulinResistance = formData.personal.insulinResistance;
       }
 
       if (screeningMode === 'ultrasound' || screeningMode === 'both') {
@@ -644,12 +659,6 @@ const PredictionWizard = () => {
 
       // ── Blood Test Results ────────────────────────────────────────────────
       case 'blood_report': {
-        const bloodPage2Fields = [
-          { key: 'vitaminD3',         label: 'Vitamin D3 (ng/mL)',          desc: 'Cholecalciferol level' },
-          { key: 'fastingInsulin',    label: 'Fasting Insulin (µIU/mL)',    desc: 'Baseline insulin level' },
-          { key: 'insulinResistance', label: 'Insulin Resistance (HOMA-IR)',desc: 'HOMA-IR index (fasting glucose × fasting insulin ÷ 405)' },
-        ];
-
         const slideVariants = {
           enter:  (dir) => ({ opacity: 0, x: dir > 0 ? 60 : -60 }),
           center: { opacity: 1, x: 0 },
@@ -674,9 +683,9 @@ const PredictionWizard = () => {
           <Box>
             {/* Header */}
             <Box sx={{ mb: 2.5 }}>
-              <Typography variant="h6" fontWeight={700}>Recent Blood Test Results (Optional)</Typography>
+              <Typography variant="h6" fontWeight={700}>Do you have recent blood test results (Optional)</Typography>
               <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5, fontWeight: 500 }}>
-                Optional – improves prediction accuracy. &nbsp;
+                 improves prediction accuracy. &nbsp;
                 <Box component="span" sx={{ color: 'primary.main', fontWeight: 600 }}>
                   Page {bloodPage} of 2
                 </Box>
@@ -684,7 +693,7 @@ const PredictionWizard = () => {
             </Box>
 
             {/* Animated field area */}
-            <Box sx={{ overflow: 'hidden', position: 'relative' }}>
+            <Box sx={{ overflow: 'hidden', position: 'relative', pt: 1.5 }}>
               <AnimatePresence mode="wait" custom={bloodSlideDir}>
                 <motion.div
                   key={`blood-page-${bloodPage}`}
@@ -701,8 +710,9 @@ const PredictionWizard = () => {
                         {/* Row 1 */}
                         <Grid item xs={12} sm={6}>
                           <FormControl fullWidth>
-                            <InputLabel>Blood Group</InputLabel>
+                            <InputLabel id="blood-group-select-label">Blood Group</InputLabel>
                             <Select
+                              labelId="blood-group-select-label"
                               value={formData.personal.bloodGroup || 'O+'}
                               label="Blood Group"
                               onChange={(e) => updateField('personal', 'bloodGroup', e.target.value)}
@@ -712,53 +722,113 @@ const PredictionWizard = () => {
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="FSH (mIU/mL)" type="number" value={formData.personal.fsh} onChange={(e) => updateField('personal', 'fsh', e.target.value)} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label="FSH (mIU/mL)" type="number" value={formData.personal.fsh} onChange={(e) => updateField('personal', 'fsh', e.target.value)} helperText="Normal: 3–10 mIU/mL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                         
                         {/* Row 2 */}
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="LH (mIU/mL)" type="number" value={formData.personal.lh} onChange={(e) => updateField('personal', 'lh', e.target.value)} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label="LH (mIU/mL)" type="number" value={formData.personal.lh} onChange={(e) => updateField('personal', 'lh', e.target.value)} helperText="Normal: 2–15 mIU/mL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="LH : FSH Ratio" value={calculatedRatio} InputProps={{ readOnly: true }} disabled sx={{ '& .MuiInputBase-input.Mui-disabled': { WebkitTextFillColor: 'rgba(233, 30, 99, 0.8)', fontWeight: 600 } }} />
+                          <TextField fullWidth label="LH : FSH Ratio" value={calculatedRatio} helperText="Normal: 1.0 – 2.0" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} InputProps={{ readOnly: true }} disabled sx={{ '& .MuiInputBase-input.Mui-disabled': { WebkitTextFillColor: 'rgba(233, 30, 99, 0.8)', fontWeight: 600 } }} />
                         </Grid>
 
                         {/* Row 3 */}
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="TSH (mIU/L)" type="number" value={formData.personal.tsh} onChange={(e) => updateField('personal', 'tsh', e.target.value)} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label="TSH (mIU/L)" type="number" value={formData.personal.tsh} onChange={(e) => updateField('personal', 'tsh', e.target.value)} helperText="Normal: 0.4–4.0 mIU/L" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="AMH (ng/mL)" type="number" value={formData.personal.amh} onChange={(e) => updateField('personal', 'amh', e.target.value)} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label="AMH (ng/mL)" type="number" value={formData.personal.amh} onChange={(e) => updateField('personal', 'amh', e.target.value)} helperText="Normal: 1.0–4.0 ng/mL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
 
                         {/* Row 4 */}
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="Testosterone" type="number" value={formData.personal.testosterone} onChange={(e) => updateField('personal', 'testosterone', e.target.value)} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label="Testosterone (ng/dL)" type="number" value={formData.personal.testosterone} onChange={(e) => updateField('personal', 'testosterone', e.target.value)} helperText="Normal: 15–70 ng/dL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="SHBG" type="number" value={formData.personal.shbg} onChange={(e) => updateField('personal', 'shbg', e.target.value)} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label="SHBG (nmol/L)" type="number" value={formData.personal.shbg} onChange={(e) => updateField('personal', 'shbg', e.target.value)} helperText="Normal: 18–144 nmol/L" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
 
                         {/* Row 5 */}
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="PRL (Prolactin)" type="number" value={formData.personal.prl} onChange={(e) => updateField('personal', 'prl', e.target.value)} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label="PRL (ng/mL)" type="number" value={formData.personal.prl} onChange={(e) => updateField('personal', 'prl', e.target.value)} helperText="Normal: 5–25 ng/mL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="PRG (Progesterone)" type="number" value={formData.personal.prg} onChange={(e) => updateField('personal', 'prg', e.target.value)} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label="PRG (ng/mL)" type="number" value={formData.personal.prg} onChange={(e) => updateField('personal', 'prg', e.target.value)} helperText="Normal: 0.2–25 ng/mL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                       </>
                     ) : (
-                      bloodPage2Fields.map((f) => (
-                        <Grid item xs={12} sm={6} key={f.key}>
-                          <TextField
-                            fullWidth label={f.label} type="number" placeholder="e.g. 4.5"
-                            value={formData.personal[f.key]}
-                            onChange={(e) => updateField('personal', f.key, e.target.value)}
-                            helperText={f.desc}
-                            inputProps={{ step: 'any', min: 0 }}
-                          />
+                      <>
+                        {/* Row 1 */}
+                        <Grid item xs={12} sm={6}>
+                          <TextField fullWidth label="Vitamin D3 (ng/mL)" type="number" value={formData.personal.vitaminD3} onChange={(e) => updateField('personal', 'vitaminD3', e.target.value)} helperText="Normal: 30–100 ng/mL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
-                      ))
+                        <Grid item xs={12} sm={6}>
+                          <TextField fullWidth label="Haemoglobin (g/dL)" type="number" value={formData.personal.haemoglobin} onChange={(e) => updateField('personal', 'haemoglobin', e.target.value)} helperText="Normal: 12–16 g/dL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                        </Grid>
+                        {/* Row 2 */}
+                        <Grid item xs={12} sm={6}>
+                          <TextField fullWidth label="Pulse Rate (bpm)" type="number" value={formData.personal.pulseRate} onChange={(e) => updateField('personal', 'pulseRate', e.target.value)} helperText="Normal: 60–100 bpm" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TextField fullWidth label="Respiratory Rate (RR) (breaths/min)" type="number" value={formData.personal.respiratoryRate} onChange={(e) => updateField('personal', 'respiratoryRate', e.target.value)} helperText="Normal: 12–20 breaths/min" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                        </Grid>
+                        {/* Row 3 */}
+                        <Grid item xs={12} sm={6}>
+                          <TextField fullWidth label="Blood Pressure (Systolic)" type="number" value={formData.personal.bpSystolic} onChange={(e) => updateField('personal', 'bpSystolic', e.target.value)} helperText="Normal: 90–120 mmHg" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TextField fullWidth label="Blood Pressure (Diastolic)" type="number" value={formData.personal.bpDiastolic} onChange={(e) => updateField('personal', 'bpDiastolic', e.target.value)} helperText="Normal: 60–80 mmHg" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                        </Grid>
+                        {/* Row 4 */}
+                        <Grid item xs={12} sm={6}>
+                          <TextField fullWidth label="Fasting Blood Glucose (mg/dL)" type="number" value={formData.personal.fastingBloodGlucose} onChange={(e) => updateField('personal', 'fastingBloodGlucose', e.target.value)} helperText="Normal: 70–99 mg/dL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TextField fullWidth label="Fasting Insulin (µIU/mL)" type="number" value={formData.personal.fastingInsulin} onChange={(e) => updateField('personal', 'fastingInsulin', e.target.value)} helperText="Normal: 2–25 µIU/mL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                        </Grid>
+                        {/* Row 5 */}
+                        <Grid item xs={12} sm={6}>
+                          <TextField fullWidth label="RBS (Random Blood Sugar) (mg/dL)" type="number" value={formData.personal.rbs} onChange={(e) => updateField('personal', 'rbs', e.target.value)} helperText="Normal: 70–140 mg/dL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <FormControl fullWidth sx={{ height: '100%', justifyContent: 'flex-start' }}>
+                             <Box sx={{
+                                border: '1px solid',
+                                borderColor: (t) => t.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.23)' : 'rgba(0, 0, 0, 0.23)',
+                                borderRadius: 1,
+                                p: 1.5,
+                                position: 'relative',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                '&:hover': { borderColor: (t) => t.palette.mode === 'dark' ? '#fff' : '#000' }
+                             }}>
+                                <Typography variant="caption" sx={{ position: 'absolute', top: '-10px', left: '10px', bgcolor: 'background.paper', px: 0.5, color: 'text.secondary', fontSize: '0.75rem' }}>
+                                  Insulin Resistance
+                                </Typography>
+                                <ToggleButtonGroup
+                                  value={formData.personal.insulinResistance}
+                                  exclusive
+                                  onChange={(_, val) => { if (val) updateField('personal', 'insulinResistance', val) }}
+                                  sx={{
+                                    gap: 1.5, display: 'flex',
+                                    '& .MuiToggleButton-root': {
+                                      px: 3, py: 0.5, borderRadius: '20px !important', fontWeight: 800, fontSize: '0.85rem',
+                                      border: '2px solid rgba(233, 30, 99, 0.35) !important', color: '#E91E63',
+                                      transition: 'all 0.22s', minWidth: '80px', textTransform: 'none',
+                                      '&.Mui-selected': { bgcolor: '#E91E63', color: '#fff', borderColor: '#E91E63 !important', boxShadow: '0 4px 12px rgba(233, 30, 99, 0.3)', '&:hover': { bgcolor: '#C2185B' } },
+                                      '&:hover': { bgcolor: 'rgba(233, 30, 99, 0.08)', transform: 'translateY(-1px)' }
+                                    }
+                                  }}
+                                >
+                                  <ToggleButton value="Yes">{t('yes', 'Yes')}</ToggleButton>
+                                  <ToggleButton value="No">{t('no', 'No')}</ToggleButton>
+                                </ToggleButtonGroup>
+                             </Box>
+                          </FormControl>
+                        </Grid>
+                      </>
                     )}
                   </Grid>
                 </motion.div>
@@ -864,12 +934,12 @@ const PredictionWizard = () => {
                 </Grid>
               ))}
             </Grid>
-            <Alert severity="info" sx={{ mt: 3 }}>
+            {/* <Alert severity="info" sx={{ mt: 3 }}>
               <Typography variant="body2">
                 <strong>Medical Disclaimer:</strong> This screening tool is for educational purposes only and does not
                 constitute a medical diagnosis. Please consult a qualified healthcare professional for a formal PCOS evaluation.
               </Typography>
-            </Alert>
+            </Alert> */}
           </Box>
         );
 
