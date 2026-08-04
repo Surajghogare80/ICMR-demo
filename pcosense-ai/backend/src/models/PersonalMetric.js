@@ -45,17 +45,25 @@ const personalMetricSchema = new mongoose.Schema(
     // Standard blood markers (Page 1)
     fsh: { type: Number, default: null },
     lh: { type: Number, default: null },
+    lhFshRatio: { type: Number, default: null },
     tsh: { type: Number, default: null },
     amh: { type: Number, default: null },
-    hb: { type: Number, default: null },
-    rbs: { type: Number, default: null },    // Random Blood Sugar (replaces prl in UI)
-    prl: { type: Number, default: null },    // Prolactin — kept for legacy records
-    // Extended blood markers (Page 2 — used by RF model)
-    vitD3: { type: Number, default: null },
+    testosterone: { type: Number, default: null },
     shbg: { type: Number, default: null },           // nmol/L
+    prl: { type: Number, default: null },            // Prolactin
+    prg: { type: Number, default: null },            // Progesterone
+    // Extended blood markers (Page 2)
+    vitD3: { type: Number, default: null },
+    haemoglobin: { type: Number, default: null }, // g/dL
+    bpSystolic: { type: Number, default: null }, // mmHg
+    bpDiastolic: { type: Number, default: null }, // mmHg
+    fastingBloodGlucose: { type: Number, default: null }, // mg/dL
     fastingInsulin: { type: Number, default: null }, // µIU/mL
-    insulinResistance: { type: Number, default: null }, // HOMA-IR
-    prg: { type: Number, default: null },
+    // Added extended clinical markers
+    pulseRate: { type: Number, default: null },
+    respiratoryRate: { type: Number, default: null },
+    rbs: { type: Number, default: null },
+    insulinResistance: { type: String, enum: ['Yes', 'No'], default: null },
   },
   { timestamps: true }
 );
