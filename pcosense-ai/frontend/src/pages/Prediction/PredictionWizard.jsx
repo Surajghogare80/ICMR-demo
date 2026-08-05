@@ -111,9 +111,14 @@ const PredictionWizard = () => {
     },
     menstrual: {
       cycleLength: 28, cycleRegularity: 'Regular', periodDuration: 5,
-      flowIntensity: 'Normal', follicleNo: '', avgFsize: '', ovaryVolume: '',
-      endometrium: '',
-      familyHistory: false, // new
+      flowIntensity: 'Normal',
+      // Ultrasound fields — exact dataset field names used by the RF model
+      follicleNoLeft: '',       // Follicle No. (L)
+      follicleNoRight: '',      // Follicle No. (R)
+      avgFollicleSizeLeft: '',  // Avg. F size (L) (mm)
+      avgFollicleSizeRight: '', // Avg. F size (R) (mm)
+      endometrium: '',          // Endometrium (mm)
+      familyHistory: false,
     },
     symptoms:  { weightGain: false, hairGrowth: false, skinDarkening: false, pimples: false, hairLoss: false, noneOfAbove: false },
     lifestyle: { fastFoodFreq: 'No', exerciseFreq: 'Yes', stressLevel: 'Moderate', sleepHours: 7 },
@@ -226,10 +231,12 @@ const PredictionWizard = () => {
         }
         return true;
       };
-      if (!checkPositive(formData.menstrual.follicleNo,  'Number of follicles'))   return false;
-      if (!checkPositive(formData.menstrual.avgFsize,    'Average follicle size')) return false;
-      if (!checkPositive(formData.menstrual.ovaryVolume, 'Ovary volume'))          return false;
-      if (!checkPositive(formData.menstrual.endometrium, 'Endometrium thickness')) return false;
+      // All fields optional — only validate format if a value is entered
+      if (!checkPositive(formData.menstrual.follicleNoLeft,       'Follicle No. (L)'))        return false;
+      if (!checkPositive(formData.menstrual.follicleNoRight,      'Follicle No. (R)'))        return false;
+      if (!checkPositive(formData.menstrual.avgFollicleSizeLeft,  'Avg. F size (L) (mm)'))   return false;
+      if (!checkPositive(formData.menstrual.avgFollicleSizeRight, 'Avg. F size (R) (mm)'))   return false;
+      if (!checkPositive(formData.menstrual.endometrium,          'Endometrium (mm)'))        return false;
     }
 
     return true;
@@ -324,7 +331,12 @@ const PredictionWizard = () => {
     } else if (currentStepId === 'ultrasound_scan') {
       setFormData((prev) => ({
         ...prev,
-        menstrual: { ...prev.menstrual, follicleNo: '', avgFsize: '', ovaryVolume: '', endometrium: '' },
+        menstrual: {
+          ...prev.menstrual,
+          follicleNoLeft: '', follicleNoRight: '',
+          avgFollicleSizeLeft: '', avgFollicleSizeRight: '',
+          endometrium: '',
+        },
       }));
       toast.success('Ultrasound scan page skipped.');
     }
@@ -391,10 +403,12 @@ const PredictionWizard = () => {
       }
 
       if (screeningMode === 'ultrasound' || screeningMode === 'both') {
-        if (formData.menstrual.follicleNo  !== '') menstrualData.follicleNo  = Number(formData.menstrual.follicleNo);
-        if (formData.menstrual.avgFsize    !== '') menstrualData.avgFsize    = Number(formData.menstrual.avgFsize);
-        if (formData.menstrual.ovaryVolume !== '') menstrualData.ovaryVolume = Number(formData.menstrual.ovaryVolume);
-        if (formData.menstrual.endometrium !== '') menstrualData.endometrium = Number(formData.menstrual.endometrium);
+        // Exact dataset field names — mapped directly to the RF model features
+        if (formData.menstrual.follicleNoLeft       !== '') menstrualData.follicleNoLeft       = Number(formData.menstrual.follicleNoLeft);
+        if (formData.menstrual.follicleNoRight      !== '') menstrualData.follicleNoRight      = Number(formData.menstrual.follicleNoRight);
+        if (formData.menstrual.avgFollicleSizeLeft  !== '') menstrualData.avgFollicleSizeLeft  = Number(formData.menstrual.avgFollicleSizeLeft);
+        if (formData.menstrual.avgFollicleSizeRight !== '') menstrualData.avgFollicleSizeRight = Number(formData.menstrual.avgFollicleSizeRight);
+        if (formData.menstrual.endometrium          !== '') menstrualData.endometrium          = Number(formData.menstrual.endometrium);
       }
 
       const payload = {
@@ -850,28 +864,84 @@ const PredictionWizard = () => {
       case 'ultrasound_scan':
         return (
           <Grid container spacing={3}>
+            {/* Header */}
             <Grid item xs={12}>
-              <Typography variant="h6" fontWeight={700}>Ultrasound Scan Metrics (Optional)</Typography>
+              <Typography variant="h6" fontWeight={700}>Do you have an ultrasound report?</Typography>
               <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5, fontWeight: 500 }}>
-                Optional – improves prediction accuracy.
+                {/* Optional — enter values from your pelvic or transvaginal scan report to improve prediction accuracy. */}
               </Typography>
             </Grid>
-            {[
-              { key: 'follicleNo',  label: 'Number of follicles (small cysts) seen', desc: 'Total count of ovarian follicles' },
-              { key: 'avgFsize',    label: 'Average follicle size (mm)',              desc: 'Mean size of follicles' },
-              { key: 'ovaryVolume', label: 'Ovary volume (mL)',                       desc: 'Total volume of the ovaries' },
-              { key: 'endometrium', label: 'Endometrium thickness (mm)',              desc: 'Uterine lining thickness' },
-            ].map((f) => (
-              <Grid item xs={12} sm={6} key={f.key}>
-                <TextField
-                  fullWidth label={f.label} type="number" placeholder="e.g. 6.0"
-                  value={formData.menstrual[f.key]}
-                  onChange={(e) => updateField('menstrual', f.key, e.target.value)}
-                  helperText={f.desc}
-                  inputProps={{ step: 'any', min: 0 }}
-                />
-              </Grid>
-            ))}
+
+            {/* Row 1 — Follicle counts */}
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Follicle No. (L)"
+                type="number"
+                placeholder="Enter left follicle count"
+                value={formData.menstrual.follicleNoLeft}
+                onChange={(e) => updateField('menstrual', 'follicleNoLeft', e.target.value)}
+                helperText="Number of follicles in the left ovary"
+                FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }}
+                inputProps={{ step: '1', min: 0 }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Follicle No. (R)"
+                type="number"
+                placeholder="Enter right follicle count"
+                value={formData.menstrual.follicleNoRight}
+                onChange={(e) => updateField('menstrual', 'follicleNoRight', e.target.value)}
+                helperText="Number of follicles in the right ovary"
+                FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }}
+                inputProps={{ step: '1', min: 0 }}
+              />
+            </Grid>
+
+            {/* Row 2 — Average follicle sizes */}
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Avg. F size (L) (mm)"
+                type="number"
+                placeholder="Enter average left follicle size"
+                value={formData.menstrual.avgFollicleSizeLeft}
+                onChange={(e) => updateField('menstrual', 'avgFollicleSizeLeft', e.target.value)}
+                helperText="Average follicle size in the left ovary"
+                FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }}
+                inputProps={{ step: 'any', min: 0 }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Avg. F size (R) (mm)"
+                type="number"
+                placeholder="Enter average right follicle size"
+                value={formData.menstrual.avgFollicleSizeRight}
+                onChange={(e) => updateField('menstrual', 'avgFollicleSizeRight', e.target.value)}
+                helperText="Average follicle size in the right ovary"
+                FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }}
+                inputProps={{ step: 'any', min: 0 }}
+              />
+            </Grid>
+
+            {/* Row 3 — Endometrium full-width */}
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Endometrium (mm)"
+                type="number"
+                placeholder="Enter endometrium thickness"
+                value={formData.menstrual.endometrium}
+                onChange={(e) => updateField('menstrual', 'endometrium', e.target.value)}
+                helperText="Thickness of the endometrium (uterine lining)"
+                FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }}
+                inputProps={{ step: 'any', min: 0 }}
+              />
+            </Grid>
           </Grid>
         );
 

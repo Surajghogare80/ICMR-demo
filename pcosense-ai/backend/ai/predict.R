@@ -147,11 +147,18 @@ features <- data.frame(
   `Reg.Exercise.Y.N.` = as.integer(reg_exercise_val),
   `BP._Systolic..mmHg.` = bp_sys_val,
   `BP._Diastolic..mmHg.` = bp_dia_val,
-  `Follicle.No...L.` = safe_num(input_data$menstrual$follicleNoL, safe_num(input_data$menstrual$follicleNo, 5.0)),
-  `Follicle.No...R.` = safe_num(input_data$menstrual$follicleNoR, safe_num(input_data$menstrual$follicleNo, 6.0)),
-  `Avg..F.size..L...mm.` = safe_num(input_data$menstrual$avgFsizeL, safe_num(input_data$menstrual$avgFsize, 15.0)),
-  `Avg..F.size..R...mm.` = safe_num(input_data$menstrual$avgFsizeR, safe_num(input_data$menstrual$avgFsize, 16.0)),
-  `Endometrium..mm.` = safe_num(input_data$menstrual$endometrium, 8.43),
+  # ── Ultrasound Scan features (exact dataset column names → RF model) ──────
+  # Frontend payload keys  →  Dataset column names
+  #   follicleNoLeft       →  Follicle No. (L)
+  #   follicleNoRight      →  Follicle No. (R)
+  #   avgFollicleSizeLeft  →  Avg. F size (L) (mm)
+  #   avgFollicleSizeRight →  Avg. F size (R) (mm)
+  #   endometrium          →  Endometrium (mm)
+  `Follicle.No...L.`     = safe_num(input_data$menstrual$follicleNoLeft,       5.0),
+  `Follicle.No...R.`     = safe_num(input_data$menstrual$follicleNoRight,      6.0),
+  `Avg..F.size..L...mm.` = safe_num(input_data$menstrual$avgFollicleSizeLeft,  15.0),
+  `Avg..F.size..R...mm.` = safe_num(input_data$menstrual$avgFollicleSizeRight, 16.0),
+  `Endometrium..mm.`     = safe_num(input_data$menstrual$endometrium,          8.43),
   check.names = FALSE
 )
 
