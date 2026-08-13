@@ -190,7 +190,7 @@ const RecentPredictions = ({ predictions, isLoading, total }) => {
             </motion.div>
             <Typography variant="h6" fontWeight={700} gutterBottom>No predictions yet</Typography>
             <Typography color="text.secondary" variant="body2" sx={{ mb: 3, maxWidth: 320, mx: 'auto' }}>
-              Start your first PCOS screening to begin tracking your health journey.
+              Start your first PMOS screening to begin tracking your health journey.
             </Typography>
             <Button
               variant="contained"

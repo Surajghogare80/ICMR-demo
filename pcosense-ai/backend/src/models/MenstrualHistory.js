@@ -35,11 +35,11 @@ const menstrualHistorySchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
-    // Family History of PCOS
+    // Family History of PMOS
     familyHistory: {
       type: Boolean,
       default: false,
-      comment: 'Has PCOS been diagnosed in mother, aunt, siblings, cousins, or grandmother',
+      comment: 'Has PMOS been diagnosed in mother, aunt, siblings, cousins, or grandmother',
     },
     // Optional Ultrasound Scan parameters — exact dataset field names used by the RF model
     follicleNoLeft:       { type: Number, default: null, comment: 'Follicle No. (L) — number of follicles in the left ovary' },

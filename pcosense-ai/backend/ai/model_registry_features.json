@@ -1,0 +1,6 @@
+{
+  "RF_Model_1_Dataset_1": ["method", "modelInfo", "modelType", "results", "pred", "bestTune", "call", "dots", "metric", "control", "finalModel", "preProcess", "trainingData", "ptype", "resample", "resampledCM", "perfNames", "maximize", "yLimits", "times", "levels", "terms", "coefnames", "contrasts", "xlevels"],
+  "RF_Model_2_Dataset_2": ["method", "modelInfo", "modelType", "results", "pred", "bestTune", "call", "dots", "metric", "control", "finalModel", "preProcess", "trainingData", "ptype", "resample", "resampledCM", "perfNames", "maximize", "yLimits", "times", "levels", "terms", "coefnames", "contrasts", "xlevels"],
+  "RF_Model_3_Dataset_3": ["method", "modelInfo", "modelType", "results", "pred", "bestTune", "call", "dots", "metric", "control", "finalModel", "preProcess", "trainingData", "ptype", "resample", "resampledCM", "perfNames", "maximize", "yLimits", "times", "levels", "terms", "coefnames", "contrasts", "xlevels"],
+  "RF_Model_4_Dataset_4": ["method", "modelInfo", "modelType", "results", "pred", "bestTune", "call", "dots", "metric", "control", "finalModel", "preProcess", "trainingData", "ptype", "resample", "resampledCM", "perfNames", "maximize", "yLimits", "times", "levels", "terms", "coefnames", "contrasts", "xlevels"]
+}

@@ -1,6 +1,6 @@
 @echo off
 echo ============================================================
-echo  PCOSense AI - Development Environment Setup
+echo  PMOSense AI - Development Environment Setup
 echo ============================================================
 echo.
 

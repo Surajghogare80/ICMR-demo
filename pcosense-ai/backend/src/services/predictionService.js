@@ -1,27 +1,21 @@
-// hy  // src/services/predictionService.js
+// backend/src/services/predictionService.js
 /**
  * PREDICTION SERVICE
  *
- * Integrates real R Random Forest model execution.
- * Fallback to rule-based dummy generation is triggered if R is not installed.
+ * Integrates real R Random Forest model execution via predictionRouter.
+ * Fallback to rule-based dummy generation is triggered if R is not installed or model fails.
  */
 import { predictionRepository } from '../repositories/predictionRepository.js';
 import { activityLogRepository } from '../repositories/activityLogRepository.js';
 import logger from '../utils/logger.js';
-import { exec } from 'child_process';
-import path from 'path';
-import fs from 'fs';
+import { runPredictionPipeline } from '../ai/predictionRouter.js';
 
 /**
  * AI INTEGRATION POINT
- * Replace this function with a call to your Python/R ML microservice.
- * Input: All form data from 4 sections
- * Output: { result, probability, confidence, recommendation }
+ * Fallback dummy rule engine for when R fails.
  */
 const generateDummyPrediction = (inputs) => {
-  // Scoring logic for realistic dummy results
   let riskScore = 0;
-
   if (inputs.menstrual?.cycleRegularity === 'Irregular') riskScore += 30;
   if (inputs.menstrual?.cycleRegularity === 'Absent') riskScore += 50;
   if (inputs.menstrual?.familyHistory) riskScore += 15;
@@ -32,7 +26,6 @@ const generateDummyPrediction = (inputs) => {
   if (inputs.lifestyle?.fastFoodFreq === 'Yes') riskScore += 10;
   if (inputs.lifestyle?.exerciseFreq === 'No') riskScore += 10;
   if (inputs.personal?.bmi > 30) riskScore += 20;
-  // WHR risk factor
   if (inputs.personal?.waistHipRatio >= 0.85) riskScore += 15;
 
   riskScore = Math.min(riskScore, 100);
@@ -46,70 +39,20 @@ const generateDummyPrediction = (inputs) => {
     'Consider pelvic ultrasound for ovarian cysts.',
     'Follow a low-glycemic index diet to manage insulin resistance.',
     'Start a regular exercise program (30 min/day, 5 days/week).',
-    'Avoid processed foods, sugar, and refined carbohydrates.',
-    'Track your menstrual cycle using a health app.',
-    'Discuss medication options (Metformin, hormonal therapy) with your doctor.',
   ];
-
   const lowRiskRecs = [
     'Maintain your current healthy lifestyle — great work!',
     'Continue exercising regularly (150 min/week of moderate activity).',
     'Keep a balanced, nutritious diet rich in vegetables and whole grains.',
     'Monitor your menstrual cycle and note any irregularities.',
-    'Schedule annual gynecological check-ups as a precaution.',
-    'Manage stress through mindfulness, yoga, or meditation.',
-    'Ensure 7-9 hours of quality sleep each night.',
   ];
-
-  const recommendations = result === 'High Risk'
-    ? highRiskRecs.slice(0, 5)
-    : lowRiskRecs.slice(0, 4);
+  const recommendations = result === 'High Risk' ? highRiskRecs : lowRiskRecs;
 
   return { result, probability, confidence, recommendation: recommendations };
 };
 
-const runRModel = (inputs) => {
-  return new Promise((resolve, reject) => {
-    const scriptPath = path.join(process.cwd(), 'ai/predict.R');
-    const tempInputPath = path.join(process.cwd(), `ai/temp_input_${Date.now()}.json`);
-
-    try {
-      fs.writeFileSync(tempInputPath, JSON.stringify(inputs));
-    } catch (err) {
-      return reject(new Error(`Failed to write temporary R input file: ${err.message}`));
-    }
-
-    // Default to Rscript in PATH, fallback to Windows installed path if not found
-    let rCmd = 'Rscript';
-    const fallbackPath = 'C:\\Program Files\\R\\R-4.6.1\\bin\\Rscript.exe';
-    if (fs.existsSync(fallbackPath)) {
-      rCmd = `"${fallbackPath}"`;
-    }
-
-    const command = `${rCmd} "${scriptPath}" "${tempInputPath}"`;
-
-    exec(command, (error, stdout, stderr) => {
-      // Clean up temp file
-      if (fs.existsSync(tempInputPath)) {
-        try { fs.unlinkSync(tempInputPath); } catch (_) {}
-      }
-
-      if (error) {
-        return reject(new Error(`R script execution failed: ${stderr || error.message}`));
-      }
-      try {
-        const result = JSON.parse(stdout);
-        resolve(result);
-      } catch (parseError) {
-        reject(new Error(`Failed to parse R output: ${stdout || stderr}`));
-      }
-    });
-  });
-};
-
 export const predictionService = {
-  async createPrediction({ userId, personal, menstrual, symptoms, lifestyle }, ip) {
-    // Destructure extended blood markers + new fields so they map correctly to DB fields
+  async createPrediction({ userId, personal, menstrual, symptoms, lifestyle, predictionMode }, ip) {
     const {
       vitaminD3, shbg, fastingInsulin, insulinResistance,
       waist, hip, waistHipRatio, rbs,
@@ -118,20 +61,16 @@ export const predictionService = {
 
     const extendedPersonal = {
       ...corePersonal,
-      // Body measurements
       ...(waist !== undefined && waist !== '' ? { waist: Number(waist) } : {}),
       ...(hip !== undefined && hip !== '' ? { hip: Number(hip) } : {}),
       ...(waistHipRatio !== undefined && waistHipRatio !== '' ? { waistHipRatio: Number(waistHipRatio) } : {}),
-      // Standard blood markers
       ...(rbs !== undefined && rbs !== '' ? { rbs: Number(rbs)} : {}),
-      // Extended blood markers — DB field names match schema
       ...(vitaminD3 !== undefined && vitaminD3 !== '' ? { vitD3: Number(vitaminD3) } : {}),
       ...(shbg !== undefined && shbg !== '' ? { shbg: Number(shbg) } : {}),
       ...(fastingInsulin !== undefined && fastingInsulin !== '' ? { fastingInsulin: Number(fastingInsulin) } : {}),
       ...(insulinResistance !== undefined && insulinResistance !== null ? { insulinResistance } : {}),
     };
 
-    // Normalize and apply defaults to lifestyle fields before saving
     const normalizedLifestyle = {
       fastFoodFreq: lifestyle?.fastFoodFreq || 'No',
       exerciseFreq: lifestyle?.exerciseFreq || 'Yes',
@@ -139,7 +78,6 @@ export const predictionService = {
       sleepHours:   Number(lifestyle?.sleepHours) || 7,
     };
 
-    // Save each section to its own collection
     const [personalMetric, menstrualHistory, clinicalSymptom, lifestyleHabit] = await Promise.all([
       predictionRepository.createPersonalMetric({ userId, ...extendedPersonal }),
       predictionRepository.createMenstrualHistory({ userId, ...menstrual }),
@@ -147,36 +85,25 @@ export const predictionService = {
       predictionRepository.createLifestyleHabit({ userId, ...normalizedLifestyle }),
     ]);
 
-    // Build the full inputs object for the R model — all live values included
-    const rInputPersonal = {
-      ...personal,
-      waist: waist !== undefined && waist !== '' ? Number(waist) : undefined,
-      hip: hip !== undefined && hip !== '' ? Number(hip) : undefined,
-      waistHipRatio: waistHipRatio !== undefined && waistHipRatio !== '' ? Number(waistHipRatio) : undefined,
-      rbs: rbs !== undefined && rbs !== '' ? Number(rbs) : undefined,
-      vitaminD3: vitaminD3 !== undefined && vitaminD3 !== '' ? Number(vitaminD3) : undefined,
-      shbg: shbg !== undefined && shbg !== '' ? Number(shbg) : undefined,
-      fastingInsulin: fastingInsulin !== undefined && fastingInsulin !== '' ? Number(fastingInsulin) : undefined,
-      insulinResistance: insulinResistance !== undefined && insulinResistance !== null ? insulinResistance : undefined,
-    };
+    const rInputs = { personal, menstrual, symptoms, lifestyle };
 
-    const rInputs = { personal: rInputPersonal, menstrual, symptoms, lifestyle: normalizedLifestyle };
-
-    // Generate prediction using real R model, falling back to dummy if Rscript is not installed
     let aiResult;
     try {
-      aiResult = await runRModel(rInputs);
+      // Execute the centralized prediction routing pipeline
+      aiResult = await runPredictionPipeline(rInputs, predictionMode);
       aiResult.engine = 'REAL_R_MODEL';
       
       console.log(`\n======================================================`);
-      console.log(`🤖 [PREDICTION ENGINE] REAL R RDS MODEL PREDICTION`);
+      console.log(`🤖 [PREDICTION ENGINE] ROUTED RF PREDICTION`);
       console.log(`   User ID     : ${userId}`);
+      console.log(`   Mode        : ${aiResult.mode}`);
+      console.log(`   Model Used  : ${aiResult.modelUsed}`);
       console.log(`   Result      : ${aiResult.result}`);
       console.log(`   Probability : ${aiResult.probability}%`);
       console.log(`   Confidence  : ${aiResult.confidence}%`);
       console.log(`======================================================\n`);
 
-      logger.info(`[REAL_R_MODEL] Prediction generated using Random Forest RDS model for user ${userId}: ${aiResult.result} (${aiResult.probability}%)`);
+      logger.info(`[REAL_R_MODEL] Prediction generated using ${aiResult.modelUsed} for user ${userId}: ${aiResult.result}`);
     } catch (err) {
       logger.warn(`Failed to execute ML R model, falling back to rule-based engine. Reason: ${err.message}`);
       aiResult = generateDummyPrediction(rInputs);
@@ -191,7 +118,6 @@ export const predictionService = {
       console.log(`======================================================\n`);
     }
 
-    // Save the prediction referencing all 4 collections
     const prediction = await predictionRepository.createPrediction({
       userId,
       personalMetricId: personalMetric._id,
@@ -204,7 +130,7 @@ export const predictionService = {
     await activityLogRepository.create({
       userId,
       action: 'PREDICTION_CREATED',
-      details: `Prediction created: ${aiResult.result} (${aiResult.probability}%)`,
+      details: `Prediction created via ${aiResult.engine}: ${aiResult.result} (${aiResult.probability}%)`,
       ipAddress: ip,
     });
 
@@ -213,11 +139,10 @@ export const predictionService = {
     return {
       prediction: {
         ...prediction.toObject ? prediction.toObject() : prediction,
-        // Embed the full personalMetric so the result page can render the blood report card
         personalMetricId: personalMetric,
         menstrualHistoryId: menstrualHistory,
       },
-      aiResult, // Return AI result separately for immediate display
+      aiResult,
     };
   },
 
@@ -232,7 +157,6 @@ export const predictionService = {
       error.statusCode = 404;
       throw error;
     }
-    // Ensure user can only view their own predictions (unless admin)
     if (prediction.userId._id.toString() !== userId.toString()) {
       const error = new Error('Not authorized to view this prediction.');
       error.statusCode = 403;

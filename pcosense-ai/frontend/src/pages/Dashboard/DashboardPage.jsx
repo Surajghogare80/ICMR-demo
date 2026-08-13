@@ -235,7 +235,7 @@ const DashboardPage = () => {
                     boxShadow: '0 12px 32px rgba(233,30,99,0.45)',
                   },
                 }}
-                aria-label="Start new PCOS screening"
+                aria-label="Start new PMOS screening"
               >
                 New Screening
               </Button>
@@ -261,7 +261,7 @@ const DashboardPage = () => {
         {/* ── Recent Predictions ─────────────────────────── */}
         <RecentPredictions predictions={predictions} isLoading={isLoading} total={total} />
 
-        {/* ── PCOS Awareness ───────────────────────────── */}
+        {/* ── PMOS Awareness ───────────────────────────── */}
         <AwarenessSection />
 
         {/* ── Health Tips ──────────────────────────────── */}
@@ -329,7 +329,7 @@ const DashboardPage = () => {
                 boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
                 '&:hover': { bgcolor: 'rgba(255,255,255,0.92)', transform: 'translateY(-2px)' },
               }}
-              aria-label="Start new PCOS screening assessment"
+              aria-label="Start new PMOS screening assessment"
             >
               Start Screening →
             </Button>

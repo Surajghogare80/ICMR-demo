@@ -41,7 +41,7 @@ const resources = {
       step_1_of_3: "Step 1 of 3: Age",
       step_2_of_3: "Step 2 of 3: Weight & Height",
       step_3_of_3: "Step 3 of 3: Waist & Hip",
-      family_history_of_pcos: "Family History of PCOS",
+      family_history_of_pmos: "Family History of PMOS",
       mother_aunt_sister_grandmother_cousin: "Mother / Aunt / Sister / Cousin / Grandmother",
       personal_health_measurements: "Personal Health Measurements",
       // Lifestyle step
@@ -114,7 +114,7 @@ const resources = {
       step_1_of_3: "चरण 1 / 3: आयु",
       step_2_of_3: "चरण 2 / 3: वजन और ऊंचाई",
       step_3_of_3: "चरण 3 / 3: कमर और कूल्हा",
-      family_history_of_pcos: "PCOS का पारिवारिक इतिहास",
+      family_history_of_pmos: "PMOS का पारिवारिक इतिहास",
       mother_aunt_sister_grandmother_cousin: "माँ / चाची / बहन / चचेरी बहन / दादी",
       personal_health_measurements: "व्यक्तिगत स्वास्थ्य माप",
       // Lifestyle step
@@ -193,7 +193,7 @@ step_1_of_3: "चरण १/३: वय",
 step_2_of_3: "चरण २/३: वजन आणि उंची",
 step_3_of_3: "चरण ३/३: कंबर आणि नितंब",
 
-family_history_of_pcos: "PCOS चा कौटुंबिक इतिहास",
+family_history_of_pmos: "PMOS चा कौटुंबिक इतिहास",
 mother_aunt_sister_grandmother_cousin: "आई / काकू / बहीण / चुलत बहीण / आजी",
 personal_health_measurements: "वैयक्तिक आरोग्य मापे",
 

@@ -323,7 +323,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
             <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
               <FamilyRestroomIcon sx={{ fontSize: 24, color: '#E91E63' }} />
               <Typography variant="h6" fontWeight={800} color="text.primary">
-                {t('family_history_of_pcos', 'Family History of PCOS')}
+                {t('family_history_of_pmos', 'Family History of PMOS')}
               </Typography>
             </Stack>
 

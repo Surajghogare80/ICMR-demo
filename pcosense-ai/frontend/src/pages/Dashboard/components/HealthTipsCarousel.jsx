@@ -4,14 +4,14 @@ import { Box, Typography, useTheme, alpha } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const HEALTH_TIPS = [
-  { emoji: '💧', title: 'Stay Hydrated', tip: 'Drink at least 8 glasses of water daily. Proper hydration helps regulate hormones and supports kidney health — essential for managing PCOS.', color: '#26C6DA' },
-  { emoji: '🥗', title: 'Eat Balanced Meals', tip: 'Focus on a low-glycemic diet rich in whole grains, lean protein, leafy greens, and healthy fats. This helps control insulin — a key factor in PCOS.', color: '#66BB6A' },
-  { emoji: '🏃', title: 'Exercise Regularly', tip: 'Aim for at least 30 minutes of moderate exercise most days. Regular movement reduces insulin resistance and helps manage weight with PCOS.', color: '#FFA726' },
-  { emoji: '😴', title: 'Prioritize Sleep', tip: 'Quality sleep of 7–8 hours supports hormone regulation and metabolism. Poor sleep can worsen insulin resistance and PCOS symptoms.', color: '#7E57C2' },
-  { emoji: '🧘', title: 'Reduce Stress', tip: 'Chronic stress elevates cortisol, which can worsen PCOS symptoms. Practice mindfulness, yoga, or deep breathing exercises daily.', color: '#F06292' },
+  { emoji: '💧', title: 'Stay Hydrated', tip: 'Drink at least 8 glasses of water daily. Proper hydration helps regulate hormones and supports kidney health — essential for managing PMOS.', color: '#26C6DA' },
+  { emoji: '🥗', title: 'Eat Balanced Meals', tip: 'Focus on a low-glycemic diet rich in whole grains, lean protein, leafy greens, and healthy fats. This helps control insulin — a key factor in PMOS.', color: '#66BB6A' },
+  { emoji: '🏃', title: 'Exercise Regularly', tip: 'Aim for at least 30 minutes of moderate exercise most days. Regular movement reduces insulin resistance and helps manage weight with PMOS.', color: '#FFA726' },
+  { emoji: '😴', title: 'Prioritize Sleep', tip: 'Quality sleep of 7–8 hours supports hormone regulation and metabolism. Poor sleep can worsen insulin resistance and PMOS symptoms.', color: '#7E57C2' },
+  { emoji: '🧘', title: 'Reduce Stress', tip: 'Chronic stress elevates cortisol, which can worsen PMOS symptoms. Practice mindfulness, yoga, or deep breathing exercises daily.', color: '#F06292' },
   { emoji: '🚫', title: 'Limit Processed Foods', tip: 'Ultra-processed foods and added sugars can spike insulin levels and worsen hormonal imbalances. Choose whole, unprocessed foods whenever possible.', color: '#EF5350' },
-  { emoji: '🌿', title: 'Consider Anti-Inflammatory Foods', tip: 'Foods like berries, leafy greens, fatty fish, and turmeric have anti-inflammatory properties that may help reduce PCOS-related inflammation.', color: '#66BB6A' },
-  { emoji: '☀️', title: 'Get Vitamin D', tip: 'Many women with PCOS have low Vitamin D levels. Spend 15-20 minutes in sunlight daily and consider testing your levels with your doctor.', color: '#FFA726' },
+  { emoji: '🌿', title: 'Consider Anti-Inflammatory Foods', tip: 'Foods like berries, leafy greens, fatty fish, and turmeric have anti-inflammatory properties that may help reduce PMOS-related inflammation.', color: '#66BB6A' },
+  { emoji: '☀️', title: 'Get Vitamin D', tip: 'Many women with PMOS have low Vitamin D levels. Spend 15-20 minutes in sunlight daily and consider testing your levels with your doctor.', color: '#FFA726' },
 ];
 
 const HealthTipsCarousel = () => {

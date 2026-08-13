@@ -378,9 +378,12 @@ const PredictionWizard = () => {
         if (formData.personal.fsh         !== '')     personalData.fsh             = Number(formData.personal.fsh);
         if (formData.personal.lh          !== '')     personalData.lh              = Number(formData.personal.lh);
         
-        // Auto calculate and send lhFshRatio if both exist and FSH != 0
+        // Auto-calculate both ratios — model requires LH:FSH and FSH/LH as distinct features
         if (formData.personal.lh !== '' && formData.personal.fsh !== '' && Number(formData.personal.fsh) !== 0) {
-          personalData.lhFshRatio = Number((Number(formData.personal.lh) / Number(formData.personal.fsh)).toFixed(2));
+          const fshVal = Number(formData.personal.fsh);
+          const lhVal  = Number(formData.personal.lh);
+          personalData.lhFshRatio = Number((lhVal / fshVal).toFixed(4)); // LH:FSH
+          personalData.fshLhRatio = Number((fshVal / lhVal).toFixed(4)); // FSH/LH
         }
 
         if (formData.personal.tsh         !== '')     personalData.tsh             = Number(formData.personal.tsh);
@@ -411,6 +414,15 @@ const PredictionWizard = () => {
         if (formData.menstrual.endometrium          !== '') menstrualData.endometrium          = Number(formData.menstrual.endometrium);
       }
 
+      // Map frontend screeningMode to the backend predictionMode routing key
+      const modeMap = {
+        symptoms:   'symptoms_only',
+        blood:      'blood_test',
+        ultrasound: 'ultrasound',
+        both:       'combined',
+      };
+      const predictionMode = modeMap[screeningMode] || 'symptoms_only';
+
       const payload = {
         personal:  personalData,
         menstrual: menstrualData,
@@ -421,6 +433,7 @@ const PredictionWizard = () => {
           stressLevel:  formData.lifestyle.stressLevel  || 'Moderate',
           sleepHours:   Number(formData.lifestyle.sleepHours) || 7,
         },
+        predictionMode,  // Explicit model routing — no guessing
       };
 
       const res = await predictionService.create(payload);
@@ -1007,7 +1020,7 @@ const PredictionWizard = () => {
             {/* <Alert severity="info" sx={{ mt: 3 }}>
               <Typography variant="body2">
                 <strong>Medical Disclaimer:</strong> This screening tool is for educational purposes only and does not
-                constitute a medical diagnosis. Please consult a qualified healthcare professional for a formal PCOS evaluation.
+                constitute a medical diagnosis. Please consult a qualified healthcare professional for a formal PMOS evaluation.
               </Typography>
             </Alert> */}
           </Box>
@@ -1188,7 +1201,7 @@ const PredictionWizard = () => {
       <Container maxWidth="md">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
           <Box sx={{ textAlign: 'center', mb: { xs: 1.5, md: 2 } }}>
-            <Typography variant="h4" fontWeight={800} gutterBottom sx={{ fontSize: { xs: '1.75rem', md: '2rem' } }}>🧬 PCOS Screening Wizard</Typography>
+            <Typography variant="h4" fontWeight={800} gutterBottom sx={{ fontSize: { xs: '1.75rem', md: '2rem' } }}>🧬 PMOS Screening Wizard</Typography>
             <Typography color="text.secondary" variant="body2">Complete the sections for an accurate risk assessment</Typography>
           </Box>
 
