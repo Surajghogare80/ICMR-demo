@@ -333,7 +333,7 @@ const PredictionWizard = () => {
         ...prev,
         menstrual: {
           ...prev.menstrual,
-          follicleNoLeft: '', follicleNoRight: '',
+          fot: '', follicleNoRight: '',
           avgFollicleSizeLeft: '', avgFollicleSizeRight: '',
           endometrium: '',
         },
