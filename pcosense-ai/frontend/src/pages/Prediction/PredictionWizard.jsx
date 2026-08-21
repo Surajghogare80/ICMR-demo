@@ -417,9 +417,9 @@ const PredictionWizard = () => {
       // Map frontend screeningMode to the backend predictionMode routing key
       const modeMap = {
         symptoms:   'symptoms_only',
-        blood:      'blood_test',
-        ultrasound: 'ultrasound',
-        both:       'combined',
+        blood:      'symptoms_blood',
+        ultrasound: 'symptoms_usg',
+        both:       'symptoms_blood_usg',
       };
       const predictionMode = modeMap[screeningMode] || 'symptoms_only';
 
@@ -428,10 +428,10 @@ const PredictionWizard = () => {
         menstrual: menstrualData,
         symptoms:  formData.symptoms,
         lifestyle: {
-          fastFoodFreq: formData.lifestyle.fastFoodFreq || 'No',
-          exerciseFreq: formData.lifestyle.exerciseFreq || 'Yes',
-          stressLevel:  formData.lifestyle.stressLevel  || 'Moderate',
-          sleepHours:   Number(formData.lifestyle.sleepHours) || 7,
+          fastFoodFreq: formData.lifestyle.fastFoodFreq,
+          exerciseFreq: formData.lifestyle.exerciseFreq,
+          stressLevel:  formData.lifestyle.stressLevel,
+          sleepHours:   formData.lifestyle.sleepHours !== '' ? Number(formData.lifestyle.sleepHours) : null,
         },
         predictionMode,  // Explicit model routing — no guessing
       };

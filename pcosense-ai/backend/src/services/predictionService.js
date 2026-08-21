@@ -10,46 +10,6 @@ import { activityLogRepository } from '../repositories/activityLogRepository.js'
 import logger from '../utils/logger.js';
 import { runPredictionPipeline } from '../ai/predictionRouter.js';
 
-/**
- * AI INTEGRATION POINT
- * Fallback dummy rule engine for when R fails.
- */
-const generateDummyPrediction = (inputs) => {
-  let riskScore = 0;
-  if (inputs.menstrual?.cycleRegularity === 'Irregular') riskScore += 30;
-  if (inputs.menstrual?.cycleRegularity === 'Absent') riskScore += 50;
-  if (inputs.menstrual?.familyHistory) riskScore += 15;
-  if (inputs.symptoms?.weightGain) riskScore += 15;
-  if (inputs.symptoms?.hairGrowth) riskScore += 15;
-  if (inputs.symptoms?.skinDarkening) riskScore += 10;
-  if (inputs.symptoms?.pimples) riskScore += 10;
-  if (inputs.lifestyle?.fastFoodFreq === 'Yes') riskScore += 10;
-  if (inputs.lifestyle?.exerciseFreq === 'No') riskScore += 10;
-  if (inputs.personal?.bmi > 30) riskScore += 20;
-  if (inputs.personal?.waistHipRatio >= 0.85) riskScore += 15;
-
-  riskScore = Math.min(riskScore, 100);
-  const probability = Math.max(5, Math.min(95, riskScore));
-  const confidence = Math.max(probability, 100 - probability);
-  const result = probability >= 50 ? 'High Risk' : 'Low Risk';
-
-  const highRiskRecs = [
-    'Consult a gynecologist or endocrinologist immediately.',
-    'Get hormonal blood tests (FSH, LH, testosterone, insulin).',
-    'Consider pelvic ultrasound for ovarian cysts.',
-    'Follow a low-glycemic index diet to manage insulin resistance.',
-    'Start a regular exercise program (30 min/day, 5 days/week).',
-  ];
-  const lowRiskRecs = [
-    'Maintain your current healthy lifestyle — great work!',
-    'Continue exercising regularly (150 min/week of moderate activity).',
-    'Keep a balanced, nutritious diet rich in vegetables and whole grains.',
-    'Monitor your menstrual cycle and note any irregularities.',
-  ];
-  const recommendations = result === 'High Risk' ? highRiskRecs : lowRiskRecs;
-
-  return { result, probability, confidence, recommendation: recommendations };
-};
 
 export const predictionService = {
   async createPrediction({ userId, personal, menstrual, symptoms, lifestyle, predictionMode }, ip) {
@@ -72,10 +32,10 @@ export const predictionService = {
     };
 
     const normalizedLifestyle = {
-      fastFoodFreq: lifestyle?.fastFoodFreq || 'No',
-      exerciseFreq: lifestyle?.exerciseFreq || 'Yes',
-      stressLevel:  lifestyle?.stressLevel  || 'Moderate',
-      sleepHours:   Number(lifestyle?.sleepHours) || 7,
+      fastFoodFreq: lifestyle?.fastFoodFreq,
+      exerciseFreq: lifestyle?.exerciseFreq,
+      stressLevel:  lifestyle?.stressLevel,
+      sleepHours:   lifestyle?.sleepHours ? Number(lifestyle.sleepHours) : undefined,
     };
 
     const [personalMetric, menstrualHistory, clinicalSymptom, lifestyleHabit] = await Promise.all([
@@ -105,17 +65,12 @@ export const predictionService = {
 
       logger.info(`[REAL_R_MODEL] Prediction generated using ${aiResult.modelUsed} for user ${userId}: ${aiResult.result}`);
     } catch (err) {
-      logger.warn(`Failed to execute ML R model, falling back to rule-based engine. Reason: ${err.message}`);
-      aiResult = generateDummyPrediction(rInputs);
-      aiResult.engine = 'DUMMY_FALLBACK';
-
-      console.log(`\n======================================================`);
-      console.log(`⚠️ [PREDICTION ENGINE] FALLBACK DUMMY RULE PREDICTION`);
-      console.log(`   User ID     : ${userId}`);
-      console.log(`   Result      : ${aiResult.result}`);
-      console.log(`   Probability : ${aiResult.probability}%`);
-      console.log(`   Fallback Cause: ${err.message}`);
-      console.log(`======================================================\n`);
+      logger.error(`Failed to execute ML R model: ${err.message}`);
+      const error = new Error(`Prediction failed: ${err.message}`);
+      if (err.message.includes("missing information")) {
+        error.statusCode = 400;
+      }
+      throw error;
     }
 
     const prediction = await predictionRepository.createPrediction({
