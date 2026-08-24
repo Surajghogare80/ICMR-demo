@@ -1,9 +1,17 @@
 import dns from 'dns';
 dns.setServers(['8.8.8.8']);
 
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
-const uri = 'mongodb+srv://suraj:suraj123@icmrdemo.cauzwfy.mongodb.net/pmosense_ai?authSource=admin&retryWrites=true&w=majority&appName=ICMRdemo';
+dotenv.config();
+
+const uri = process.env.MONGODB_URI;
+
+if (!uri) {
+  console.error('MONGODB_URI is not set. Add it to your .env file before running this script.');
+  process.exit(1);
+}
 
 console.log('Connecting with authSource=admin...');
 try {
