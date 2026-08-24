@@ -100,7 +100,7 @@ const AdminPredictionDetail = ({ prediction, onClose }) => {
             <InfoRow label="Period Duration" value={mh.periodDuration} unit="days" />
             <InfoRow label="Regularity" value={mh.cycleRegularity} />
             <InfoRow label="Flow" value={mh.flowIntensity} />
-            <InfoRow label="Family History of PCOS" value={mh.familyHistory !== undefined && mh.familyHistory !== null ? (mh.familyHistory ? 'Yes' : 'No') : '—'} />
+            <InfoRow label="Family History of PMOS" value={mh.familyHistory !== undefined && mh.familyHistory !== null ? (mh.familyHistory ? 'Yes' : 'No') : '—'} />
           </Grid>
 
           {/* Standard Blood */}

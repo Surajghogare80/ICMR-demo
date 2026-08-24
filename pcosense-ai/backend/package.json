@@ -1,7 +1,7 @@
 {
-  "name": "pcosense-ai-backend",
+  "name": "pmosense-ai-backend",
   "version": "1.0.0",
-  "description": "PCOSense AI - PCOS Prediction REST API",
+  "description": "PMOSense AI - PMOS Prediction REST API",
   "type": "module",
   "main": "src/server.js",
   "scripts": {

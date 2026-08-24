@@ -3,3 +3,7 @@ node_modules/
 logs/*.log
 uploads/*
 !uploads/.gitkeep
+
+# Large ML model files — do not commit to git
+ai/All_4_RF_Models.rds
+ai/*.rds

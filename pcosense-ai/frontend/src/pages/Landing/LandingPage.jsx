@@ -16,9 +16,9 @@ import { APP_NAME, APP_TAGLINE, APP_DESCRIPTION } from '../../config/appConfig.j
 const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } };
 
 const features = [
-  { icon: <Psychology />, title: 'AI-Powered Screening', desc: 'Advanced multi-factor analysis using clinical and lifestyle data for accurate PCOS risk assessment.', color: '#E91E63' },
+  { icon: <Psychology />, title: 'AI-Powered Screening', desc: 'Advanced multi-factor analysis using clinical and lifestyle data for accurate PMOS risk assessment.', color: '#E91E63' },
   { icon: <Security />, title: 'Secure & Private', desc: 'Your health data is encrypted and protected with enterprise-grade security. We take privacy seriously.', color: '#F06292' },
-  { icon: <Speed />, title: 'Instant Results', desc: 'Get your PCOS risk assessment in seconds with detailed recommendations and next steps.', color: '#FFA726' },
+  { icon: <Speed />, title: 'Instant Results', desc: 'Get your PMOS risk assessment in seconds with detailed recommendations and next steps.', color: '#FFA726' },
   { icon: <Analytics />, title: 'Track History', desc: 'Monitor your health journey over time with prediction history and visual trend analysis.', color: '#66BB6A' },
 ];
 
@@ -30,9 +30,9 @@ const steps = [
 ];
 
 const faqs = [
-  { q: 'What is PCOS?', a: 'Polycystic Ovary Syndrome (PCOS) is a common hormonal disorder affecting women of reproductive age. It causes irregular periods, excess androgen, and polycystic ovaries.' },
+  { q: 'What is PMOS?', a: 'Polycystic Ovary Syndrome (PMOS) is a common hormonal disorder affecting women of reproductive age. It causes irregular periods, excess androgen, and polycystic ovaries.' },
   { q: 'Is this a medical diagnosis?', a: `No. ${APP_NAME} is a screening tool only. Results are for educational purposes and should be discussed with a qualified gynecologist or endocrinologist.` },
-  { q: 'How accurate is the prediction?', a: 'Our model is trained on clinical datasets and uses multiple risk factors. However, only a licensed medical professional can provide a formal PCOS diagnosis.' },
+  { q: 'How accurate is the prediction?', a: 'Our model is trained on clinical datasets and uses multiple risk factors. However, only a licensed medical professional can provide a formal PMOS diagnosis.' },
   { q: 'Is my data safe?', a: 'Yes. All data is encrypted in transit and at rest. We do not share your health information with third parties.' },
   { q: 'Can I delete my data?', a: 'Yes. You can delete your prediction history at any time from your dashboard.' },
 ];
@@ -71,7 +71,7 @@ const LandingPage = () => {
                 <Typography variant="h1" sx={{ fontSize: { xs: '2.5rem', md: '3.8rem' }, fontWeight: 900, color: (theme) => theme.palette.mode === 'dark' ? '#FFFFFF' : '#2D2D2D', lineHeight: 1.1, mb: 3 }}>
                   Understand Your
                   <Box component="span" sx={{ display: 'block', background: 'linear-gradient(135deg, #EC407A, #F48FB1, #FFA726)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                    PCOS Risk Today
+                    PMOS Risk Today
                   </Box>
                 </Typography>
                 <Typography variant="h6" sx={{ color: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.65)' : 'text.secondary', fontWeight: 400, lineHeight: 1.8, mb: 5, maxWidth: 520 }}>
@@ -181,7 +181,7 @@ const LandingPage = () => {
         <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.6 }}>
           <Typography variant="h3" fontWeight={800} textAlign="center" gutterBottom>Why {APP_NAME}?</Typography>
           <Typography variant="h6" color="text.secondary" textAlign="center" sx={{ mb: 7, fontWeight: 400, maxWidth: 600, mx: 'auto' }}>
-            A comprehensive, evidence-based approach to PCOS risk assessment
+            A comprehensive, evidence-based approach to PMOS risk assessment
           </Typography>
         </motion.div>
         <Grid container spacing={3}>
@@ -206,7 +206,7 @@ const LandingPage = () => {
         <Container maxWidth="lg">
           <Typography variant="h3" fontWeight={800} textAlign="center" gutterBottom>How It Works</Typography>
           <Typography variant="h6" color="text.secondary" textAlign="center" sx={{ mb: 8, fontWeight: 400 }}>
-            Get your PCOS risk assessment in 4 simple steps
+            Get your PMOS risk assessment in 4 simple steps
           </Typography>
           <Grid container spacing={4}>
             {steps.map((s, i) => (
@@ -224,11 +224,11 @@ const LandingPage = () => {
         </Container>
       </Box>
 
-      {/* About PCOS */}
+      {/* About PMOS */}
       <Container maxWidth="md" sx={{ py: 10 }}>
-        <Typography variant="h3" fontWeight={800} textAlign="center" gutterBottom>About PCOS</Typography>
+        <Typography variant="h3" fontWeight={800} textAlign="center" gutterBottom>About PMOS</Typography>
         <Typography variant="body1" color="text.secondary" textAlign="center" lineHeight={1.9} sx={{ mb: 4 }}>
-          Polycystic Ovary Syndrome (PCOS) affects approximately <strong>1 in 10</strong> women of childbearing age worldwide. It is one of the most common endocrine disorders and a leading cause of female infertility. Early detection and lifestyle intervention can significantly improve outcomes.
+          Polycystic Ovary Syndrome (PMOS) affects approximately <strong>1 in 10</strong> women of childbearing age worldwide. It is one of the most common endocrine disorders and a leading cause of female infertility. Early detection and lifestyle intervention can significantly improve outcomes.
         </Typography>
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center' }}>
           {['Irregular periods', 'Hormonal imbalance', 'Weight gain', 'Hair thinning', 'Acne', 'Fertility issues'].map((t) => (

@@ -81,11 +81,12 @@ export const predictionValidator = [
     .optional()
     .isBoolean().withMessage('Family history must be true or false'),
 
-  // ── Ultrasound (optional) ─────────────────────────────────────────────────
-  optPositive('follicleNo', 'menstrual'),
-  optPositive('avgFsize', 'menstrual'),
-  optPositive('ovaryVolume', 'menstrual'),
-  optPositive('endometrium', 'menstrual'),
+  // ── Ultrasound (optional) — exact dataset field names used by the RF model ───
+  optPositive('follicleNoLeft',       'menstrual'),   // Follicle No. (L)
+  optPositive('follicleNoRight',      'menstrual'),   // Follicle No. (R)
+  optPositive('avgFollicleSizeLeft',  'menstrual'),   // Avg. F size (L) (mm)
+  optPositive('avgFollicleSizeRight', 'menstrual'),   // Avg. F size (R) (mm)
+  optPositive('endometrium',          'menstrual'),   // Endometrium (mm)
 
   // ── Symptoms ──────────────────────────────────────────────────────────────
   body('symptoms.weightGain').optional().isBoolean(),

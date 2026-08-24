@@ -106,7 +106,7 @@ const PredictionDetailDialog = ({ prediction, onClose }) => {
             <InfoRow label="Period Duration" value={mh.periodDuration} unit="days" />
             <InfoRow label="Regularity" value={mh.cycleRegularity} />
             <InfoRow label="Flow Intensity" value={mh.flowIntensity} />
-            <InfoRow label="Family History of PCOS" value={mh.familyHistory !== undefined && mh.familyHistory !== null ? (mh.familyHistory ? 'Yes' : 'No') : '—'} />
+            <InfoRow label="Family History of PMOS" value={mh.familyHistory !== undefined && mh.familyHistory !== null ? (mh.familyHistory ? 'Yes' : 'No') : '—'} />
           </Grid>
 
           {/* Blood Report — Page 1 */}
@@ -227,7 +227,7 @@ const PredictionHistoryPage = () => {
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
             <Box>
               <Typography variant="h4" fontWeight={800} gutterBottom>Prediction History</Typography>
-              <Typography color="text.secondary">Your complete PCOS screening history</Typography>
+              <Typography color="text.secondary">Your complete PMOS screening history</Typography>
             </Box>
             <Button variant="contained" startIcon={<Science />} onClick={() => navigate(ROUTES.PREDICTION)}>
               New Screening
@@ -242,7 +242,7 @@ const PredictionHistoryPage = () => {
                 <Science sx={{ fontSize: 64, color: 'text.disabled', mb: 2 }} />
                 <Typography variant="h6" color="text.secondary" gutterBottom>No predictions yet</Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                  Complete your first PCOS screening to see results here.
+                  Complete your first PMOS screening to see results here.
                 </Typography>
                 <Button variant="contained" onClick={() => navigate(ROUTES.PREDICTION)}>
                   Start Screening

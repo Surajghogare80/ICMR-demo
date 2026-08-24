@@ -10,7 +10,7 @@ import { ROUTES } from '../../../constants/index.js';
 const ACTIONS = [
   {
     title: 'Start Assessment',
-    subtitle: 'Begin your PCOS screening',
+    subtitle: 'Begin your PMOS screening',
     icon: <Science sx={{ fontSize: 32 }} />,
     gradient: 'linear-gradient(135deg, #EC407A, #F48FB1)',
     accentColor: '#EC407A',
@@ -27,7 +27,7 @@ const ACTIONS = [
   },
   {
     title: 'Health Library',
-    subtitle: 'PCOS education & articles',
+    subtitle: 'PMOS education & articles',
     icon: <LibraryBooks sx={{ fontSize: 32 }} />,
     gradient: 'linear-gradient(135deg, #26C6DA, #80DEEA)',
     accentColor: '#26C6DA',

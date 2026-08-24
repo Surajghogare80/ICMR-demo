@@ -3,7 +3,7 @@ dns.setServers(['8.8.8.8']);
 
 import mongoose from 'mongoose';
 
-const uri = 'mongodb+srv://suraj:suraj123@icmrdemo.cauzwfy.mongodb.net/pcosense_ai?authSource=admin&retryWrites=true&w=majority&appName=ICMRdemo';
+const uri = 'mongodb+srv://suraj:suraj123@icmrdemo.cauzwfy.mongodb.net/pmosense_ai?authSource=admin&retryWrites=true&w=majority&appName=ICMRdemo';
 
 console.log('Connecting with authSource=admin...');
 try {

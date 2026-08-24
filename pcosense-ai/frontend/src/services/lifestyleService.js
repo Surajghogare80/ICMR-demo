@@ -12,9 +12,9 @@ const mockArticles = [
     translations: {
       en: {
         title: "Balanced Diet for Hormonal Health",
-        description: "Discover how nutrition plays a vital role in managing PCOS and improving overall well-being.",
-        whatIsIt: "A balanced diet provides essential nutrients the body needs to function properly. For women with PCOS, it involves focusing on whole foods, low glycemic index carbohydrates, lean proteins, and healthy fats.",
-        whyIsItImportant: "Diet directly impacts insulin resistance, inflammation, and hormone production—key factors in PCOS.",
+        description: "Discover how nutrition plays a vital role in managing PMOS and improving overall well-being.",
+        whatIsIt: "A balanced diet provides essential nutrients the body needs to function properly. For women with PMOS, it involves focusing on whole foods, low glycemic index carbohydrates, lean proteins, and healthy fats.",
+        whyIsItImportant: "Diet directly impacts insulin resistance, inflammation, and hormone production—key factors in PMOS.",
         benefits: ["Improves insulin sensitivity", "Helps maintain a healthy weight", "Reduces inflammation", "Regulates menstrual cycles"],
         recommendations: "Aim for a plate that is 50% vegetables, 25% lean protein, and 25% complex carbohydrates.",
         thingsToAvoid: ["Highly processed foods", "Sugary drinks and snacks", "Refined carbohydrates (white bread, pastries)", "Excessive saturated fats"],
@@ -22,7 +22,7 @@ const mockArticles = [
       },
       hi: {
         title: "हार्मोनल स्वास्थ्य के लिए संतुलित आहार",
-        description: "जानें कि पीसीओएस (PCOS) को प्रबंधित करने और समग्र स्वास्थ्य को बेहतर बनाने में पोषण कैसे महत्वपूर्ण भूमिका निभाता है।",
+        description: "जानें कि पीसीओएस (PMOS) को प्रबंधित करने और समग्र स्वास्थ्य को बेहतर बनाने में पोषण कैसे महत्वपूर्ण भूमिका निभाता है।",
         whatIsIt: "संतुलित आहार शरीर को ठीक से काम करने के लिए आवश्यक पोषक तत्व प्रदान करता है। पीसीओएस वाली महिलाओं के लिए, इसमें साबुत अनाज, कम ग्लाइसेमिक इंडेक्स वाले कार्बोहाइड्रेट, लीन प्रोटीन और स्वस्थ वसा पर ध्यान केंद्रित करना शामिल है।",
         whyIsItImportant: "आहार सीधे इंसुलिन प्रतिरोध, सूजन और हार्मोन उत्पादन को प्रभावित करता है - जो पीसीओएस में प्रमुख कारक हैं।",
         benefits: ["इंसुलिन संवेदनशीलता में सुधार करता है", "स्वस्थ वजन बनाए रखने में मदद करता है", "सूजन कम करता है", "मासिक धर्म चक्र को नियंत्रित करता है"],
@@ -32,7 +32,7 @@ const mockArticles = [
       },
       mr: {
         title: "हार्मोनल आरोग्यासाठी संतुलित आहार",
-        description: "पीसीओएस (PCOS) व्यवस्थापित करण्यात आणि एकंदर आरोग्य सुधारण्यात पोषण कशी महत्त्वाची भूमिका बजावते ते शोधा.",
+        description: "पीसीओएस (PMOS) व्यवस्थापित करण्यात आणि एकंदर आरोग्य सुधारण्यात पोषण कशी महत्त्वाची भूमिका बजावते ते शोधा.",
         whatIsIt: "संतुलित आहार शरीराला योग्यरित्या कार्य करण्यासाठी आवश्यक पोषक तत्त्वे प्रदान करतो. पीसीओएस असलेल्या महिलांसाठी, यामध्ये संपूर्ण धान्य, कमी ग्लायसेमिक इंडेक्स कार्बोहायड्रेट्स, पातळ प्रथिने आणि निरोगी चरबी यावर लक्ष केंद्रित करणे समाविष्ट आहे.",
         whyIsItImportant: "आहार थेट इन्सुलिन प्रतिरोध, जळजळ आणि संप्रेरक उत्पादनावर परिणाम करतो - जे पीसीओएस मधील प्रमुख घटक आहेत.",
         benefits: ["इन्सुलिन संवेदनशीलता सुधारते", "निरोगी वजन राखण्यास मदत करते", "जळजळ कमी करते", "मासिक पाळी नियंत्रित करते"],
@@ -49,10 +49,10 @@ const mockArticles = [
     icon: '🏃‍♀️',
     translations: {
       en: {
-        title: "Exercise for PCOS Management",
+        title: "Exercise for PMOS Management",
         description: "Learn which types of physical activities are most effective for hormonal balance.",
         whatIsIt: "Regular physical activity that includes a mix of cardiovascular exercises, strength training, and flexibility workouts.",
-        whyIsItImportant: "Exercise helps lower insulin levels, reduces stress, and aids in weight management, significantly improving PCOS symptoms.",
+        whyIsItImportant: "Exercise helps lower insulin levels, reduces stress, and aids in weight management, significantly improving PMOS symptoms.",
         benefits: ["Boosts metabolism", "Enhances mood and reduces anxiety", "Builds lean muscle mass", "Improves cardiovascular health"],
         recommendations: "Aim for at least 150 minutes of moderate-intensity aerobic activity or 75 minutes of vigorous activity each week, plus strength training twice a week.",
         thingsToAvoid: ["Overtraining, which can increase stress hormones", "Exercising immediately after a heavy meal"],
@@ -90,7 +90,7 @@ const mockArticles = [
         title: "Stress Management & Mental Wellbeing",
         description: "Effective techniques to lower cortisol levels and improve your mental health.",
         whatIsIt: "Practices and habits designed to reduce psychological stress and promote emotional resilience.",
-        whyIsItImportant: "Chronic stress elevates cortisol levels, which can disrupt other hormones and worsen insulin resistance and PCOS symptoms.",
+        whyIsItImportant: "Chronic stress elevates cortisol levels, which can disrupt other hormones and worsen insulin resistance and PMOS symptoms.",
         benefits: ["Lowers cortisol levels", "Improves sleep quality", "Reduces emotional eating", "Enhances focus and clarity"],
         recommendations: "Practice mindfulness, meditation, deep breathing exercises, or yoga for at least 10-15 minutes daily.",
         thingsToAvoid: ["Excessive caffeine intake", "Doomscrolling on social media", "Ignoring signs of burnout"],
