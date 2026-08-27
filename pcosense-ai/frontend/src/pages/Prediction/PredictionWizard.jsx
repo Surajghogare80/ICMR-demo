@@ -20,6 +20,7 @@ import toast from 'react-hot-toast';
 import WheelPicker from '../../components/ui/WheelPicker.jsx';
 import PersonalInfoSection from './components/PersonalInfoSection.jsx';
 import MenstrualHistorySection from './components/MenstrualHistorySection.jsx';
+import { translateOptionValue } from '../../utils/optionTranslation.js';
 
 // ─── Shared pink outlined button style ────────────────────────────────────────
 const PINK_BTN_SX = {
@@ -41,24 +42,26 @@ const PINK_BTN_SX = {
 };
 
 // ─── Step list builder ────────────────────────────────────────────────────────
-const getStepsList = (mode) => {
+const getStepsList = (mode, t) => {
+  const stepMeta = (id) => ({ id, label: t(`prediction.steps.${id}.label`), description: t(`prediction.steps.${id}.description`) });
+
   const list = [
-    { id: 'personal',   label: 'Personal Info',     description: 'Age, Measurements & Family History' },
-    { id: 'menstrual',  label: 'Menstrual History', description: 'Cycle, Regularity & Flow Intensity' },
-    { id: 'symptoms',   label: 'Clinical Symptoms', description: 'Physical Symptoms & Signs' },
-    { id: 'lifestyle',  label: 'Lifestyle',          description: 'Diet, Exercise & Stress Levels' },
+    stepMeta('personal'),
+    stepMeta('menstrual'),
+    stepMeta('symptoms'),
+    stepMeta('lifestyle'),
   ];
 
   if (mode === 'blood' || mode === 'both') {
-    list.push({ id: 'blood_report', label: 'Blood Test Results', description: 'Blood Group, FSH, LH, TSH, AMH, Hb & RBS' });
+    list.push(stepMeta('blood_report'));
   }
 
   if (mode === 'ultrasound' || mode === 'both') {
-    list.push({ id: 'ultrasound_scan', label: 'Ultrasound Scan', description: 'Follicles, Size, Volume & Endometrium' });
+    list.push(stepMeta('ultrasound_scan'));
   }
 
   if (mode === 'symptoms') {
-    list.push({ id: 'review', label: 'Review & Submit', description: 'Review all information before submitting' });
+    list.push(stepMeta('review'));
   }
 
   return list;
@@ -81,6 +84,10 @@ const getWHRColor = (whr) => {
   if (w < 0.85) return '#FF9800'; // Orange – Moderate risk
   return '#F44336';               // Red    – High risk
 };
+
+// Canonical option values (sent to the backend/model) are never translated —
+// only their on-screen label is looked up through this map.
+const translateOption = (t, group, value) => translateOptionValue(t, `options.${group}`, value);
 
 // ─── Component ────────────────────────────────────────────────────────────────
 const PredictionWizard = () => {
@@ -124,7 +131,7 @@ const PredictionWizard = () => {
     lifestyle: { fastFoodFreq: 'No', exerciseFreq: 'Yes', stressLevel: 'Moderate', sleepHours: 7 },
   });
 
-  const steps         = getStepsList(screeningMode || 'symptoms');
+  const steps         = getStepsList(screeningMode || 'symptoms', t);
   const progress      = ((activeStep) / (steps.length - 1)) * 100;
   const currentStepId = steps[activeStep]?.id;
 
@@ -172,17 +179,17 @@ const PredictionWizard = () => {
       const periodDuration = formData.menstrual.periodDuration ? Number(formData.menstrual.periodDuration) : null;
 
       if (!formData.menstrual.cycleLength || isNaN(cycleLength) || cycleLength < 15 || cycleLength > 90) {
-        toast.error('Average Cycle Length must be between 15 and 90 days.'); return false;
+        toast.error(t('prediction.validation.cycle_length_range')); return false;
       }
       if (periodDuration !== null && (isNaN(periodDuration) || periodDuration < 1 || periodDuration > 15)) {
-        toast.error('Period Duration must be between 1 and 15 days.'); return false;
+        toast.error(t('prediction.validation.period_duration_range')); return false;
       }
     }
 
     if (stepId === 'symptoms') {
       const hasSelection = Object.values(formData.symptoms).some(val => val === true);
       if (!hasSelection) {
-        toast.error('Please select at least one symptom or "None of the Above".');
+        toast.error(t('prediction.validation.at_least_one_symptom'));
         return false;
       }
     }
@@ -190,14 +197,14 @@ const PredictionWizard = () => {
     if (stepId === 'lifestyle') {
       const sleepHours = formData.lifestyle.sleepHours ? Number(formData.lifestyle.sleepHours) : null;
       if (sleepHours !== null && (isNaN(sleepHours) || sleepHours < 3 || sleepHours > 12)) {
-        toast.error('Sleep hours must be between 3 and 12 hours.'); return false;
+        toast.error(t('prediction.validation.sleep_hours_range')); return false;
       }
     }
 
     if (stepId === 'blood_report') {
       const checkPositive = (val, name) => {
         if (val && (isNaN(Number(val)) || Number(val) < 0)) {
-          toast.error(`${name} must be a positive number.`);
+          toast.error(t('prediction.validation.must_be_positive', { field: name }));
           return false;
         }
         return true;
@@ -226,7 +233,7 @@ const PredictionWizard = () => {
     if (stepId === 'ultrasound_scan') {
       const checkPositive = (val, name) => {
         if (val && (isNaN(Number(val)) || Number(val) < 0)) {
-          toast.error(`${name} must be a positive number.`);
+          toast.error(t('prediction.validation.must_be_positive', { field: name }));
           return false;
         }
         return true;
@@ -327,7 +334,7 @@ const PredictionWizard = () => {
         },
       }));
       setBloodPage(1);
-      toast.success('Blood report page skipped.');
+      toast.success(t('prediction.validation.blood_skipped'));
     } else if (currentStepId === 'ultrasound_scan') {
       setFormData((prev) => ({
         ...prev,
@@ -338,7 +345,7 @@ const PredictionWizard = () => {
           endometrium: '',
         },
       }));
-      toast.success('Ultrasound scan page skipped.');
+      toast.success(t('prediction.validation.ultrasound_skipped'));
     }
 
     if (activeStep < steps.length - 1) {
@@ -437,10 +444,10 @@ const PredictionWizard = () => {
       };
 
       const res = await predictionService.create(payload);
-      toast.success('Prediction completed!');
+      toast.success(t('prediction.validation.prediction_success'));
       navigate('/prediction/result', { state: { result: res.data.aiResult, prediction: res.data.prediction } });
     } catch (err) {
-      toast.error(err.message || 'Prediction failed. Please try again.');
+      toast.error(err.message || t('prediction.validation.prediction_failed'));
     } finally {
       setIsSubmitting(false);
     }
@@ -473,18 +480,18 @@ const PredictionWizard = () => {
         return (
           <Box>
             <Box textAlign="center" mb={4}>
-              <Typography variant="h5" fontWeight={700} gutterBottom>Clinical Symptoms</Typography>
-              <Typography variant="body1" color="text.secondary">Do you have any of these?</Typography>
-              <Typography variant="body2" color="text.secondary" fontWeight={500}>Select all that apply.</Typography>
+              <Typography variant="h5" fontWeight={700} gutterBottom>{t('prediction.symptoms.title')}</Typography>
+              <Typography variant="body1" color="text.secondary">{t('prediction.symptoms.subtitle_do_you_have')}</Typography>
+              <Typography variant="body2" color="text.secondary" fontWeight={500}>{t('prediction.symptoms.subtitle_select_all')}</Typography>
             </Box>
             <Grid container spacing={3}>
               {[
-                { key: 'hairGrowth',    icon: '👱', label: 'Extra hair on body or face'}, //desc: 'Extra hair on face or body (Hirsutism)' },
-                { key: 'skinDarkening', icon: '⚫', label: 'Dark Patches of Skin (neck,armpits)'},                   //desc: 'Dark patches on neck, armpits or groin' },
-                { key: 'pimples',       icon: '🔴', label: 'Acne or Skin Problems'},                   //desc: 'Persistent acne or skin problems' },
-                { key: 'weightGain',    icon: '⚖️', label: 'Unexplained Weight Gain'},           //desc: 'Sudden weight gain without obvious reason' },
-                { key: 'hairLoss',      icon: '🧑‍🦲', label: 'Hair Thinning or loss from scalp'},            // desc: 'Hair thinning or loss from scalp' },
-                { key: 'noneOfAbove',   icon: '✋', label: 'None of the Above'},                      //desc: 'No symptoms listed above' },
+                { key: 'hairGrowth',    icon: '👱', label: t('prediction.symptoms.hair_growth') },
+                { key: 'skinDarkening', icon: '⚫', label: t('prediction.symptoms.skin_darkening') },
+                { key: 'pimples',       icon: '🔴', label: t('prediction.symptoms.pimples') },
+                { key: 'weightGain',    icon: '⚖️', label: t('prediction.symptoms.weight_gain') },
+                { key: 'hairLoss',      icon: '🧑‍🦲', label: t('prediction.symptoms.hair_loss') },
+                { key: 'noneOfAbove',   icon: '✋', label: t('prediction.symptoms.none_of_above') },
               ].map((sym) => {
                 const isChecked = formData.symptoms[sym.key];
                 return (
@@ -592,14 +599,14 @@ const PredictionWizard = () => {
         return (
           <Grid container spacing={3}>
             <Grid item xs={12} sx={{ textAlign: 'center', mb: 2 }}>
-              <Typography variant="h5" fontWeight={800} gutterBottom>{t('lifestyle', 'Lifestyle')}</Typography>
+              <Typography variant="h5" fontWeight={800} gutterBottom>{t('prediction.lifestyle.title')}</Typography>
             </Grid>
 
             {/* Fast Food */}
             <Grid item xs={12} md={6}>
               <Box sx={{ p: 3, borderRadius: '20px', bgcolor: 'rgba(233, 30, 99, 0.03)', border: '1px solid rgba(233, 30, 99, 0.15)', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                 <Typography variant="subtitle1" fontWeight={700} color="text.primary" sx={{ mb: 2 }}>
-                  {t('eat_fast_food_regularly', 'Do you eat fast food regularly?')}
+                  {t('prediction.lifestyle.fast_food_question')}
                 </Typography>
                 <ToggleButtonGroup
                   value={formData.lifestyle.fastFoodFreq}
@@ -607,8 +614,8 @@ const PredictionWizard = () => {
                   onChange={(_, val) => { if (val) updateField('lifestyle', 'fastFoodFreq', val) }}
                   sx={toggleStyle}
                 >
-                  <ToggleButton value="Yes">{t('yes', 'Yes')}</ToggleButton>
-                  <ToggleButton value="No">{t('no', 'No')}</ToggleButton>
+                  <ToggleButton value="Yes">{t('common.yes')}</ToggleButton>
+                  <ToggleButton value="No">{t('common.no')}</ToggleButton>
                 </ToggleButtonGroup>
               </Box>
             </Grid>
@@ -617,7 +624,7 @@ const PredictionWizard = () => {
             <Grid item xs={12} md={6}>
               <Box sx={{ p: 3, borderRadius: '20px', bgcolor: 'rgba(233, 30, 99, 0.03)', border: '1px solid rgba(233, 30, 99, 0.15)', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                 <Typography variant="subtitle1" fontWeight={700} color="text.primary" sx={{ mb: 2 }}>
-                  {t('exercise_regularly', 'Do you exercise regularly?')}
+                  {t('prediction.lifestyle.exercise_question')}
                 </Typography>
                 <ToggleButtonGroup
                   value={formData.lifestyle.exerciseFreq}
@@ -625,8 +632,8 @@ const PredictionWizard = () => {
                   onChange={(_, val) => { if (val) updateField('lifestyle', 'exerciseFreq', val) }}
                   sx={toggleStyle}
                 >
-                  <ToggleButton value="Yes">{t('yes', 'Yes')}</ToggleButton>
-                  <ToggleButton value="No">{t('no', 'No')}</ToggleButton>
+                  <ToggleButton value="Yes">{t('common.yes')}</ToggleButton>
+                  <ToggleButton value="No">{t('common.no')}</ToggleButton>
                 </ToggleButtonGroup>
               </Box>
             </Grid>
@@ -635,7 +642,7 @@ const PredictionWizard = () => {
             <Grid item xs={12} md={6}>
               <Box sx={{ p: 3, borderRadius: '20px', bgcolor: 'rgba(233, 30, 99, 0.03)', border: '1px solid rgba(233, 30, 99, 0.15)', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                 <Typography variant="subtitle1" fontWeight={700} color="text.primary" sx={{ mb: 2 }}>
-                  {t('stress_level', 'Stress Level')}
+                  {t('prediction.lifestyle.stress_level')}
                 </Typography>
                 <ToggleButtonGroup
                   value={formData.lifestyle.stressLevel}
@@ -643,9 +650,9 @@ const PredictionWizard = () => {
                   onChange={(_, val) => { if (val) updateField('lifestyle', 'stressLevel', val) }}
                   sx={{ ...toggleStyle, '& .MuiToggleButton-root': { ...toggleStyle['& .MuiToggleButton-root'], minWidth: '90px', px: 2 } }}
                 >
-                  <ToggleButton value="Low">{t('low', 'Low')}</ToggleButton>
-                  <ToggleButton value="Moderate">{t('moderate', 'Moderate')}</ToggleButton>
-                  <ToggleButton value="High">{t('high', 'High')}</ToggleButton>
+                  <ToggleButton value="Low">{t('options.stress.low')}</ToggleButton>
+                  <ToggleButton value="Moderate">{t('options.stress.moderate')}</ToggleButton>
+                  <ToggleButton value="High">{t('options.stress.high')}</ToggleButton>
                 </ToggleButtonGroup>
               </Box>
             </Grid>
@@ -654,12 +661,13 @@ const PredictionWizard = () => {
             <Grid item xs={12} md={6}>
               <Box sx={{ p: 3, borderRadius: '20px', bgcolor: 'rgba(233, 30, 99, 0.03)', border: '1px solid rgba(233, 30, 99, 0.15)', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                 <Typography variant="subtitle1" fontWeight={700} color="text.primary" sx={{ mb: 2 }}>
-                  {t('sleep_hours_per_night', 'Sleep Hours per Night')}
+                  {t('prediction.lifestyle.sleep_hours_per_night')}
                 </Typography>
                 <Stack direction="row" alignItems="center" justifyContent="center" spacing={2}>
                   <IconButton
                     onClick={() => handleSleepStep(false)}
                     sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 40, height: 40 }}
+                    aria-label={t('prediction.lifestyle.decrease_sleep_hours')}
                   >
                     <RemoveIcon />
                   </IconButton>
@@ -668,12 +676,13 @@ const PredictionWizard = () => {
                       {formData.lifestyle.sleepHours || 7}
                     </Typography>
                     <Typography variant="subtitle1" fontWeight={700} color="text.secondary">
-                      {t('hours', 'hours')}
+                      {t('units.hours_label')}
                     </Typography>
                   </Box>
                   <IconButton
                     onClick={() => handleSleepStep(true)}
                     sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 40, height: 40 }}
+                    aria-label={t('prediction.lifestyle.increase_sleep_hours')}
                   >
                     <AddIcon />
                   </IconButton>
@@ -710,11 +719,11 @@ const PredictionWizard = () => {
           <Box>
             {/* Header */}
             <Box sx={{ mb: 2.5 }}>
-              <Typography variant="h6" fontWeight={700}>Do you have recent blood test results (Optional)</Typography>
+              <Typography variant="h6" fontWeight={700}>{t('prediction.blood.header_title')}</Typography>
               <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5, fontWeight: 500 }}>
-                 improves prediction accuracy. &nbsp;
+                {t('prediction.blood.header_subtitle')} &nbsp;
                 <Box component="span" sx={{ color: 'primary.main', fontWeight: 600 }}>
-                  Page {bloodPage} of 2
+                  {t('prediction.blood.page_of', { page: bloodPage })}
                 </Box>
               </Typography>
             </Box>
@@ -737,11 +746,11 @@ const PredictionWizard = () => {
                         {/* Row 1 */}
                         <Grid item xs={12} sm={6}>
                           <FormControl fullWidth>
-                            <InputLabel id="blood-group-select-label">Blood Group</InputLabel>
+                            <InputLabel id="blood-group-select-label">{t('prediction.blood.blood_group')}</InputLabel>
                             <Select
                               labelId="blood-group-select-label"
                               value={formData.personal.bloodGroup || 'O+'}
-                              label="Blood Group"
+                              label={t('prediction.blood.blood_group')}
                               onChange={(e) => updateField('personal', 'bloodGroup', e.target.value)}
                             >
                               {BLOOD_GROUP_OPTIONS.map((o) => <MenuItem key={o} value={o}>{o}</MenuItem>)}
@@ -749,74 +758,74 @@ const PredictionWizard = () => {
                           </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="FSH (mIU/mL)" type="number" value={formData.personal.fsh} onChange={(e) => updateField('personal', 'fsh', e.target.value)} helperText="Normal: 3–10 mIU/mL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label={t('prediction.blood.fsh_label')} type="number" value={formData.personal.fsh} onChange={(e) => updateField('personal', 'fsh', e.target.value)} helperText={t('prediction.blood.fsh_helper')} FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
-                        
+
                         {/* Row 2 */}
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="LH (mIU/mL)" type="number" value={formData.personal.lh} onChange={(e) => updateField('personal', 'lh', e.target.value)} helperText="Normal: 2–15 mIU/mL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label={t('prediction.blood.lh_label')} type="number" value={formData.personal.lh} onChange={(e) => updateField('personal', 'lh', e.target.value)} helperText={t('prediction.blood.lh_helper')} FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="LH : FSH Ratio" value={calculatedRatio} helperText="Normal: 1.0 – 2.0" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} InputProps={{ readOnly: true }} disabled sx={{ '& .MuiInputBase-input.Mui-disabled': { WebkitTextFillColor: 'rgba(233, 30, 99, 0.8)', fontWeight: 600 } }} />
+                          <TextField fullWidth label={t('prediction.blood.lh_fsh_ratio_label')} value={calculatedRatio} helperText={t('prediction.blood.lh_fsh_ratio_helper')} FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} InputProps={{ readOnly: true }} disabled sx={{ '& .MuiInputBase-input.Mui-disabled': { WebkitTextFillColor: 'rgba(233, 30, 99, 0.8)', fontWeight: 600 } }} />
                         </Grid>
 
                         {/* Row 3 */}
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="TSH (mIU/L)" type="number" value={formData.personal.tsh} onChange={(e) => updateField('personal', 'tsh', e.target.value)} helperText="Normal: 0.4–4.0 mIU/L" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label={t('prediction.blood.tsh_label')} type="number" value={formData.personal.tsh} onChange={(e) => updateField('personal', 'tsh', e.target.value)} helperText={t('prediction.blood.tsh_helper')} FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="AMH (ng/mL)" type="number" value={formData.personal.amh} onChange={(e) => updateField('personal', 'amh', e.target.value)} helperText="Normal: 1.0–4.0 ng/mL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label={t('prediction.blood.amh_label')} type="number" value={formData.personal.amh} onChange={(e) => updateField('personal', 'amh', e.target.value)} helperText={t('prediction.blood.amh_helper')} FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
 
                         {/* Row 4 */}
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="Testosterone (ng/dL)" type="number" value={formData.personal.testosterone} onChange={(e) => updateField('personal', 'testosterone', e.target.value)} helperText="Normal: 15–70 ng/dL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label={t('prediction.blood.testosterone_label')} type="number" value={formData.personal.testosterone} onChange={(e) => updateField('personal', 'testosterone', e.target.value)} helperText={t('prediction.blood.testosterone_helper')} FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="SHBG (nmol/L)" type="number" value={formData.personal.shbg} onChange={(e) => updateField('personal', 'shbg', e.target.value)} helperText="Normal: 18–144 nmol/L" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label={t('prediction.blood.shbg_label')} type="number" value={formData.personal.shbg} onChange={(e) => updateField('personal', 'shbg', e.target.value)} helperText={t('prediction.blood.shbg_helper')} FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
 
                         {/* Row 5 */}
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="PRL (ng/mL)" type="number" value={formData.personal.prl} onChange={(e) => updateField('personal', 'prl', e.target.value)} helperText="Normal: 5–25 ng/mL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label={t('prediction.blood.prl_label')} type="number" value={formData.personal.prl} onChange={(e) => updateField('personal', 'prl', e.target.value)} helperText={t('prediction.blood.prl_helper')} FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="PRG (ng/mL)" type="number" value={formData.personal.prg} onChange={(e) => updateField('personal', 'prg', e.target.value)} helperText="Normal: 0.2–25 ng/mL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label={t('prediction.blood.prg_label')} type="number" value={formData.personal.prg} onChange={(e) => updateField('personal', 'prg', e.target.value)} helperText={t('prediction.blood.prg_helper')} FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                       </>
                     ) : (
                       <>
                         {/* Row 1 */}
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="Vitamin D3 (ng/mL)" type="number" value={formData.personal.vitaminD3} onChange={(e) => updateField('personal', 'vitaminD3', e.target.value)} helperText="Normal: 30–100 ng/mL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label={t('prediction.blood.vitamin_d3_label')} type="number" value={formData.personal.vitaminD3} onChange={(e) => updateField('personal', 'vitaminD3', e.target.value)} helperText={t('prediction.blood.vitamin_d3_helper')} FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="Haemoglobin (g/dL)" type="number" value={formData.personal.haemoglobin} onChange={(e) => updateField('personal', 'haemoglobin', e.target.value)} helperText="Normal: 12–16 g/dL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label={t('prediction.blood.haemoglobin_label')} type="number" value={formData.personal.haemoglobin} onChange={(e) => updateField('personal', 'haemoglobin', e.target.value)} helperText={t('prediction.blood.haemoglobin_helper')} FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                         {/* Row 2 */}
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="Pulse Rate (bpm)" type="number" value={formData.personal.pulseRate} onChange={(e) => updateField('personal', 'pulseRate', e.target.value)} helperText="Normal: 60–100 bpm" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label={t('prediction.blood.pulse_rate_label')} type="number" value={formData.personal.pulseRate} onChange={(e) => updateField('personal', 'pulseRate', e.target.value)} helperText={t('prediction.blood.pulse_rate_helper')} FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="Respiratory Rate (RR) (breaths/min)" type="number" value={formData.personal.respiratoryRate} onChange={(e) => updateField('personal', 'respiratoryRate', e.target.value)} helperText="Normal: 12–20 breaths/min" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label={t('prediction.blood.respiratory_rate_label')} type="number" value={formData.personal.respiratoryRate} onChange={(e) => updateField('personal', 'respiratoryRate', e.target.value)} helperText={t('prediction.blood.respiratory_rate_helper')} FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                         {/* Row 3 */}
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="Blood Pressure (Systolic)" type="number" value={formData.personal.bpSystolic} onChange={(e) => updateField('personal', 'bpSystolic', e.target.value)} helperText="Normal: 90–120 mmHg" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label={t('prediction.blood.bp_systolic_label')} type="number" value={formData.personal.bpSystolic} onChange={(e) => updateField('personal', 'bpSystolic', e.target.value)} helperText={t('prediction.blood.bp_systolic_helper')} FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="Blood Pressure (Diastolic)" type="number" value={formData.personal.bpDiastolic} onChange={(e) => updateField('personal', 'bpDiastolic', e.target.value)} helperText="Normal: 60–80 mmHg" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label={t('prediction.blood.bp_diastolic_label')} type="number" value={formData.personal.bpDiastolic} onChange={(e) => updateField('personal', 'bpDiastolic', e.target.value)} helperText={t('prediction.blood.bp_diastolic_helper')} FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                         {/* Row 4 */}
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="Fasting Blood Glucose (mg/dL)" type="number" value={formData.personal.fastingBloodGlucose} onChange={(e) => updateField('personal', 'fastingBloodGlucose', e.target.value)} helperText="Normal: 70–99 mg/dL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label={t('prediction.blood.fasting_glucose_label')} type="number" value={formData.personal.fastingBloodGlucose} onChange={(e) => updateField('personal', 'fastingBloodGlucose', e.target.value)} helperText={t('prediction.blood.fasting_glucose_helper')} FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="Fasting Insulin (µIU/mL)" type="number" value={formData.personal.fastingInsulin} onChange={(e) => updateField('personal', 'fastingInsulin', e.target.value)} helperText="Normal: 2–25 µIU/mL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label={t('prediction.blood.fasting_insulin_label')} type="number" value={formData.personal.fastingInsulin} onChange={(e) => updateField('personal', 'fastingInsulin', e.target.value)} helperText={t('prediction.blood.fasting_insulin_helper')} FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                         {/* Row 5 */}
                         <Grid item xs={12} sm={6}>
-                          <TextField fullWidth label="RBS (Random Blood Sugar) (mg/dL)" type="number" value={formData.personal.rbs} onChange={(e) => updateField('personal', 'rbs', e.target.value)} helperText="Normal: 70–140 mg/dL" FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
+                          <TextField fullWidth label={t('prediction.blood.rbs_label')} type="number" value={formData.personal.rbs} onChange={(e) => updateField('personal', 'rbs', e.target.value)} helperText={t('prediction.blood.rbs_helper')} FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }} inputProps={{ step: 'any', min: 0 }} />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                           <FormControl fullWidth sx={{ height: '100%', justifyContent: 'flex-start' }}>
@@ -832,7 +841,7 @@ const PredictionWizard = () => {
                                 '&:hover': { borderColor: (t) => t.palette.mode === 'dark' ? '#fff' : '#000' }
                              }}>
                                 <Typography variant="caption" sx={{ position: 'absolute', top: '-10px', left: '10px', bgcolor: 'background.paper', px: 0.5, color: 'text.secondary', fontSize: '0.75rem' }}>
-                                  Insulin Resistance
+                                  {t('prediction.blood.insulin_resistance_label')}
                                 </Typography>
                                 <ToggleButtonGroup
                                   value={formData.personal.insulinResistance}
@@ -849,8 +858,8 @@ const PredictionWizard = () => {
                                     }
                                   }}
                                 >
-                                  <ToggleButton value="Yes">{t('yes', 'Yes')}</ToggleButton>
-                                  <ToggleButton value="No">{t('no', 'No')}</ToggleButton>
+                                  <ToggleButton value="Yes">{t('common.yes')}</ToggleButton>
+                                  <ToggleButton value="No">{t('common.no')}</ToggleButton>
                                 </ToggleButtonGroup>
                              </Box>
                           </FormControl>
@@ -865,8 +874,8 @@ const PredictionWizard = () => {
             {/* View More / Previous Blood Tests */}
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
               {bloodPage === 1
-                ? <Button variant="outlined" size="small" onClick={goToPage2} sx={PINK_BTN_SX}>View More ›</Button>
-                : <Button variant="outlined" size="small" onClick={goToPage1} sx={PINK_BTN_SX}>‹ Previous Blood Tests</Button>
+                ? <Button variant="outlined" size="small" onClick={goToPage2} sx={PINK_BTN_SX}>{t('prediction.blood.view_more')}</Button>
+                : <Button variant="outlined" size="small" onClick={goToPage1} sx={PINK_BTN_SX}>{t('prediction.blood.previous_blood_tests')}</Button>
               }
             </Box>
           </Box>
@@ -879,22 +888,20 @@ const PredictionWizard = () => {
           <Grid container spacing={3}>
             {/* Header */}
             <Grid item xs={12}>
-              <Typography variant="h6" fontWeight={700}>Do you have an ultrasound report?</Typography>
-              <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5, fontWeight: 500 }}>
-                {/* Optional — enter values from your pelvic or transvaginal scan report to improve prediction accuracy. */}
-              </Typography>
+              <Typography variant="h6" fontWeight={700}>{t('prediction.ultrasound.header_title')}</Typography>
+              <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5, fontWeight: 500 }} />
             </Grid>
 
             {/* Row 1 — Follicle counts */}
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
-                label="Follicle No. (L)"
+                label={t('prediction.ultrasound.follicle_left_label')}
                 type="number"
-                placeholder="Enter left follicle count"
+                placeholder={t('prediction.ultrasound.follicle_left_placeholder')}
                 value={formData.menstrual.follicleNoLeft}
                 onChange={(e) => updateField('menstrual', 'follicleNoLeft', e.target.value)}
-                helperText="Number of follicles in the left ovary"
+                helperText={t('prediction.ultrasound.follicle_left_helper')}
                 FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }}
                 inputProps={{ step: '1', min: 0 }}
               />
@@ -902,12 +909,12 @@ const PredictionWizard = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
-                label="Follicle No. (R)"
+                label={t('prediction.ultrasound.follicle_right_label')}
                 type="number"
-                placeholder="Enter right follicle count"
+                placeholder={t('prediction.ultrasound.follicle_right_placeholder')}
                 value={formData.menstrual.follicleNoRight}
                 onChange={(e) => updateField('menstrual', 'follicleNoRight', e.target.value)}
-                helperText="Number of follicles in the right ovary"
+                helperText={t('prediction.ultrasound.follicle_right_helper')}
                 FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }}
                 inputProps={{ step: '1', min: 0 }}
               />
@@ -917,12 +924,12 @@ const PredictionWizard = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
-                label="Avg. F size (L) (mm)"
+                label={t('prediction.ultrasound.avg_size_left_label')}
                 type="number"
-                placeholder="Enter average left follicle size"
+                placeholder={t('prediction.ultrasound.avg_size_left_placeholder')}
                 value={formData.menstrual.avgFollicleSizeLeft}
                 onChange={(e) => updateField('menstrual', 'avgFollicleSizeLeft', e.target.value)}
-                helperText="Average follicle size in the left ovary"
+                helperText={t('prediction.ultrasound.avg_size_left_helper')}
                 FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }}
                 inputProps={{ step: 'any', min: 0 }}
               />
@@ -930,12 +937,12 @@ const PredictionWizard = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
-                label="Avg. F size (R) (mm)"
+                label={t('prediction.ultrasound.avg_size_right_label')}
                 type="number"
-                placeholder="Enter average right follicle size"
+                placeholder={t('prediction.ultrasound.avg_size_right_placeholder')}
                 value={formData.menstrual.avgFollicleSizeRight}
                 onChange={(e) => updateField('menstrual', 'avgFollicleSizeRight', e.target.value)}
-                helperText="Average follicle size in the right ovary"
+                helperText={t('prediction.ultrasound.avg_size_right_helper')}
                 FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }}
                 inputProps={{ step: 'any', min: 0 }}
               />
@@ -945,12 +952,12 @@ const PredictionWizard = () => {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Endometrium (mm)"
+                label={t('prediction.ultrasound.endometrium_label')}
                 type="number"
-                placeholder="Enter endometrium thickness"
+                placeholder={t('prediction.ultrasound.endometrium_placeholder')}
                 value={formData.menstrual.endometrium}
                 onChange={(e) => updateField('menstrual', 'endometrium', e.target.value)}
-                helperText="Thickness of the endometrium (uterine lining)"
+                helperText={t('prediction.ultrasound.endometrium_helper')}
                 FormHelperTextProps={{ sx: { color: 'text.secondary', fontSize: '0.75rem' } }}
                 inputProps={{ step: 'any', min: 0 }}
               />
@@ -962,45 +969,45 @@ const PredictionWizard = () => {
       case 'review':
         return (
           <Box>
-            <Typography variant="h6" fontWeight={700} gutterBottom>Review Your Information</Typography>
+            <Typography variant="h6" fontWeight={700} gutterBottom>{t('prediction.review.title')}</Typography>
             <Grid container spacing={2}>
               {[
                 {
-                  title: '👤 Personal Info',
+                  title: t('prediction.review.sections.personal_info'),
                   items: [
-                    `Age: ${formData.personal.age} yrs`,
-                    `Weight: ${formData.personal.weight} kg`,
-                    `Height: ${formData.personal.height} cm`,
-                    `BMI: ${formData.personal.bmi}`,
-                    ...(formData.personal.waist    ? [`Waist: ${formData.personal.waist}"`]           : []),
-                    ...(formData.personal.hip      ? [`Hip: ${formData.personal.hip}"`]               : []),
-                    ...(formData.personal.waistHipRatio ? [`WHR: ${formData.personal.waistHipRatio}`] : []),
+                    t('prediction.review.age_yrs', { value: formData.personal.age }),
+                    t('prediction.review.weight_kg', { value: formData.personal.weight }),
+                    t('prediction.review.height_cm', { value: formData.personal.height }),
+                    t('prediction.review.bmi', { value: formData.personal.bmi }),
+                    ...(formData.personal.waist    ? [t('prediction.review.waist_in', { value: formData.personal.waist })] : []),
+                    ...(formData.personal.hip      ? [t('prediction.review.hip_in', { value: formData.personal.hip })]     : []),
+                    ...(formData.personal.waistHipRatio ? [t('prediction.review.whr', { value: formData.personal.waistHipRatio })] : []),
                   ],
                 },
                 {
-                  title: '🩸 Menstrual History',
+                  title: t('prediction.review.sections.menstrual_history'),
                   items: [
-                    `Cycle Length: ${formData.menstrual.cycleLength} days`,
-                    `Regularity: ${formData.menstrual.cycleRegularity}`,
-                    `Duration: ${formData.menstrual.periodDuration || 'N/A'} days`,
-                    `Flow: ${formData.menstrual.flowIntensity}`,
-                    `Family History: ${formData.menstrual.familyHistory ? 'Yes' : 'No'}`,
+                    t('prediction.review.cycle_length_days', { value: formData.menstrual.cycleLength }),
+                    t('prediction.review.regularity', { value: translateOption(t, 'cycleRegularity', formData.menstrual.cycleRegularity) }),
+                    t('prediction.review.duration_days', { value: formData.menstrual.periodDuration || t('prediction.review.not_available') }),
+                    t('prediction.review.flow', { value: translateOption(t, 'flowIntensity', formData.menstrual.flowIntensity) }),
+                    t('prediction.review.family_history', { value: formData.menstrual.familyHistory ? t('common.yes') : t('common.no') }),
                   ],
                 },
                 {
-                  title: '🔬 Clinical Symptoms',
+                  title: t('prediction.review.sections.clinical_symptoms'),
                   items: Object.entries(formData.symptoms)
                     .filter(([, v]) => v)
-                    .map(([k]) => k.replace(/([A-Z])/g, ' $1').trim())
+                    .map(([k]) => t(`prediction.symptoms.${k.replace(/([A-Z])/g, '_$1').toLowerCase()}`, { defaultValue: k.replace(/([A-Z])/g, ' $1').trim() }))
                     .map((s) => `✓ ${s}`),
                 },
                 {
-                  title: '🏃 Lifestyle',
+                  title: t('prediction.review.sections.lifestyle'),
                   items: [
-                    `Fast Food: ${formData.lifestyle.fastFoodFreq}`,
-                    `Exercise: ${formData.lifestyle.exerciseFreq}`,
-                    `Stress: ${formData.lifestyle.stressLevel}`,
-                    `Sleep: ${formData.lifestyle.sleepHours || 'N/A'} hrs`,
+                    t('prediction.review.fast_food', { value: translateOption(t, 'yesNo', formData.lifestyle.fastFoodFreq) }),
+                    t('prediction.review.exercise', { value: translateOption(t, 'yesNo', formData.lifestyle.exerciseFreq) }),
+                    t('prediction.review.stress', { value: translateOption(t, 'stress', formData.lifestyle.stressLevel) }),
+                    t('prediction.review.sleep_hrs', { value: formData.lifestyle.sleepHours || t('prediction.review.not_available') }),
                   ],
                 },
               ].map((section) => (
@@ -1011,7 +1018,7 @@ const PredictionWizard = () => {
                       ? section.items.map((item) => (
                           <Typography key={item} variant="body2" color="text.secondary" sx={{ py: 0.3 }}>{item}</Typography>
                         ))
-                      : <Typography variant="body2" color="text.secondary">None reported</Typography>
+                      : <Typography variant="body2" color="text.secondary">{t('prediction.review.none_reported')}</Typography>
                     }
                   </Card>
                 </Grid>
@@ -1039,10 +1046,10 @@ const PredictionWizard = () => {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <Box sx={{ textAlign: 'center', mb: 5 }}>
               <Typography variant="h4" fontWeight={800} gutterBottom>
-                What do you have with you today?
+                {t('prediction.choice.heading')}
               </Typography>
               <Typography color="text.secondary">
-                Pick whichever fits — you can always do a full check later.
+                {t('prediction.choice.subheading')}
               </Typography>
             </Box>
 
@@ -1050,30 +1057,30 @@ const PredictionWizard = () => {
               {[
                 {
                   id: 'symptoms',
-                  title: 'Just my symptoms',
-                  tag: 'No reports needed',
-                  desc: "I don't have any test reports — just answer questions about my body.",
+                  title: t('prediction.choice.options.symptoms.title'),
+                  tag: t('prediction.choice.options.symptoms.tag'),
+                  desc: t('prediction.choice.options.symptoms.desc'),
                   icon: <ListAlt sx={{ color: (theme) => theme.palette.mode === 'dark' ? '#E2E8F0' : '#64748B' }} />,
                 },
                 {
                   id: 'blood',
-                  title: 'I have a blood test report',
-                  tag: 'Have blood report',
-                  desc: 'From a lab or hospital visit. I can enter the numbers from the report.',
+                  title: t('prediction.choice.options.blood.title'),
+                  tag: t('prediction.choice.options.blood.tag'),
+                  desc: t('prediction.choice.options.blood.desc'),
                   icon: <Science sx={{ color: '#E91E63' }} />,
                 },
                 {
                   id: 'ultrasound',
-                  title: 'I have an ultrasound scan',
-                  tag: 'Have ultrasound',
-                  desc: 'A pelvic or transvaginal scan from a clinic or hospital.',
+                  title: t('prediction.choice.options.ultrasound.title'),
+                  tag: t('prediction.choice.options.ultrasound.tag'),
+                  desc: t('prediction.choice.options.ultrasound.desc'),
                   icon: <Biotech sx={{ color: '#1976D2' }} />,
                 },
                 {
                   id: 'both',
-                  title: 'Blood report + ultrasound scan',
-                  tag: 'Most complete',
-                  desc: 'I have both. This gives the most complete picture.',
+                  title: t('prediction.choice.options.both.title'),
+                  tag: t('prediction.choice.options.both.tag'),
+                  desc: t('prediction.choice.options.both.desc'),
                   icon: <Assignment sx={{ color: '#EF5350' }} />,
                 },
               ].map((option) => {
@@ -1181,7 +1188,7 @@ const PredictionWizard = () => {
                   background: selectedMode ? 'linear-gradient(135deg, #EC407A 0%, #F48FB1 100%)' : undefined,
                 }}
               >
-                Start screening →
+                {t('prediction.choice.start_button')}
               </Button>
             </Box>
           </motion.div>
@@ -1201,15 +1208,15 @@ const PredictionWizard = () => {
       <Container maxWidth="md">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
           <Box sx={{ textAlign: 'center', mb: { xs: 1.5, md: 2 } }}>
-            <Typography variant="h4" fontWeight={800} gutterBottom sx={{ fontSize: { xs: '1.75rem', md: '2rem' } }}>🧬 PMOS Screening Wizard</Typography>
-            <Typography color="text.secondary" variant="body2">Complete the sections for an accurate risk assessment</Typography>
+            <Typography variant="h4" fontWeight={800} gutterBottom sx={{ fontSize: { xs: '1.75rem', md: '2rem' } }}>{t('prediction.header.title')}</Typography>
+            <Typography color="text.secondary" variant="body2">{t('prediction.header.subtitle')}</Typography>
           </Box>
 
           {/* Progress Bar */}
           <Box sx={{ mb: { xs: 1.5, md: 2 } }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
-              <Typography variant="caption" color="text.secondary">Step {activeStep + 1} of {steps.length}</Typography>
-              <Typography variant="caption" color="primary" fontWeight={700}>{Math.round(progress)}% Complete</Typography>
+              <Typography variant="caption" color="text.secondary">{t('prediction.header.step_of', { current: activeStep + 1, total: steps.length })}</Typography>
+              <Typography variant="caption" color="primary" fontWeight={700}>{t('prediction.header.percent_complete', { percent: Math.round(progress) })}</Typography>
             </Box>
             <LinearProgress variant="determinate" value={progress} sx={{ height: 6, borderRadius: 3 }} />
           </Box>
@@ -1247,18 +1254,18 @@ const PredictionWizard = () => {
               onClick={handleBack}
               disabled={activeStep === 0 && (currentStepId !== 'personal' || personalSubStep === 1)}
             >
-              Back
+              {t('prediction.nav.back')}
             </Button>
 
             {(currentStepId === 'blood_report' || currentStepId === 'ultrasound_scan') && (
               <Button variant="outlined" color="warning" onClick={handleSkip}>
-                {currentStepId === 'blood_report' ? "Skip (I don't have this)" : 'Skip'}
+                {currentStepId === 'blood_report' ? t('prediction.nav.skip_blood') : t('prediction.nav.skip')}
               </Button>
             )}
 
             {!isSubmissionStep ? (
               <Button variant="contained" endIcon={<ArrowForward />} onClick={handleNext}>
-                {currentStepId === 'personal' && personalSubStep === 1 ? 'Next' : 'Next Step'}
+                {currentStepId === 'personal' && personalSubStep === 1 ? t('prediction.nav.next') : t('prediction.nav.next_step')}
               </Button>
             ) : (
               <Button
@@ -1266,7 +1273,7 @@ const PredictionWizard = () => {
                 onClick={handleSubmit} disabled={isSubmitting}
                 sx={{ background: 'linear-gradient(135deg, #EC407A 0%, #F48FB1 100%)', px: 4 }}
               >
-                {isSubmitting ? 'Analyzing...' : 'Get My Result'}
+                {isSubmitting ? t('prediction.nav.analyzing') : t('prediction.nav.get_my_result')}
               </Button>
             )}
           </Box>

@@ -2,23 +2,27 @@
 import { useState, useEffect } from 'react';
 import { Box, Typography, useTheme, alpha } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const HEALTH_TIPS = [
-  { emoji: '💧', title: 'Stay Hydrated', tip: 'Drink at least 8 glasses of water daily. Proper hydration helps regulate hormones and supports kidney health — essential for managing PMOS.', color: '#26C6DA' },
-  { emoji: '🥗', title: 'Eat Balanced Meals', tip: 'Focus on a low-glycemic diet rich in whole grains, lean protein, leafy greens, and healthy fats. This helps control insulin — a key factor in PMOS.', color: '#66BB6A' },
-  { emoji: '🏃', title: 'Exercise Regularly', tip: 'Aim for at least 30 minutes of moderate exercise most days. Regular movement reduces insulin resistance and helps manage weight with PMOS.', color: '#FFA726' },
-  { emoji: '😴', title: 'Prioritize Sleep', tip: 'Quality sleep of 7–8 hours supports hormone regulation and metabolism. Poor sleep can worsen insulin resistance and PMOS symptoms.', color: '#7E57C2' },
-  { emoji: '🧘', title: 'Reduce Stress', tip: 'Chronic stress elevates cortisol, which can worsen PMOS symptoms. Practice mindfulness, yoga, or deep breathing exercises daily.', color: '#F06292' },
-  { emoji: '🚫', title: 'Limit Processed Foods', tip: 'Ultra-processed foods and added sugars can spike insulin levels and worsen hormonal imbalances. Choose whole, unprocessed foods whenever possible.', color: '#EF5350' },
-  { emoji: '🌿', title: 'Consider Anti-Inflammatory Foods', tip: 'Foods like berries, leafy greens, fatty fish, and turmeric have anti-inflammatory properties that may help reduce PMOS-related inflammation.', color: '#66BB6A' },
-  { emoji: '☀️', title: 'Get Vitamin D', tip: 'Many women with PMOS have low Vitamin D levels. Spend 15-20 minutes in sunlight daily and consider testing your levels with your doctor.', color: '#FFA726' },
+  { id: 'hydrate', emoji: '💧', color: '#26C6DA' },
+  { id: 'balancedMeals', emoji: '🥗', color: '#66BB6A' },
+  { id: 'exercise', emoji: '🏃', color: '#FFA726' },
+  { id: 'sleep', emoji: '😴', color: '#7E57C2' },
+  { id: 'stress', emoji: '🧘', color: '#F06292' },
+  { id: 'processedFoods', emoji: '🚫', color: '#EF5350' },
+  { id: 'antiInflammatory', emoji: '🌿', color: '#66BB6A' },
+  { id: 'vitaminD', emoji: '☀️', color: '#FFA726' },
 ];
 
 const HealthTipsCarousel = () => {
+  const { t } = useTranslation();
   const [current, setCurrent] = useState(0);
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
   const tip = HEALTH_TIPS[current];
+  const tipTitle = t(`dashboard.tips.items.${tip.id}.title`);
+  const tipText = t(`dashboard.tips.items.${tip.id}.tip`);
 
   useEffect(() => {
     const id = setInterval(() => setCurrent((c) => (c + 1) % HEALTH_TIPS.length), 4500);
@@ -28,9 +32,9 @@ const HealthTipsCarousel = () => {
   return (
     <Box sx={{ mb: 5 }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-        <Typography variant="h5" fontWeight={800} sx={{ mb: 0.5 }}>Daily Health Tips</Typography>
+        <Typography variant="h5" fontWeight={800} sx={{ mb: 0.5 }}>{t('dashboard.tips.heading')}</Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-          Science-backed tips rotating every few seconds
+          {t('dashboard.tips.subtitle')}
         </Typography>
       </motion.div>
 
@@ -113,10 +117,10 @@ const HealthTipsCarousel = () => {
                   fontWeight={800}
                   sx={{ color: tip.color, mb: 1 }}
                 >
-                  {tip.title}
+                  {tipTitle}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" lineHeight={1.8} sx={{ maxWidth: 600 }}>
-                  {tip.tip}
+                  {tipText}
                 </Typography>
               </motion.div>
             </AnimatePresence>
@@ -131,7 +135,7 @@ const HealthTipsCarousel = () => {
                 key={i}
                 onClick={() => setCurrent(i)}
                 role="button"
-                aria-label={`Tip ${i + 1}`}
+                aria-label={t('dashboard.tips.dotAriaLabel', { number: i + 1 })}
                 sx={{
                   width: i === current ? 20 : 6,
                   height: 6,

@@ -15,33 +15,33 @@ import { useTranslation } from 'react-i18next';
 import WheelPicker from '../../../components/ui/WheelPicker.jsx';
 
 // Color & Status helpers for BMI
-const getBMIInfo = (bmi) => {
+const getBMIInfo = (bmi, t) => {
   const b = Number(bmi);
   if (!b || isNaN(b) || b <= 0) {
-    return { status: '--', color: '#9E9E9E', desc: 'Enter weight & height' };
+    return { status: '--', color: '#9E9E9E', desc: t('prediction.personal.bmi_status.enter_weight_height') };
   }
   if (b < 18.5) {
-    return { status: 'Underweight', color: '#2196F3', desc: '≤ 18.4' }; // Blue
+    return { status: t('prediction.personal.bmi_status.underweight'), color: '#2196F3', desc: t('prediction.personal.bmi_status.underweight_range') }; // Blue
   }
   if (b < 25) {
-    return { status: 'Normal', color: '#4CAF50', desc: '18.5 – 24.9' };   // Green
+    return { status: t('prediction.personal.bmi_status.normal'), color: '#4CAF50', desc: t('prediction.personal.bmi_status.normal_range') };   // Green
   }
-  return { status: 'Overweight / Obese', color: '#FF9800', desc: '≥ 25.0' }; // Orange
+  return { status: t('prediction.personal.bmi_status.overweight_obese'), color: '#FF9800', desc: t('prediction.personal.bmi_status.overweight_range') }; // Orange
 };
 
 // Color & Status helpers for Waist-Hip Ratio
-const getWHRInfo = (whr) => {
+const getWHRInfo = (whr, t) => {
   const w = Number(whr);
   if (!w || isNaN(w) || w <= 0) {
-    return { status: '--', color: '#9E9E9E', desc: 'Enter waist & hip' };
+    return { status: '--', color: '#9E9E9E', desc: t('prediction.personal.whr_status.enter_waist_hip') };
   }
   if (w < 0.80) {
-    return { status: 'Low', color: '#4CAF50', desc: '< 0.80 Low Risk' };    // Green
+    return { status: t('prediction.personal.whr_status.low'), color: '#4CAF50', desc: t('prediction.personal.whr_status.low_desc') };    // Green
   }
   if (w < 0.85) {
-    return { status: 'Moderate', color: '#FF9800', desc: '0.80 – 0.84 Moderate Risk' }; // Orange
+    return { status: t('prediction.personal.whr_status.moderate'), color: '#FF9800', desc: t('prediction.personal.whr_status.moderate_desc') }; // Orange
   }
-  return { status: 'High', color: '#F44336', desc: '≥ 0.85 High Risk' };            // Red
+  return { status: t('prediction.personal.whr_status.high'), color: '#F44336', desc: t('prediction.personal.whr_status.high_desc') };            // Red
 };
 
 const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
@@ -257,8 +257,8 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
     minHeight: { xs: '115px', md: '125px' },
   };
 
-  const bmiInfo = getBMIInfo(personal.bmi);
-  const whrInfo = getWHRInfo(personal.waistHipRatio);
+  const bmiInfo = getBMIInfo(personal.bmi, t);
+  const whrInfo = getWHRInfo(personal.waistHipRatio, t);
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -275,7 +275,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
               fontWeight={800}
               sx={{ color: 'text.primary', textAlign: 'center', mb: 2 }}
             >
-              {t('how_old_are_you', 'How old are you?')}
+              {t('prediction.personal.how_old_are_you')}
             </Typography>
 
             {/* Wheel Picker (~20% smaller via scaled container, overflow visible so border is never cut) */}
@@ -298,7 +298,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                   min={10}
                   max={60}
                   step={1}
-                  unit={t('years', 'Years')}
+                  unit={t('prediction.personal.years_unit')}
                 />
               </Box>
             </Box>
@@ -323,12 +323,12 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
             <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
               <FamilyRestroomIcon sx={{ fontSize: 24, color: '#E91E63' }} />
               <Typography variant="h6" fontWeight={800} color="text.primary">
-                {t('family_history_of_pmos', 'Family History of PMOS')}
+                {t('prediction.personal.family_history_title')}
               </Typography>
             </Stack>
 
             <Typography variant="body2" color="text.secondary" fontWeight={600} sx={{ mb: 2.5 }}>
-              {t('mother_aunt_sister_grandmother_cousin', 'Mother / Aunt / Sister / Cousin / Grandmother')}
+              {t('prediction.personal.family_history_subtitle')}
             </Typography>
 
             {/* Yes / No Toggle */}
@@ -366,8 +366,8 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                 },
               }}
             >
-              <ToggleButton value="yes">{t('yes', 'Yes')}</ToggleButton>
-              <ToggleButton value="no">{t('no', 'No')}</ToggleButton>
+              <ToggleButton value="yes">{t('common.yes')}</ToggleButton>
+              <ToggleButton value="no">{t('common.no')}</ToggleButton>
             </ToggleButtonGroup>
           </Box>
         </Box>
@@ -382,7 +382,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
             fontWeight={800}
             sx={{ color: 'text.primary', textAlign: 'center', mb: 3 }}
           >
-            {t('personal_health_measurements', 'Personal Health Measurements')}
+            {t('prediction.personal.measurements_title')}
           </Typography>
 
           {/* Row 1: Weight | Height | BMI Card */}
@@ -392,7 +392,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
               <Box sx={columnStyle}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%', maxWidth: '220px', mb: 0.5 }}>
                   <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
-                    {t('weight', 'Weight')}
+                    {t('prediction.personal.weight_label')}
                   </Typography>
                   <ToggleButtonGroup
                     value={weightUnit}
@@ -401,8 +401,8 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                     size="small"
                     sx={{ '& .MuiToggleButton-root': { py: 0.2, px: 1.1, borderRadius: '12px', fontWeight: 700, fontSize: '0.7rem' } }}
                   >
-                    <ToggleButton value="kg">{t('kg', 'kg')}</ToggleButton>
-                    <ToggleButton value="lbs">{t('lbs', 'lbs')}</ToggleButton>
+                    <ToggleButton value="kg">{t('units.kg')}</ToggleButton>
+                    <ToggleButton value="lbs">{t('units.lbs')}</ToggleButton>
                   </ToggleButtonGroup>
                 </Stack>
 
@@ -419,7 +419,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                       {displayedWeight}
                     </Typography>
                     <Typography variant="subtitle1" fontWeight={700} color="text.secondary" sx={{ whiteSpace: 'nowrap', lineHeight: 1 }}>
-                      {t(weightUnit)}
+                      {t(`units.${weightUnit}`)}
                     </Typography>
                   </Box>
                   <IconButton
@@ -438,7 +438,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
               <Box sx={columnStyle}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%', maxWidth: '220px', mb: 0.5 }}>
                   <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
-                    {t('height', 'Height')}
+                    {t('prediction.personal.height_label')}
                   </Typography>
                   <ToggleButtonGroup
                     value={heightUnit}
@@ -447,8 +447,8 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                     size="small"
                     sx={{ '& .MuiToggleButton-root': { py: 0.2, px: 1.1, borderRadius: '12px', fontWeight: 700, fontSize: '0.7rem' } }}
                   >
-                    <ToggleButton value="cm">{t('cm', 'cm')}</ToggleButton>
-                    <ToggleButton value="inch">{t('inch', 'inch')}</ToggleButton>
+                    <ToggleButton value="cm">{t('units.cm')}</ToggleButton>
+                    <ToggleButton value="inch">{t('units.inch')}</ToggleButton>
                   </ToggleButtonGroup>
                 </Stack>
 
@@ -465,7 +465,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                       {displayedHeight}
                     </Typography>
                     <Typography variant="subtitle1" fontWeight={700} color="text.secondary" sx={{ whiteSpace: 'nowrap', lineHeight: 1 }}>
-                      {t(heightUnit)}
+                      {t(`units.${heightUnit}`)}
                     </Typography>
                   </Box>
                   <IconButton
@@ -490,7 +490,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                 <Stack direction="row" alignItems="center" justifyContent="center" spacing={0.8} sx={{ width: '100%', mb: 0.5 }}>
                   {/* <FavoriteIcon sx={{ fontSize: 18, color: '#E91E63' }} /> */}
                   <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
-                    {t('bmi', 'BMI')} · {t('body_mass_index', 'Body Mass Index')}
+                    {t('prediction.personal.bmi_label')} · {t('prediction.personal.body_mass_index')}
                   </Typography>
                 </Stack>
 
@@ -529,7 +529,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
               <Box sx={columnStyle}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%', maxWidth: '220px', mb: 0.5 }}>
                   <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
-                    {t('waist', 'Waist')}
+                    {t('prediction.personal.waist_label')}
                   </Typography>
                   <ToggleButtonGroup
                     value={waistUnit}
@@ -538,8 +538,8 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                     size="small"
                     sx={{ '& .MuiToggleButton-root': { py: 0.2, px: 1.1, borderRadius: '12px', fontWeight: 700, fontSize: '0.7rem' } }}
                   >
-                    <ToggleButton value="cm">{t('cm', 'cm')}</ToggleButton>
-                    <ToggleButton value="inch">{t('inch', 'inch')}</ToggleButton>
+                    <ToggleButton value="cm">{t('units.cm')}</ToggleButton>
+                    <ToggleButton value="inch">{t('units.inch')}</ToggleButton>
                   </ToggleButtonGroup>
                 </Stack>
 
@@ -556,7 +556,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                       {displayedWaist}
                     </Typography>
                     <Typography variant="subtitle1" fontWeight={700} color="text.secondary" sx={{ whiteSpace: 'nowrap', lineHeight: 1 }}>
-                      {t(waistUnit)}
+                      {t(`units.${waistUnit}`)}
                     </Typography>
                   </Box>
                   <IconButton
@@ -575,7 +575,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
               <Box sx={columnStyle}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%', maxWidth: '220px', mb: 0.5 }}>
                   <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
-                    {t('hip', 'Hip')}
+                    {t('prediction.personal.hip_label')}
                   </Typography>
                   <ToggleButtonGroup
                     value={hipUnit}
@@ -584,8 +584,8 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                     size="small"
                     sx={{ '& .MuiToggleButton-root': { py: 0.2, px: 1.1, borderRadius: '12px', fontWeight: 700, fontSize: '0.7rem' } }}
                   >
-                    <ToggleButton value="cm">{t('cm', 'cm')}</ToggleButton>
-                    <ToggleButton value="inch">{t('inch', 'inch')}</ToggleButton>
+                    <ToggleButton value="cm">{t('units.cm')}</ToggleButton>
+                    <ToggleButton value="inch">{t('units.inch')}</ToggleButton>
                   </ToggleButtonGroup>
                 </Stack>
 
@@ -602,7 +602,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                       {displayedHip}
                     </Typography>
                     <Typography variant="subtitle1" fontWeight={700} color="text.secondary" sx={{ whiteSpace: 'nowrap', lineHeight: 1 }}>
-                      {t(hipUnit)}
+                      {t(`units.${hipUnit}`)}
                     </Typography>
                   </Box>
                   <IconButton
@@ -627,7 +627,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                 <Stack direction="row" alignItems="center" justifyContent="center" spacing={0.8} sx={{ width: '100%', mb: 0.5 }}>
                   {/* <MonitorHeartIcon sx={{ fontSize: 18, color: '#E91E63' }} /> */}
                   <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
-                    {t('waist_hip_ratio', 'WHR')} · {t('body_fat_distribution', 'Ratio')}
+                    {t('prediction.personal.whr_label')} · {t('prediction.personal.ratio_label')}
                   </Typography>
                 </Stack>
 

@@ -1,6 +1,7 @@
 // src/layout/Navbar/Navbar.jsx
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   AppBar, Toolbar, Typography, IconButton, Button, Avatar,
   Menu, MenuItem, Box, Tooltip, Divider, Badge, useTheme, alpha,
@@ -13,8 +14,10 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext.jsx';
 import { ROUTES } from '../../constants/index.js';
 import { APP_NAME } from '../../config/appConfig.js';
+import LanguageSelector from '../../components/common/LanguageSelector.jsx';
 
 const Navbar = ({ onThemeToggle, isDark }) => {
+  const { t } = useTranslation();
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
   const navigate = useNavigate();
   const theme = useTheme();
@@ -75,17 +78,20 @@ const Navbar = ({ onThemeToggle, isDark }) => {
         {/* Nav links (authenticated) */}
         {isAuthenticated && (
           <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 0.5 }}>
-            <Button startIcon={<Dashboard />} onClick={() => navigate(ROUTES.DASHBOARD)} size="small">Dashboard</Button>
-            <Button startIcon={<Favorite />} onClick={() => navigate(ROUTES.LIFESTYLE)} size="small">Lifestyle</Button>
-            <Button startIcon={<History />} onClick={() => navigate(ROUTES.HISTORY)} size="small">History</Button>
+            <Button startIcon={<Dashboard />} onClick={() => navigate(ROUTES.DASHBOARD)} size="small">{t('nav.dashboard')}</Button>
+            <Button startIcon={<Favorite />} onClick={() => navigate(ROUTES.LIFESTYLE)} size="small">{t('nav.lifestyle')}</Button>
+            <Button startIcon={<History />} onClick={() => navigate(ROUTES.HISTORY)} size="small">{t('nav.history')}</Button>
             {isAdmin && (
-              <Button startIcon={<AdminPanelSettings />} onClick={() => navigate(ROUTES.ADMIN)} size="small" color="secondary">Admin</Button>
+              <Button startIcon={<AdminPanelSettings />} onClick={() => navigate(ROUTES.ADMIN)} size="small" color="secondary">{t('nav.admin')}</Button>
             )}
           </Box>
         )}
 
+        {/* Language selector */}
+        <LanguageSelector />
+
         {/* Theme toggle */}
-        <Tooltip title={isDark ? 'Light mode' : 'Dark mode'}>
+        <Tooltip title={isDark ? t('nav.light_mode') : t('nav.dark_mode')}>
           <IconButton onClick={onThemeToggle} size="small">
             {isDark ? <LightMode /> : <DarkMode />}
           </IconButton>
@@ -117,21 +123,21 @@ const Navbar = ({ onThemeToggle, isDark }) => {
               </Box>
               <Divider />
               <MenuItem onClick={() => { setAnchorEl(null); navigate(ROUTES.PROFILE); }}>
-                <Person fontSize="small" sx={{ mr: 1.5 }} /> Profile
+                <Person fontSize="small" sx={{ mr: 1.5 }} /> {t('nav.profile')}
               </MenuItem>
               <MenuItem onClick={() => { setAnchorEl(null); navigate(ROUTES.DASHBOARD); }}>
-                <Dashboard fontSize="small" sx={{ mr: 1.5 }} /> Dashboard
+                <Dashboard fontSize="small" sx={{ mr: 1.5 }} /> {t('nav.dashboard')}
               </MenuItem>
               <Divider />
               <MenuItem onClick={handleLogout} sx={{ color: 'error.main' }}>
-                <Logout fontSize="small" sx={{ mr: 1.5 }} /> Logout
+                <Logout fontSize="small" sx={{ mr: 1.5 }} /> {t('nav.logout')}
               </MenuItem>
             </Menu>
           </>
         ) : (
           <Box sx={{ display: 'flex', gap: 1 }}>
-            <Button variant="outlined" size="small" onClick={() => navigate(ROUTES.LOGIN)}>Login</Button>
-            <Button variant="contained" size="small" onClick={() => navigate(ROUTES.REGISTER)}>Sign Up</Button>
+            <Button variant="outlined" size="small" onClick={() => navigate(ROUTES.LOGIN)}>{t('nav.login')}</Button>
+            <Button variant="contained" size="small" onClick={() => navigate(ROUTES.REGISTER)}>{t('nav.signup')}</Button>
           </Box>
         )}
       </Toolbar>

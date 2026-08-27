@@ -12,6 +12,7 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { lifestyleService } from '../../services/lifestyleService.js';
 import { ROUTES } from '../../constants/index.js';
+import { translateOptionValue } from '../../utils/optionTranslation.js';
 
 const ArticlePage = () => {
   const { id } = useParams();
@@ -72,22 +73,23 @@ const ArticlePage = () => {
         />
         
         <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1, pb: 6 }}>
-          <IconButton 
+          <IconButton
             onClick={() => navigate(ROUTES.LIFESTYLE)}
+            aria-label={t('common.back')}
             sx={{ color: '#fff', mb: 2, bgcolor: 'rgba(255,255,255,0.2)', '&:hover': { bgcolor: 'rgba(255,255,255,0.4)' } }}
           >
             <ArrowBack />
           </IconButton>
-          
+
           <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
-            <Chip 
-              icon={<span style={{ paddingLeft: 8 }}>{article.icon}</span>} 
-              label={article.category} 
-              sx={{ bgcolor: '#EC407A', color: '#fff', fontWeight: 700 }} 
+            <Chip
+              icon={<span style={{ paddingLeft: 8 }}>{article.icon}</span>}
+              label={translateOptionValue(t, 'lifestyleHub.categories', article.category)}
+              sx={{ bgcolor: '#EC407A', color: '#fff', fontWeight: 700 }}
             />
-            <Chip 
-              label={`5 ${t('reading_time')}`} 
-              sx={{ bgcolor: 'rgba(255,255,255,0.2)', color: '#fff' }} 
+            <Chip
+              label={`5 ${t('lifestyleHub.article.minRead')}`}
+              sx={{ bgcolor: 'rgba(255,255,255,0.2)', color: '#fff' }}
             />
           </Box>
           
@@ -122,14 +124,14 @@ const ArticlePage = () => {
             >
               <VerifiedUser fontSize="small" />
               <Typography variant="caption" fontWeight={700}>
-                {t('who_info_badge')}
+                {t('lifestyleHub.article.whoBadge')}
               </Typography>
             </Box>
-            
+
             <Box sx={{ display: 'flex', gap: 1 }}>
-              <IconButton size="small"><Share /></IconButton>
-              <IconButton size="small"><BookmarkBorder /></IconButton>
-              <IconButton size="small"><Print /></IconButton>
+              <IconButton size="small" aria-label={t('common.share')}><Share /></IconButton>
+              <IconButton size="small" aria-label={t('lifestyleHub.article.bookmark')}><BookmarkBorder /></IconButton>
+              <IconButton size="small" aria-label={t('common.print')}><Print /></IconButton>
             </Box>
           </Box>
 
@@ -142,7 +144,7 @@ const ArticlePage = () => {
           {/* Structured Content */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
             <Typography variant="h5" fontWeight={700} color="secondary" gutterBottom>
-              {t('what_is_it')}
+              {t('lifestyleHub.article.whatIsIt')}
             </Typography>
             <Typography variant="body1" paragraph sx={{ lineHeight: 1.8, fontSize: '1.1rem' }}>
               {article.whatIsIt}
@@ -153,7 +155,7 @@ const ArticlePage = () => {
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
             <Typography variant="h5" fontWeight={700} color="secondary" gutterBottom>
-              {t('why_is_it_important')}
+              {t('lifestyleHub.article.whyImportant')}
             </Typography>
             <Typography variant="body1" paragraph sx={{ lineHeight: 1.8, fontSize: '1.1rem' }}>
               {article.whyIsItImportant}
@@ -167,7 +169,7 @@ const ArticlePage = () => {
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
                 <Box sx={{ bgcolor: alpha('#EC407A', 0.05), p: 3, borderRadius: 3, height: '100%' }}>
                   <Typography variant="h6" fontWeight={700} gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <CheckCircleOutline color="secondary" /> {t('benefits')}
+                    <CheckCircleOutline color="secondary" /> {t('lifestyleHub.article.benefits')}
                   </Typography>
                   <Box component="ul" sx={{ pl: 2, m: 0 }}>
                     {article.benefits.map((benefit, idx) => (
@@ -183,7 +185,7 @@ const ArticlePage = () => {
               <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}>
                 <Box sx={{ bgcolor: alpha('#d32f2f', 0.05), p: 3, borderRadius: 3, height: '100%' }}>
                   <Typography variant="h6" fontWeight={700} gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <WarningAmber color="error" /> {t('things_to_avoid')}
+                    <WarningAmber color="error" /> {t('lifestyleHub.article.thingsToAvoid')}
                   </Typography>
                   <Box component="ul" sx={{ pl: 2, m: 0 }}>
                     {article.thingsToAvoid.map((thing, idx) => (
@@ -202,7 +204,7 @@ const ArticlePage = () => {
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
             <Typography variant="h5" fontWeight={700} color="secondary" gutterBottom>
-              {t('recommendations')}
+              {t('lifestyleHub.article.recommendations')}
             </Typography>
             <Typography variant="body1" paragraph sx={{ lineHeight: 1.8, fontSize: '1.1rem', bgcolor: theme.palette.mode === 'dark' ? alpha('#fff', 0.05) : '#f8f9fa', p: 3, borderRadius: 2, borderLeft: '4px solid #EC407A' }}>
               {article.recommendations}
@@ -213,7 +215,7 @@ const ArticlePage = () => {
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
             <Typography variant="h5" fontWeight={700} color="secondary" gutterBottom>
-              {t('quick_tips')}
+              {t('lifestyleHub.article.quickTips')}
             </Typography>
             <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
               {article.quickTips.map((tip, idx) => (

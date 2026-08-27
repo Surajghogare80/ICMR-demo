@@ -2,32 +2,30 @@ import { useState, useEffect } from 'react';
 import { Box, Typography, IconButton, Button, alpha, useTheme } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const slides = [
   {
+    id: 'diet',
     image: '/healthy-diet.jpg',
-    title: 'Healthy Diet',
-    description: 'Fuel your body with the right nutrients for hormonal balance.',
   },
   {
+    id: 'exercise',
     image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1200&auto=format&fit=crop',
-    title: 'Daily Exercise',
-    description: 'Stay active to boost metabolism and improve insulin sensitivity.',
   },
   {
+    id: 'mental',
     image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1200&auto=format&fit=crop',
-    title: 'Mental Well-being',
-    description: 'Manage stress to keep cortisol levels in check and promote emotional resilience.',
   },
   {
+    id: 'sleep',
     image: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?q=80&w=1200&auto=format&fit=crop',
-    title: 'Healthy Sleep',
-    description: 'Get enough quality rest to allow your body to heal and regulate hormones.',
   }
 ];
 
 const HeroSlideshow = () => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
@@ -103,10 +101,10 @@ const HeroSlideshow = () => {
                 transition={{ delay: 0.3, duration: 0.6 }}
               >
                 <Typography variant="h3" fontWeight={800} sx={{ mb: 2, textShadow: '0 2px 10px rgba(0,0,0,0.2)' }}>
-                  {slides[currentSlide].title}
+                  {t(`lifestyleHub.hero.slides.${slides[currentSlide].id}.title`)}
                 </Typography>
                 <Typography variant="h6" sx={{ mb: 4, maxWidth: 600, fontWeight: 400, textShadow: '0 2px 10px rgba(0,0,0,0.2)' }}>
-                  {slides[currentSlide].description}
+                  {t(`lifestyleHub.hero.slides.${slides[currentSlide].id}.description`)}
                 </Typography>
                 <Button
                   variant="contained"
@@ -120,7 +118,7 @@ const HeroSlideshow = () => {
                     fontWeight: 700,
                   }}
                 >
-                  Learn More
+                  {t('common.learn_more')}
                 </Button>
               </motion.div>
             </Box>
@@ -131,6 +129,7 @@ const HeroSlideshow = () => {
       {/* Manual Navigation */}
       <IconButton
         onClick={handlePrev}
+        aria-label={t('lifestyleHub.hero.previousSlide')}
         sx={{
           position: 'absolute',
           top: '50%',
@@ -146,6 +145,7 @@ const HeroSlideshow = () => {
       </IconButton>
       <IconButton
         onClick={handleNext}
+        aria-label={t('lifestyleHub.hero.nextSlide')}
         sx={{
           position: 'absolute',
           top: '50%',

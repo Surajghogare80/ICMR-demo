@@ -8,6 +8,7 @@ import {
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation, Trans } from 'react-i18next';
 import { predictionService } from '../../services/predictionService.js';
 import { useAuth } from '../../contexts/AuthContext.jsx';
 import { ROUTES } from '../../constants/index.js';
@@ -24,11 +25,17 @@ import RecentPredictions from './components/RecentPredictions.jsx';
 import HealthArticles from './components/HealthArticles.jsx';
 import HealthProgressSection from './components/HealthProgressSection.jsx';
 
-const getGreeting = () => {
+const GREETING_META = {
+  morning: { Icon: WbSunny, color: '#FFA726' },
+  afternoon: { Icon: WbCloudy, color: '#26C6DA' },
+  evening: { Icon: NightsStay, color: '#7E57C2' },
+};
+
+const getGreetingKey = () => {
   const h = new Date().getHours();
-  if (h < 12) return { text: 'Good morning', Icon: WbSunny, color: '#FFA726' };
-  if (h < 18) return { text: 'Good afternoon', Icon: WbCloudy, color: '#26C6DA' };
-  return { text: 'Good evening', Icon: NightsStay, color: '#7E57C2' };
+  if (h < 12) return 'morning';
+  if (h < 18) return 'afternoon';
+  return 'evening';
 };
 
 // Floating decorative blob
@@ -45,12 +52,14 @@ const Blob = ({ sx }) => (
 );
 
 const DashboardPage = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
-  const greeting = getGreeting();
-  const firstName = user?.name?.split(' ')[0] || 'there';
+  const greetingKey = getGreetingKey();
+  const greeting = { text: t(`dashboard.greeting.${greetingKey}`), ...GREETING_META[greetingKey] };
+  const firstName = user?.name?.split(' ')[0] || t('dashboard.greeting.guest');
 
   const { data: predictionsData, isLoading } = useQuery({
     queryKey: ['predictions'],
@@ -208,9 +217,9 @@ const DashboardPage = () => {
                     maxWidth: 420,
                   }}
                 >
-                  Welcome back to{' '}
-                  <Box component="span" sx={{ color: '#EC407A', fontWeight: 700 }}>{APP_NAME}</Box>
-                  . Your health journey starts with awareness and early detection.
+                  <Trans i18nKey="dashboard.welcome.subtitle" values={{ appName: APP_NAME }}>
+                    Welcome back to <Box component="span" sx={{ color: '#EC407A', fontWeight: 700 }}>{{ appName: APP_NAME }}</Box>. Your health journey starts with awareness and early detection.
+                  </Trans>
                 </Typography>
               </Box>
             </Box>
@@ -235,9 +244,9 @@ const DashboardPage = () => {
                     boxShadow: '0 12px 32px rgba(233,30,99,0.45)',
                   },
                 }}
-                aria-label="Start new PMOS screening"
+                aria-label={t('dashboard.welcome.ctaAriaLabel')}
               >
-                New Screening
+                {t('dashboard.welcome.cta')}
               </Button>
             </motion.div>
           </Box>
@@ -306,13 +315,13 @@ const DashboardPage = () => {
               gutterBottom
               sx={{ fontSize: { xs: '1.5rem', md: '2rem' } }}
             >
-              Your Health, Your Story
+              {t('dashboard.footerBanner.title')}
             </Typography>
             <Typography
               variant="body1"
               sx={{ color: 'rgba(255,255,255,0.88)', mb: 3, maxWidth: 520, mx: 'auto', lineHeight: 1.7 }}
             >
-              Every screening brings you closer to understanding your body. Take the next step in your health journey today.
+              {t('dashboard.footerBanner.subtitle')}
             </Typography>
             <Button
               variant="contained"
@@ -329,9 +338,9 @@ const DashboardPage = () => {
                 boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
                 '&:hover': { bgcolor: 'rgba(255,255,255,0.92)', transform: 'translateY(-2px)' },
               }}
-              aria-label="Start new PMOS screening assessment"
+              aria-label={t('dashboard.footerBanner.ctaAriaLabel')}
             >
-              Start Screening →
+              {t('dashboard.footerBanner.cta')} →
             </Button>
           </Box>
         </motion.div>

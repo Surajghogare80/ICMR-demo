@@ -7,73 +7,59 @@ import {
   LocalHospital, Favorite, Restaurant, Psychology, MenuBook,
 } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../../constants/index.js';
 
 const SLIDES = [
   {
     id: 0,
+    key: 'earlyDetection',
     emoji: '🌸',
     icon: <LocalHospital sx={{ fontSize: 64 }} />,
-    title: 'Early Detection Saves Lives',
-    subtitle: 'Detect PMOS early using AI-powered health screening and understand your body better.',
-    cta: 'Start Assessment',
     ctaRoute: ROUTES.PREDICTION,
     gradient: 'linear-gradient(135deg, #EC407A 0%, #F48FB1 50%, #FFEAF0 100%)',
     accentColor: '#EC407A',
     illustration: 'flower',
-    tags: ['AI-Powered', 'Early Detection', 'Free'],
   },
   {
     id: 1,
+    key: 'betterHealthcare',
     emoji: '💗',
     icon: <Favorite sx={{ fontSize: 64 }} />,
-    title: 'Every Woman Deserves Better Healthcare',
-    subtitle: 'Monitor symptoms, understand your risks, and stay informed with personalized health insights.',
-    cta: 'Learn More',
     ctaRoute: ROUTES.PREDICTION,
     gradient: 'linear-gradient(135deg, #F06292 0%, #EC407A 50%, #FCE4EC 100%)',
     accentColor: '#F06292',
     illustration: 'heart',
-    tags: ['Personal', 'Insights', 'Wellness'],
   },
   {
     id: 2,
+    key: 'healthyLifestyle',
     emoji: '🥗',
     icon: <Restaurant sx={{ fontSize: 64 }} />,
-    title: 'Healthy Lifestyle Matters',
-    subtitle: 'Balanced diet, regular exercise, quality sleep, and stress management — your health pillars.',
-    cta: 'Health Tips',
     ctaRoute: ROUTES.DASHBOARD,
     gradient: 'linear-gradient(135deg, #66BB6A 0%, #A5D6A7 50%, #E8F5E9 100%)',
     accentColor: '#66BB6A',
     illustration: 'leaf',
-    tags: ['Diet', 'Exercise', 'Sleep', 'Stress'],
   },
   {
     id: 3,
+    key: 'aiPrediction',
     emoji: '🩺',
     icon: <Psychology sx={{ fontSize: 64 }} />,
-    title: 'AI-Assisted Prediction',
-    subtitle: 'Advanced machine learning helping women understand their health risks and take action early.',
-    cta: 'View Features',
     ctaRoute: ROUTES.PREDICTION,
     gradient: 'linear-gradient(135deg, #7E57C2 0%, #BA68C8 50%, #F3E5F5 100%)',
     accentColor: '#7E57C2',
     illustration: 'brain',
-    tags: ['Machine Learning', 'Prediction', 'Accurate'],
   },
   {
     id: 4,
+    key: 'learnAboutPmos',
     emoji: '📚',
     icon: <MenuBook sx={{ fontSize: 64 }} />,
-    title: 'Learn About PMOS',
-    subtitle: 'Understand symptoms, causes, treatments, and lifestyle strategies for managing PMOS effectively.',
-    cta: 'Read Articles',
     ctaRoute: ROUTES.DASHBOARD,
     gradient: 'linear-gradient(135deg, #FFA726 0%, #FFB74D 50%, #FFF8E1 100%)',
     accentColor: '#FFA726',
     illustration: 'book',
-    tags: ['Symptoms', 'Causes', 'Treatment', 'Lifestyle'],
   },
 ];
 
@@ -127,6 +113,7 @@ const SlideIllustration = ({ type, color }) => {
 };
 
 const HeroSlider = () => {
+  const { t } = useTranslation();
   const [current, setCurrent] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
@@ -143,6 +130,10 @@ const HeroSlider = () => {
   }, [isHovered, next]);
 
   const slide = SLIDES[current];
+  const slideTitle = t(`dashboard.hero.slides.${slide.key}.title`);
+  const slideSubtitle = t(`dashboard.hero.slides.${slide.key}.subtitle`);
+  const slideCta = t(`dashboard.hero.slides.${slide.key}.cta`);
+  const slideTags = t(`dashboard.hero.slides.${slide.key}.tags`, { returnObjects: true });
 
   return (
     <Box
@@ -229,7 +220,7 @@ const HeroSlider = () => {
                     textShadow: isDark ? `0 0 30px ${alpha(slide.accentColor, 0.5)}` : 'none',
                   }}
                 >
-                  {slide.title}
+                  {slideTitle}
                 </Typography>
                 <Typography
                   variant="body1"
@@ -241,12 +232,12 @@ const HeroSlider = () => {
                     fontSize: { xs: '0.9rem', md: '1rem' },
                   }}
                 >
-                  {slide.subtitle}
+                  {slideSubtitle}
                 </Typography>
 
                 {/* Tags */}
                 <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 3 }}>
-                  {slide.tags.map((tag) => (
+                  {slideTags.map((tag) => (
                     <Box
                       key={tag}
                       sx={{
@@ -292,7 +283,7 @@ const HeroSlider = () => {
                     },
                   }}
                 >
-                  {slide.cta} →
+                  {slideCta} →
                 </Button>
               </motion.div>
             </Box>
@@ -302,8 +293,8 @@ const HeroSlider = () => {
 
       {/* Prev / Next Buttons */}
       {[
-        { icon: <ArrowBackIos sx={{ fontSize: 16 }} />, onClick: prev, side: 'left', ariaLabel: 'Previous slide' },
-        { icon: <ArrowForwardIos sx={{ fontSize: 16 }} />, onClick: next, side: 'right', ariaLabel: 'Next slide' },
+        { icon: <ArrowBackIos sx={{ fontSize: 16 }} />, onClick: prev, side: 'left', ariaLabel: t('dashboard.hero.prevSlide') },
+        { icon: <ArrowForwardIos sx={{ fontSize: 16 }} />, onClick: next, side: 'right', ariaLabel: t('dashboard.hero.nextSlide') },
       ].map(({ icon, onClick, side, ariaLabel }) => (
         <IconButton
           key={side}
@@ -344,7 +335,7 @@ const HeroSlider = () => {
             key={s.id}
             onClick={() => setCurrent(i)}
             role="button"
-            aria-label={`Go to slide ${i + 1}`}
+            aria-label={t('dashboard.hero.goToSlide', { number: i + 1 })}
             sx={{
               width: i === current ? 24 : 8,
               height: 8,

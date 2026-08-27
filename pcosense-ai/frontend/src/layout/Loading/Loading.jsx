@@ -1,8 +1,11 @@
 // src/layout/Loading/Loading.jsx
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
-const Loading = ({ fullScreen = false, message = 'Loading...' }) => {
+const Loading = ({ fullScreen = false, message }) => {
+  const { t } = useTranslation();
+  const displayMessage = message ?? t('loading.default_message');
   const content = (
     <Box
       sx={{
@@ -37,7 +40,7 @@ const Loading = ({ fullScreen = false, message = 'Loading...' }) => {
         variant="body2"
         sx={{ color: (theme) => fullScreen ? (theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.6)' : 'text.secondary') : 'text.secondary', fontWeight: 500 }}
       >
-        {message}
+        {displayMessage}
       </Typography>
     </Box>
   );

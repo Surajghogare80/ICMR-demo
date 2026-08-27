@@ -1,5 +1,6 @@
 // src/contexts/AuthContext.jsx
 import { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { authService } from '../services/authService.js';
 import toast from 'react-hot-toast';
 import { APP_NAME } from '../config/appConfig.js';
@@ -10,6 +11,7 @@ const TOKEN_KEY = 'prabha_token';
 const USER_KEY = 'prabha_user';
 
 export const AuthProvider = ({ children }) => {
+  const { t } = useTranslation();
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem(USER_KEY);
     return saved ? JSON.parse(saved) : null;
@@ -59,35 +61,35 @@ export const AuthProvider = ({ children }) => {
     try {
       const { data, message } = await authService.register(formData);
       saveAuth(data.user, data.token);
-      toast.success(message || `Registration successful! Welcome to ${APP_NAME}.`);
+      toast.success(message || t('auth.toast.registration_success', { appName: APP_NAME }));
       return { success: true };
     } catch (error) {
-      toast.error(error.message || 'Registration failed.');
+      toast.error(error.message || t('auth.toast.registration_failed'));
       return { success: false, error: error.message };
     } finally {
       setLoading(false);
     }
-  }, [saveAuth]);
+  }, [saveAuth, t]);
 
   const login = useCallback(async (formData) => {
     setLoading(true);
     try {
       const { data, message } = await authService.login(formData);
       saveAuth(data.user, data.token);
-      toast.success(message || `Welcome back, ${data.user.name}!`);
+      toast.success(message || t('auth.toast.login_welcome_back', { name: data.user.name }));
       return { success: true, user: data.user };
     } catch (error) {
-      toast.error(error.message || 'Invalid email or password.');
+      toast.error(error.message || t('auth.toast.login_failed'));
       return { success: false, error: error.message };
     } finally {
       setLoading(false);
     }
-  }, [saveAuth]);
+  }, [saveAuth, t]);
 
   const logout = useCallback(() => {
     clearAuth();
-    toast.success('You have been logged out successfully.');
-  }, [clearAuth]);
+    toast.success(t('auth.toast.logout_success'));
+  }, [clearAuth, t]);
 
   const updateUser = useCallback((updatedUser) => {
     setUser(updatedUser);

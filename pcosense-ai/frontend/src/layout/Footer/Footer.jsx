@@ -1,9 +1,13 @@
 // src/layout/Footer/Footer.jsx
 import { Box, Container, Typography, Link as MUILink, Divider, Grid } from '@mui/material';
 import { Favorite } from '@mui/icons-material';
-import { APP_NAME, APP_TAGLINE } from '../../config/appConfig.js';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '../../config/appConfig.js';
 
-const Footer = () => (
+const Footer = () => {
+  const { t } = useTranslation();
+
+  return (
   <Box
     component="footer"
     sx={{
@@ -27,26 +31,22 @@ const Footer = () => (
             </Typography>
           </Box>
           <Typography variant="body2" color="text.secondary">
-            {APP_TAGLINE}
+            {t('brand.tagline')}
           </Typography>
         </Grid>
-        {/* <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" fontWeight={700} gutterBottom>Medical Disclaimer</Typography>
-          <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1.7 }}>
-            This tool is for educational purposes only and does NOT replace professional medical advice. Always consult a qualified healthcare provider.
-          </Typography>
-        </Grid> */}
         <Grid item xs={12} md={4} sx={{ textAlign: { md: 'right' } }}>
           <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 0.5, justifyContent: { md: 'flex-end' } }}>
-            Made with <Favorite sx={{ fontSize: 14, color: 'error.main' }} /> for women's health
+            {t('footer.made_with_for')}
+            <Favorite sx={{ fontSize: 14, color: 'error.main' }} />
           </Typography>
           <Typography variant="caption" color="text.secondary">
-            © {new Date().getFullYear()} {APP_NAME}. All rights reserved.
+            {t('footer.rights_reserved', { year: new Date().getFullYear(), appName: APP_NAME })}
           </Typography>
         </Grid>
       </Grid>
     </Container>
   </Box>
-);
+  );
+};
 
 export default Footer;

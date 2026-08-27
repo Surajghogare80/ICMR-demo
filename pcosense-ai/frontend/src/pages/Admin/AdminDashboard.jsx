@@ -9,10 +9,13 @@ import {
 } from '@mui/material';
 import { People, Science, Warning, CheckCircle, Delete, Refresh, Visibility, Close } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { adminService } from '../../services/predictionService.js';
 import Loading from '../../layout/Loading/Loading.jsx';
 import toast from 'react-hot-toast';
+import { formatLocalizedDate, formatLocalizedDateTime } from '../../utils/localeFormat.js';
+import { translateOptionValue } from '../../utils/optionTranslation.js';
 
 // ─── Reusable info row ─────────────────────────────────────────────────────
 const InfoRow = ({ label, value, unit = '' }) => (
@@ -26,6 +29,7 @@ const InfoRow = ({ label, value, unit = '' }) => (
 
 // ─── Admin Prediction Detail Dialog ───────────────────────────────────────
 const AdminPredictionDetail = ({ prediction, onClose }) => {
+  const { t, i18n } = useTranslation();
   if (!prediction) return null;
   const pm  = prediction.personalMetricId  || {};
   const mh  = prediction.menstrualHistoryId || {};
@@ -33,6 +37,7 @@ const AdminPredictionDetail = ({ prediction, onClose }) => {
   const lhd = prediction.lifestyleHabitId  || {};
   const isHighRisk = prediction.result === 'High Risk';
   const resultColor = isHighRisk ? 'error.main' : 'success.main';
+  const u = t('admin.detail_dialog.units', { returnObjects: true });
 
   return (
     <Dialog
@@ -44,14 +49,14 @@ const AdminPredictionDetail = ({ prediction, onClose }) => {
     >
       <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pb: 1 }}>
         <Box>
-          <Typography variant="h6" fontWeight={700}>Prediction Details (Admin)</Typography>
+          <Typography variant="h6" fontWeight={700}>{t('admin.detail_dialog.title')}</Typography>
           <Typography variant="caption" color="text.secondary">
-            {prediction.createdAt ? new Date(prediction.createdAt).toLocaleString('en-IN') : ''}
+            {prediction.createdAt ? formatLocalizedDateTime(prediction.createdAt, i18n.language) : ''}
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
           <Chip
-            label={prediction.result}
+            label={translateOptionValue(t, 'admin.results', prediction.result)}
             size="small"
             sx={{
               bgcolor: (theme) => alpha(isHighRisk ? theme.palette.error.main : theme.palette.success.main, 0.12),
@@ -69,11 +74,11 @@ const AdminPredictionDetail = ({ prediction, onClose }) => {
           <Grid item xs={12}>
             <Box sx={{ display: 'flex', gap: 3, mb: 0.5 }}>
               <Box>
-                <Typography variant="caption" color="text.secondary">Probability</Typography>
+                <Typography variant="caption" color="text.secondary">{t('admin.detail_dialog.probability_label')}</Typography>
                 <Typography variant="h5" fontWeight={800} color={resultColor}>{prediction.probability}%</Typography>
               </Box>
               <Box>
-                <Typography variant="caption" color="text.secondary">Confidence</Typography>
+                <Typography variant="caption" color="text.secondary">{t('admin.detail_dialog.confidence_label')}</Typography>
                 <Typography variant="h5" fontWeight={800}>{prediction.confidence}%</Typography>
               </Box>
             </Box>
@@ -82,71 +87,71 @@ const AdminPredictionDetail = ({ prediction, onClose }) => {
 
           {/* Personal */}
           <Grid item xs={12} sm={6}>
-            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>👤 Personal</Typography>
-            <InfoRow label="Age" value={pm.age} unit="yrs" />
-            <InfoRow label="Weight" value={pm.weight} unit="kg" />
-            <InfoRow label="Height" value={pm.height} unit="cm" />
-            <InfoRow label="BMI" value={pm.bmi} />
-            <InfoRow label="Waist Size" value={pm.waist} unit="inch" />
-            <InfoRow label="Hip Size" value={pm.hip} unit="inch" />
-            <InfoRow label="Waist : Hip Ratio" value={pm.waistHipRatio} />
-            <InfoRow label="Blood Group" value={pm.bloodGroup} />
+            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>👤 {t('admin.detail_dialog.sections.personal')}</Typography>
+            <InfoRow label={t('admin.detail_dialog.fields.age')} value={pm.age} unit={u.yrs} />
+            <InfoRow label={t('admin.detail_dialog.fields.weight')} value={pm.weight} unit={u.kg} />
+            <InfoRow label={t('admin.detail_dialog.fields.height')} value={pm.height} unit={u.cm} />
+            <InfoRow label={t('admin.detail_dialog.fields.bmi')} value={pm.bmi} />
+            <InfoRow label={t('admin.detail_dialog.fields.waist_size')} value={pm.waist} unit={u.inch} />
+            <InfoRow label={t('admin.detail_dialog.fields.hip_size')} value={pm.hip} unit={u.inch} />
+            <InfoRow label={t('admin.detail_dialog.fields.waist_hip_ratio')} value={pm.waistHipRatio} />
+            <InfoRow label={t('admin.detail_dialog.fields.blood_group')} value={pm.bloodGroup} />
           </Grid>
 
           {/* Menstrual */}
           <Grid item xs={12} sm={6}>
-            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>🩸 Menstrual</Typography>
-            <InfoRow label="Cycle Length" value={mh.cycleLength} unit="days" />
-            <InfoRow label="Period Duration" value={mh.periodDuration} unit="days" />
-            <InfoRow label="Regularity" value={mh.cycleRegularity} />
-            <InfoRow label="Flow" value={mh.flowIntensity} />
-            <InfoRow label="Family History of PMOS" value={mh.familyHistory !== undefined && mh.familyHistory !== null ? (mh.familyHistory ? 'Yes' : 'No') : '—'} />
+            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>🩸 {t('admin.detail_dialog.sections.menstrual')}</Typography>
+            <InfoRow label={t('admin.detail_dialog.fields.cycle_length')} value={mh.cycleLength} unit={u.days} />
+            <InfoRow label={t('admin.detail_dialog.fields.period_duration')} value={mh.periodDuration} unit={u.days} />
+            <InfoRow label={t('admin.detail_dialog.fields.regularity')} value={mh.cycleRegularity} />
+            <InfoRow label={t('admin.detail_dialog.fields.flow')} value={mh.flowIntensity} />
+            <InfoRow label={t('admin.detail_dialog.fields.family_history')} value={mh.familyHistory !== undefined && mh.familyHistory !== null ? (mh.familyHistory ? t('common.yes') : t('common.no')) : '—'} />
           </Grid>
 
           {/* Standard Blood */}
           <Grid item xs={12} sm={6}>
-            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>🔬 Blood Report (Standard)</Typography>
-            <InfoRow label="FSH" value={pm.fsh} unit="mIU/mL" />
-            <InfoRow label="LH" value={pm.lh} unit="mIU/mL" />
-            <InfoRow label="TSH" value={pm.tsh} unit="mIU/L" />
-            <InfoRow label="AMH" value={pm.amh} unit="ng/mL" />
-            <InfoRow label="Haemoglobin" value={pm.hb} unit="g/dL" />
-            <InfoRow label="Random Blood Sugar" value={pm.rbs} unit="mg/dL" />
+            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>🔬 {t('admin.detail_dialog.sections.blood_standard')}</Typography>
+            <InfoRow label={t('admin.detail_dialog.fields.fsh')} value={pm.fsh} unit={u.mIU_mL} />
+            <InfoRow label={t('admin.detail_dialog.fields.lh')} value={pm.lh} unit={u.mIU_mL} />
+            <InfoRow label={t('admin.detail_dialog.fields.tsh')} value={pm.tsh} unit={u.mIU_L} />
+            <InfoRow label={t('admin.detail_dialog.fields.amh')} value={pm.amh} unit={u.ng_mL} />
+            <InfoRow label={t('admin.detail_dialog.fields.haemoglobin')} value={pm.hb} unit={u.g_dL} />
+            <InfoRow label={t('admin.detail_dialog.fields.random_blood_sugar')} value={pm.rbs} unit={u.mg_dL} />
           </Grid>
 
           {/* Extended Blood — 4 new parameters */}
           <Grid item xs={12} sm={6}>
-            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'secondary.main' }}>💉 Blood Report (Extended)</Typography>
-            <InfoRow label="Vitamin D3" value={pm.vitD3} unit="ng/mL" />
-            <InfoRow label="SHBG" value={pm.shbg} unit="nmol/L" />
-            <InfoRow label="Fasting Insulin" value={pm.fastingInsulin} unit="µIU/mL" />
-            <InfoRow label="HOMA-IR" value={pm.insulinResistance} />
+            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'secondary.main' }}>💉 {t('admin.detail_dialog.sections.blood_extended')}</Typography>
+            <InfoRow label={t('admin.detail_dialog.fields.vitamin_d3')} value={pm.vitD3} unit={u.ng_mL} />
+            <InfoRow label={t('admin.detail_dialog.fields.shbg')} value={pm.shbg} unit={u.nmol_L} />
+            <InfoRow label={t('admin.detail_dialog.fields.fasting_insulin')} value={pm.fastingInsulin} unit={u.uIU_mL} />
+            <InfoRow label={t('admin.detail_dialog.fields.homa_ir')} value={pm.insulinResistance} />
           </Grid>
 
           {/* Ultrasound (if available) */}
           {(mh.follicleNo || mh.avgFsize || mh.ovaryVolume || mh.endometrium) && (
             <Grid item xs={12} sm={6}>
-              <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>🔍 Ultrasound</Typography>
-              <InfoRow label="Follicle No." value={mh.follicleNo} />
-              <InfoRow label="Avg Follicle Size" value={mh.avgFsize} unit="mm" />
-              <InfoRow label="Ovary Volume" value={mh.ovaryVolume} unit="mL" />
-              <InfoRow label="Endometrium" value={mh.endometrium} unit="mm" />
+              <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>🔍 {t('admin.detail_dialog.sections.ultrasound')}</Typography>
+              <InfoRow label={t('admin.detail_dialog.fields.follicle_no')} value={mh.follicleNo} />
+              <InfoRow label={t('admin.detail_dialog.fields.avg_follicle_size')} value={mh.avgFsize} unit={u.mm} />
+              <InfoRow label={t('admin.detail_dialog.fields.ovary_volume')} value={mh.ovaryVolume} unit={u.mL} />
+              <InfoRow label={t('admin.detail_dialog.fields.endometrium')} value={mh.endometrium} unit={u.mm} />
             </Grid>
           )}
 
           {/* Lifestyle */}
           <Grid item xs={12} sm={6}>
-            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>🏃 Lifestyle</Typography>
-            <InfoRow label="Fast Food" value={lhd.fastFoodFreq} />
-            <InfoRow label="Exercise" value={lhd.exerciseFreq} />
-            <InfoRow label="Stress" value={lhd.stressLevel} />
-            <InfoRow label="Sleep" value={lhd.sleepHours} unit="hrs" />
+            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1, color: 'primary.main' }}>🏃 {t('admin.detail_dialog.sections.lifestyle')}</Typography>
+            <InfoRow label={t('admin.detail_dialog.fields.fast_food')} value={lhd.fastFoodFreq} />
+            <InfoRow label={t('admin.detail_dialog.fields.exercise')} value={lhd.exerciseFreq} />
+            <InfoRow label={t('admin.detail_dialog.fields.stress')} value={lhd.stressLevel} />
+            <InfoRow label={t('admin.detail_dialog.fields.sleep')} value={lhd.sleepHours} unit={u.hrs} />
           </Grid>
         </Grid>
       </DialogContent>
 
       <DialogActions sx={{ px: 3, pb: 2 }}>
-        <Button onClick={onClose} variant="outlined" size="small">Close</Button>
+        <Button onClick={onClose} variant="outlined" size="small">{t('common.close')}</Button>
       </DialogActions>
     </Dialog>
   );
@@ -154,6 +159,7 @@ const AdminPredictionDetail = ({ prediction, onClose }) => {
 
 // ─── Main Dashboard ────────────────────────────────────────────────────────
 const AdminDashboard = () => {
+  const { t, i18n } = useTranslation();
   const queryClient = useQueryClient();
   const [deleteId, setDeleteId] = useState(null);
   const [viewPrediction, setViewPrediction] = useState(null);
@@ -171,12 +177,12 @@ const AdminDashboard = () => {
   const deleteMutation = useMutation({
     mutationFn: adminService.deleteUser,
     onSuccess: () => {
-      toast.success('User deleted successfully.');
+      toast.success(t('admin.toasts.user_deleted'));
       queryClient.invalidateQueries({ queryKey: ['admin-users'] });
       queryClient.invalidateQueries({ queryKey: ['admin-dashboard'] });
       setDeleteId(null);
     },
-    onError: (err) => toast.error(err.message || 'Failed to delete user.'),
+    onError: (err) => toast.error(err.message || t('admin.toasts.user_delete_failed')),
   });
 
   const stats = statsData?.data;
@@ -184,11 +190,13 @@ const AdminDashboard = () => {
   const logs  = stats?.recentLogs || [];
   const recentPredictions = stats?.recentPredictions || [];
 
+  // `key` is a stable identifier used for logic (progress-bar condition below);
+  // `title` is the translated, display-only label.
   const statCards = stats ? [
-    { title: 'Total Users',       value: stats.totalUsers,       icon: <People />,      color: '#E91E63' },
-    { title: 'Total Predictions', value: stats.totalPredictions, icon: <Science />,     color: '#F06292' },
-    { title: 'High Risk Cases',   value: stats.highRiskCount,    icon: <Warning />,     color: '#EF5350' },
-    { title: 'Low Risk Cases',    value: stats.lowRiskCount,     icon: <CheckCircle />, color: '#66BB6A' },
+    { key: 'total_users',       title: t('admin.stats.total_users'),       value: stats.totalUsers,       icon: <People />,      color: '#E91E63' },
+    { key: 'total_predictions', title: t('admin.stats.total_predictions'), value: stats.totalPredictions, icon: <Science />,     color: '#F06292' },
+    { key: 'high_risk_cases',   title: t('admin.stats.high_risk_cases'),   value: stats.highRiskCount,    icon: <Warning />,     color: '#EF5350' },
+    { key: 'low_risk_cases',    title: t('admin.stats.low_risk_cases'),    value: stats.lowRiskCount,     icon: <CheckCircle />, color: '#66BB6A' },
   ] : [];
 
   return (
@@ -197,19 +205,19 @@ const AdminDashboard = () => {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
             <Box>
-              <Typography variant="h4" fontWeight={800} gutterBottom>Admin Dashboard</Typography>
-              <Typography color="text.secondary">Platform overview and user management</Typography>
+              <Typography variant="h4" fontWeight={800} gutterBottom>{t('admin.title')}</Typography>
+              <Typography color="text.secondary">{t('admin.subtitle')}</Typography>
             </Box>
-            <Button startIcon={<Refresh />} variant="outlined" onClick={() => refetch()}>Refresh</Button>
+            <Button startIcon={<Refresh />} variant="outlined" onClick={() => refetch()}>{t('admin.actions.refresh')}</Button>
           </Box>
 
           {/* Stats Cards */}
           {statsLoading ? (
-            <Box sx={{ py: 4 }}><Loading message="Loading statistics..." /></Box>
+            <Box sx={{ py: 4 }}><Loading message={t('admin.loading.statistics')} /></Box>
           ) : (
             <Grid container spacing={3} sx={{ mb: 4 }}>
               {statCards.map((s, i) => (
-                <Grid key={s.title} item xs={12} sm={6} md={3}>
+                <Grid key={s.key} item xs={12} sm={6} md={3}>
                   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}>
                     <Card sx={{ transition: 'transform 0.3s', '&:hover': { transform: 'translateY(-4px)' } }}>
                       <CardContent sx={{ p: 3 }}>
@@ -220,7 +228,7 @@ const AdminDashboard = () => {
                           </Box>
                           <Avatar sx={{ bgcolor: `${s.color}18`, color: s.color, width: 48, height: 48 }}>{s.icon}</Avatar>
                         </Box>
-                        {stats.totalPredictions > 0 && (s.title === 'High Risk Cases' || s.title === 'Low Risk Cases') && (
+                        {stats.totalPredictions > 0 && (s.key === 'high_risk_cases' || s.key === 'low_risk_cases') && (
                           <Box sx={{ mt: 2 }}>
                             <LinearProgress
                               variant="determinate"
@@ -228,7 +236,7 @@ const AdminDashboard = () => {
                               sx={{ height: 4, borderRadius: 2, bgcolor: `${s.color}15`, '& .MuiLinearProgress-bar': { bgcolor: s.color } }}
                             />
                             <Typography variant="caption" color="text.secondary">
-                              {stats.totalPredictions > 0 ? Math.round((s.value / stats.totalPredictions) * 100) : 0}% of total
+                              {t('admin.stats.percent_of_total', { percent: stats.totalPredictions > 0 ? Math.round((s.value / stats.totalPredictions) * 100) : 0 })}
                             </Typography>
                           </Box>
                         )}
@@ -245,44 +253,49 @@ const AdminDashboard = () => {
             <Grid item xs={12} md={7}>
               <Card>
                 <CardContent sx={{ p: 3 }}>
-                  <Typography variant="h6" fontWeight={700} gutterBottom>User Management</Typography>
+                  <Typography variant="h6" fontWeight={700} gutterBottom>{t('admin.users_table.title')}</Typography>
                   {usersLoading ? (
-                    <Loading message="Loading users..." />
+                    <Loading message={t('admin.loading.users')} />
                   ) : (
                     <TableContainer>
                       <Table size="small">
                         <TableHead>
                           <TableRow sx={{ bgcolor: 'action.hover' }}>
-                            <TableCell><strong>Name</strong></TableCell>
-                            <TableCell><strong>Role</strong></TableCell>
-                            <TableCell><strong>Joined</strong></TableCell>
-                            <TableCell align="center"><strong>Action</strong></TableCell>
+                            <TableCell><strong>{t('admin.users_table.name')}</strong></TableCell>
+                            <TableCell><strong>{t('admin.users_table.role')}</strong></TableCell>
+                            <TableCell><strong>{t('admin.users_table.joined')}</strong></TableCell>
+                            <TableCell align="center"><strong>{t('admin.users_table.action')}</strong></TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {users.map((u) => (
-                            <TableRow key={u._id} hover sx={{ '&:last-child td': { border: 0 } }}>
+                          {users.map((usr) => (
+                            <TableRow key={usr._id} hover sx={{ '&:last-child td': { border: 0 } }}>
                               <TableCell>
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                                   <Avatar sx={{ width: 32, height: 32, fontSize: '0.8rem', bgcolor: 'primary.main' }}>
-                                    {u.name?.charAt(0)?.toUpperCase()}
+                                    {usr.name?.charAt(0)?.toUpperCase()}
                                   </Avatar>
                                   <Box>
-                                    <Typography variant="body2" fontWeight={600}>{u.name}</Typography>
-                                    <Typography variant="caption" color="text.secondary">{u.email}</Typography>
+                                    <Typography variant="body2" fontWeight={600}>{usr.name}</Typography>
+                                    <Typography variant="caption" color="text.secondary">{usr.email}</Typography>
                                   </Box>
                                 </Box>
                               </TableCell>
                               <TableCell>
-                                <Chip label={u.role} size="small" color={u.role === 'admin' ? 'secondary' : 'default'} sx={{ fontWeight: 600 }} />
+                                <Chip
+                                  label={t(`admin.roles.${usr.role}`, { defaultValue: usr.role })}
+                                  size="small"
+                                  color={usr.role === 'admin' ? 'secondary' : 'default'}
+                                  sx={{ fontWeight: 600 }}
+                                />
                               </TableCell>
                               <TableCell>
-                                <Typography variant="caption">{new Date(u.createdAt).toLocaleDateString()}</Typography>
+                                <Typography variant="caption">{formatLocalizedDate(usr.createdAt, i18n.language)}</Typography>
                               </TableCell>
                               <TableCell align="center">
-                                {u.role !== 'admin' && (
-                                  <Tooltip title="Delete user">
-                                    <IconButton size="small" color="error" onClick={() => setDeleteId(u._id)}>
+                                {usr.role !== 'admin' && (
+                                  <Tooltip title={t('admin.users_table.delete_tooltip')}>
+                                    <IconButton size="small" color="error" onClick={() => setDeleteId(usr._id)}>
                                       <Delete fontSize="small" />
                                     </IconButton>
                                   </Tooltip>
@@ -302,9 +315,9 @@ const AdminDashboard = () => {
             <Grid item xs={12} md={5}>
               <Card sx={{ height: '100%' }}>
                 <CardContent sx={{ p: 3 }}>
-                  <Typography variant="h6" fontWeight={700} gutterBottom>Recent Activity</Typography>
+                  <Typography variant="h6" fontWeight={700} gutterBottom>{t('admin.activity.title')}</Typography>
                   {logs.length === 0 ? (
-                    <Typography color="text.secondary" variant="body2">No activity logs yet.</Typography>
+                    <Typography color="text.secondary" variant="body2">{t('admin.activity.empty')}</Typography>
                   ) : (
                     <List disablePadding sx={{ maxHeight: 400, overflow: 'auto' }}>
                       {logs.map((log, i) => (
@@ -313,14 +326,19 @@ const AdminDashboard = () => {
                             <ListItemText
                               primary={
                                 <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                                  <Chip label={log.action} size="small" variant="outlined" sx={{ fontSize: '0.65rem', height: 20 }} />
+                                  <Chip
+                                    label={t(`admin.log_actions.${log.action}`, { defaultValue: log.action })}
+                                    size="small"
+                                    variant="outlined"
+                                    sx={{ fontSize: '0.65rem', height: 20 }}
+                                  />
                                 </Box>
                               }
                               secondary={
                                 <>
                                   <Typography variant="caption" color="text.secondary">{log.details}</Typography>
                                   <br />
-                                  <Typography variant="caption" color="text.disabled">{new Date(log.createdAt).toLocaleString()}</Typography>
+                                  <Typography variant="caption" color="text.disabled">{formatLocalizedDateTime(log.createdAt, i18n.language)}</Typography>
                                 </>
                               }
                             />
@@ -339,16 +357,16 @@ const AdminDashboard = () => {
               <Grid item xs={12}>
                 <Card>
                   <CardContent sx={{ p: 3 }}>
-                    <Typography variant="h6" fontWeight={700} gutterBottom>Recent Predictions</Typography>
+                    <Typography variant="h6" fontWeight={700} gutterBottom>{t('admin.predictions_table.title')}</Typography>
                     <TableContainer>
                       <Table size="small">
                         <TableHead>
                           <TableRow sx={{ bgcolor: 'action.hover' }}>
-                            <TableCell><strong>User</strong></TableCell>
-                            <TableCell><strong>Date</strong></TableCell>
-                            <TableCell><strong>Result</strong></TableCell>
-                            <TableCell><strong>Probability</strong></TableCell>
-                            <TableCell align="center"><strong>Details</strong></TableCell>
+                            <TableCell><strong>{t('admin.predictions_table.user')}</strong></TableCell>
+                            <TableCell><strong>{t('admin.predictions_table.date')}</strong></TableCell>
+                            <TableCell><strong>{t('admin.predictions_table.result')}</strong></TableCell>
+                            <TableCell><strong>{t('admin.predictions_table.probability')}</strong></TableCell>
+                            <TableCell align="center"><strong>{t('admin.predictions_table.details')}</strong></TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
@@ -358,18 +376,18 @@ const AdminDashboard = () => {
                               <TableRow key={p._id} hover sx={{ '&:last-child td': { border: 0 } }}>
                                 <TableCell>
                                   <Typography variant="body2" fontWeight={500}>
-                                    {p.userId?.name || 'Anonymous'}
+                                    {p.userId?.name || t('admin.predictions_table.anonymous')}
                                   </Typography>
                                   <Typography variant="caption" color="text.secondary">{p.userId?.email}</Typography>
                                 </TableCell>
                                 <TableCell>
                                   <Typography variant="caption">
-                                    {new Date(p.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                    {formatLocalizedDate(p.createdAt, i18n.language, { day: 'numeric', month: 'short', year: 'numeric' })}
                                   </Typography>
                                 </TableCell>
                                 <TableCell>
                                   <Chip
-                                    label={p.result}
+                                    label={translateOptionValue(t, 'admin.results', p.result)}
                                     size="small"
                                     sx={{
                                       bgcolor: (theme) => alpha(isHigh ? theme.palette.error.main : theme.palette.success.main, 0.12),
@@ -384,7 +402,7 @@ const AdminDashboard = () => {
                                   </Typography>
                                 </TableCell>
                                 <TableCell align="center">
-                                  <Tooltip title="View prediction details">
+                                  <Tooltip title={t('admin.predictions_table.view_tooltip')}>
                                     <IconButton size="small" color="primary" onClick={() => setViewPrediction(p)}>
                                       <Visibility fontSize="small" />
                                     </IconButton>
@@ -409,14 +427,14 @@ const AdminDashboard = () => {
 
       {/* Delete confirmation */}
       <Dialog open={!!deleteId} onClose={() => setDeleteId(null)} PaperProps={{ sx: { borderRadius: 3 } }}>
-        <DialogTitle fontWeight={700}>Delete User</DialogTitle>
+        <DialogTitle fontWeight={700}>{t('admin.delete_dialog.title')}</DialogTitle>
         <DialogContent>
-          <Typography>Are you sure you want to permanently delete this user and all their data?</Typography>
+          <Typography>{t('admin.delete_dialog.body')}</Typography>
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 3 }}>
-          <Button onClick={() => setDeleteId(null)} variant="outlined">Cancel</Button>
+          <Button onClick={() => setDeleteId(null)} variant="outlined">{t('common.cancel')}</Button>
           <Button onClick={() => deleteMutation.mutate(deleteId)} color="error" variant="contained" disabled={deleteMutation.isPending}>
-            {deleteMutation.isPending ? 'Deleting...' : 'Delete User'}
+            {deleteMutation.isPending ? t('admin.delete_dialog.deleting') : t('admin.delete_dialog.confirm_button')}
           </Button>
         </DialogActions>
       </Dialog>

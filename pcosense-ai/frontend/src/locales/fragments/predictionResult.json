@@ -1,0 +1,164 @@
+{
+  "en": {
+    "predictionResult": {
+      "noResult": {
+        "message": "No result found. Please complete the screening first.",
+        "startButton": "Start Screening"
+      },
+      "riskLevels": {
+        "high_risk": "High Risk",
+        "low_risk": "Low Risk"
+      },
+      "headline": {
+        "high": "High PMOS Risk Detected",
+        "low": "Low PMOS Risk Detected"
+      },
+      "subheading": "Based on your submitted clinical and lifestyle data",
+      "metrics": {
+        "riskProbability": "Risk Probability",
+        "modelConfidence": "Model Confidence",
+        "aiCertainty": "AI model certainty score"
+      },
+      "bloodReport": {
+        "title": "🔬 Blood Report Summary",
+        "standardMarkers": "Standard Markers",
+        "extendedMarkers": "Extended Markers",
+        "labels": {
+          "fsh": "FSH",
+          "lh": "LH",
+          "tsh": "TSH",
+          "amh": "AMH",
+          "hb": "Haemoglobin",
+          "rbs": "Random Blood Sugar",
+          "vitD3": "Vitamin D3",
+          "shbg": "SHBG",
+          "fastingInsulin": "Fasting Insulin",
+          "insulinResistance": "Insulin Resistance (HOMA-IR)"
+        }
+      },
+      "recommendations": {
+        "title": "📋 Personalized Recommendations"
+      },
+      "actions": {
+        "dashboard": "Go to Dashboard",
+        "history": "View History",
+        "newScreening": "New Screening"
+      },
+      "units": {
+        "mIU_mL": "mIU/mL",
+        "g_dL": "g/dL",
+        "mg_dL": "mg/dL",
+        "nmol_L": "nmol/L",
+        "uIU_mL": "µIU/mL"
+      }
+    }
+  },
+  "hi": {
+    "predictionResult": {
+      "noResult": {
+        "message": "कोई परिणाम नहीं मिला। कृपया पहले स्क्रीनिंग पूरी करें।",
+        "startButton": "स्क्रीनिंग शुरू करें"
+      },
+      "riskLevels": {
+        "high_risk": "उच्च जोखिम",
+        "low_risk": "कम जोखिम"
+      },
+      "headline": {
+        "high": "उच्च PMOS जोखिम पाया गया",
+        "low": "कम PMOS जोखिम पाया गया"
+      },
+      "subheading": "आपके द्वारा प्रस्तुत नैदानिक और जीवनशैली डेटा के आधार पर",
+      "metrics": {
+        "riskProbability": "जोखिम संभावना",
+        "modelConfidence": "मॉडल विश्वसनीयता",
+        "aiCertainty": "AI मॉडल निश्चितता स्कोर"
+      },
+      "bloodReport": {
+        "title": "🔬 रक्त रिपोर्ट सारांश",
+        "standardMarkers": "मानक मार्कर",
+        "extendedMarkers": "विस्तृत मार्कर",
+        "labels": {
+          "fsh": "FSH",
+          "lh": "LH",
+          "tsh": "TSH",
+          "amh": "AMH",
+          "hb": "हीमोग्लोबिन",
+          "rbs": "रैंडम ब्लड शुगर",
+          "vitD3": "विटामिन D3",
+          "shbg": "SHBG",
+          "fastingInsulin": "फास्टिंग इंसुलिन",
+          "insulinResistance": "इंसुलिन प्रतिरोध (HOMA-IR)"
+        }
+      },
+      "recommendations": {
+        "title": "📋 व्यक्तिगत सुझाव"
+      },
+      "actions": {
+        "dashboard": "डैशबोर्ड पर जाएं",
+        "history": "इतिहास देखें",
+        "newScreening": "नई स्क्रीनिंग"
+      },
+      "units": {
+        "mIU_mL": "mIU/mL",
+        "g_dL": "g/dL",
+        "mg_dL": "mg/dL",
+        "nmol_L": "nmol/L",
+        "uIU_mL": "µIU/mL"
+      }
+    }
+  },
+  "mr": {
+    "predictionResult": {
+      "noResult": {
+        "message": "कोणताही निकाल आढळला नाही. कृपया आधी स्क्रीनिंग पूर्ण करा.",
+        "startButton": "स्क्रीनिंग सुरू करा"
+      },
+      "riskLevels": {
+        "high_risk": "उच्च जोखीम",
+        "low_risk": "कमी जोखीम"
+      },
+      "headline": {
+        "high": "उच्च PMOS जोखीम आढळले",
+        "low": "कमी PMOS जोखीम आढळले"
+      },
+      "subheading": "तुम्ही सादर केलेल्या वैद्यकीय आणि जीवनशैली डेटावर आधारित",
+      "metrics": {
+        "riskProbability": "जोखीम संभाव्यता",
+        "modelConfidence": "मॉडेल विश्वासार्हता",
+        "aiCertainty": "AI मॉडेल निश्चितता गुण"
+      },
+      "bloodReport": {
+        "title": "🔬 रक्त अहवाल सारांश",
+        "standardMarkers": "मानक मार्कर्स",
+        "extendedMarkers": "विस्तारित मार्कर्स",
+        "labels": {
+          "fsh": "FSH",
+          "lh": "LH",
+          "tsh": "TSH",
+          "amh": "AMH",
+          "hb": "हिमोग्लोबिन",
+          "rbs": "रँडम ब्लड शुगर",
+          "vitD3": "व्हिटॅमिन D3",
+          "shbg": "SHBG",
+          "fastingInsulin": "फास्टिंग इन्सुलिन",
+          "insulinResistance": "इन्सुलिन प्रतिरोध (HOMA-IR)"
+        }
+      },
+      "recommendations": {
+        "title": "📋 वैयक्तिक शिफारसी"
+      },
+      "actions": {
+        "dashboard": "डॅशबोर्डवर जा",
+        "history": "इतिहास पाहा",
+        "newScreening": "नवीन स्क्रीनिंग"
+      },
+      "units": {
+        "mIU_mL": "mIU/mL",
+        "g_dL": "g/dL",
+        "mg_dL": "mg/dL",
+        "nmol_L": "nmol/L",
+        "uIU_mL": "µIU/mL"
+      }
+    }
+  }
+}
