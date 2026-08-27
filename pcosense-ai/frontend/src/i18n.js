@@ -1,245 +1,65 @@
 // src/i18n.js
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
 
-const resources = {
-  en: {
-    translation: {
-      personal_info: "Personal Information",
-      age_selection: "Age Selection",
-      how_old_are_you: "How old are you?",
-      or_enter_age_manually: "Or Enter Age Manually",
-      age: "Age",
-      years: "years",
-      next: "Next",
-      back: "Back",
-      weight_and_height: "Weight & Height",
-      weight: "Weight",
-      height: "Height",
-      kg: "kg",
-      lbs: "lbs",
-      cm: "cm",
-      inch: "inch",
-      or_enter_weight_manually: "Or Enter Weight Manually",
-      or_enter_height_manually: "Or Enter Height Manually",
-      enter_manually: "Enter Manually",
-      your_bmi: "Your BMI",
-      bmi: "BMI",
-      body_mass_index: "Body Mass Index",
-      waist_and_hip: "Waist & Hip",
-      waist: "Waist",
-      hip: "Hip",
-      or_enter_waist_manually: "Or Enter Waist Manually",
-      or_enter_hip_manually: "Or Enter Hip Manually",
-      waist_hip_ratio: "WHR",
-      body_fat_distribution: "Ratio",
-      age_validation_error: "Please select or enter an age between 10 and 60 years.",
-      weight_validation_error: "Please enter a valid weight.",
-      height_validation_error: "Please enter a valid height.",
-      waist_validation_error: "Please enter a valid waist measurement.",
-      hip_validation_error: "Please enter a valid hip measurement.",
-      step_1_of_3: "Step 1 of 3: Age",
-      step_2_of_3: "Step 2 of 3: Weight & Height",
-      step_3_of_3: "Step 3 of 3: Waist & Hip",
-      family_history_of_pmos: "Family History of PMOS",
-      mother_aunt_sister_grandmother_cousin: "Mother / Aunt / Sister / Cousin / Grandmother",
-      personal_health_measurements: "Personal Health Measurements",
-      // Lifestyle step
-      lifestyle: "Lifestyle",
-      eat_fast_food_regularly: "Do you eat fast food regularly?",
-      exercise_regularly: "Do you exercise regularly?",
-      stress_level: "Stress Level",
-      sleep_hours_per_night: "Sleep Hours per Night",
-      yes: "Yes",
-      no: "No",
-      low: "Low",
-      moderate: "Moderate",
-      high: "High",
-      hours: "hours",
-      
-      // Lifestyle Section UI
-      lifestyle_hub: "Lifestyle Hub",
-      search_health_topics: "Search health topics...",
-      all_categories: "All Categories",
-      read_article: "Read Article",
-      who_info_badge: "Information adapted from WHO guidelines",
-      reading_time: "min read",
-      related_articles: "You may also like",
-      share: "Share",
-      bookmark: "Bookmark",
-      print: "Print",
-      what_is_it: "What is it?",
-      why_is_it_important: "Why is it important?",
-      benefits: "Benefits",
-      recommendations: "Daily recommendations",
-      things_to_avoid: "Things to avoid",
-      quick_tips: "Quick tips",
-    }
-  },
-  hi: {
-    translation: {
-      personal_info: "व्यक्तिगत जानकारी",
-      age_selection: "आयु चयन",
-      how_old_are_you: "आपकी आयु क्या है?",
-      or_enter_age_manually: "या आयु मैन्युअल रूप से दर्ज करें",
-      age: "आयु",
-      years: "वर्ष",
-      next: "आगे",
-      back: "पीछे",
-      weight_and_height: "वजन और ऊंचाई",
-      weight: "वजन",
-      height: "ऊंचाई",
-      kg: "किग्रा",
-      lbs: "पाउंड",
-      cm: "सेमी",
-      inch: "इंच",
-      or_enter_weight_manually: "या वजन मैन्युअल रूप से दर्ज करें",
-      or_enter_height_manually: "या ऊंचाई मैन्युअल रूप से दर्ज करें",
-      enter_manually: "मैन्युअल रूप से दर्ज करें",
-      your_bmi: "आपका बीएमआई (BMI)",
-      bmi: "बीएमआई",
-      body_mass_index: "बॉडी मास इंडेक्स",
-      waist_and_hip: "कमर और कूल्हे",
-      waist: "कमर",
-      hip: "कूल्हा",
-      or_enter_waist_manually: "या कमर का माप मैन्युअल रूप से दर्ज करें",
-      or_enter_hip_manually: "या कूल्हे का माप मैन्युअल रूप से दर्ज करें",
-      waist_hip_ratio: "कमर-कूल्हा अनुपात",
-      body_fat_distribution: "अनुपात",
-      age_validation_error: "कृपया 10 से 60 वर्ष के बीच की आयु दर्ज करें।",
-      weight_validation_error: "कृपया सही वजन दर्ज करें।",
-      height_validation_error: "कृपया सही ऊंचाई दर्ज करें।",
-      waist_validation_error: "कृपया सही कमर का माप दर्ज करें।",
-      hip_validation_error: "कृपया सही कूल्हे का माप दर्ज करें।",
-      step_1_of_3: "चरण 1 / 3: आयु",
-      step_2_of_3: "चरण 2 / 3: वजन और ऊंचाई",
-      step_3_of_3: "चरण 3 / 3: कमर और कूल्हा",
-      family_history_of_pmos: "PMOS का पारिवारिक इतिहास",
-      mother_aunt_sister_grandmother_cousin: "माँ / चाची / बहन / चचेरी बहन / दादी",
-      personal_health_measurements: "व्यक्तिगत स्वास्थ्य माप",
-      // Lifestyle step
-      lifestyle: "जीवनशैली",
-      eat_fast_food_regularly: "क्या आप नियमित रूप से फास्ट फूड खाते हैं?",
-      exercise_regularly: "क्या आप नियमित रूप से व्यायाम करते हैं?",
-      stress_level: "तनाव का स्तर",
-      sleep_hours_per_night: "रात की नींद के घंटे",
-      yes: "हाँ",
-      no: "नहीं",
-      low: "कम",
-      moderate: "मध्यम",
-      high: "अधिक",
-      hours: "घंटे",
+// Every page/feature keeps its own translation fragment file under
+// locales/fragments/ so different areas of the app can be maintained
+// independently. They are discovered automatically (Vite's import.meta.glob)
+// rather than hand-listed here, so adding a new fragment file needs no
+// change to this file — and combined into a single flat "translation"
+// namespace per language.
+import core from './locales/core.json';
 
-      // Lifestyle Section UI
-      lifestyle_hub: "जीवनशैली हब",
-      search_health_topics: "स्वास्थ्य विषय खोजें...",
-      all_categories: "सभी श्रेणियां",
-      read_article: "लेख पढ़ें",
-      who_info_badge: "WHO दिशानिर्देशों से अनुकूलित जानकारी",
-      reading_time: "मिनट की पढ़ाई",
-      related_articles: "आप यह भी पसंद कर सकते हैं",
-      share: "साझा करें",
-      bookmark: "बुकमार्क",
-      print: "प्रिंट",
-      what_is_it: "यह क्या है?",
-      why_is_it_important: "यह महत्वपूर्ण क्यों है?",
-      benefits: "लाभ",
-      recommendations: "दैनिक सिफारिशें",
-      things_to_avoid: "किन चीजों से बचें",
-      quick_tips: "त्वरित सुझाव",
-    }
-  },
-  mr: {
-    translation: {
-      personal_info: "वैयक्तिक माहिती",
-      age_selection: "वय निवड",
-      how_old_are_you: "तुमचे वय किती आहे?",
-      or_enter_age_manually: "किंवा स्वतः वय प्रविष्ट करा",
-      age: "वय",
-      years: "वर्षे",
-      next: "पुढे",
-      back: "मागे",
-      weight_and_height: "वजन आणि उंची",
-      weight: "वजन",
-      height: "उंची",
-      kg: "किग्रॅ",
+const fragmentModules = import.meta.glob('./locales/fragments/*.json', { eager: true });
+const fragments = [core, ...Object.values(fragmentModules).map((mod) => mod.default)];
 
- lbs: "पाऊंड",
-cm: "सेमी",
-inch: "इंच",
-or_enter_weight_manually: "किंवा स्वतः वजन प्रविष्ट करा",
-or_enter_height_manually: "किंवा स्वतः उंची प्रविष्ट करा",
-enter_manually: "स्वतः प्रविष्ट करा",
+export const SUPPORTED_LANGUAGES = ['en', 'hi', 'mr'];
+export const STORAGE_KEY = 'prabha_language';
 
-your_bmi: "तुमचा बीएमआय (BMI)",
-bmi: "बीएमआय",
-body_mass_index: "बॉडी मास इंडेक्स",
-
-waist_and_hip: "कंबर आणि नितंब",
-waist: "कंबर",
-hip: "नितंब",
-or_enter_waist_manually: "किंवा स्वतः कमरेचे माप प्रविष्ट करा",
-or_enter_hip_manually: "किंवा स्वतः नितंबाचे माप प्रविष्ट करा",
-waist_hip_ratio: "कंबर-ते-नितंब प्रमाण",
-body_fat_distribution: "चरबीचे वितरण",
-
-age_validation_error: "कृपया १० ते ६० वर्षांच्या दरम्यानचे वय प्रविष्ट करा.",
-weight_validation_error: "कृपया योग्य वजन प्रविष्ट करा.",
-height_validation_error: "कृपया योग्य उंची प्रविष्ट करा.",
-waist_validation_error: "कृपया कमरेचे योग्य माप प्रविष्ट करा.",
-hip_validation_error: "कृपया नितंबाचे योग्य माप प्रविष्ट करा.",
-
-step_1_of_3: "चरण १/३: वय",
-step_2_of_3: "चरण २/३: वजन आणि उंची",
-step_3_of_3: "चरण ३/३: कंबर आणि नितंब",
-
-family_history_of_pmos: "PMOS चा कौटुंबिक इतिहास",
-mother_aunt_sister_grandmother_cousin: "आई / काकू / बहीण / चुलत बहीण / आजी",
-personal_health_measurements: "वैयक्तिक आरोग्य मापे",
-
-// Lifestyle step
-lifestyle: "जीवनशैली",
-eat_fast_food_regularly: "तुम्ही नियमितपणे फास्ट फूड खाता का?",
-exercise_regularly: "तुम्ही नियमितपणे व्यायाम करता का?",
-stress_level: "ताणाची पातळी",
-sleep_hours_per_night: "रात्रीच्या झोपेचे तास",
-yes: "होय",
-no: "नाही",
-low: "कमी",
-moderate: "मध्यम",
-high: "जास्त",
-hours: "तास",
-
-// Lifestyle Section UI
-lifestyle_hub: "जीवनशैली हब",
-search_health_topics: "आरोग्य विषय शोधा...",
-all_categories: "सर्व श्रेणी",
-read_article: "लेख वाचा",
-who_info_badge: "WHO मार्गदर्शक तत्त्वांमधून रुपांतरित माहिती",
-reading_time: "मिनिटे वाचन",
-related_articles: "तुम्हाला हे देखील आवडू शकते",
-share: "शेअर करा",
-bookmark: "बुकमार्क",
-print: "प्रिंट",
-what_is_it: "हे काय आहे?",
-why_is_it_important: "हे का महत्त्वाचे आहे?",
-benefits: "फायदे",
-recommendations: "दैनंदिन शिफारसी",
-things_to_avoid: "टाळण्याच्या गोष्टी",
-quick_tips: "त्वरित टिप्स",
-    }
-  }
-};
+const resources = SUPPORTED_LANGUAGES.reduce((acc, lng) => {
+  acc[lng] = {
+    translation: fragments.reduce((merged, fragment) => Object.assign(merged, fragment[lng]), {}),
+  };
+  return acc;
+}, {});
 
 i18n
+  // Official i18next plugin for detecting/persisting the active language:
+  // checks localStorage first (so a saved choice always wins), falls back to
+  // the browser's own language, then to <html lang>. Writes back to
+  // localStorage automatically on every i18n.changeLanguage() call.
+  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'en',
     fallbackLng: 'en',
+    supportedLngs: SUPPORTED_LANGUAGES,
+    // Normalizes locale variants (e.g. browser-reported "en-GB", "hi-IN")
+    // down to their base language code so they match our supported list.
+    load: 'languageOnly',
+    detection: {
+      order: ['localStorage', 'navigator', 'htmlTag'],
+      lookupLocalStorage: STORAGE_KEY,
+      caches: ['localStorage'],
+    },
     interpolation: {
       escapeValue: false,
     },
+    returnEmptyString: false,
+    saveMissing: import.meta.env.DEV,
+    missingKeyHandler: import.meta.env.DEV
+      ? (lngs, _ns, key) => {
+          // eslint-disable-next-line no-console
+          console.warn(`[i18n] Missing translation key "${key}" for language(s): ${lngs.join(', ')}`);
+        }
+      : undefined,
   });
+
+export const changeLanguage = (lang) => {
+  if (!SUPPORTED_LANGUAGES.includes(lang)) return;
+  // The LanguageDetector's localStorage cache persists this automatically.
+  i18n.changeLanguage(lang);
+};
 
 export default i18n;

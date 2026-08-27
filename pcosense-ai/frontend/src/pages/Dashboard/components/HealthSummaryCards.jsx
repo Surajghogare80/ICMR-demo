@@ -5,6 +5,13 @@ import {
   Science, TrendingUp, Shield, CalendarToday, Analytics, FavoriteOutlined,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+import { formatLocalizedDate } from '../../../utils/localeFormat.js';
+import { translateOptionValue } from '../../../utils/optionTranslation.js';
+
+// Translates a backend-provided risk result (e.g. "High Risk") for display only.
+// The underlying stored/compared value must never be altered.
+const translateStatus = (t, result) => translateOptionValue(t, 'dashboard.healthSummary.status', result);
 
 const useAnimatedCounter = (target, duration = 1500, delay = 0) => {
   const [value, setValue] = useState(0);
@@ -144,26 +151,27 @@ const StatCard = ({ title, displayValue, rawValue, subtitle, icon, gradient, acc
 };
 
 const HealthSummaryCards = ({ predictions, total }) => {
+  const { t, i18n } = useTranslation();
   const latestPrediction = predictions?.[0];
 
   const cards = [
     {
-      title: 'Total Screenings',
+      title: t('dashboard.healthSummary.cards.totalScreenings.title'),
       displayValue: String(total),
       rawValue: total,
-      subtitle: 'All time health assessments',
+      subtitle: t('dashboard.healthSummary.cards.totalScreenings.subtitle'),
       icon: <Science sx={{ fontSize: 22, color: 'white' }} />,
       gradient: 'linear-gradient(135deg, #EC407A, #F48FB1)',
       accentColor: '#EC407A',
       suffix: '',
     },
     {
-      title: 'Last Assessment',
-      displayValue: latestPrediction?.result || '—',
+      title: t('dashboard.healthSummary.cards.lastAssessment.title'),
+      displayValue: translateStatus(t, latestPrediction?.result) || '—',
       rawValue: NaN,
       subtitle: latestPrediction
-        ? new Date(latestPrediction.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
-        : 'No assessments yet',
+        ? formatLocalizedDate(latestPrediction.createdAt, i18n.language, { day: 'numeric', month: 'short', year: 'numeric' })
+        : t('dashboard.healthSummary.cards.lastAssessment.subtitleEmpty'),
       icon: <TrendingUp sx={{ fontSize: 22, color: 'white' }} />,
       gradient: latestPrediction?.result === 'High Risk'
         ? 'linear-gradient(135deg, #EF5350, #EF9A9A)'
@@ -172,42 +180,44 @@ const HealthSummaryCards = ({ predictions, total }) => {
       suffix: '',
     },
     {
-      title: 'Risk Probability',
+      title: t('dashboard.healthSummary.cards.riskProbability.title'),
       displayValue: latestPrediction ? `${latestPrediction.probability}%` : '—',
       rawValue: latestPrediction ? latestPrediction.probability : NaN,
-      subtitle: 'Latest risk probability score',
+      subtitle: t('dashboard.healthSummary.cards.riskProbability.subtitle'),
       icon: <Analytics sx={{ fontSize: 22, color: 'white' }} />,
       gradient: 'linear-gradient(135deg, #FFA726, #FFD54F)',
       accentColor: '#FFA726',
       suffix: '%',
     },
     {
-      title: 'Confidence Score',
+      title: t('dashboard.healthSummary.cards.confidenceScore.title'),
       displayValue: latestPrediction ? `${latestPrediction.confidence}%` : '—',
       rawValue: latestPrediction ? latestPrediction.confidence : NaN,
-      subtitle: 'AI model confidence level',
+      subtitle: t('dashboard.healthSummary.cards.confidenceScore.subtitle'),
       icon: <Shield sx={{ fontSize: 22, color: 'white' }} />,
       gradient: 'linear-gradient(135deg, #7E57C2, #B39DDB)',
       accentColor: '#7E57C2',
       suffix: '%',
     },
     {
-      title: 'Last Assessment Date',
+      title: t('dashboard.healthSummary.cards.lastAssessmentDate.title'),
       displayValue: latestPrediction
-        ? new Date(latestPrediction.createdAt).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' })
+        ? formatLocalizedDate(latestPrediction.createdAt, i18n.language, { month: 'short', day: 'numeric' })
         : '—',
       rawValue: NaN,
-      subtitle: 'Most recent screening date',
+      subtitle: t('dashboard.healthSummary.cards.lastAssessmentDate.subtitle'),
       icon: <CalendarToday sx={{ fontSize: 22, color: 'white' }} />,
       gradient: 'linear-gradient(135deg, #26C6DA, #80DEEA)',
       accentColor: '#26C6DA',
       suffix: '',
     },
     {
-      title: 'Health Journey',
-      displayValue: total > 0 ? 'Active' : 'Start Now',
+      title: t('dashboard.healthSummary.cards.healthJourney.title'),
+      displayValue: total > 0 ? t('dashboard.healthSummary.cards.healthJourney.active') : t('dashboard.healthSummary.cards.healthJourney.startNow'),
       rawValue: NaN,
-      subtitle: total > 0 ? `${total} screenings completed` : 'Begin your health tracking',
+      subtitle: total > 0
+        ? t('dashboard.healthSummary.cards.healthJourney.subtitleCount', { count: total })
+        : t('dashboard.healthSummary.cards.healthJourney.subtitleStart'),
       icon: <FavoriteOutlined sx={{ fontSize: 22, color: 'white' }} />,
       gradient: 'linear-gradient(135deg, #F06292, #F48FB1)',
       accentColor: '#F06292',
@@ -223,10 +233,10 @@ const HealthSummaryCards = ({ predictions, total }) => {
         transition={{ duration: 0.5 }}
       >
         <Typography variant="h5" fontWeight={800} sx={{ mb: 0.5 }}>
-          Health Summary
+          {t('dashboard.healthSummary.heading')}
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-          Your latest health metrics at a glance
+          {t('dashboard.healthSummary.subtitle')}
         </Typography>
       </motion.div>
 

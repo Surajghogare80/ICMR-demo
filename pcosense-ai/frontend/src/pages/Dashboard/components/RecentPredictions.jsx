@@ -8,8 +8,13 @@ import {
   Science, ArrowForward, TrendingUp, TrendingDown, CalendarToday,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../../constants/index.js';
+import { formatLocalizedDate } from '../../../utils/localeFormat.js';
+import { translateOptionValue } from '../../../utils/optionTranslation.js';
 
+// getRiskConfig keeps comparing/storing the original backend value (result) as-is.
+// The `label` field returned here is only ever used for translated display.
 const getRiskConfig = (result) => {
   if (!result) return { color: '#9E9E9E', label: 'Unknown', gradient: 'linear-gradient(135deg, #9E9E9E, #BDBDBD)' };
   if (result === 'High Risk') return { color: '#EF5350', label: 'High Risk', gradient: 'linear-gradient(135deg, #EF5350, #EF9A9A)' };
@@ -17,10 +22,16 @@ const getRiskConfig = (result) => {
   return { color: '#FFA726', label: result, gradient: 'linear-gradient(135deg, #FFA726, #FFD54F)' };
 };
 
+// Translates a risk label for display only; falls back to the original value
+// for statuses that don't have a dedicated translation key.
+const translateStatus = (t, label) => translateOptionValue(t, 'dashboard.recentPredictions.status', label);
+
 const PredictionRow = ({ prediction, index }) => {
+  const { t, i18n } = useTranslation();
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
   const risk = getRiskConfig(prediction.result);
+  const riskLabel = translateStatus(t, risk.label);
 
   return (
     <motion.div
@@ -69,7 +80,7 @@ const PredictionRow = ({ prediction, index }) => {
         <Box sx={{ flexGrow: 1, minWidth: 0 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.8, flexWrap: 'wrap' }}>
             <Chip
-              label={risk.label}
+              label={riskLabel}
               size="small"
               sx={{
                 bgcolor: alpha(risk.color, isDark ? 0.2 : 0.1),
@@ -80,7 +91,7 @@ const PredictionRow = ({ prediction, index }) => {
               }}
             />
             <Typography variant="body2" fontWeight={600} sx={{ color: 'text.primary' }}>
-              {prediction.probability}% probability
+              {t('dashboard.recentPredictions.probabilityLabel', { value: prediction.probability })}
             </Typography>
           </Box>
 
@@ -103,13 +114,13 @@ const PredictionRow = ({ prediction, index }) => {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
             <CalendarToday sx={{ fontSize: 12, color: 'text.disabled' }} />
             <Typography variant="caption" color="text.disabled" fontWeight={500}>
-              {new Date(prediction.createdAt).toLocaleDateString('en-IN', {
+              {formatLocalizedDate(prediction.createdAt, i18n.language, {
                 day: 'numeric', month: 'short', year: 'numeric',
               })}
             </Typography>
             <Typography variant="caption" color="text.disabled" sx={{ mx: 0.5 }}>•</Typography>
             <Typography variant="caption" color="text.disabled">
-              Confidence: {prediction.confidence}%
+              {t('dashboard.recentPredictions.confidenceLabel', { value: prediction.confidence })}
             </Typography>
           </Box>
         </Box>
@@ -119,6 +130,7 @@ const PredictionRow = ({ prediction, index }) => {
 };
 
 const RecentPredictions = ({ predictions, isLoading, total }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
@@ -128,9 +140,11 @@ const RecentPredictions = ({ predictions, isLoading, total }) => {
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', mb: 3 }}>
           <Box>
-            <Typography variant="h5" fontWeight={800} sx={{ mb: 0.5 }}>Recent Predictions</Typography>
+            <Typography variant="h5" fontWeight={800} sx={{ mb: 0.5 }}>{t('dashboard.recentPredictions.heading')}</Typography>
             <Typography variant="body2" color="text.secondary">
-              {total > 0 ? `${total} total health screenings completed` : 'Your prediction history will appear here'}
+              {total > 0
+                ? t('dashboard.recentPredictions.subtitleCount', { count: total })
+                : t('dashboard.recentPredictions.subtitleEmpty')}
             </Typography>
           </Box>
           {total > 0 && (
@@ -140,7 +154,7 @@ const RecentPredictions = ({ predictions, isLoading, total }) => {
               onClick={() => navigate(ROUTES.HISTORY)}
               sx={{ fontWeight: 700, color: '#EC407A' }}
             >
-              View all
+              {t('common.view_all')}
             </Button>
           )}
         </Box>
@@ -188,9 +202,9 @@ const RecentPredictions = ({ predictions, isLoading, total }) => {
                 <Science sx={{ fontSize: 40, color: 'rgba(233,30,99,0.4)' }} />
               </Box>
             </motion.div>
-            <Typography variant="h6" fontWeight={700} gutterBottom>No predictions yet</Typography>
+            <Typography variant="h6" fontWeight={700} gutterBottom>{t('dashboard.recentPredictions.emptyTitle')}</Typography>
             <Typography color="text.secondary" variant="body2" sx={{ mb: 3, maxWidth: 320, mx: 'auto' }}>
-              Start your first PMOS screening to begin tracking your health journey.
+              {t('dashboard.recentPredictions.emptyText')}
             </Typography>
             <Button
               variant="contained"
@@ -204,7 +218,7 @@ const RecentPredictions = ({ predictions, isLoading, total }) => {
                 boxShadow: '0 8px 24px rgba(233,30,99,0.3)',
               }}
             >
-              Start First Screening →
+              {t('dashboard.recentPredictions.emptyCta')} →
             </Button>
           </Box>
         ) : (

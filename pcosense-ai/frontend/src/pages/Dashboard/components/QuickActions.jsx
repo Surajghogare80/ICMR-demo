@@ -5,12 +5,12 @@ import {
   Science, History, LibraryBooks, Person, BarChart, Settings,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../../constants/index.js';
 
 const ACTIONS = [
   {
-    title: 'Start Assessment',
-    subtitle: 'Begin your PMOS screening',
+    id: 'startAssessment',
     icon: <Science sx={{ fontSize: 32 }} />,
     gradient: 'linear-gradient(135deg, #EC407A, #F48FB1)',
     accentColor: '#EC407A',
@@ -18,32 +18,28 @@ const ACTIONS = [
     featured: true,
   },
   {
-    title: 'Prediction History',
-    subtitle: 'View all past results',
+    id: 'predictionHistory',
     icon: <History sx={{ fontSize: 32 }} />,
     gradient: 'linear-gradient(135deg, #7E57C2, #B39DDB)',
     accentColor: '#7E57C2',
     route: ROUTES.HISTORY,
   },
   {
-    title: 'Health Library',
-    subtitle: 'PMOS education & articles',
+    id: 'healthLibrary',
     icon: <LibraryBooks sx={{ fontSize: 32 }} />,
     gradient: 'linear-gradient(135deg, #26C6DA, #80DEEA)',
     accentColor: '#26C6DA',
     route: ROUTES.DASHBOARD,
   },
   {
-    title: 'My Profile',
-    subtitle: 'Manage your account',
+    id: 'myProfile',
     icon: <Person sx={{ fontSize: 32 }} />,
     gradient: 'linear-gradient(135deg, #66BB6A, #A5D6A7)',
     accentColor: '#66BB6A',
     route: ROUTES.PROFILE,
   },
   {
-    title: 'Reports',
-    subtitle: 'Detailed health analytics',
+    id: 'reports',
     icon: <BarChart sx={{ fontSize: 32 }} />,
     gradient: 'linear-gradient(135deg, #FFA726, #FFD54F)',
     accentColor: '#FFA726',
@@ -51,8 +47,7 @@ const ACTIONS = [
     comingSoon: false,
   },
   {
-    title: 'Settings',
-    subtitle: 'App preferences',
+    id: 'settings',
     icon: <Settings sx={{ fontSize: 32 }} />,
     gradient: 'linear-gradient(135deg, #F06292, #F48FB1)',
     accentColor: '#F06292',
@@ -61,9 +56,12 @@ const ACTIONS = [
 ];
 
 const ActionCard = ({ action, index }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
+  const title = t(`dashboard.quickActions.actions.${action.id}.title`);
+  const subtitle = t(`dashboard.quickActions.actions.${action.id}.subtitle`);
 
   return (
     <motion.div
@@ -79,7 +77,7 @@ const ActionCard = ({ action, index }) => {
         style={{ height: '100%', cursor: 'pointer' }}
         onClick={() => navigate(action.route)}
         role="button"
-        aria-label={action.title}
+        aria-label={title}
       >
         <Box
           sx={{
@@ -144,7 +142,7 @@ const ActionCard = ({ action, index }) => {
               lineHeight: 1.3,
             }}
           >
-            {action.title}
+            {title}
           </Typography>
           <Typography
             variant="caption"
@@ -153,7 +151,7 @@ const ActionCard = ({ action, index }) => {
               fontSize: '0.78rem',
             }}
           >
-            {action.subtitle}
+            {subtitle}
           </Typography>
 
           {action.comingSoon && (
@@ -170,7 +168,7 @@ const ActionCard = ({ action, index }) => {
               }}
             >
               <Typography sx={{ fontSize: '0.62rem', fontWeight: 700, color: action.accentColor }}>
-                SOON
+                {t('dashboard.quickActions.soonBadge')}
               </Typography>
             </Box>
           )}
@@ -180,22 +178,25 @@ const ActionCard = ({ action, index }) => {
   );
 };
 
-const QuickActions = () => (
-  <Box sx={{ mb: 5 }}>
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-      <Typography variant="h5" fontWeight={800} sx={{ mb: 0.5 }}>Quick Actions</Typography>
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Jump right into what you need
-      </Typography>
-    </motion.div>
-    <Grid container spacing={2.5}>
-      {ACTIONS.map((action, i) => (
-        <Grid item xs={6} sm={4} md={2} key={action.title}>
-          <ActionCard action={action} index={i} />
-        </Grid>
-      ))}
-    </Grid>
-  </Box>
-);
+const QuickActions = () => {
+  const { t } = useTranslation();
+  return (
+    <Box sx={{ mb: 5 }}>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+        <Typography variant="h5" fontWeight={800} sx={{ mb: 0.5 }}>{t('dashboard.quickActions.heading')}</Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+          {t('dashboard.quickActions.subtitle')}
+        </Typography>
+      </motion.div>
+      <Grid container spacing={2.5}>
+        {ACTIONS.map((action, i) => (
+          <Grid item xs={6} sm={4} md={2} key={action.id}>
+            <ActionCard action={action} index={i} />
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  );
+};
 
 export default QuickActions;

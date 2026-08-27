@@ -7,73 +7,61 @@ import {
   FitnessCenter, Psychology, Favorite,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const ARTICLES = [
   {
-    title: 'Understanding PMOS: A Complete Guide',
-    category: 'Education',
+    id: 'pcosGuide',
     categoryColor: '#EC407A',
     icon: <MenuBook sx={{ fontSize: 28, color: 'white' }} />,
     iconBg: 'linear-gradient(135deg, #EC407A, #F48FB1)',
-    excerpt: 'Learn everything about Polycystic Ovary Syndrome — its causes, symptoms, diagnosis, and how it affects women\'s health across all life stages.',
-    readTime: '8 min read',
-    tags: ['PMOS', 'Basics'],
+    readMinutes: 8,
   },
   {
-    title: 'Managing PMOS Symptoms Naturally',
-    category: 'Wellness',
+    id: 'naturalManagement',
     categoryColor: '#66BB6A',
     icon: <SelfImprovement sx={{ fontSize: 28, color: 'white' }} />,
     iconBg: 'linear-gradient(135deg, #66BB6A, #A5D6A7)',
-    excerpt: 'Discover evidence-based natural approaches to reducing PMOS symptoms through lifestyle modifications, stress management, and holistic wellness practices.',
-    readTime: '6 min read',
-    tags: ['Natural', 'Lifestyle'],
+    readMinutes: 6,
   },
   {
-    title: 'Nutrition Guide for PMOS',
-    category: 'Nutrition',
+    id: 'nutrition',
     categoryColor: '#FFA726',
     icon: <Restaurant sx={{ fontSize: 28, color: 'white' }} />,
     iconBg: 'linear-gradient(135deg, #FFA726, #FFD54F)',
-    excerpt: 'A comprehensive nutrition guide specifically designed for women with PMOS, including anti-inflammatory foods, meal planning strategies, and foods to avoid.',
-    readTime: '10 min read',
-    tags: ['Diet', 'Food'],
+    readMinutes: 10,
   },
   {
-    title: 'Exercise & PMOS: What Works',
-    category: 'Fitness',
+    id: 'exercise',
     categoryColor: '#7E57C2',
     icon: <FitnessCenter sx={{ fontSize: 28, color: 'white' }} />,
     iconBg: 'linear-gradient(135deg, #7E57C2, #B39DDB)',
-    excerpt: 'Not all exercise is equal for PMOS. Discover the most effective workout types, intensities, and frequencies to improve insulin sensitivity and hormone balance.',
-    readTime: '7 min read',
-    tags: ['Exercise', 'Fitness'],
+    readMinutes: 7,
   },
   {
-    title: 'Mental Wellness & PMOS',
-    category: 'Mental Health',
+    id: 'mentalWellness',
     categoryColor: '#26C6DA',
     icon: <Psychology sx={{ fontSize: 28, color: 'white' }} />,
     iconBg: 'linear-gradient(135deg, #26C6DA, #80DEEA)',
-    excerpt: 'The emotional impact of PMOS is real. Learn about the connection between PMOS and anxiety/depression, plus strategies for emotional well-being and resilience.',
-    readTime: '9 min read',
-    tags: ['Mental Health', 'Wellness'],
+    readMinutes: 9,
   },
   {
-    title: 'PMOS & Fertility: Your Questions Answered',
-    category: 'Fertility',
+    id: 'fertility',
     categoryColor: '#F06292',
     icon: <Favorite sx={{ fontSize: 28, color: 'white' }} />,
     iconBg: 'linear-gradient(135deg, #F06292, #F48FB1)',
-    excerpt: 'Explore how PMOS impacts fertility, the treatment options available, success stories, and what modern medicine can do to help you on your journey to motherhood.',
-    readTime: '11 min read',
-    tags: ['Fertility', 'Hope'],
+    readMinutes: 11,
   },
 ];
 
 const ArticleCard = ({ article, index }) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
+  const title = t(`dashboard.articles.items.${article.id}.title`);
+  const category = t(`dashboard.articles.items.${article.id}.category`);
+  const excerpt = t(`dashboard.articles.items.${article.id}.excerpt`);
+  const tags = t(`dashboard.articles.items.${article.id}.tags`, { returnObjects: true });
 
   return (
     <motion.div
@@ -132,7 +120,7 @@ const ArticleCard = ({ article, index }) => {
             <Box sx={{ flexGrow: 1, minWidth: 0 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5, flexWrap: 'wrap' }}>
                 <Chip
-                  label={article.category}
+                  label={category}
                   size="small"
                   sx={{
                     bgcolor: alpha(article.categoryColor, isDark ? 0.2 : 0.12),
@@ -143,11 +131,11 @@ const ArticleCard = ({ article, index }) => {
                   }}
                 />
                 <Typography variant="caption" color="text.disabled" fontWeight={500}>
-                  {article.readTime}
+                  {t('dashboard.articles.readTime', { count: article.readMinutes })}
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
-                {article.tags.map((tag) => (
+                {tags.map((tag) => (
                   <Typography key={tag} variant="caption" sx={{ color: 'text.disabled', fontSize: '0.7rem' }}>
                     #{tag}
                   </Typography>
@@ -159,10 +147,10 @@ const ArticleCard = ({ article, index }) => {
           {/* Content */}
           <Box sx={{ p: 3, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
             <Typography variant="subtitle1" fontWeight={700} lineHeight={1.4} sx={{ mb: 1.5 }}>
-              {article.title}
+              {title}
             </Typography>
             <Typography variant="body2" color="text.secondary" lineHeight={1.75} sx={{ flexGrow: 1, mb: 2.5, fontSize: '0.83rem' }}>
-              {article.excerpt}
+              {excerpt}
             </Typography>
 
             <Button
@@ -180,7 +168,7 @@ const ArticleCard = ({ article, index }) => {
                 },
               }}
             >
-              Read Article
+              {t('dashboard.articles.readArticle')}
             </Button>
           </Box>
         </Box>
@@ -189,29 +177,32 @@ const ArticleCard = ({ article, index }) => {
   );
 };
 
-const HealthArticles = () => (
-  <Box sx={{ mb: 5 }}>
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 0.5 }}>
-        <Typography variant="h5" fontWeight={800}>Health Library</Typography>
-        <Chip
-          label="6 Articles"
-          size="small"
-          sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#EC407A', fontWeight: 700, fontSize: '0.7rem' }}
-        />
-      </Box>
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Curated health education articles for your wellness journey
-      </Typography>
-    </motion.div>
-    <Grid container spacing={2.5}>
-      {ARTICLES.map((article, i) => (
-        <Grid item xs={12} sm={6} md={4} key={article.title}>
-          <ArticleCard article={article} index={i} />
-        </Grid>
-      ))}
-    </Grid>
-  </Box>
-);
+const HealthArticles = () => {
+  const { t } = useTranslation();
+  return (
+    <Box sx={{ mb: 5 }}>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 0.5 }}>
+          <Typography variant="h5" fontWeight={800}>{t('dashboard.articles.heading')}</Typography>
+          <Chip
+            label={t('dashboard.articles.countBadge', { count: ARTICLES.length })}
+            size="small"
+            sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#EC407A', fontWeight: 700, fontSize: '0.7rem' }}
+          />
+        </Box>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+          {t('dashboard.articles.subtitle')}
+        </Typography>
+      </motion.div>
+      <Grid container spacing={2.5}>
+        {ARTICLES.map((article, i) => (
+          <Grid item xs={12} sm={6} md={4} key={article.id}>
+            <ArticleCard article={article} index={i} />
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  );
+};
 
 export default HealthArticles;

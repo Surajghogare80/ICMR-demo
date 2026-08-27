@@ -1,0 +1,362 @@
+{
+  "en": {
+    "landing": {
+      "hero": {
+        "badge": "🧬 AI-Powered Healthcare",
+        "titleLine1": "Understand Your",
+        "titleLine2": "PMOS Risk Today",
+        "ctaAuthenticated": "Start Screening",
+        "dashboard": "Dashboard",
+        "ctaGuest": "Start Free Screening",
+        "login": "Login",
+        "trust": {
+          "free": "Free to use",
+          "private": "Private & secure",
+          "instant": "Instant results"
+        },
+        "sample": {
+          "title": "🔬 Sample Prediction Result",
+          "riskLevelLabel": "Risk Level",
+          "riskLevelValue": "Low Risk",
+          "probabilityLabel": "Probability",
+          "probabilityValue": "26%",
+          "confidenceLabel": "Confidence",
+          "confidenceValue": "98%",
+          "recommendationsTitle": "Recommendations",
+          "recommendations": {
+            "lifestyle": "Maintain healthy lifestyle",
+            "exercise": "Exercise regularly",
+            "consult": "Consult doctor if symptoms increase"
+          }
+        }
+      },
+      "features": {
+        "title": "Why {{appName}}?",
+        "subtitle": "A comprehensive, evidence-based approach to PMOS risk assessment",
+        "items": {
+          "screening": {
+            "title": "AI-Powered Screening",
+            "desc": "Advanced multi-factor analysis using clinical and lifestyle data for accurate PMOS risk assessment."
+          },
+          "secure": {
+            "title": "Secure & Private",
+            "desc": "Your health data is encrypted and protected with enterprise-grade security. We take privacy seriously."
+          },
+          "instant": {
+            "title": "Instant Results",
+            "desc": "Get your PMOS risk assessment in seconds with detailed recommendations and next steps."
+          },
+          "history": {
+            "title": "Track History",
+            "desc": "Monitor your health journey over time with prediction history and visual trend analysis."
+          }
+        }
+      },
+      "howItWorks": {
+        "title": "How It Works",
+        "subtitle": "Get your PMOS risk assessment in 4 simple steps",
+        "steps": {
+          "account": {
+            "title": "Create Account",
+            "desc": "Register securely and set up your personal health profile."
+          },
+          "screening": {
+            "title": "Complete Screening",
+            "desc": "Answer questions in our guided 4-step healthcare wizard."
+          },
+          "results": {
+            "title": "Get Results",
+            "desc": "Receive instant risk assessment with personalized recommendations."
+          },
+          "track": {
+            "title": "Track Progress",
+            "desc": "Monitor changes over time and share results with your doctor."
+          }
+        }
+      },
+      "about": {
+        "title": "About PMOS",
+        "description": "Polycystic Ovary Syndrome (PMOS) affects approximately <strong>1 in 10</strong> women of childbearing age worldwide. It is one of the most common endocrine disorders and a leading cause of female infertility. Early detection and lifestyle intervention can significantly improve outcomes.",
+        "tags": {
+          "periods": "Irregular periods",
+          "hormonal": "Hormonal imbalance",
+          "weight": "Weight gain",
+          "hair": "Hair thinning",
+          "acne": "Acne",
+          "fertility": "Fertility issues"
+        }
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "items": {
+          "whatIsPmos": {
+            "q": "What is PMOS?",
+            "a": "Polycystic Ovary Syndrome (PMOS) is a common hormonal disorder affecting women of reproductive age. It causes irregular periods, excess androgen, and polycystic ovaries."
+          },
+          "medicalDiagnosis": {
+            "q": "Is this a medical diagnosis?",
+            "a": "No. {{appName}} is a screening tool only. Results are for educational purposes and should be discussed with a qualified gynecologist or endocrinologist."
+          },
+          "accuracy": {
+            "q": "How accurate is the prediction?",
+            "a": "Our model is trained on clinical datasets and uses multiple risk factors. However, only a licensed medical professional can provide a formal PMOS diagnosis."
+          },
+          "dataSafe": {
+            "q": "Is my data safe?",
+            "a": "Yes. All data is encrypted in transit and at rest. We do not share your health information with third parties."
+          },
+          "deleteData": {
+            "q": "Can I delete my data?",
+            "a": "Yes. You can delete your prediction history at any time from your dashboard."
+          }
+        }
+      },
+      "cta": {
+        "title": "Take the First Step Today",
+        "subtitle": "Early awareness can make all the difference. Start your free screening now.",
+        "buttonAuthenticated": "Get Started →",
+        "buttonGuest": "Get Started →"
+      }
+    }
+  },
+  "hi": {
+    "landing": {
+      "hero": {
+        "badge": "🧬 एआई-संचालित स्वास्थ्य सेवा",
+        "titleLine1": "आज ही समझें अपना",
+        "titleLine2": "PMOS जोखिम",
+        "ctaAuthenticated": "स्क्रीनिंग शुरू करें",
+        "dashboard": "डैशबोर्ड",
+        "ctaGuest": "मुफ़्त स्क्रीनिंग शुरू करें",
+        "login": "लॉगिन",
+        "trust": {
+          "free": "उपयोग करने के लिए मुफ़्त",
+          "private": "निजी और सुरक्षित",
+          "instant": "तुरंत परिणाम"
+        },
+        "sample": {
+          "title": "🔬 नमूना भविष्यवाणी परिणाम",
+          "riskLevelLabel": "जोखिम स्तर",
+          "riskLevelValue": "कम जोखिम",
+          "probabilityLabel": "संभावना",
+          "probabilityValue": "26%",
+          "confidenceLabel": "विश्वसनीयता",
+          "confidenceValue": "98%",
+          "recommendationsTitle": "सिफारिशें",
+          "recommendations": {
+            "lifestyle": "स्वस्थ जीवनशैली बनाए रखें",
+            "exercise": "नियमित रूप से व्यायाम करें",
+            "consult": "लक्षण बढ़ने पर डॉक्टर से सलाह लें"
+          }
+        }
+      },
+      "features": {
+        "title": "{{appName}} क्यों?",
+        "subtitle": "PMOS जोखिम मूल्यांकन के लिए एक व्यापक, साक्ष्य-आधारित दृष्टिकोण",
+        "items": {
+          "screening": {
+            "title": "एआई-संचालित स्क्रीनिंग",
+            "desc": "सटीक PMOS जोखिम मूल्यांकन के लिए नैदानिक और जीवनशैली संबंधी डेटा का उपयोग करके उन्नत बहु-कारक विश्लेषण।"
+          },
+          "secure": {
+            "title": "सुरक्षित और निजी",
+            "desc": "आपका स्वास्थ्य डेटा एंटरप्राइज़-ग्रेड सुरक्षा के साथ एन्क्रिप्टेड और सुरक्षित है। हम गोपनीयता को गंभीरता से लेते हैं।"
+          },
+          "instant": {
+            "title": "तुरंत परिणाम",
+            "desc": "विस्तृत सिफारिशों और अगले कदमों के साथ सेकंडों में अपना PMOS जोखिम मूल्यांकन प्राप्त करें।"
+          },
+          "history": {
+            "title": "इतिहास ट्रैक करें",
+            "desc": "भविष्यवाणी इतिहास और विज़ुअल ट्रेंड विश्लेषण के साथ समय के साथ अपनी स्वास्थ्य यात्रा पर नज़र रखें।"
+          }
+        }
+      },
+      "howItWorks": {
+        "title": "यह कैसे काम करता है",
+        "subtitle": "4 आसान चरणों में अपना PMOS जोखिम मूल्यांकन प्राप्त करें",
+        "steps": {
+          "account": {
+            "title": "खाता बनाएं",
+            "desc": "सुरक्षित रूप से पंजीकरण करें और अपनी व्यक्तिगत स्वास्थ्य प्रोफ़ाइल सेट करें।"
+          },
+          "screening": {
+            "title": "स्क्रीनिंग पूरी करें",
+            "desc": "हमारे निर्देशित 4-चरणीय स्वास्थ्य सेवा विज़ार्ड में प्रश्नों के उत्तर दें।"
+          },
+          "results": {
+            "title": "परिणाम प्राप्त करें",
+            "desc": "व्यक्तिगत सिफारिशों के साथ तुरंत जोखिम मूल्यांकन प्राप्त करें।"
+          },
+          "track": {
+            "title": "प्रगति ट्रैक करें",
+            "desc": "समय के साथ बदलावों पर नज़र रखें और अपने डॉक्टर के साथ परिणाम साझा करें।"
+          }
+        }
+      },
+      "about": {
+        "title": "PMOS के बारे में",
+        "description": "पॉलीसिस्टिक ओवरी सिंड्रोम (PMOS) दुनिया भर में प्रजनन आयु की लगभग <strong>10 में से 1</strong> महिला को प्रभावित करता है। यह सबसे आम अंतःस्रावी विकारों में से एक है और महिला बांझपन का एक प्रमुख कारण है। शीघ्र पहचान और जीवनशैली में हस्तक्षेप परिणामों में उल्लेखनीय सुधार कर सकते हैं।",
+        "tags": {
+          "periods": "अनियमित मासिक धर्म",
+          "hormonal": "हार्मोनल असंतुलन",
+          "weight": "वजन बढ़ना",
+          "hair": "बालों का पतला होना",
+          "acne": "मुँहासे",
+          "fertility": "प्रजनन क्षमता संबंधी समस्याएं"
+        }
+      },
+      "faq": {
+        "title": "अक्सर पूछे जाने वाले प्रश्न",
+        "items": {
+          "whatIsPmos": {
+            "q": "PMOS क्या है?",
+            "a": "पॉलीसिस्टिक ओवरी सिंड्रोम (PMOS) प्रजनन आयु की महिलाओं को प्रभावित करने वाला एक सामान्य हार्मोनल विकार है। इससे अनियमित मासिक धर्म, अतिरिक्त एण्ड्रोजन और पॉलीसिस्टिक अंडाशय होते हैं।"
+          },
+          "medicalDiagnosis": {
+            "q": "क्या यह एक चिकित्सीय निदान है?",
+            "a": "नहीं। {{appName}} केवल एक स्क्रीनिंग टूल है। परिणाम शैक्षिक उद्देश्यों के लिए हैं और इन पर किसी योग्य स्त्री रोग विशेषज्ञ या एंडोक्राइनोलॉजिस्ट से चर्चा की जानी चाहिए।"
+          },
+          "accuracy": {
+            "q": "भविष्यवाणी कितनी सटीक है?",
+            "a": "हमारा मॉडल नैदानिक डेटासेट पर प्रशिक्षित है और कई जोखिम कारकों का उपयोग करता है। हालांकि, केवल एक लाइसेंस प्राप्त चिकित्सा पेशेवर ही औपचारिक PMOS निदान प्रदान कर सकता है।"
+          },
+          "dataSafe": {
+            "q": "क्या मेरा डेटा सुरक्षित है?",
+            "a": "हां। सभी डेटा ट्रांज़िट और स्टोरेज दोनों में एन्क्रिप्टेड है। हम आपकी स्वास्थ्य जानकारी तीसरे पक्ष के साथ साझा नहीं करते हैं।"
+          },
+          "deleteData": {
+            "q": "क्या मैं अपना डेटा हटा सकती हूँ?",
+            "a": "हां। आप किसी भी समय अपने डैशबोर्ड से अपना भविष्यवाणी इतिहास हटा सकती हैं।"
+          }
+        }
+      },
+      "cta": {
+        "title": "आज ही पहला कदम उठाएं",
+        "subtitle": "जल्दी जागरूकता पूरा फर्क डाल सकती है। अभी अपनी मुफ़्त स्क्रीनिंग शुरू करें।",
+        "buttonAuthenticated": "स्क्रीनिंग शुरू करें →",
+        "buttonGuest": "मुफ़्त स्क्रीनिंग शुरू करें →"
+      }
+    }
+  },
+  "mr": {
+    "landing": {
+      "hero": {
+        "badge": "🧬 एआय-चालित आरोग्यसेवा",
+        "titleLine1": "आजच समजून घ्या तुमचा",
+        "titleLine2": "PMOS धोका",
+        "ctaAuthenticated": "स्क्रीनिंग सुरू करा",
+        "dashboard": "डॅशबोर्ड",
+        "ctaGuest": "मोफत स्क्रीनिंग सुरू करा",
+        "login": "लॉगिन",
+        "trust": {
+          "free": "वापरण्यासाठी मोफत",
+          "private": "खाजगी आणि सुरक्षित",
+          "instant": "त्वरित निकाल"
+        },
+        "sample": {
+          "title": "🔬 नमुना अंदाज निकाल",
+          "riskLevelLabel": "धोक्याची पातळी",
+          "riskLevelValue": "कमी धोका",
+          "probabilityLabel": "संभाव्यता",
+          "probabilityValue": "26%",
+          "confidenceLabel": "विश्वासार्हता",
+          "confidenceValue": "98%",
+          "recommendationsTitle": "शिफारसी",
+          "recommendations": {
+            "lifestyle": "निरोगी जीवनशैली राखा",
+            "exercise": "नियमित व्यायाम करा",
+            "consult": "लक्षणे वाढल्यास डॉक्टरांचा सल्ला घ्या"
+          }
+        }
+      },
+      "features": {
+        "title": "{{appName}} का?",
+        "subtitle": "PMOS जोखीम मूल्यांकनासाठी सर्वसमावेशक, पुराव्यावर आधारित दृष्टिकोन",
+        "items": {
+          "screening": {
+            "title": "एआय-चालित स्क्रीनिंग",
+            "desc": "अचूक PMOS जोखीम मूल्यांकनासाठी क्लिनिकल आणि जीवनशैली डेटा वापरून प्रगत बहु-घटक विश्लेषण."
+          },
+          "secure": {
+            "title": "सुरक्षित आणि खाजगी",
+            "desc": "तुमचा आरोग्य डेटा एंटरप्राइझ-दर्जाच्या सुरक्षिततेसह एन्क्रिप्ट केलेला आणि संरक्षित आहे. आम्ही गोपनीयतेला गांभीर्याने घेतो."
+          },
+          "instant": {
+            "title": "त्वरित निकाल",
+            "desc": "तपशीलवार शिफारसी आणि पुढील पावलांसह काही सेकंदात तुमचे PMOS जोखीम मूल्यांकन मिळवा."
+          },
+          "history": {
+            "title": "इतिहास ट्रॅक करा",
+            "desc": "अंदाज इतिहास आणि दृश्य कल विश्लेषणासह कालांतराने तुमच्या आरोग्य प्रवासावर लक्ष ठेवा."
+          }
+        }
+      },
+      "howItWorks": {
+        "title": "हे कसे कार्य करते",
+        "subtitle": "4 सोप्या पायऱ्यांमध्ये तुमचे PMOS जोखीम मूल्यांकन मिळवा",
+        "steps": {
+          "account": {
+            "title": "खाते तयार करा",
+            "desc": "सुरक्षितपणे नोंदणी करा आणि तुमची वैयक्तिक आरोग्य प्रोफाइल सेट करा."
+          },
+          "screening": {
+            "title": "स्क्रीनिंग पूर्ण करा",
+            "desc": "आमच्या मार्गदर्शित 4-टप्प्यांच्या आरोग्यसेवा विझार्डमध्ये प्रश्नांची उत्तरे द्या."
+          },
+          "results": {
+            "title": "निकाल मिळवा",
+            "desc": "वैयक्तिकृत शिफारसींसह त्वरित जोखीम मूल्यांकन मिळवा."
+          },
+          "track": {
+            "title": "प्रगतीचा मागोवा घ्या",
+            "desc": "कालांतराने बदलांवर लक्ष ठेवा आणि तुमच्या डॉक्टरांशी निकाल शेअर करा."
+          }
+        }
+      },
+      "about": {
+        "title": "PMOS विषयी",
+        "description": "पॉलीसिस्टिक ओव्हरी सिंड्रोम (PMOS) जगभरातील प्रजनन वयोगटातील अंदाजे <strong>10 पैकी 1</strong> महिलेला प्रभावित करतो. हा सर्वात सामान्य अंतःस्रावी विकारांपैकी एक आहे आणि महिला वंध्यत्वाचे एक प्रमुख कारण आहे. लवकर निदान आणि जीवनशैलीतील हस्तक्षेप परिणामांमध्ये लक्षणीय सुधारणा करू शकतात.",
+        "tags": {
+          "periods": "अनियमित मासिक पाळी",
+          "hormonal": "हार्मोनल असंतुलन",
+          "weight": "वजन वाढणे",
+          "hair": "केस पातळ होणे",
+          "acne": "मुरुम",
+          "fertility": "प्रजनन क्षमतेच्या समस्या"
+        }
+      },
+      "faq": {
+        "title": "वारंवार विचारले जाणारे प्रश्न",
+        "items": {
+          "whatIsPmos": {
+            "q": "PMOS म्हणजे काय?",
+            "a": "पॉलीसिस्टिक ओव्हरी सिंड्रोम (PMOS) हा प्रजनन वयोगटातील महिलांना प्रभावित करणारा एक सामान्य हार्मोनल विकार आहे. यामुळे अनियमित मासिक पाळी, जास्त अँड्रोजन आणि पॉलीसिस्टिक अंडाशय होतात."
+          },
+          "medicalDiagnosis": {
+            "q": "हे वैद्यकीय निदान आहे का?",
+            "a": "नाही. {{appName}} हे केवळ एक स्क्रीनिंग साधन आहे. निकाल शैक्षणिक हेतूंसाठी आहेत आणि त्यावर योग्य स्त्रीरोगतज्ज्ञ किंवा एंडोक्रायनोलॉजिस्टशी चर्चा करावी."
+          },
+          "accuracy": {
+            "q": "अंदाज किती अचूक आहे?",
+            "a": "आमचे मॉडेल क्लिनिकल डेटासेटवर प्रशिक्षित आहे आणि अनेक जोखीम घटक वापरते. तथापि, केवळ परवानाधारक वैद्यकीय व्यावसायिकच औपचारिक PMOS निदान देऊ शकतात."
+          },
+          "dataSafe": {
+            "q": "माझा डेटा सुरक्षित आहे का?",
+            "a": "होय. सर्व डेटा ट्रान्झिट आणि साठवणुकीत एन्क्रिप्ट केलेला आहे. आम्ही तुमची आरोग्य माहिती तृतीय पक्षांसोबत शेअर करत नाही."
+          },
+          "deleteData": {
+            "q": "मी माझा डेटा हटवू शकते का?",
+            "a": "होय. तुम्ही कधीही तुमच्या डॅशबोर्डवरून तुमचा अंदाज इतिहास हटवू शकता."
+          }
+        }
+      },
+      "cta": {
+        "title": "आजच पहिले पाऊल टाका",
+        "subtitle": "लवकर जागरूकता खूप फरक करू शकते. आत्ताच तुमची मोफत स्क्रीनिंग सुरू करा.",
+        "buttonAuthenticated": "स्क्रीनिंग सुरू करा →",
+        "buttonGuest": "मोफत स्क्रीनिंग सुरू करा →"
+      }
+    }
+  }
+}

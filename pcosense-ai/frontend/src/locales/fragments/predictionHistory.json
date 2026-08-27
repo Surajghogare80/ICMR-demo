@@ -1,0 +1,320 @@
+{
+  "en": {
+    "predictionHistory": {
+      "pageTitle": "Prediction History",
+      "pageSubtitle": "Your complete PMOS screening history",
+      "newScreening": "New Screening",
+      "loadingMessage": "Loading prediction history...",
+      "emptyState": {
+        "title": "No predictions yet",
+        "description": "Complete your first PMOS screening to see results here.",
+        "startButton": "Start Screening"
+      },
+      "table": {
+        "columns": {
+          "index": "#",
+          "date": "Date",
+          "result": "Result",
+          "probability": "Probability",
+          "confidence": "Confidence",
+          "actions": "Actions"
+        }
+      },
+      "tooltips": {
+        "viewDetails": "View details",
+        "deletePrediction": "Delete prediction"
+      },
+      "disclaimer": "All predictions are generated for educational purposes only. Consult a medical professional for clinical evaluation.",
+      "deleteDialog": {
+        "title": "Delete Prediction",
+        "message": "Are you sure you want to delete this prediction? This action cannot be undone.",
+        "deleting": "Deleting..."
+      },
+      "toast": {
+        "deleteSuccess": "Prediction deleted successfully.",
+        "deleteError": "Failed to delete prediction."
+      },
+      "detailDialog": {
+        "title": "Prediction Details",
+        "riskProbability": "Risk Probability",
+        "modelConfidence": "Model Confidence",
+        "sections": {
+          "personalInfo": "👤 Personal Info",
+          "menstrual": "🩸 Menstrual",
+          "bloodStandard": "🔬 Blood Report (Standard)",
+          "bloodExtended": "💉 Blood Report (Extended)",
+          "symptoms": "🩺 Symptoms",
+          "lifestyle": "🏃 Lifestyle"
+        },
+        "labels": {
+          "age": "Age",
+          "weight": "Weight",
+          "height": "Height",
+          "bmi": "BMI",
+          "waistSize": "Waist Size",
+          "hipSize": "Hip Size",
+          "waistHipRatio": "Waist : Hip Ratio",
+          "bloodGroup": "Blood Group",
+          "cycleLength": "Cycle Length",
+          "periodDuration": "Period Duration",
+          "regularity": "Regularity",
+          "flowIntensity": "Flow Intensity",
+          "familyHistory": "Family History of PMOS",
+          "fsh": "FSH",
+          "lh": "LH",
+          "tsh": "TSH",
+          "amh": "AMH",
+          "hb": "Haemoglobin",
+          "rbs": "Random Blood Sugar",
+          "vitD3": "Vitamin D3",
+          "shbg": "SHBG",
+          "fastingInsulin": "Fasting Insulin",
+          "insulinResistance": "Insulin Resistance (HOMA-IR)"
+        },
+        "symptomLabels": {
+          "weightGain": "Weight Gain",
+          "hairGrowth": "Excessive Hair Growth",
+          "skinDarkening": "Skin Darkening",
+          "pimples": "Acne / Pimples",
+          "hairLoss": "Hair Loss"
+        },
+        "lifestyleLabels": {
+          "fastFood": "Fast Food",
+          "exercise": "Exercise",
+          "stressLevel": "Stress Level",
+          "sleepHours": "Sleep Hours"
+        }
+      },
+      "riskLevels": {
+        "high_risk": "High Risk",
+        "low_risk": "Low Risk"
+      },
+      "units": {
+        "yrs": "yrs",
+        "days": "days",
+        "hrs": "hrs",
+        "mIU_mL": "mIU/mL",
+        "g_dL": "g/dL",
+        "mg_dL": "mg/dL",
+        "nmol_L": "nmol/L",
+        "uIU_mL": "µIU/mL"
+      },
+      "pagination": {
+        "rowsPerPage": "Rows per page:",
+        "displayedRange": "{{from}}–{{to}} of {{count}}"
+      }
+    }
+  },
+  "hi": {
+    "predictionHistory": {
+      "pageTitle": "पूर्वानुमान इतिहास",
+      "pageSubtitle": "आपका संपूर्ण PMOS स्क्रीनिंग इतिहास",
+      "newScreening": "नई स्क्रीनिंग",
+      "loadingMessage": "पूर्वानुमान इतिहास लोड हो रहा है...",
+      "emptyState": {
+        "title": "अभी तक कोई पूर्वानुमान नहीं",
+        "description": "यहां परिणाम देखने के लिए अपनी पहली PMOS स्क्रीनिंग पूरी करें।",
+        "startButton": "स्क्रीनिंग शुरू करें"
+      },
+      "table": {
+        "columns": {
+          "index": "#",
+          "date": "तारीख",
+          "result": "परिणाम",
+          "probability": "संभावना",
+          "confidence": "विश्वसनीयता",
+          "actions": "कार्रवाई"
+        }
+      },
+      "tooltips": {
+        "viewDetails": "विवरण देखें",
+        "deletePrediction": "पूर्वानुमान हटाएं"
+      },
+      "disclaimer": "सभी पूर्वानुमान केवल शैक्षणिक उद्देश्यों के लिए तैयार किए जाते हैं। नैदानिक मूल्यांकन के लिए किसी चिकित्सा पेशेवर से सलाह लें।",
+      "deleteDialog": {
+        "title": "पूर्वानुमान हटाएं",
+        "message": "क्या आप वाकई इस पूर्वानुमान को हटाना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।",
+        "deleting": "हटाया जा रहा है..."
+      },
+      "toast": {
+        "deleteSuccess": "पूर्वानुमान सफलतापूर्वक हटा दिया गया।",
+        "deleteError": "पूर्वानुमान हटाने में विफल।"
+      },
+      "detailDialog": {
+        "title": "पूर्वानुमान विवरण",
+        "riskProbability": "जोखिम संभावना",
+        "modelConfidence": "मॉडल विश्वसनीयता",
+        "sections": {
+          "personalInfo": "👤 व्यक्तिगत जानकारी",
+          "menstrual": "🩸 मासिक धर्म",
+          "bloodStandard": "🔬 रक्त रिपोर्ट (मानक)",
+          "bloodExtended": "💉 रक्त रिपोर्ट (विस्तृत)",
+          "symptoms": "🩺 लक्षण",
+          "lifestyle": "🏃 जीवनशैली"
+        },
+        "labels": {
+          "age": "आयु",
+          "weight": "वज़न",
+          "height": "ऊंचाई",
+          "bmi": "BMI",
+          "waistSize": "कमर का आकार",
+          "hipSize": "कूल्हे का आकार",
+          "waistHipRatio": "कमर : कूल्हे अनुपात",
+          "bloodGroup": "रक्त समूह",
+          "cycleLength": "चक्र अवधि",
+          "periodDuration": "माहवारी अवधि",
+          "regularity": "नियमितता",
+          "flowIntensity": "प्रवाह तीव्रता",
+          "familyHistory": "PMOS का पारिवारिक इतिहास",
+          "fsh": "FSH",
+          "lh": "LH",
+          "tsh": "TSH",
+          "amh": "AMH",
+          "hb": "हीमोग्लोबिन",
+          "rbs": "रैंडम ब्लड शुगर",
+          "vitD3": "विटामिन D3",
+          "shbg": "SHBG",
+          "fastingInsulin": "फास्टिंग इंसुलिन",
+          "insulinResistance": "इंसुलिन प्रतिरोध (HOMA-IR)"
+        },
+        "symptomLabels": {
+          "weightGain": "वज़न बढ़ना",
+          "hairGrowth": "अत्यधिक बाल विकास",
+          "skinDarkening": "त्वचा का काला पड़ना",
+          "pimples": "मुंहासे / फुंसियां",
+          "hairLoss": "बाल झड़ना"
+        },
+        "lifestyleLabels": {
+          "fastFood": "फास्ट फूड",
+          "exercise": "व्यायाम",
+          "stressLevel": "तनाव स्तर",
+          "sleepHours": "नींद के घंटे"
+        }
+      },
+      "riskLevels": {
+        "high_risk": "उच्च जोखिम",
+        "low_risk": "कम जोखिम"
+      },
+      "units": {
+        "yrs": "वर्ष",
+        "days": "दिन",
+        "hrs": "घंटे",
+        "mIU_mL": "mIU/mL",
+        "g_dL": "g/dL",
+        "mg_dL": "mg/dL",
+        "nmol_L": "nmol/L",
+        "uIU_mL": "µIU/mL"
+      },
+      "pagination": {
+        "rowsPerPage": "प्रति पृष्ठ पंक्तियां:",
+        "displayedRange": "{{count}} में से {{from}}–{{to}}"
+      }
+    }
+  },
+  "mr": {
+    "predictionHistory": {
+      "pageTitle": "अंदाज इतिहास",
+      "pageSubtitle": "तुमचा संपूर्ण PMOS स्क्रीनिंग इतिहास",
+      "newScreening": "नवीन स्क्रीनिंग",
+      "loadingMessage": "अंदाज इतिहास लोड होत आहे...",
+      "emptyState": {
+        "title": "अद्याप कोणतेही अंदाज नाहीत",
+        "description": "येथे निकाल पाहण्यासाठी तुमची पहिली PMOS स्क्रीनिंग पूर्ण करा.",
+        "startButton": "स्क्रीनिंग सुरू करा"
+      },
+      "table": {
+        "columns": {
+          "index": "#",
+          "date": "तारीख",
+          "result": "निकाल",
+          "probability": "संभाव्यता",
+          "confidence": "विश्वासार्हता",
+          "actions": "कृती"
+        }
+      },
+      "tooltips": {
+        "viewDetails": "तपशील पाहा",
+        "deletePrediction": "अंदाज काढून टाका"
+      },
+      "disclaimer": "सर्व अंदाज केवळ शैक्षणिक उद्देशांसाठी तयार केले जातात. वैद्यकीय मूल्यमापनासाठी वैद्यकीय तज्ज्ञांचा सल्ला घ्या.",
+      "deleteDialog": {
+        "title": "अंदाज काढून टाका",
+        "message": "तुम्हाला खरोखर हा अंदाज काढून टाकायचा आहे का? ही क्रिया पूर्ववत केली जाऊ शकत नाही.",
+        "deleting": "काढून टाकत आहे..."
+      },
+      "toast": {
+        "deleteSuccess": "अंदाज यशस्वीरित्या काढून टाकला.",
+        "deleteError": "अंदाज काढून टाकण्यात अयशस्वी."
+      },
+      "detailDialog": {
+        "title": "अंदाज तपशील",
+        "riskProbability": "जोखीम संभाव्यता",
+        "modelConfidence": "मॉडेल विश्वासार्हता",
+        "sections": {
+          "personalInfo": "👤 वैयक्तिक माहिती",
+          "menstrual": "🩸 मासिक पाळी",
+          "bloodStandard": "🔬 रक्त अहवाल (मानक)",
+          "bloodExtended": "💉 रक्त अहवाल (विस्तारित)",
+          "symptoms": "🩺 लक्षणे",
+          "lifestyle": "🏃 जीवनशैली"
+        },
+        "labels": {
+          "age": "वय",
+          "weight": "वजन",
+          "height": "उंची",
+          "bmi": "BMI",
+          "waistSize": "कंबरेचा आकार",
+          "hipSize": "नितंबाचा आकार",
+          "waistHipRatio": "कंबर : नितंब गुणोत्तर",
+          "bloodGroup": "रक्तगट",
+          "cycleLength": "चक्र कालावधी",
+          "periodDuration": "पाळीचा कालावधी",
+          "regularity": "नियमितता",
+          "flowIntensity": "प्रवाह तीव्रता",
+          "familyHistory": "PMOS चा कौटुंबिक इतिहास",
+          "fsh": "FSH",
+          "lh": "LH",
+          "tsh": "TSH",
+          "amh": "AMH",
+          "hb": "हिमोग्लोबिन",
+          "rbs": "रँडम ब्लड शुगर",
+          "vitD3": "व्हिटॅमिन D3",
+          "shbg": "SHBG",
+          "fastingInsulin": "फास्टिंग इन्सुलिन",
+          "insulinResistance": "इन्सुलिन प्रतिरोध (HOMA-IR)"
+        },
+        "symptomLabels": {
+          "weightGain": "वजन वाढणे",
+          "hairGrowth": "जास्त केस वाढणे",
+          "skinDarkening": "त्वचा काळी पडणे",
+          "pimples": "पुरळ / मुरुम",
+          "hairLoss": "केस गळणे"
+        },
+        "lifestyleLabels": {
+          "fastFood": "फास्ट फूड",
+          "exercise": "व्यायाम",
+          "stressLevel": "तणाव पातळी",
+          "sleepHours": "झोपेचे तास"
+        }
+      },
+      "riskLevels": {
+        "high_risk": "उच्च जोखीम",
+        "low_risk": "कमी जोखीम"
+      },
+      "units": {
+        "yrs": "वर्षे",
+        "days": "दिवस",
+        "hrs": "तास",
+        "mIU_mL": "mIU/mL",
+        "g_dL": "g/dL",
+        "mg_dL": "mg/dL",
+        "nmol_L": "nmol/L",
+        "uIU_mL": "µIU/mL"
+      },
+      "pagination": {
+        "rowsPerPage": "प्रति पान ओळी:",
+        "displayedRange": "{{count}} पैकी {{from}}–{{to}}"
+      }
+    }
+  }
+}

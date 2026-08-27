@@ -1,0 +1,374 @@
+{
+  "en": {
+    "common": {
+      "next": "Next",
+      "back": "Back",
+      "submit": "Submit",
+      "cancel": "Cancel",
+      "save": "Save",
+      "continue": "Continue",
+      "yes": "Yes",
+      "no": "No",
+      "loading": "Loading...",
+      "required": "Required",
+      "optional": "Optional",
+      "close": "Close",
+      "edit": "Edit",
+      "delete": "Delete",
+      "view": "View",
+      "view_all": "View All",
+      "download": "Download",
+      "share": "Share",
+      "print": "Print",
+      "search": "Search",
+      "retry": "Retry",
+      "confirm": "Confirm",
+      "success": "Success",
+      "error": "Error",
+      "warning": "Warning",
+      "select": "Select",
+      "all": "All",
+      "or": "or",
+      "and": "and",
+      "welcome": "Welcome",
+      "logout": "Logout",
+      "login": "Login",
+      "signup": "Sign Up",
+      "get_started": "Get Started",
+      "learn_more": "Learn More",
+      "submitting": "Submitting...",
+      "please_wait": "Please wait...",
+      "no_data_found": "No data found",
+      "try_again": "Try Again",
+      "go_back": "Go Back",
+      "go_home": "Go to Home"
+    },
+    "brand": {
+      "name": "PRABHA",
+      "tagline": "PMOS Risk Assessment Based on Health Appraisal",
+      "description": "PRABHA is an AI-powered women's health screening platform designed to assess PMOS risk through clinical symptoms, menstrual history, lifestyle factors, and blood test parameters."
+    },
+    "nav": {
+      "dashboard": "Dashboard",
+      "lifestyle": "Lifestyle",
+      "history": "History",
+      "admin": "Admin",
+      "profile": "Profile",
+      "login": "Login",
+      "signup": "Sign Up",
+      "logout": "Logout",
+      "light_mode": "Light mode",
+      "dark_mode": "Dark mode",
+      "notifications": "Notifications",
+      "menu": "Menu"
+    },
+    "footer": {
+      "made_with_for": "Made with love for women's health",
+      "rights_reserved": "© {{year}} {{appName}}. All rights reserved."
+    },
+    "language": {
+      "select_language": "Select Language",
+      "english": "English",
+      "hindi": "हिन्दी",
+      "marathi": "मराठी"
+    },
+    "units": {
+      "kg": "kg",
+      "lbs": "lbs",
+      "cm": "cm",
+      "inch": "inch",
+      "bpm": "bpm",
+      "mmHg": "mmHg",
+      "mIU_L": "mIU/L",
+      "ng_mL": "ng/mL",
+      "years": "{{count}} years",
+      "hours": "{{count}} hours",
+      "kg_per_m2": "kg/m²",
+      "hours_label": "hours"
+    },
+    "options": {
+      "yesNo": {
+        "yes": "Yes",
+        "no": "No"
+      },
+      "cycleRegularity": {
+        "regular": "Regular",
+        "irregular": "Irregular",
+        "absent": "Absent"
+      },
+      "flowIntensity": {
+        "light": "Light",
+        "normal": "Normal",
+        "heavy": "Heavy",
+        "very_heavy": "Very Heavy"
+      },
+      "stress": {
+        "low": "Low",
+        "moderate": "Moderate",
+        "high": "High"
+      }
+    },
+    "errors": {
+      "generic": "Something went wrong. Please try again.",
+      "network_error": "Unable to reach the server. Please check your connection.",
+      "missing_required_field": "Please fill in all required fields.",
+      "invalid_credentials": "Invalid email or password.",
+      "session_expired": "Your session has expired. Please log in again.",
+      "unauthorized": "You are not authorized to perform this action.",
+      "not_found": "The requested resource was not found.",
+      "server_error": "Server error. Please try again later.",
+      "invalid_email": "Enter a valid email address.",
+      "email_required": "Email is required.",
+      "password_required": "Password is required.",
+      "too_many_requests": "Too many requests. Please slow down."
+    }
+  },
+  "hi": {
+    "common": {
+      "next": "आगे",
+      "back": "पीछे",
+      "submit": "जमा करें",
+      "cancel": "रद्द करें",
+      "save": "सहेजें",
+      "continue": "जारी रखें",
+      "yes": "हां",
+      "no": "नहीं",
+      "loading": "लोड हो रहा है...",
+      "required": "आवश्यक",
+      "optional": "ऐच्छिक",
+      "close": "बंद करें",
+      "edit": "संपादित करें",
+      "delete": "हटाओं",
+      "view": "देखें",
+      "view_all": "सभी देखें",
+      "download": "डाउनलोड करें",
+      "share": "साझा करें",
+      "print": "प्रिंट करें",
+      "search": "खोजें",
+      "retry": "पुन: प्रयास करें",
+      "confirm": "पुष्टि करें",
+      "success": "सफलता",
+      "error": "त्रुटि",
+      "warning": "चेतावनी",
+      "select": "चुनें",
+      "all": "सभी",
+      "or": "या",
+      "and": "और",
+      "welcome": "स्वागत है",
+      "logout": "लॉग आउट",
+      "login": "लॉगिन",
+      "signup": "साइन अप",
+      "get_started": "शुरू करें",
+      "learn_more": "और जानें",
+      "submitting": "जमा हो रहा है...",
+      "please_wait": "कृपया प्रतीक्षा करें...",
+      "no_data_found": "कोई डेटा नहीं मिला",
+      "try_again": "पुन: प्रयास करें",
+      "go_back": "वापस जाएं",
+      "go_home": "होम पर जाएं"
+    },
+    "brand": {
+      "name": "PRABHA",
+      "tagline": "स्वास्थ्य मूल्यांकन पर आधारित PMOS जोखिम मूल्यांकन",
+      "description": "PRABHA एक AI-आधारित महिला स्वास्थ्य जांच प्लेटफॉर्म है जो नैदानिक लक्षणों, मासिक धर्म इतिहास, जीवनशैली कारकों और रक्त परीक्षण मापदंडों के माध्यम से PMOS जोखिम का मूल्यांकन करता है।"
+    },
+    "nav": {
+      "dashboard": "डैशबोर्ड",
+      "lifestyle": "जीवनशैली",
+      "history": "इतिहास",
+      "admin": "एडमिन",
+      "profile": "प्रोफ़ाइल",
+      "login": "लॉगिन",
+      "signup": "साइन अप",
+      "logout": "लॉग आउट",
+      "light_mode": "लाइट मोड",
+      "dark_mode": "डार्क मोड",
+      "notifications": "सूचनाएं",
+      "menu": "मेनू"
+    },
+    "footer": {
+      "made_with_for": "महिला स्वास्थ्य के लिए प्यार से बनाया गया",
+      "rights_reserved": "© {{year}} {{appName}}. सर्वाधिकार सुरक्षित।"
+    },
+    "language": {
+      "select_language": "भाषा चुनें",
+      "english": "English",
+      "hindi": "हिन्दी",
+      "marathi": "मराठी"
+    },
+    "units": {
+      "kg": "किग्रा",
+      "lbs": "पाउंड",
+      "cm": "सेमी",
+      "inch": "इंच",
+      "bpm": "बीपीएम",
+      "mmHg": "मिमी एचजी",
+      "mIU_L": "mIU/L",
+      "ng_mL": "ng/mL",
+      "years": "{{count}} वर्ष",
+      "hours": "{{count}} घंटे",
+      "kg_per_m2": "किग्रा/मी²",
+      "hours_label": "घंटे"
+    },
+    "options": {
+      "yesNo": {
+        "yes": "हां",
+        "no": "नहीं"
+      },
+      "cycleRegularity": {
+        "regular": "नियमित",
+        "irregular": "अनियमित",
+        "absent": "अनुपस्थित"
+      },
+      "flowIntensity": {
+        "light": "हल्का",
+        "normal": "सामान्य",
+        "heavy": "भारी",
+        "very_heavy": "बहुत भारी"
+      },
+      "stress": {
+        "low": "कम",
+        "moderate": "मध्यम",
+        "high": "अधिक"
+      }
+    },
+    "errors": {
+      "generic": "कुछ गलत हो गया। कृपया पुन: प्रयास करें।",
+      "network_error": "सर्वर तक पहुंचने में असमर्थ। कृपया अपना कनेक्शन जांचें।",
+      "missing_required_field": "कृपया सभी आवश्यक फ़ील्ड भरें।",
+      "invalid_credentials": "अमान्य ईमेल या पासवर्ड।",
+      "session_expired": "आपका सत्र समाप्त हो गया है। कृपया पुन: लॉगिन करें।",
+      "unauthorized": "आपको यह कार्रवाई करने की अनुमति नहीं है।",
+      "not_found": "अनुरोधित संसाधन नहीं मिला।",
+      "server_error": "सर्वर त्रुटि। कृपया बाद में पुन: प्रयास करें।",
+      "invalid_email": "सही ईमेल दर्ज करें।",
+      "email_required": "ईमेल आवश्यक है।",
+      "password_required": "पासवर्ड आवश्यक है।",
+      "too_many_requests": "बहुत अधिक अनुरोध। कृपया धीमी गति से प्रयास करें।"
+    }
+  },
+  "mr": {
+    "common": {
+      "next": "पुढे",
+      "back": "मागे",
+      "submit": "सबमिट करा",
+      "cancel": "रद्द करा",
+      "save": "जतन करा",
+      "continue": "सुरू ठेवा",
+      "yes": "होय",
+      "no": "नाही",
+      "loading": "लोड होत आहे...",
+      "required": "आवश्यक",
+      "optional": "ऐच्छिक",
+      "close": "बंद करा",
+      "edit": "संपादित करा",
+      "delete": "काढून टाका",
+      "view": "पाहा",
+      "view_all": "सर्व पहा",
+      "download": "डाऊनलोड करा",
+      "share": "शेअर करा",
+      "print": "प्रिंट करा",
+      "search": "शोधा",
+      "retry": "पुन्हा प्रयत्न करा",
+      "confirm": "खात्री करा",
+      "success": "यशस्वी",
+      "error": "त्रुटी",
+      "warning": "इशारा",
+      "select": "निवडा",
+      "all": "सर्व",
+      "or": "किंवा",
+      "and": "आणि",
+      "welcome": "स्वागत आहे",
+      "logout": "लॉग आउट",
+      "login": "लॉगिन",
+      "signup": "साइन अप",
+      "get_started": "सुरू करा",
+      "learn_more": "अधिक जाणा",
+      "submitting": "सबमिट होत आहे...",
+      "please_wait": "कृपया प्रतीक्षा करा...",
+      "no_data_found": "डेटा सापडला नाही",
+      "try_again": "पुन्हा प्रयत्न करा",
+      "go_back": "मागे जा",
+      "go_home": "होमवर जा"
+    },
+    "brand": {
+      "name": "PRABHA",
+      "tagline": "आरोग्य मूल्यमापनावर आधारित PMOS जोखीम मूल्यमापन",
+      "description": "PRABHA हे AI-आधारित महिला आरोग्य तपासणी प्लॅटफॉर्म आहे जे वैद्यकीय लक्षणे, मासिक पाळीचा इतिहास, जीवनशैलीचे घटक आणि रक्तचाचणीच्या पॅरामीटर्सवरून PMOS जोखीमचे मूल्यमापन करते."
+    },
+    "nav": {
+      "dashboard": "डॅशबोर्ड",
+      "lifestyle": "जीवनशैली",
+      "history": "इतिहास",
+      "admin": "अॅडमिन",
+      "profile": "प्रोफाइल",
+      "login": "लॉगिन",
+      "signup": "साइन अप",
+      "logout": "लॉग आउट",
+      "light_mode": "लाइट मोड",
+      "dark_mode": "डार्क मोड",
+      "notifications": "सूचना",
+      "menu": "मेनू"
+    },
+    "footer": {
+      "made_with_for": "महिला आरोग्यासाठी प्रेमाने बनवले",
+      "rights_reserved": "© {{year}} {{appName}}. सर्व हक्क राखीव."
+    },
+    "language": {
+      "select_language": "भाषा निवडा",
+      "english": "English",
+      "hindi": "हिंदी",
+      "marathi": "मराठी"
+    },
+    "units": {
+      "kg": "किग्रॅ",
+      "lbs": "पाउंड",
+      "cm": "सेमी",
+      "inch": "इंच",
+      "bpm": "बीपीएम",
+      "mmHg": "मिमी एचजी",
+      "mIU_L": "mIU/L",
+      "ng_mL": "ng/mL",
+      "years": "{{count}} वर्षे",
+      "hours": "{{count}} तास",
+      "kg_per_m2": "किग्रॅ/मी²",
+      "hours_label": "तास"
+    },
+    "options": {
+      "yesNo": {
+        "yes": "होय",
+        "no": "नाही"
+      },
+      "cycleRegularity": {
+        "regular": "नियमित",
+        "irregular": "अनियमित",
+        "absent": "अनुपस्थित"
+      },
+      "flowIntensity": {
+        "light": "हलके",
+        "normal": "सर्वसाधारण",
+        "heavy": "जास्त",
+        "very_heavy": "खूप जास्त"
+      },
+      "stress": {
+        "low": "कमी",
+        "moderate": "मध्यम",
+        "high": "जास्त"
+      }
+    },
+    "errors": {
+      "generic": "काहीतरी चूक झाली. कृपया पुन्हा प्रयत्न करा.",
+      "network_error": "सर्व्हरपर्यंत पोहोचणे शक्य नाही. कृपया तुमचे कनेक्शन तपासा.",
+      "missing_required_field": "कृपया सर्व आवश्यक फील्ड भरा.",
+      "invalid_credentials": "अवैध ईमेल किंवा पासवर्ड.",
+      "session_expired": "तुमचे सत्र संपले आहे. कृपया पुन्हा लॉगिन करा.",
+      "unauthorized": "ही कृती करण्यास तुम्हाला परवानगी नाही.",
+      "not_found": "विनंती केलेली गोष्ट सापडली नाही.",
+      "server_error": "सर्व्हर त्रुटी. कृपया नंतर पुन्हा प्रयत्न करा.",
+      "invalid_email": "योग्य ईमेल प्रविष्ट करा.",
+      "email_required": "ईमेल आवश्यक आहे.",
+      "password_required": "पासवर्ड आवश्यक आहे.",
+      "too_many_requests": "खूप जास्त विनंत्या. कृपया हळू करा."
+    }
+  }
+}

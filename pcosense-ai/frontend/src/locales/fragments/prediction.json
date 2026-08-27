@@ -1,0 +1,764 @@
+{
+  "en": {
+    "prediction": {
+      "steps": {
+        "personal": {
+          "label": "Personal Info",
+          "description": "Age, Measurements & Family History"
+        },
+        "menstrual": {
+          "label": "Menstrual History",
+          "description": "Cycle, Regularity & Flow Intensity"
+        },
+        "symptoms": {
+          "label": "Clinical Symptoms",
+          "description": "Physical Symptoms & Signs"
+        },
+        "lifestyle": {
+          "label": "Lifestyle",
+          "description": "Diet, Exercise & Stress Levels"
+        },
+        "blood_report": {
+          "label": "Blood Test Results",
+          "description": "Blood Group, FSH, LH, TSH, AMH, Hb & RBS"
+        },
+        "ultrasound_scan": {
+          "label": "Ultrasound Scan",
+          "description": "Follicles, Size, Volume & Endometrium"
+        },
+        "review": {
+          "label": "Review & Submit",
+          "description": "Review all information before submitting"
+        }
+      },
+      "choice": {
+        "heading": "What do you have with you today?",
+        "subheading": "Pick whichever fits — you can always do a full check later.",
+        "start_button": "Start screening →",
+        "options": {
+          "symptoms": {
+            "title": "Just my symptoms",
+            "tag": "No reports needed",
+            "desc": "I don't have any test reports — just answer questions about my body."
+          },
+          "blood": {
+            "title": "I have a blood test report",
+            "tag": "Have blood report",
+            "desc": "From a lab or hospital visit. I can enter the numbers from the report."
+          },
+          "ultrasound": {
+            "title": "I have an ultrasound scan",
+            "tag": "Have ultrasound",
+            "desc": "A pelvic or transvaginal scan from a clinic or hospital."
+          },
+          "both": {
+            "title": "Blood report + ultrasound scan",
+            "tag": "Most complete",
+            "desc": "I have both. This gives the most complete picture."
+          }
+        }
+      },
+      "header": {
+        "title": "🧬 PMOS Screening Wizard",
+        "subtitle": "Complete the sections for an accurate risk assessment",
+        "step_of": "Step {{current}} of {{total}}",
+        "percent_complete": "{{percent}}% Complete"
+      },
+      "nav": {
+        "back": "Back",
+        "next": "Next",
+        "next_step": "Next Step",
+        "skip": "Skip",
+        "skip_blood": "Skip (I don't have this)",
+        "analyzing": "Analyzing...",
+        "get_my_result": "Get My Result"
+      },
+      "symptoms": {
+        "title": "Clinical Symptoms",
+        "subtitle_do_you_have": "Do you have any of these?",
+        "subtitle_select_all": "Select all that apply.",
+        "hair_growth": "Extra hair on body or face",
+        "skin_darkening": "Dark Patches of Skin (neck, armpits)",
+        "pimples": "Acne or Skin Problems",
+        "weight_gain": "Unexplained Weight Gain",
+        "hair_loss": "Hair Thinning or loss from scalp",
+        "none_of_above": "None of the Above"
+      },
+      "lifestyle": {
+        "title": "Lifestyle",
+        "fast_food_question": "Do you eat fast food regularly?",
+        "exercise_question": "Do you exercise regularly?",
+        "stress_level": "Stress Level",
+        "sleep_hours_per_night": "Sleep Hours per Night",
+        "decrease_sleep_hours": "Decrease sleep hours",
+        "increase_sleep_hours": "Increase sleep hours"
+      },
+      "blood": {
+        "header_title": "Do you have recent blood test results (Optional)",
+        "header_subtitle": "improves prediction accuracy.",
+        "page_of": "Page {{page}} of 2",
+        "blood_group": "Blood Group",
+        "fsh_label": "FSH (mIU/mL)",
+        "fsh_helper": "Normal: 3–10 mIU/mL",
+        "lh_label": "LH (mIU/mL)",
+        "lh_helper": "Normal: 2–15 mIU/mL",
+        "lh_fsh_ratio_label": "LH : FSH Ratio",
+        "lh_fsh_ratio_helper": "Normal: 1.0 – 2.0",
+        "tsh_label": "TSH (mIU/L)",
+        "tsh_helper": "Normal: 0.4–4.0 mIU/L",
+        "amh_label": "AMH (ng/mL)",
+        "amh_helper": "Normal: 1.0–4.0 ng/mL",
+        "testosterone_label": "Testosterone (ng/dL)",
+        "testosterone_helper": "Normal: 15–70 ng/dL",
+        "shbg_label": "SHBG (nmol/L)",
+        "shbg_helper": "Normal: 18–144 nmol/L",
+        "prl_label": "PRL (ng/mL)",
+        "prl_helper": "Normal: 5–25 ng/mL",
+        "prg_label": "PRG (ng/mL)",
+        "prg_helper": "Normal: 0.2–25 ng/mL",
+        "vitamin_d3_label": "Vitamin D3 (ng/mL)",
+        "vitamin_d3_helper": "Normal: 30–100 ng/mL",
+        "haemoglobin_label": "Haemoglobin (g/dL)",
+        "haemoglobin_helper": "Normal: 12–16 g/dL",
+        "pulse_rate_label": "Pulse Rate (bpm)",
+        "pulse_rate_helper": "Normal: 60–100 bpm",
+        "respiratory_rate_label": "Respiratory Rate (RR) (breaths/min)",
+        "respiratory_rate_helper": "Normal: 12–20 breaths/min",
+        "bp_systolic_label": "Blood Pressure (Systolic)",
+        "bp_systolic_helper": "Normal: 90–120 mmHg",
+        "bp_diastolic_label": "Blood Pressure (Diastolic)",
+        "bp_diastolic_helper": "Normal: 60–80 mmHg",
+        "fasting_glucose_label": "Fasting Blood Glucose (mg/dL)",
+        "fasting_glucose_helper": "Normal: 70–99 mg/dL",
+        "fasting_insulin_label": "Fasting Insulin (µIU/mL)",
+        "fasting_insulin_helper": "Normal: 2–25 µIU/mL",
+        "rbs_label": "RBS (Random Blood Sugar) (mg/dL)",
+        "rbs_helper": "Normal: 70–140 mg/dL",
+        "insulin_resistance_label": "Insulin Resistance",
+        "view_more": "View More ›",
+        "previous_blood_tests": "‹ Previous Blood Tests"
+      },
+      "ultrasound": {
+        "header_title": "Do you have an ultrasound report?",
+        "follicle_left_label": "Follicle No. (L)",
+        "follicle_left_placeholder": "Enter left follicle count",
+        "follicle_left_helper": "Number of follicles in the left ovary",
+        "follicle_right_label": "Follicle No. (R)",
+        "follicle_right_placeholder": "Enter right follicle count",
+        "follicle_right_helper": "Number of follicles in the right ovary",
+        "avg_size_left_label": "Avg. F size (L) (mm)",
+        "avg_size_left_placeholder": "Enter average left follicle size",
+        "avg_size_left_helper": "Average follicle size in the left ovary",
+        "avg_size_right_label": "Avg. F size (R) (mm)",
+        "avg_size_right_placeholder": "Enter average right follicle size",
+        "avg_size_right_helper": "Average follicle size in the right ovary",
+        "endometrium_label": "Endometrium (mm)",
+        "endometrium_placeholder": "Enter endometrium thickness",
+        "endometrium_helper": "Thickness of the endometrium (uterine lining)"
+      },
+      "review": {
+        "title": "Review Your Information",
+        "sections": {
+          "personal_info": "👤 Personal Info",
+          "menstrual_history": "🩸 Menstrual History",
+          "clinical_symptoms": "🔬 Clinical Symptoms",
+          "lifestyle": "🏃 Lifestyle"
+        },
+        "age_yrs": "Age: {{value}} yrs",
+        "weight_kg": "Weight: {{value}} kg",
+        "height_cm": "Height: {{value}} cm",
+        "bmi": "BMI: {{value}}",
+        "waist_in": "Waist: {{value}}\"",
+        "hip_in": "Hip: {{value}}\"",
+        "whr": "WHR: {{value}}",
+        "cycle_length_days": "Cycle Length: {{value}} days",
+        "regularity": "Regularity: {{value}}",
+        "duration_days": "Duration: {{value}} days",
+        "flow": "Flow: {{value}}",
+        "family_history": "Family History: {{value}}",
+        "fast_food": "Fast Food: {{value}}",
+        "exercise": "Exercise: {{value}}",
+        "stress": "Stress: {{value}}",
+        "sleep_hrs": "Sleep: {{value}} hrs",
+        "not_available": "N/A",
+        "none_reported": "None reported"
+      },
+      "validation": {
+        "cycle_length_range": "Average Cycle Length must be between 15 and 90 days.",
+        "period_duration_range": "Period Duration must be between 1 and 15 days.",
+        "at_least_one_symptom": "Please select at least one symptom or \"None of the Above\".",
+        "sleep_hours_range": "Sleep hours must be between 3 and 12 hours.",
+        "must_be_positive": "{{field}} must be a positive number.",
+        "blood_skipped": "Blood report page skipped.",
+        "ultrasound_skipped": "Ultrasound scan page skipped.",
+        "prediction_success": "Prediction completed!",
+        "prediction_failed": "Prediction failed. Please try again."
+      },
+      "menstrual": {
+        "title": "Menstrual History",
+        "regularity_question": "How regular are your periods?",
+        "duration_question": "How long does your period last?",
+        "days_label": "Days",
+        "avg_cycle_length_title": "Average Cycle Length",
+        "days_unit": "days",
+        "flow_intensity_title": "Flow Intensity",
+        "intensity_label": "Intensity",
+        "regularity_options": {
+          "regular": {
+            "title": "Regular",
+            "description": "Comes every 21–35 days"
+          },
+          "irregular": {
+            "title": "Irregular",
+            "description": "Unpredictable — sometimes early, sometimes late"
+          },
+          "absent": {
+            "title": "Often absent",
+            "description": "Skipped for months at a time"
+          }
+        }
+      },
+      "personal": {
+        "how_old_are_you": "How old are you?",
+        "years_unit": "Years",
+        "family_history_title": "Family History of PMOS",
+        "family_history_subtitle": "Mother / Aunt / Sister / Cousin / Grandmother",
+        "measurements_title": "Personal Health Measurements",
+        "weight_label": "Weight",
+        "height_label": "Height",
+        "bmi_label": "BMI",
+        "body_mass_index": "Body Mass Index",
+        "waist_label": "Waist",
+        "hip_label": "Hip",
+        "whr_label": "WHR",
+        "ratio_label": "Ratio",
+        "bmi_status": {
+          "underweight": "Underweight",
+          "normal": "Normal",
+          "overweight_obese": "Overweight / Obese",
+          "enter_weight_height": "Enter weight & height",
+          "underweight_range": "≤ 18.4",
+          "normal_range": "18.5 – 24.9",
+          "overweight_range": "≥ 25.0"
+        },
+        "whr_status": {
+          "low": "Low",
+          "moderate": "Moderate",
+          "high": "High",
+          "enter_waist_hip": "Enter waist & hip",
+          "low_desc": "< 0.80 Low Risk",
+          "moderate_desc": "0.80 – 0.84 Moderate Risk",
+          "high_desc": "≥ 0.85 High Risk"
+        }
+      }
+    }
+  },
+  "hi": {
+    "prediction": {
+      "steps": {
+        "personal": {
+          "label": "व्यक्तिगत जानकारी",
+          "description": "आयु, माप और पारिवारिक इतिहास"
+        },
+        "menstrual": {
+          "label": "मासिक धर्म इतिहास",
+          "description": "चक्र, नियमितता और प्रवाह तीव्रता"
+        },
+        "symptoms": {
+          "label": "नैदानिक लक्षण",
+          "description": "शारीरिक लक्षण और संकेत"
+        },
+        "lifestyle": {
+          "label": "जीवनशैली",
+          "description": "आहार, व्यायाम और तनाव स्तर"
+        },
+        "blood_report": {
+          "label": "रक्त परीक्षण परिणाम",
+          "description": "ब्लड ग्रुप, FSH, LH, TSH, AMH, Hb और RBS"
+        },
+        "ultrasound_scan": {
+          "label": "अल्ट्रासाउंड स्कैन",
+          "description": "फॉलिकल्स, आकार, आयतन और एंडोमेट्रियम"
+        },
+        "review": {
+          "label": "समीक्षा और सबमिट करें",
+          "description": "सबमिट करने से पहले सभी जानकारी की समीक्षा करें"
+        }
+      },
+      "choice": {
+        "heading": "आज आपके पास क्या है?",
+        "subheading": "जो भी उपयुक्त हो उसे चुनें — पूरी जांच बाद में भी कर सकती हैं।",
+        "start_button": "स्क्रीनिंग शुरू करें →",
+        "options": {
+          "symptoms": {
+            "title": "सिर्फ मेरे लक्षण",
+            "tag": "किसी रिपोर्ट की आवश्यकता नहीं",
+            "desc": "मेरे पास कोई टेस्ट रिपोर्ट नहीं है — बस मेरे शरीर के बारे में सवालों के जवाब दें।"
+          },
+          "blood": {
+            "title": "मेरे पास रक्त परीक्षण रिपोर्ट है",
+            "tag": "रक्त रिपोर्ट है",
+            "desc": "किसी लैब या अस्पताल से। मैं रिपोर्ट से संख्याएं दर्ज कर सकती हूं।"
+          },
+          "ultrasound": {
+            "title": "मेरे पास अल्ट्रासाउंड स्कैन है",
+            "tag": "अल्ट्रासाउंड है",
+            "desc": "क्लिनिक या अस्पताल से पेल्विक या ट्रांसवेजाइनल स्कैन।"
+          },
+          "both": {
+            "title": "रक्त रिपोर्ट + अल्ट्रासाउंड स्कैन",
+            "tag": "सबसे संपूर्ण",
+            "desc": "मेरे पास दोनों हैं। यह सबसे संपूर्ण जानकारी देता है।"
+          }
+        }
+      },
+      "header": {
+        "title": "🧬 PMOS स्क्रीनिंग विज़ार्ड",
+        "subtitle": "सटीक जोखिम मूल्यांकन के लिए सभी अनुभाग पूरे करें",
+        "step_of": "चरण {{current}} / {{total}}",
+        "percent_complete": "{{percent}}% पूर्ण"
+      },
+      "nav": {
+        "back": "पीछे",
+        "next": "आगे",
+        "next_step": "अगला चरण",
+        "skip": "छोड़ें",
+        "skip_blood": "छोड़ें (मेरे पास यह नहीं है)",
+        "analyzing": "विश्लेषण हो रहा है...",
+        "get_my_result": "मेरा परिणाम प्राप्त करें"
+      },
+      "symptoms": {
+        "title": "नैदानिक लक्षण",
+        "subtitle_do_you_have": "क्या आपमें इनमें से कोई है?",
+        "subtitle_select_all": "जो भी लागू हो उसे चुनें।",
+        "hair_growth": "शरीर या चेहरे पर अतिरिक्त बाल",
+        "skin_darkening": "त्वचा के काले धब्बे (गर्दन, बगल)",
+        "pimples": "मुंहासे या त्वचा की समस्याएं",
+        "weight_gain": "अस्पष्टीकृत वजन बढ़ना",
+        "hair_loss": "सिर से बालों का पतला होना या झड़ना",
+        "none_of_above": "इनमें से कोई नहीं"
+      },
+      "lifestyle": {
+        "title": "जीवनशैली",
+        "fast_food_question": "क्या आप नियमित रूप से फास्ट फूड खाते हैं?",
+        "exercise_question": "क्या आप नियमित रूप से व्यायाम करते हैं?",
+        "stress_level": "तनाव का स्तर",
+        "sleep_hours_per_night": "रात की नींद के घंटे",
+        "decrease_sleep_hours": "नींद के घंटे घटाएं",
+        "increase_sleep_hours": "नींद के घंटे बढ़ाएं"
+      },
+      "blood": {
+        "header_title": "क्या आपके पास हाल के रक्त परीक्षण परिणाम हैं (ऐच्छिक)",
+        "header_subtitle": "इससे भविष्यवाणी की सटीकता बढ़ती है।",
+        "page_of": "पृष्ठ {{page}} / 2",
+        "blood_group": "ब्लड ग्रुप",
+        "fsh_label": "FSH (mIU/mL)",
+        "fsh_helper": "सामान्य: 3–10 mIU/mL",
+        "lh_label": "LH (mIU/mL)",
+        "lh_helper": "सामान्य: 2–15 mIU/mL",
+        "lh_fsh_ratio_label": "LH : FSH अनुपात",
+        "lh_fsh_ratio_helper": "सामान्य: 1.0 – 2.0",
+        "tsh_label": "TSH (mIU/L)",
+        "tsh_helper": "सामान्य: 0.4–4.0 mIU/L",
+        "amh_label": "AMH (ng/mL)",
+        "amh_helper": "सामान्य: 1.0–4.0 ng/mL",
+        "testosterone_label": "टेस्टोस्टेरोन (ng/dL)",
+        "testosterone_helper": "सामान्य: 15–70 ng/dL",
+        "shbg_label": "SHBG (nmol/L)",
+        "shbg_helper": "सामान्य: 18–144 nmol/L",
+        "prl_label": "PRL (ng/mL)",
+        "prl_helper": "सामान्य: 5–25 ng/mL",
+        "prg_label": "PRG (ng/mL)",
+        "prg_helper": "सामान्य: 0.2–25 ng/mL",
+        "vitamin_d3_label": "विटामिन D3 (ng/mL)",
+        "vitamin_d3_helper": "सामान्य: 30–100 ng/mL",
+        "haemoglobin_label": "हीमोग्लोबिन (g/dL)",
+        "haemoglobin_helper": "सामान्य: 12–16 g/dL",
+        "pulse_rate_label": "नाड़ी दर (bpm)",
+        "pulse_rate_helper": "सामान्य: 60–100 bpm",
+        "respiratory_rate_label": "श्वसन दर (RR) (सांस/मिनट)",
+        "respiratory_rate_helper": "सामान्य: 12–20 सांस/मिनट",
+        "bp_systolic_label": "रक्तचाप (सिस्टोलिक)",
+        "bp_systolic_helper": "सामान्य: 90–120 mmHg",
+        "bp_diastolic_label": "रक्तचाप (डायस्टोलिक)",
+        "bp_diastolic_helper": "सामान्य: 60–80 mmHg",
+        "fasting_glucose_label": "फास्टिंग ब्लड ग्लूकोज (mg/dL)",
+        "fasting_glucose_helper": "सामान्य: 70–99 mg/dL",
+        "fasting_insulin_label": "फास्टिंग इंसुलिन (µIU/mL)",
+        "fasting_insulin_helper": "सामान्य: 2–25 µIU/mL",
+        "rbs_label": "RBS (रैंडम ब्लड शुगर) (mg/dL)",
+        "rbs_helper": "सामान्य: 70–140 mg/dL",
+        "insulin_resistance_label": "इंसुलिन प्रतिरोध",
+        "view_more": "और देखें ›",
+        "previous_blood_tests": "‹ पिछले रक्त परीक्षण"
+      },
+      "ultrasound": {
+        "header_title": "क्या आपके पास अल्ट्रासाउंड रिपोर्ट है?",
+        "follicle_left_label": "फॉलिकल संख्या (बायां)",
+        "follicle_left_placeholder": "बायां फॉलिकल संख्या दर्ज करें",
+        "follicle_left_helper": "बाएं अंडाशय में फॉलिकल्स की संख्या",
+        "follicle_right_label": "फॉलिकल संख्या (दायां)",
+        "follicle_right_placeholder": "दायां फॉलिकल संख्या दर्ज करें",
+        "follicle_right_helper": "दाएं अंडाशय में फॉलिकल्स की संख्या",
+        "avg_size_left_label": "औसत फॉलिकल आकार (बायां) (mm)",
+        "avg_size_left_placeholder": "औसत बायां फॉलिकल आकार दर्ज करें",
+        "avg_size_left_helper": "बाएं अंडाशय में औसत फॉलिकल आकार",
+        "avg_size_right_label": "औसत फॉलिकल आकार (दायां) (mm)",
+        "avg_size_right_placeholder": "औसत दायां फॉलिकल आकार दर्ज करें",
+        "avg_size_right_helper": "दाएं अंडाशय में औसत फॉलिकल आकार",
+        "endometrium_label": "एंडोमेट्रियम (mm)",
+        "endometrium_placeholder": "एंडोमेट्रियम की मोटाई दर्ज करें",
+        "endometrium_helper": "एंडोमेट्रियम (गर्भाशय की परत) की मोटाई"
+      },
+      "review": {
+        "title": "अपनी जानकारी की समीक्षा करें",
+        "sections": {
+          "personal_info": "👤 व्यक्तिगत जानकारी",
+          "menstrual_history": "🩸 मासिक धर्म इतिहास",
+          "clinical_symptoms": "🔬 नैदानिक लक्षण",
+          "lifestyle": "🏃 जीवनशैली"
+        },
+        "age_yrs": "आयु: {{value}} वर्ष",
+        "weight_kg": "वजन: {{value}} किग्रा",
+        "height_cm": "ऊंचाई: {{value}} सेमी",
+        "bmi": "बीएमआई: {{value}}",
+        "waist_in": "कमर: {{value}}\"",
+        "hip_in": "कूल्हा: {{value}}\"",
+        "whr": "WHR: {{value}}",
+        "cycle_length_days": "चक्र अवधि: {{value}} दिन",
+        "regularity": "नियमितता: {{value}}",
+        "duration_days": "अवधि: {{value}} दिन",
+        "flow": "प्रवाह: {{value}}",
+        "family_history": "पारिवारिक इतिहास: {{value}}",
+        "fast_food": "फास्ट फूड: {{value}}",
+        "exercise": "व्यायाम: {{value}}",
+        "stress": "तनाव: {{value}}",
+        "sleep_hrs": "नींद: {{value}} घंटे",
+        "not_available": "लागू नहीं",
+        "none_reported": "कुछ भी रिपोर्ट नहीं किया गया"
+      },
+      "validation": {
+        "cycle_length_range": "औसत चक्र अवधि 15 से 90 दिनों के बीच होनी चाहिए।",
+        "period_duration_range": "पीरियड की अवधि 1 से 15 दिनों के बीच होनी चाहिए।",
+        "at_least_one_symptom": "कृपया कम से कम एक लक्षण या \"इनमें से कोई नहीं\" चुनें।",
+        "sleep_hours_range": "नींद के घंटे 3 से 12 घंटों के बीच होने चाहिए।",
+        "must_be_positive": "{{field}} एक धनात्मक संख्या होनी चाहिए।",
+        "blood_skipped": "रक्त रिपोर्ट पृष्ठ छोड़ दिया गया।",
+        "ultrasound_skipped": "अल्ट्रासाउंड स्कैन पृष्ठ छोड़ दिया गया।",
+        "prediction_success": "भविष्यवाणी पूर्ण हुई!",
+        "prediction_failed": "भविष्यवाणी विफल रही। कृपया पुन: प्रयास करें।"
+      },
+      "menstrual": {
+        "title": "मासिक धर्म इतिहास",
+        "regularity_question": "आपके पीरियड कितने नियमित हैं?",
+        "duration_question": "आपका पीरियड कितने दिन चलता है?",
+        "days_label": "दिन",
+        "avg_cycle_length_title": "औसत चक्र अवधि",
+        "days_unit": "दिन",
+        "flow_intensity_title": "प्रवाह तीव्रता",
+        "intensity_label": "तीव्रता",
+        "regularity_options": {
+          "regular": {
+            "title": "नियमित",
+            "description": "हर 21–35 दिनों में आता है"
+          },
+          "irregular": {
+            "title": "अनियमित",
+            "description": "अप्रत्याशित — कभी जल्दी, कभी देर से"
+          },
+          "absent": {
+            "title": "अक्सर अनुपस्थित",
+            "description": "महीनों तक छूट जाता है"
+          }
+        }
+      },
+      "personal": {
+        "how_old_are_you": "आपकी आयु क्या है?",
+        "years_unit": "वर्ष",
+        "family_history_title": "PMOS का पारिवारिक इतिहास",
+        "family_history_subtitle": "माँ / चाची / बहन / चचेरी बहन / दादी",
+        "measurements_title": "व्यक्तिगत स्वास्थ्य माप",
+        "weight_label": "वजन",
+        "height_label": "ऊंचाई",
+        "bmi_label": "बीएमआई",
+        "body_mass_index": "बॉडी मास इंडेक्स",
+        "waist_label": "कमर",
+        "hip_label": "कूल्हा",
+        "whr_label": "WHR",
+        "ratio_label": "अनुपात",
+        "bmi_status": {
+          "underweight": "कम वजन",
+          "normal": "सामान्य",
+          "overweight_obese": "अधिक वजन / मोटापा",
+          "enter_weight_height": "वजन और ऊंचाई दर्ज करें",
+          "underweight_range": "≤ 18.4",
+          "normal_range": "18.5 – 24.9",
+          "overweight_range": "≥ 25.0"
+        },
+        "whr_status": {
+          "low": "कम",
+          "moderate": "मध्यम",
+          "high": "अधिक",
+          "enter_waist_hip": "कमर और कूल्हे का माप दर्ज करें",
+          "low_desc": "< 0.80 कम जोखिम",
+          "moderate_desc": "0.80 – 0.84 मध्यम जोखिम",
+          "high_desc": "≥ 0.85 उच्च जोखिम"
+        }
+      }
+    }
+  },
+  "mr": {
+    "prediction": {
+      "steps": {
+        "personal": {
+          "label": "वैयक्तिक माहिती",
+          "description": "वय, मापे आणि कौटुंबिक इतिहास"
+        },
+        "menstrual": {
+          "label": "मासिक पाळीचा इतिहास",
+          "description": "चक्र, नियमितता आणि प्रवाहाची तीव्रता"
+        },
+        "symptoms": {
+          "label": "वैद्यकीय लक्षणे",
+          "description": "शारीरिक लक्षणे आणि चिन्हे"
+        },
+        "lifestyle": {
+          "label": "जीवनशैली",
+          "description": "आहार, व्यायाम आणि ताण पातळी"
+        },
+        "blood_report": {
+          "label": "रक्त तपासणी निकाल",
+          "description": "ब्लड ग्रुप, FSH, LH, TSH, AMH, Hb आणि RBS"
+        },
+        "ultrasound_scan": {
+          "label": "अल्ट्रासाऊंड स्कॅन",
+          "description": "फॉलिकल्स, आकार, आकारमान आणि एंडोमेट्रियम"
+        },
+        "review": {
+          "label": "पुनरावलोकन आणि सबमिट करा",
+          "description": "सबमिट करण्यापूर्वी सर्व माहितीचे पुनरावलोकन करा"
+        }
+      },
+      "choice": {
+        "heading": "आज तुमच्याकडे काय आहे?",
+        "subheading": "जे लागू असेल ते निवडा — संपूर्ण तपासणी नंतरही करू शकता.",
+        "start_button": "स्क्रीनिंग सुरू करा →",
+        "options": {
+          "symptoms": {
+            "title": "फक्त माझी लक्षणे",
+            "tag": "अहवालाची गरज नाही",
+            "desc": "माझ्याकडे कोणताही चाचणी अहवाल नाही — फक्त माझ्या शरीराबद्दलच्या प्रश्नांची उत्तरे द्या."
+          },
+          "blood": {
+            "title": "माझ्याकडे रक्त तपासणी अहवाल आहे",
+            "tag": "रक्त अहवाल आहे",
+            "desc": "लॅब किंवा रुग्णालयातून. मी अहवालातील आकडे प्रविष्ट करू शकते."
+          },
+          "ultrasound": {
+            "title": "माझ्याकडे अल्ट्रासाऊंड स्कॅन आहे",
+            "tag": "अल्ट्रासाऊंड आहे",
+            "desc": "क्लिनिक किंवा रुग्णालयातील पेल्विक किंवा ट्रान्सव्हजायनल स्कॅन."
+          },
+          "both": {
+            "title": "रक्त अहवाल + अल्ट्रासाऊंड स्कॅन",
+            "tag": "सर्वात संपूर्ण",
+            "desc": "माझ्याकडे दोन्ही आहेत. यामुळे सर्वात संपूर्ण चित्र मिळते."
+          }
+        }
+      },
+      "header": {
+        "title": "🧬 PMOS स्क्रीनिंग विझार्ड",
+        "subtitle": "अचूक जोखीम मूल्यमापनासाठी सर्व विभाग पूर्ण करा",
+        "step_of": "पायरी {{current}} / {{total}}",
+        "percent_complete": "{{percent}}% पूर्ण"
+      },
+      "nav": {
+        "back": "मागे",
+        "next": "पुढे",
+        "next_step": "पुढील पायरी",
+        "skip": "वगळा",
+        "skip_blood": "वगळा (माझ्याकडे हे नाही)",
+        "analyzing": "विश्लेषण सुरू आहे...",
+        "get_my_result": "माझा निकाल मिळवा"
+      },
+      "symptoms": {
+        "title": "वैद्यकीय लक्षणे",
+        "subtitle_do_you_have": "यापैकी तुम्हाला काही आहे का?",
+        "subtitle_select_all": "लागू असलेले सर्व निवडा.",
+        "hair_growth": "शरीरावर किंवा चेहऱ्यावर जास्त केस",
+        "skin_darkening": "त्वचेवर काळे डाग (मान, काखेत)",
+        "pimples": "मुरुम किंवा त्वचेच्या समस्या",
+        "weight_gain": "अनाकलनीय वजन वाढ",
+        "hair_loss": "टाळूवरील केस पातळ होणे किंवा गळणे",
+        "none_of_above": "वरीलपैकी काहीही नाही"
+      },
+      "lifestyle": {
+        "title": "जीवनशैली",
+        "fast_food_question": "तुम्ही नियमितपणे फास्ट फूड खाता का?",
+        "exercise_question": "तुम्ही नियमितपणे व्यायाम करता का?",
+        "stress_level": "ताणाची पातळी",
+        "sleep_hours_per_night": "रात्रीच्या झोपेचे तास",
+        "decrease_sleep_hours": "झोपेचे तास कमी करा",
+        "increase_sleep_hours": "झोपेचे तास वाढवा"
+      },
+      "blood": {
+        "header_title": "तुमच्याकडे अलीकडील रक्त तपासणी निकाल आहेत का (ऐच्छिक)",
+        "header_subtitle": "यामुळे अंदाजाची अचूकता वाढते.",
+        "page_of": "पृष्ठ {{page}} / 2",
+        "blood_group": "ब्लड ग्रुप",
+        "fsh_label": "FSH (mIU/mL)",
+        "fsh_helper": "सर्वसाधारण: 3–10 mIU/mL",
+        "lh_label": "LH (mIU/mL)",
+        "lh_helper": "सर्वसाधारण: 2–15 mIU/mL",
+        "lh_fsh_ratio_label": "LH : FSH प्रमाण",
+        "lh_fsh_ratio_helper": "सर्वसाधारण: 1.0 – 2.0",
+        "tsh_label": "TSH (mIU/L)",
+        "tsh_helper": "सर्वसाधारण: 0.4–4.0 mIU/L",
+        "amh_label": "AMH (ng/mL)",
+        "amh_helper": "सर्वसाधारण: 1.0–4.0 ng/mL",
+        "testosterone_label": "टेस्टोस्टेरॉन (ng/dL)",
+        "testosterone_helper": "सर्वसाधारण: 15–70 ng/dL",
+        "shbg_label": "SHBG (nmol/L)",
+        "shbg_helper": "सर्वसाधारण: 18–144 nmol/L",
+        "prl_label": "PRL (ng/mL)",
+        "prl_helper": "सर्वसाधारण: 5–25 ng/mL",
+        "prg_label": "PRG (ng/mL)",
+        "prg_helper": "सर्वसाधारण: 0.2–25 ng/mL",
+        "vitamin_d3_label": "व्हिटॅमिन D3 (ng/mL)",
+        "vitamin_d3_helper": "सर्वसाधारण: 30–100 ng/mL",
+        "haemoglobin_label": "हिमोग्लोबिन (g/dL)",
+        "haemoglobin_helper": "सर्वसाधारण: 12–16 g/dL",
+        "pulse_rate_label": "नाडीचा वेग (bpm)",
+        "pulse_rate_helper": "सर्वसाधारण: 60–100 bpm",
+        "respiratory_rate_label": "श्वसन दर (RR) (श्वास/मिनिट)",
+        "respiratory_rate_helper": "सर्वसाधारण: 12–20 श्वास/मिनिट",
+        "bp_systolic_label": "रक्तदाब (सिस्टोलिक)",
+        "bp_systolic_helper": "सर्वसाधारण: 90–120 mmHg",
+        "bp_diastolic_label": "रक्तदाब (डायस्टोलिक)",
+        "bp_diastolic_helper": "सर्वसाधारण: 60–80 mmHg",
+        "fasting_glucose_label": "उपाशीपोटी रक्तशर्करा (mg/dL)",
+        "fasting_glucose_helper": "सर्वसाधारण: 70–99 mg/dL",
+        "fasting_insulin_label": "उपाशीपोटी इन्सुलिन (µIU/mL)",
+        "fasting_insulin_helper": "सर्वसाधारण: 2–25 µIU/mL",
+        "rbs_label": "RBS (रँडम ब्लड शुगर) (mg/dL)",
+        "rbs_helper": "सर्वसाधारण: 70–140 mg/dL",
+        "insulin_resistance_label": "इन्सुलिन प्रतिरोध",
+        "view_more": "अधिक पहा ›",
+        "previous_blood_tests": "‹ मागील रक्त तपासण्या"
+      },
+      "ultrasound": {
+        "header_title": "तुमच्याकडे अल्ट्रासाऊंड अहवाल आहे का?",
+        "follicle_left_label": "फॉलिकल संख्या (डावी)",
+        "follicle_left_placeholder": "डावी फॉलिकल संख्या प्रविष्ट करा",
+        "follicle_left_helper": "डाव्या अंडाशयातील फॉलिकल्सची संख्या",
+        "follicle_right_label": "फॉलिकल संख्या (उजवी)",
+        "follicle_right_placeholder": "उजवी फॉलिकल संख्या प्रविष्ट करा",
+        "follicle_right_helper": "उजव्या अंडाशयातील फॉलिकल्सची संख्या",
+        "avg_size_left_label": "सरासरी फॉलिकल आकार (डावी) (mm)",
+        "avg_size_left_placeholder": "सरासरी डावा फॉलिकल आकार प्रविष्ट करा",
+        "avg_size_left_helper": "डाव्या अंडाशयातील सरासरी फॉलिकल आकार",
+        "avg_size_right_label": "सरासरी फॉलिकल आकार (उजवी) (mm)",
+        "avg_size_right_placeholder": "सरासरी उजवा फॉलिकल आकार प्रविष्ट करा",
+        "avg_size_right_helper": "उजव्या अंडाशयातील सरासरी फॉलिकल आकार",
+        "endometrium_label": "एंडोमेट्रियम (mm)",
+        "endometrium_placeholder": "एंडोमेट्रियमची जाडी प्रविष्ट करा",
+        "endometrium_helper": "एंडोमेट्रियम (गर्भाशयाच्या आतील थर) ची जाडी"
+      },
+      "review": {
+        "title": "तुमच्या माहितीचे पुनरावलोकन करा",
+        "sections": {
+          "personal_info": "👤 वैयक्तिक माहिती",
+          "menstrual_history": "🩸 मासिक पाळीचा इतिहास",
+          "clinical_symptoms": "🔬 वैद्यकीय लक्षणे",
+          "lifestyle": "🏃 जीवनशैली"
+        },
+        "age_yrs": "वय: {{value}} वर्षे",
+        "weight_kg": "वजन: {{value}} किग्रॅ",
+        "height_cm": "उंची: {{value}} सेमी",
+        "bmi": "बीएमआय: {{value}}",
+        "waist_in": "कंबर: {{value}}\"",
+        "hip_in": "नितंब: {{value}}\"",
+        "whr": "WHR: {{value}}",
+        "cycle_length_days": "चक्र कालावधी: {{value}} दिवस",
+        "regularity": "नियमितता: {{value}}",
+        "duration_days": "कालावधी: {{value}} दिवस",
+        "flow": "प्रवाह: {{value}}",
+        "family_history": "कौटुंबिक इतिहास: {{value}}",
+        "fast_food": "फास्ट फूड: {{value}}",
+        "exercise": "व्यायाम: {{value}}",
+        "stress": "ताण: {{value}}",
+        "sleep_hrs": "झोप: {{value}} तास",
+        "not_available": "लागू नाही",
+        "none_reported": "काहीही नोंदवले नाही"
+      },
+      "validation": {
+        "cycle_length_range": "सरासरी चक्र कालावधी 15 ते 90 दिवसांच्या दरम्यान असावा.",
+        "period_duration_range": "मासिक पाळीचा कालावधी 1 ते 15 दिवसांच्या दरम्यान असावा.",
+        "at_least_one_symptom": "कृपया किमान एक लक्षण किंवा \"वरीलपैकी काहीही नाही\" निवडा.",
+        "sleep_hours_range": "झोपेचे तास 3 ते 12 तासांच्या दरम्यान असावेत.",
+        "must_be_positive": "{{field}} ही धन संख्या असावी.",
+        "blood_skipped": "रक्त अहवाल पृष्ठ वगळले.",
+        "ultrasound_skipped": "अल्ट्रासाऊंड स्कॅन पृष्ठ वगळले.",
+        "prediction_success": "अंदाज पूर्ण झाला!",
+        "prediction_failed": "अंदाज अयशस्वी झाला. कृपया पुन्हा प्रयत्न करा."
+      },
+      "menstrual": {
+        "title": "मासिक पाळीचा इतिहास",
+        "regularity_question": "तुमची पाळी किती नियमित आहे?",
+        "duration_question": "तुमची पाळी किती दिवस असते?",
+        "days_label": "दिवस",
+        "avg_cycle_length_title": "सरासरी चक्र कालावधी",
+        "days_unit": "दिवस",
+        "flow_intensity_title": "प्रवाहाची तीव्रता",
+        "intensity_label": "तीव्रता",
+        "regularity_options": {
+          "regular": {
+            "title": "नियमित",
+            "description": "दर 21–35 दिवसांनी येते"
+          },
+          "irregular": {
+            "title": "अनियमित",
+            "description": "अनिश्चित — कधी लवकर, कधी उशिरा"
+          },
+          "absent": {
+            "title": "बरेचदा येत नाही",
+            "description": "महिन्यांपर्यंत चुकते"
+          }
+        }
+      },
+      "personal": {
+        "how_old_are_you": "तुमचे वय किती आहे?",
+        "years_unit": "वर्षे",
+        "family_history_title": "PMOS चा कौटुंबिक इतिहास",
+        "family_history_subtitle": "आई / काकू / बहीण / चुलत बहीण / आजी",
+        "measurements_title": "वैयक्तिक आरोग्य मापे",
+        "weight_label": "वजन",
+        "height_label": "उंची",
+        "bmi_label": "बीएमआय",
+        "body_mass_index": "बॉडी मास इंडेक्स",
+        "waist_label": "कंबर",
+        "hip_label": "नितंब",
+        "whr_label": "WHR",
+        "ratio_label": "प्रमाण",
+        "bmi_status": {
+          "underweight": "कमी वजन",
+          "normal": "सर्वसाधारण",
+          "overweight_obese": "जास्त वजन / लठ्ठपणा",
+          "enter_weight_height": "वजन आणि उंची प्रविष्ट करा",
+          "underweight_range": "≤ 18.4",
+          "normal_range": "18.5 – 24.9",
+          "overweight_range": "≥ 25.0"
+        },
+        "whr_status": {
+          "low": "कमी",
+          "moderate": "मध्यम",
+          "high": "जास्त",
+          "enter_waist_hip": "कंबर आणि नितंबाचे माप प्रविष्ट करा",
+          "low_desc": "< 0.80 कमी जोखीम",
+          "moderate_desc": "0.80 – 0.84 मध्यम जोखीम",
+          "high_desc": "≥ 0.85 जास्त जोखीम"
+        }
+      }
+    }
+  }
+}

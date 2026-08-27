@@ -1,0 +1,1019 @@
+{
+  "en": {
+    "dashboard": {
+      "greeting": {
+        "morning": "Good morning",
+        "afternoon": "Good afternoon",
+        "evening": "Good evening",
+        "guest": "there"
+      },
+      "welcome": {
+        "subtitle": "Welcome back to <1>{{appName}}</1>. Your health journey starts with awareness and early detection.",
+        "cta": "New Screening",
+        "ctaAriaLabel": "Start new PMOS screening"
+      },
+      "footerBanner": {
+        "title": "Your Health, Your Story",
+        "subtitle": "Every screening brings you closer to understanding your body. Take the next step in your health journey today.",
+        "cta": "Start Screening",
+        "ctaAriaLabel": "Start new PMOS screening assessment"
+      },
+      "hero": {
+        "prevSlide": "Previous slide",
+        "nextSlide": "Next slide",
+        "goToSlide": "Go to slide {{number}}",
+        "slides": {
+          "earlyDetection": {
+            "title": "Early Detection Saves Lives",
+            "subtitle": "Detect PMOS early using AI-powered health screening and understand your body better.",
+            "cta": "Start Assessment",
+            "tags": [
+              "AI-Powered",
+              "Early Detection",
+              "Free"
+            ]
+          },
+          "betterHealthcare": {
+            "title": "Every Woman Deserves Better Healthcare",
+            "subtitle": "Monitor symptoms, understand your risks, and stay informed with personalized health insights.",
+            "cta": "Learn More",
+            "tags": [
+              "Personal",
+              "Insights",
+              "Wellness"
+            ]
+          },
+          "healthyLifestyle": {
+            "title": "Healthy Lifestyle Matters",
+            "subtitle": "Balanced diet, regular exercise, quality sleep, and stress management — your health pillars.",
+            "cta": "Health Tips",
+            "tags": [
+              "Diet",
+              "Exercise",
+              "Sleep",
+              "Stress"
+            ]
+          },
+          "aiPrediction": {
+            "title": "AI-Assisted Prediction",
+            "subtitle": "Advanced machine learning helping women understand their health risks and take action early.",
+            "cta": "View Features",
+            "tags": [
+              "Machine Learning",
+              "Prediction",
+              "Accurate"
+            ]
+          },
+          "learnAboutPmos": {
+            "title": "Learn About PMOS",
+            "subtitle": "Understand symptoms, causes, treatments, and lifestyle strategies for managing PMOS effectively.",
+            "cta": "Read Articles",
+            "tags": [
+              "Symptoms",
+              "Causes",
+              "Treatment",
+              "Lifestyle"
+            ]
+          }
+        }
+      },
+      "quickActions": {
+        "heading": "Quick Actions",
+        "subtitle": "Jump right into what you need",
+        "soonBadge": "SOON",
+        "actions": {
+          "startAssessment": {
+            "title": "Start Assessment",
+            "subtitle": "Begin your PMOS screening"
+          },
+          "predictionHistory": {
+            "title": "Prediction History",
+            "subtitle": "View all past results"
+          },
+          "healthLibrary": {
+            "title": "Health Library",
+            "subtitle": "PMOS education & articles"
+          },
+          "myProfile": {
+            "title": "My Profile",
+            "subtitle": "Manage your account"
+          },
+          "reports": {
+            "title": "Reports",
+            "subtitle": "Detailed health analytics"
+          },
+          "settings": {
+            "title": "Settings",
+            "subtitle": "App preferences"
+          }
+        }
+      },
+      "recentPredictions": {
+        "heading": "Recent Predictions",
+        "subtitleCount": "{{count}} total health screenings completed",
+        "subtitleEmpty": "Your prediction history will appear here",
+        "emptyTitle": "No predictions yet",
+        "emptyText": "Start your first PMOS screening to begin tracking your health journey.",
+        "emptyCta": "Start First Screening",
+        "probabilityLabel": "{{value}}% probability",
+        "confidenceLabel": "Confidence: {{value}}%",
+        "status": {
+          "unknown": "Unknown",
+          "high_risk": "High Risk",
+          "low_risk": "Low Risk"
+        }
+      },
+      "healthSummary": {
+        "heading": "Health Summary",
+        "subtitle": "Your latest health metrics at a glance",
+        "cards": {
+          "totalScreenings": {
+            "title": "Total Screenings",
+            "subtitle": "All time health assessments"
+          },
+          "lastAssessment": {
+            "title": "Last Assessment",
+            "subtitleEmpty": "No assessments yet"
+          },
+          "riskProbability": {
+            "title": "Risk Probability",
+            "subtitle": "Latest risk probability score"
+          },
+          "confidenceScore": {
+            "title": "Confidence Score",
+            "subtitle": "AI model confidence level"
+          },
+          "lastAssessmentDate": {
+            "title": "Last Assessment Date",
+            "subtitle": "Most recent screening date"
+          },
+          "healthJourney": {
+            "title": "Health Journey",
+            "active": "Active",
+            "startNow": "Start Now",
+            "subtitleStart": "Begin your health tracking",
+            "subtitleCount": "{{count}} screenings completed"
+          }
+        },
+        "status": {
+          "high_risk": "High Risk",
+          "low_risk": "Low Risk"
+        }
+      },
+      "progress": {
+        "heading": "Health Progress",
+        "subtitle": "Track your risk trends and health metrics over time",
+        "chartTitle": "Risk Trend Over Time",
+        "emptyChart": "Complete 2+ screenings to see your risk trend chart",
+        "tooltipRisk": "Risk: {{value}}%",
+        "metricsTitle": "Health Metrics",
+        "metrics": {
+          "riskProbability": "Risk Probability",
+          "aiConfidence": "AI Confidence",
+          "screeningsCompleted": "Screenings Completed",
+          "healthEngagement": "Health Engagement"
+        }
+      },
+      "tips": {
+        "heading": "Daily Health Tips",
+        "subtitle": "Science-backed tips rotating every few seconds",
+        "dotAriaLabel": "Tip {{number}}",
+        "items": {
+          "hydrate": {
+            "title": "Stay Hydrated",
+            "tip": "Drink at least 8 glasses of water daily. Proper hydration helps regulate hormones and supports kidney health — essential for managing PMOS."
+          },
+          "balancedMeals": {
+            "title": "Eat Balanced Meals",
+            "tip": "Focus on a low-glycemic diet rich in whole grains, lean protein, leafy greens, and healthy fats. This helps control insulin — a key factor in PMOS."
+          },
+          "exercise": {
+            "title": "Exercise Regularly",
+            "tip": "Aim for at least 30 minutes of moderate exercise most days. Regular movement reduces insulin resistance and helps manage weight with PMOS."
+          },
+          "sleep": {
+            "title": "Prioritize Sleep",
+            "tip": "Quality sleep of 7–8 hours supports hormone regulation and metabolism. Poor sleep can worsen insulin resistance and PMOS symptoms."
+          },
+          "stress": {
+            "title": "Reduce Stress",
+            "tip": "Chronic stress elevates cortisol, which can worsen PMOS symptoms. Practice mindfulness, yoga, or deep breathing exercises daily."
+          },
+          "processedFoods": {
+            "title": "Limit Processed Foods",
+            "tip": "Ultra-processed foods and added sugars can spike insulin levels and worsen hormonal imbalances. Choose whole, unprocessed foods whenever possible."
+          },
+          "antiInflammatory": {
+            "title": "Consider Anti-Inflammatory Foods",
+            "tip": "Foods like berries, leafy greens, fatty fish, and turmeric have anti-inflammatory properties that may help reduce PMOS-related inflammation."
+          },
+          "vitaminD": {
+            "title": "Get Vitamin D",
+            "tip": "Many women with PMOS have low Vitamin D levels. Spend 15-20 minutes in sunlight daily and consider testing your levels with your doctor."
+          }
+        }
+      },
+      "articles": {
+        "heading": "Health Library",
+        "countBadge": "{{count}} Articles",
+        "subtitle": "Curated health education articles for your wellness journey",
+        "readArticle": "Read Article",
+        "readTime": "{{count}} min read",
+        "items": {
+          "pcosGuide": {
+            "title": "Understanding PMOS: A Complete Guide",
+            "category": "Education",
+            "excerpt": "Learn everything about Polycystic Ovary Syndrome — its causes, symptoms, diagnosis, and how it affects women's health across all life stages.",
+            "tags": [
+              "PMOS",
+              "Basics"
+            ]
+          },
+          "naturalManagement": {
+            "title": "Managing PMOS Symptoms Naturally",
+            "category": "Wellness",
+            "excerpt": "Discover evidence-based natural approaches to reducing PMOS symptoms through lifestyle modifications, stress management, and holistic wellness practices.",
+            "tags": [
+              "Natural",
+              "Lifestyle"
+            ]
+          },
+          "nutrition": {
+            "title": "Nutrition Guide for PMOS",
+            "category": "Nutrition",
+            "excerpt": "A comprehensive nutrition guide specifically designed for women with PMOS, including anti-inflammatory foods, meal planning strategies, and foods to avoid.",
+            "tags": [
+              "Diet",
+              "Food"
+            ]
+          },
+          "exercise": {
+            "title": "Exercise & PMOS: What Works",
+            "category": "Fitness",
+            "excerpt": "Not all exercise is equal for PMOS. Discover the most effective workout types, intensities, and frequencies to improve insulin sensitivity and hormone balance.",
+            "tags": [
+              "Exercise",
+              "Fitness"
+            ]
+          },
+          "mentalWellness": {
+            "title": "Mental Wellness & PMOS",
+            "category": "Mental Health",
+            "excerpt": "The emotional impact of PMOS is real. Learn about the connection between PMOS and anxiety/depression, plus strategies for emotional well-being and resilience.",
+            "tags": [
+              "Mental Health",
+              "Wellness"
+            ]
+          },
+          "fertility": {
+            "title": "PMOS & Fertility: Your Questions Answered",
+            "category": "Fertility",
+            "excerpt": "Explore how PMOS impacts fertility, the treatment options available, success stories, and what modern medicine can do to help you on your journey to motherhood.",
+            "tags": [
+              "Fertility",
+              "Hope"
+            ]
+          }
+        }
+      },
+      "awareness": {
+        "heading": "PMOS Awareness",
+        "badge": "Educational",
+        "subtitle": "Learn about PMOS — knowledge is your first step toward better health",
+        "readMore": "Read More",
+        "showLess": "Show Less",
+        "cards": {
+          "basics": {
+            "title": "What is PMOS?",
+            "category": "Basics",
+            "summary": "Polycystic Ovary Syndrome (PMOS) is a common hormonal disorder affecting 1 in 10 women of reproductive age.",
+            "detail": "PMOS affects the ovaries and ovulation. The three main features are: cysts in the ovaries, high levels of male hormones (androgens), and irregular or skipped periods. Not all women with PMOS will have cysts on their ovaries."
+          },
+          "symptoms": {
+            "title": "Common Symptoms",
+            "category": "Symptoms",
+            "summary": "PMOS symptoms can vary widely. Recognizing them early leads to better management and quality of life.",
+            "detail": "Irregular periods, excess androgen (elevated male hormone levels), polycystic ovaries, weight gain, acne, thinning hair, excess facial/body hair, and skin darkening are all common signs. Many women have no symptoms at all."
+          },
+          "myths": {
+            "title": "Common Myths",
+            "category": "Education",
+            "summary": "Many misconceptions surround PMOS. Let's debunk the most common ones to empower better decisions.",
+            "detail": "Myth: You must have cysts to have PMOS. Fact: The name is misleading — many women with PMOS never develop cysts. Myth: PMOS means you cannot get pregnant. Fact: Most women with PMOS can conceive with the right treatment."
+          },
+          "treatment": {
+            "title": "Treatment Options",
+            "category": "Treatment",
+            "summary": "PMOS has no cure, but symptoms can be managed effectively through lifestyle changes and medical treatments.",
+            "detail": "Options include lifestyle modifications (diet, exercise), hormonal birth control to regulate periods, medications like Metformin to improve insulin resistance, anti-androgen medications, and fertility treatments if needed. Always consult a gynecologist."
+          },
+          "lifestyle": {
+            "title": "Healthy Lifestyle",
+            "category": "Wellness",
+            "summary": "Lifestyle plays a powerful role in managing PMOS. Small daily changes can lead to significant improvements.",
+            "detail": "A balanced diet rich in fiber, lean protein, and healthy fats helps manage insulin levels. Regular physical activity (30 minutes most days) reduces androgen levels and improves insulin sensitivity. Stress management through yoga, mindfulness, and adequate sleep (7–8 hours) also significantly reduces symptoms."
+          },
+          "whenToSeeDoctor": {
+            "title": "When to See a Doctor",
+            "category": "Medical",
+            "summary": "Know when to seek professional medical advice. Early consultation leads to better health outcomes.",
+            "detail": "See a doctor if you experience: irregular or missed periods for several months, symptoms of high androgen levels (excess hair growth, acne, male-pattern baldness), difficulty getting pregnant, or weight gain without an obvious cause. A gynecologist or endocrinologist can provide proper diagnosis and treatment."
+          }
+        }
+      },
+      "quotes": {
+        "dotAriaLabel": "Quote {{number}}",
+        "authors": {
+          "womensHealth": "Women's Health",
+          "wellness": "Wellness"
+        },
+        "items": {
+          "habits": "Small healthy habits create lifelong wellness.",
+          "awareness": "Early awareness empowers better healthcare decisions.",
+          "selfCare": "Taking care of yourself is the first step toward a healthier future.",
+          "uniqueJourney": "Your health journey is unique — honor it every single day.",
+          "empowered": "Every woman deserves to understand her body and feel empowered.",
+          "progress": "Progress, not perfection, is what leads to lasting health."
+        }
+      }
+    }
+  },
+  "hi": {
+    "dashboard": {
+      "greeting": {
+        "morning": "सुप्रभात",
+        "afternoon": "शुभ दोपहर",
+        "evening": "शुभ संध्या",
+        "guest": "अतिथि"
+      },
+      "welcome": {
+        "subtitle": "<1>{{appName}}</1> में आपका फिर से स्वागत है। आपकी स्वास्थ्य यात्रा जागरूकता और शीघ्र पहचान के साथ शुरू होती है।",
+        "cta": "नई स्क्रीनिंग",
+        "ctaAriaLabel": "नई PMOS जांच शुरू करें"
+      },
+      "footerBanner": {
+        "title": "आपका स्वास्थ्य, आपकी कहानी",
+        "subtitle": "हर जांच आपको अपने शरीर को समझने के करीब लाती है। आज ही अपनी स्वास्थ्य यात्रा में अगला कदम उठाएं।",
+        "cta": "जांच शुरू करें",
+        "ctaAriaLabel": "नई PMOS जांच मूल्यांकन शुरू करें"
+      },
+      "hero": {
+        "prevSlide": "पिछली स्लाइड",
+        "nextSlide": "अगली स्लाइड",
+        "goToSlide": "स्लाइड {{number}} पर जाएं",
+        "slides": {
+          "earlyDetection": {
+            "title": "जल्दी पहचान जीवन बचाती है",
+            "subtitle": "AI-संचालित स्वास्थ्य जांच का उपयोग करके PMOS की जल्दी पहचान करें और अपने शरीर को बेहतर समझें।",
+            "cta": "मूल्यांकन शुरू करें",
+            "tags": [
+              "AI-संचालित",
+              "जल्दी पहचान",
+              "मुफ़्त"
+            ]
+          },
+          "betterHealthcare": {
+            "title": "हर महिला बेहतर स्वास्थ्य सेवा की हकदार है",
+            "subtitle": "लक्षणों पर नज़र रखें, अपने जोखिमों को समझें, और व्यक्तिगत स्वास्थ्य जानकारी के साथ सूचित रहें।",
+            "cta": "और जानें",
+            "tags": [
+              "व्यक्तिगत",
+              "जानकारी",
+              "स्वास्थ्य"
+            ]
+          },
+          "healthyLifestyle": {
+            "title": "स्वस्थ जीवनशैली मायने रखती है",
+            "subtitle": "संतुलित आहार, नियमित व्यायाम, अच्छी नींद और तनाव प्रबंधन — आपके स्वास्थ्य के स्तंभ।",
+            "cta": "स्वास्थ्य सुझाव",
+            "tags": [
+              "आहार",
+              "व्यायाम",
+              "नींद",
+              "तनाव"
+            ]
+          },
+          "aiPrediction": {
+            "title": "AI-सहायता प्राप्त भविष्यवाणी",
+            "subtitle": "उन्नत मशीन लर्निंग महिलाओं को उनके स्वास्थ्य जोखिमों को समझने और जल्दी कार्रवाई करने में मदद करती है।",
+            "cta": "विशेषताएं देखें",
+            "tags": [
+              "मशीन लर्निंग",
+              "भविष्यवाणी",
+              "सटीक"
+            ]
+          },
+          "learnAboutPmos": {
+            "title": "PMOS के बारे में जानें",
+            "subtitle": "PMOS को प्रभावी ढंग से प्रबंधित करने के लिए लक्षण, कारण, उपचार और जीवनशैली रणनीतियों को समझें।",
+            "cta": "लेख पढ़ें",
+            "tags": [
+              "लक्षण",
+              "कारण",
+              "उपचार",
+              "जीवनशैली"
+            ]
+          }
+        }
+      },
+      "quickActions": {
+        "heading": "त्वरित कार्य",
+        "subtitle": "जो चाहिए उस पर सीधे जाएं",
+        "soonBadge": "जल्द ही",
+        "actions": {
+          "startAssessment": {
+            "title": "मूल्यांकन शुरू करें",
+            "subtitle": "अपनी PMOS जांच शुरू करें"
+          },
+          "predictionHistory": {
+            "title": "भविष्यवाणी इतिहास",
+            "subtitle": "सभी पिछले परिणाम देखें"
+          },
+          "healthLibrary": {
+            "title": "स्वास्थ्य लाइब्रेरी",
+            "subtitle": "PMOS शिक्षा और लेख"
+          },
+          "myProfile": {
+            "title": "मेरी प्रोफ़ाइल",
+            "subtitle": "अपना खाता प्रबंधित करें"
+          },
+          "reports": {
+            "title": "रिपोर्ट",
+            "subtitle": "विस्तृत स्वास्थ्य विश्लेषण"
+          },
+          "settings": {
+            "title": "सेटिंग्स",
+            "subtitle": "ऐप प्राथमिकताएं"
+          }
+        }
+      },
+      "recentPredictions": {
+        "heading": "हाल की भविष्यवाणियां",
+        "subtitleCount": "कुल {{count}} स्वास्थ्य जांच पूरी हुईं",
+        "subtitleEmpty": "आपका भविष्यवाणी इतिहास यहां दिखाई देगा",
+        "emptyTitle": "अभी तक कोई भविष्यवाणी नहीं",
+        "emptyText": "अपनी स्वास्थ्य यात्रा को ट्रैक करना शुरू करने के लिए अपनी पहली PMOS जांच करें।",
+        "emptyCta": "पहली जांच शुरू करें",
+        "probabilityLabel": "{{value}}% संभावना",
+        "confidenceLabel": "विश्वास स्तर: {{value}}%",
+        "status": {
+          "unknown": "अज्ञात",
+          "high_risk": "उच्च जोखिम",
+          "low_risk": "कम जोखिम"
+        }
+      },
+      "healthSummary": {
+        "heading": "स्वास्थ्य सारांश",
+        "subtitle": "एक नज़र में आपके नवीनतम स्वास्थ्य मैट्रिक्स",
+        "cards": {
+          "totalScreenings": {
+            "title": "कुल जांच",
+            "subtitle": "अब तक के सभी स्वास्थ्य आकलन"
+          },
+          "lastAssessment": {
+            "title": "अंतिम मूल्यांकन",
+            "subtitleEmpty": "अभी तक कोई मूल्यांकन नहीं"
+          },
+          "riskProbability": {
+            "title": "जोखिम संभावना",
+            "subtitle": "नवीनतम जोखिम संभावना स्कोर"
+          },
+          "confidenceScore": {
+            "title": "विश्वास स्कोर",
+            "subtitle": "AI मॉडल विश्वास स्तर"
+          },
+          "lastAssessmentDate": {
+            "title": "अंतिम मूल्यांकन तिथि",
+            "subtitle": "सबसे हाल की जांच की तारीख"
+          },
+          "healthJourney": {
+            "title": "स्वास्थ्य यात्रा",
+            "active": "सक्रिय",
+            "startNow": "अभी शुरू करें",
+            "subtitleStart": "अपनी स्वास्थ्य ट्रैकिंग शुरू करें",
+            "subtitleCount": "{{count}} जांच पूरी हुईं"
+          }
+        },
+        "status": {
+          "high_risk": "उच्च जोखिम",
+          "low_risk": "कम जोखिम"
+        }
+      },
+      "progress": {
+        "heading": "स्वास्थ्य प्रगति",
+        "subtitle": "समय के साथ अपने जोखिम रुझान और स्वास्थ्य मैट्रिक्स को ट्रैक करें",
+        "chartTitle": "समय के साथ जोखिम रुझान",
+        "emptyChart": "अपना जोखिम रुझान चार्ट देखने के लिए 2+ जांच पूरी करें",
+        "tooltipRisk": "जोखिम: {{value}}%",
+        "metricsTitle": "स्वास्थ्य मैट्रिक्स",
+        "metrics": {
+          "riskProbability": "जोखिम संभावना",
+          "aiConfidence": "AI विश्वास स्तर",
+          "screeningsCompleted": "पूरी हुई जांचें",
+          "healthEngagement": "स्वास्थ्य सहभागिता"
+        }
+      },
+      "tips": {
+        "heading": "दैनिक स्वास्थ्य सुझाव",
+        "subtitle": "हर कुछ सेकंड में बदलते वैज्ञानिक रूप से सिद्ध सुझाव",
+        "dotAriaLabel": "सुझाव {{number}}",
+        "items": {
+          "hydrate": {
+            "title": "हाइड्रेटेड रहें",
+            "tip": "प्रतिदिन कम से कम 8 गिलास पानी पिएं। उचित जलयोजन हार्मोन को नियंत्रित करने और किडनी स्वास्थ्य को सहारा देने में मदद करता है — जो PMOS प्रबंधन के लिए आवश्यक है।"
+          },
+          "balancedMeals": {
+            "title": "संतुलित भोजन करें",
+            "tip": "साबुत अनाज, दुबला प्रोटीन, हरी पत्तेदार सब्जियों और स्वस्थ वसा से भरपूर कम-ग्लाइसेमिक आहार पर ध्यान दें। यह इंसुलिन को नियंत्रित करने में मदद करता है — PMOS का एक प्रमुख कारक।"
+          },
+          "exercise": {
+            "title": "नियमित व्यायाम करें",
+            "tip": "अधिकांश दिनों में कम से कम 30 मिनट मध्यम व्यायाम का लक्ष्य रखें। नियमित गतिविधि इंसुलिन प्रतिरोध को कम करती है और PMOS के साथ वजन प्रबंधित करने में मदद करती है।"
+          },
+          "sleep": {
+            "title": "नींद को प्राथमिकता दें",
+            "tip": "7–8 घंटे की गुणवत्तापूर्ण नींद हार्मोन नियमन और चयापचय को सहारा देती है। खराब नींद इंसुलिन प्रतिरोध और PMOS के लक्षणों को बढ़ा सकती है।"
+          },
+          "stress": {
+            "title": "तनाव कम करें",
+            "tip": "लंबे समय तक तनाव कॉर्टिसोल बढ़ाता है, जो PMOS के लक्षणों को बढ़ा सकता है। रोज़ माइंडफुलनेस, योग या गहरी सांस लेने के अभ्यास करें।"
+          },
+          "processedFoods": {
+            "title": "प्रोसेस्ड भोजन सीमित करें",
+            "tip": "अत्यधिक प्रोसेस्ड भोजन और अतिरिक्त शक्कर इंसुलिन स्तर बढ़ा सकते हैं और हार्मोनल असंतुलन को बढ़ा सकते हैं। जब भी संभव हो साबुत, बिना प्रोसेस्ड भोजन चुनें।"
+          },
+          "antiInflammatory": {
+            "title": "सूजनरोधी खाद्य पदार्थ शामिल करें",
+            "tip": "बेरीज़, हरी पत्तेदार सब्जियां, वसायुक्त मछली और हल्दी जैसे खाद्य पदार्थों में सूजनरोधी गुण होते हैं जो PMOS-संबंधित सूजन को कम करने में मदद कर सकते हैं।"
+          },
+          "vitaminD": {
+            "title": "विटामिन डी लें",
+            "tip": "PMOS वाली कई महिलाओं में विटामिन डी का स्तर कम होता है। रोज़ 15-20 मिनट धूप में रहें और अपने डॉक्टर के साथ स्तर की जांच कराने पर विचार करें।"
+          }
+        }
+      },
+      "articles": {
+        "heading": "स्वास्थ्य लाइब्रेरी",
+        "countBadge": "{{count}} लेख",
+        "subtitle": "आपकी स्वास्थ्य यात्रा के लिए चुनिंदा स्वास्थ्य शिक्षा लेख",
+        "readArticle": "लेख पढ़ें",
+        "readTime": "{{count}} मिनट का पठन",
+        "items": {
+          "pcosGuide": {
+            "title": "PMOS को समझना: एक संपूर्ण गाइड",
+            "category": "शिक्षा",
+            "excerpt": "पॉलीसिस्टिक ओवरी सिंड्रोम के बारे में सब कुछ जानें — इसके कारण, लक्षण, निदान, और यह जीवन के सभी चरणों में महिलाओं के स्वास्थ्य को कैसे प्रभावित करता है।",
+            "tags": [
+              "PMOS",
+              "मूल बातें"
+            ]
+          },
+          "naturalManagement": {
+            "title": "PMOS के लक्षणों को स्वाभाविक रूप से प्रबंधित करना",
+            "category": "स्वास्थ्य",
+            "excerpt": "जीवनशैली में बदलाव, तनाव प्रबंधन और समग्र स्वास्थ्य प्रथाओं के माध्यम से PMOS लक्षणों को कम करने के प्रमाण-आधारित प्राकृतिक तरीके खोजें।",
+            "tags": [
+              "प्राकृतिक",
+              "जीवनशैली"
+            ]
+          },
+          "nutrition": {
+            "title": "PMOS के लिए पोषण गाइड",
+            "category": "पोषण",
+            "excerpt": "PMOS वाली महिलाओं के लिए विशेष रूप से डिज़ाइन की गई एक व्यापक पोषण गाइड, जिसमें सूजनरोधी खाद्य पदार्थ, भोजन योजना रणनीतियां और बचने योग्य खाद्य पदार्थ शामिल हैं।",
+            "tags": [
+              "आहार",
+              "भोजन"
+            ]
+          },
+          "exercise": {
+            "title": "व्यायाम और PMOS: क्या कारगर है",
+            "category": "फिटनेस",
+            "excerpt": "PMOS के लिए सभी व्यायाम समान नहीं हैं। इंसुलिन संवेदनशीलता और हार्मोन संतुलन को बेहतर बनाने के लिए सबसे प्रभावी वर्कआउट प्रकार, तीव्रता और आवृत्ति जानें।",
+            "tags": [
+              "व्यायाम",
+              "फिटनेस"
+            ]
+          },
+          "mentalWellness": {
+            "title": "मानसिक स्वास्थ्य और PMOS",
+            "category": "मानसिक स्वास्थ्य",
+            "excerpt": "PMOS का भावनात्मक प्रभाव वास्तविक है। PMOS और चिंता/अवसाद के बीच संबंध के साथ-साथ भावनात्मक कल्याण और लचीलेपन की रणनीतियों के बारे में जानें।",
+            "tags": [
+              "मानसिक स्वास्थ्य",
+              "स्वास्थ्य"
+            ]
+          },
+          "fertility": {
+            "title": "PMOS और प्रजनन क्षमता: आपके सवालों के जवाब",
+            "category": "प्रजनन क्षमता",
+            "excerpt": "जानें कि PMOS प्रजनन क्षमता को कैसे प्रभावित करता है, उपलब्ध उपचार विकल्प, सफलता की कहानियां, और आधुनिक चिकित्सा मातृत्व की आपकी यात्रा में कैसे मदद कर सकती है।",
+            "tags": [
+              "प्रजनन क्षमता",
+              "आशा"
+            ]
+          }
+        }
+      },
+      "awareness": {
+        "heading": "PMOS जागरूकता",
+        "badge": "शैक्षिक",
+        "subtitle": "PMOS के बारे में जानें — जानकारी बेहतर स्वास्थ्य की दिशा में आपका पहला कदम है",
+        "readMore": "और पढ़ें",
+        "showLess": "कम दिखाएं",
+        "cards": {
+          "basics": {
+            "title": "PMOS क्या है?",
+            "category": "मूल बातें",
+            "summary": "पॉलीसिस्टिक ओवरी सिंड्रोम (PMOS) एक सामान्य हार्मोनल विकार है जो प्रजनन आयु की हर 10 में से 1 महिला को प्रभावित करता है।",
+            "detail": "PMOS अंडाशय और अंडोत्सर्ग को प्रभावित करता है। तीन मुख्य विशेषताएं हैं: अंडाशय में सिस्ट, पुरुष हार्मोन (एंड्रोजन) का उच्च स्तर, और अनियमित या छूटे हुए मासिक धर्म। PMOS वाली सभी महिलाओं में अंडाशय पर सिस्ट नहीं होते।"
+          },
+          "symptoms": {
+            "title": "सामान्य लक्षण",
+            "category": "लक्षण",
+            "summary": "PMOS के लक्षण व्यापक रूप से भिन्न हो सकते हैं। इन्हें जल्दी पहचानना बेहतर प्रबंधन और जीवन की गुणवत्ता की ओर ले जाता है।",
+            "detail": "अनियमित मासिक धर्म, अतिरिक्त एंड्रोजन (उच्च पुरुष हार्मोन स्तर), पॉलीसिस्टिक अंडाशय, वजन बढ़ना, मुहांसे, बालों का पतला होना, चेहरे/शरीर पर अतिरिक्त बाल, और त्वचा का काला पड़ना ये सभी सामान्य संकेत हैं। कई महिलाओं में कोई लक्षण बिल्कुल नहीं होते।"
+          },
+          "myths": {
+            "title": "सामान्य भ्रांतियां",
+            "category": "शिक्षा",
+            "summary": "PMOS को लेकर कई गलतफहमियां हैं। बेहतर निर्णय लेने के लिए सबसे आम भ्रांतियों को दूर करते हैं।",
+            "detail": "भ्रांति: PMOS होने के लिए सिस्ट होना ज़रूरी है। तथ्य: नाम भ्रामक है — PMOS वाली कई महिलाओं में कभी सिस्ट विकसित नहीं होते। भ्रांति: PMOS का मतलब है कि आप गर्भवती नहीं हो सकतीं। तथ्य: सही उपचार से PMOS वाली अधिकांश महिलाएं गर्भधारण कर सकती हैं।"
+          },
+          "treatment": {
+            "title": "उपचार के विकल्प",
+            "category": "उपचार",
+            "summary": "PMOS का कोई इलाज नहीं है, लेकिन जीवनशैली में बदलाव और चिकित्सा उपचारों से लक्षणों को प्रभावी ढंग से प्रबंधित किया जा सकता है।",
+            "detail": "विकल्पों में जीवनशैली में बदलाव (आहार, व्यायाम), मासिक धर्म को नियमित करने के लिए हार्मोनल गर्भनिरोधक, इंसुलिन प्रतिरोध सुधारने के लिए मेटफॉर्मिन जैसी दवाएं, एंटी-एंड्रोजन दवाएं, और यदि आवश्यक हो तो प्रजनन उपचार शामिल हैं। हमेशा स्त्री रोग विशेषज्ञ से परामर्श करें।"
+          },
+          "lifestyle": {
+            "title": "स्वस्थ जीवनशैली",
+            "category": "स्वास्थ्य",
+            "summary": "जीवनशैली PMOS के प्रबंधन में एक शक्तिशाली भूमिका निभाती है। छोटे दैनिक बदलाव महत्वपूर्ण सुधार ला सकते हैं।",
+            "detail": "फाइबर, दुबले प्रोटीन और स्वस्थ वसा से भरपूर संतुलित आहार इंसुलिन के स्तर को प्रबंधित करने में मदद करता है। नियमित शारीरिक गतिविधि (अधिकांश दिनों में 30 मिनट) एंड्रोजन के स्तर को कम करती है और इंसुलिन संवेदनशीलता में सुधार करती है। योग, माइंडफुलनेस और पर्याप्त नींद (7–8 घंटे) के माध्यम से तनाव प्रबंधन भी लक्षणों को काफी कम करता है।"
+          },
+          "whenToSeeDoctor": {
+            "title": "डॉक्टर को कब दिखाएं",
+            "category": "चिकित्सा",
+            "summary": "जानें कि पेशेवर चिकित्सा सलाह कब लेनी चाहिए। जल्दी परामर्श बेहतर स्वास्थ्य परिणामों की ओर ले जाता है।",
+            "detail": "यदि आपको ये अनुभव हो तो डॉक्टर से मिलें: कई महीनों तक अनियमित या छूटे हुए मासिक धर्म, उच्च एंड्रोजन स्तर के लक्षण (अतिरिक्त बालों की वृद्धि, मुहांसे, पुरुष-पैटर्न गंजापन), गर्भवती होने में कठिनाई, या बिना किसी स्पष्ट कारण के वजन बढ़ना। एक स्त्री रोग विशेषज्ञ या एंडोक्राइनोलॉजिस्ट सही निदान और उपचार प्रदान कर सकते हैं।"
+          }
+        }
+      },
+      "quotes": {
+        "dotAriaLabel": "उद्धरण {{number}}",
+        "authors": {
+          "womensHealth": "महिला स्वास्थ्य",
+          "wellness": "स्वास्थ्य"
+        },
+        "items": {
+          "habits": "छोटी स्वस्थ आदतें आजीवन स्वास्थ्य का निर्माण करती हैं।",
+          "awareness": "जल्दी जागरूकता बेहतर स्वास्थ्य सेवा निर्णयों को सशक्त बनाती है।",
+          "selfCare": "अपना ख्याल रखना एक स्वस्थ भविष्य की ओर पहला कदम है।",
+          "uniqueJourney": "आपकी स्वास्थ्य यात्रा अनोखी है — हर दिन इसका सम्मान करें।",
+          "empowered": "हर महिला अपने शरीर को समझने और सशक्त महसूस करने की हकदार है।",
+          "progress": "प्रगति, पूर्णता नहीं, स्थायी स्वास्थ्य की ओर ले जाती है।"
+        }
+      }
+    }
+  },
+  "mr": {
+    "dashboard": {
+      "greeting": {
+        "morning": "सुप्रभात",
+        "afternoon": "शुभ दुपार",
+        "evening": "शुभ संध्याकाळ",
+        "guest": "पाहुणे"
+      },
+      "welcome": {
+        "subtitle": "<1>{{appName}}</1> मध्ये पुन्हा स्वागत आहे. तुमचा आरोग्य प्रवास जागरूकता आणि लवकर निदानासोबत सुरू होतो.",
+        "cta": "नवीन स्क्रीनिंग",
+        "ctaAriaLabel": "नवीन PMOS स्क्रीनिंग सुरू करा"
+      },
+      "footerBanner": {
+        "title": "तुमचे आरोग्य, तुमची कहाणी",
+        "subtitle": "प्रत्येक तपासणी तुम्हाला तुमचे शरीर समजून घेण्याच्या जवळ घेऊन जाते. आजच तुमच्या आरोग्य प्रवासातील पुढचे पाऊल उचला.",
+        "cta": "तपासणी सुरू करा",
+        "ctaAriaLabel": "नवीन PMOS तपासणी मूल्यांकन सुरू करा"
+      },
+      "hero": {
+        "prevSlide": "मागील स्लाइड",
+        "nextSlide": "पुढील स्लाइड",
+        "goToSlide": "स्लाइड {{number}} वर जा",
+        "slides": {
+          "earlyDetection": {
+            "title": "लवकर निदान जीव वाचवते",
+            "subtitle": "AI-आधारित आरोग्य तपासणी वापरून PMOS लवकर ओळखा आणि तुमचे शरीर अधिक चांगल्या प्रकारे समजून घ्या.",
+            "cta": "मूल्यांकन सुरू करा",
+            "tags": [
+              "AI-आधारित",
+              "लवकर निदान",
+              "मोफत"
+            ]
+          },
+          "betterHealthcare": {
+            "title": "प्रत्येक स्त्री उत्तम आरोग्यसेवेस पात्र आहे",
+            "subtitle": "लक्षणांवर लक्ष ठेवा, तुमचे धोके समजून घ्या आणि वैयक्तिकृत आरोग्य माहितीसह अद्ययावत रहा.",
+            "cta": "अधिक जाणा",
+            "tags": [
+              "वैयक्तिक",
+              "माहिती",
+              "आरोग्य"
+            ]
+          },
+          "healthyLifestyle": {
+            "title": "निरोगी जीवनशैली महत्त्वाची आहे",
+            "subtitle": "संतुलित आहार, नियमित व्यायाम, चांगली झोप आणि ताण व्यवस्थापन — तुमच्या आरोग्याचे आधारस्तंभ.",
+            "cta": "आरोग्य टिप्स",
+            "tags": [
+              "आहार",
+              "व्यायाम",
+              "झोप",
+              "ताण"
+            ]
+          },
+          "aiPrediction": {
+            "title": "AI-सहाय्यित भाकीत",
+            "subtitle": "प्रगत मशीन लर्निंग स्त्रियांना त्यांचे आरोग्य धोके समजून घेण्यास आणि लवकर कृती करण्यास मदत करते.",
+            "cta": "वैशिष्ट्ये पहा",
+            "tags": [
+              "मशीन लर्निंग",
+              "भाकीत",
+              "अचूक"
+            ]
+          },
+          "learnAboutPmos": {
+            "title": "PMOS बद्दल जाणून घ्या",
+            "subtitle": "PMOS प्रभावीपणे व्यवस्थापित करण्यासाठी लक्षणे, कारणे, उपचार आणि जीवनशैली धोरणे समजून घ्या.",
+            "cta": "लेख वाचा",
+            "tags": [
+              "लक्षणे",
+              "कारणे",
+              "उपचार",
+              "जीवनशैली"
+            ]
+          }
+        }
+      },
+      "quickActions": {
+        "heading": "त्वरित कृती",
+        "subtitle": "तुम्हाला हवे तिथे थेट जा",
+        "soonBadge": "लवकरच",
+        "actions": {
+          "startAssessment": {
+            "title": "मूल्यांकन सुरू करा",
+            "subtitle": "तुमची PMOS तपासणी सुरू करा"
+          },
+          "predictionHistory": {
+            "title": "भाकीत इतिहास",
+            "subtitle": "सर्व मागील निकाल पहा"
+          },
+          "healthLibrary": {
+            "title": "आरोग्य लायब्ररी",
+            "subtitle": "PMOS शिक्षण आणि लेख"
+          },
+          "myProfile": {
+            "title": "माझी प्रोफाइल",
+            "subtitle": "तुमचे खाते व्यवस्थापित करा"
+          },
+          "reports": {
+            "title": "अहवाल",
+            "subtitle": "सविस्तर आरोग्य विश्लेषण"
+          },
+          "settings": {
+            "title": "सेटिंग्ज",
+            "subtitle": "अ‍ॅप प्राधान्ये"
+          }
+        }
+      },
+      "recentPredictions": {
+        "heading": "अलीकडील भाकीते",
+        "subtitleCount": "एकूण {{count}} आरोग्य तपासण्या पूर्ण झाल्या",
+        "subtitleEmpty": "तुमचा भाकीत इतिहास येथे दिसेल",
+        "emptyTitle": "अजून कोणतेही भाकीत नाही",
+        "emptyText": "तुमचा आरोग्य प्रवास ट्रॅक करण्यास सुरुवात करण्यासाठी तुमची पहिली PMOS तपासणी करा.",
+        "emptyCta": "पहिली तपासणी सुरू करा",
+        "probabilityLabel": "{{value}}% शक्यता",
+        "confidenceLabel": "विश्वासार्हता: {{value}}%",
+        "status": {
+          "unknown": "अज्ञात",
+          "high_risk": "उच्च धोका",
+          "low_risk": "कमी धोका"
+        }
+      },
+      "healthSummary": {
+        "heading": "आरोग्य सारांश",
+        "subtitle": "एका दृष्टीक्षेपात तुमचे नवीनतम आरोग्य मेट्रिक्स",
+        "cards": {
+          "totalScreenings": {
+            "title": "एकूण तपासण्या",
+            "subtitle": "आजवरची सर्व आरोग्य मूल्यांकने"
+          },
+          "lastAssessment": {
+            "title": "शेवटचे मूल्यांकन",
+            "subtitleEmpty": "अजून कोणतेही मूल्यांकन नाही"
+          },
+          "riskProbability": {
+            "title": "धोका शक्यता",
+            "subtitle": "नवीनतम धोका शक्यता स्कोर"
+          },
+          "confidenceScore": {
+            "title": "विश्वासार्हता स्कोर",
+            "subtitle": "AI मॉडेल विश्वासार्हता पातळी"
+          },
+          "lastAssessmentDate": {
+            "title": "शेवटच्या मूल्यांकनाची तारीख",
+            "subtitle": "सर्वात अलीकडील तपासणीची तारीख"
+          },
+          "healthJourney": {
+            "title": "आरोग्य प्रवास",
+            "active": "सक्रिय",
+            "startNow": "आता सुरू करा",
+            "subtitleStart": "तुमचा आरोग्य ट्रॅकिंग सुरू करा",
+            "subtitleCount": "{{count}} तपासण्या पूर्ण झाल्या"
+          }
+        },
+        "status": {
+          "high_risk": "उच्च धोका",
+          "low_risk": "कमी धोका"
+        }
+      },
+      "progress": {
+        "heading": "आरोग्य प्रगती",
+        "subtitle": "कालांतराने तुमचा धोका कल आणि आरोग्य मेट्रिक्स ट्रॅक करा",
+        "chartTitle": "कालांतराने धोका कल",
+        "emptyChart": "तुमचा धोका कल चार्ट पाहण्यासाठी 2+ तपासण्या पूर्ण करा",
+        "tooltipRisk": "धोका: {{value}}%",
+        "metricsTitle": "आरोग्य मेट्रिक्स",
+        "metrics": {
+          "riskProbability": "धोका शक्यता",
+          "aiConfidence": "AI विश्वासार्हता",
+          "screeningsCompleted": "पूर्ण झालेल्या तपासण्या",
+          "healthEngagement": "आरोग्य सहभाग"
+        }
+      },
+      "tips": {
+        "heading": "दैनंदिन आरोग्य टिप्स",
+        "subtitle": "दर काही सेकंदांनी बदलणाऱ्या शास्त्रीय आधार असलेल्या टिप्स",
+        "dotAriaLabel": "टिप {{number}}",
+        "items": {
+          "hydrate": {
+            "title": "हायड्रेटेड रहा",
+            "tip": "दररोज किमान 8 ग्लास पाणी प्या. योग्य हायड्रेशन हार्मोन्स नियंत्रित करण्यास आणि किडनीच्या आरोग्यास आधार देण्यास मदत करते — जे PMOS व्यवस्थापनासाठी आवश्यक आहे."
+          },
+          "balancedMeals": {
+            "title": "संतुलित आहार घ्या",
+            "tip": "संपूर्ण धान्य, कमी चरबीयुक्त प्रथिने, हिरव्या पालेभाज्या आणि आरोग्यदायी स्निग्ध पदार्थांनी समृद्ध कमी-ग्लायसेमिक आहारावर लक्ष केंद्रित करा. हे इन्सुलिन नियंत्रित करण्यास मदत करते — PMOS मधील एक महत्त्वाचा घटक."
+          },
+          "exercise": {
+            "title": "नियमित व्यायाम करा",
+            "tip": "बहुतांश दिवशी किमान 30 मिनिटे मध्यम व्यायामाचे लक्ष्य ठेवा. नियमित हालचाल इन्सुलिन प्रतिरोध कमी करते आणि PMOS सोबत वजन व्यवस्थापित करण्यास मदत करते."
+          },
+          "sleep": {
+            "title": "झोपेला प्राधान्य द्या",
+            "tip": "7–8 तासांची दर्जेदार झोप हार्मोन नियमन आणि चयापचयाला आधार देते. कमी झोप इन्सुलिन प्रतिरोध आणि PMOS ची लक्षणे वाढवू शकते."
+          },
+          "stress": {
+            "title": "ताण कमी करा",
+            "tip": "दीर्घकालीन ताण कॉर्टिसोल वाढवतो, ज्यामुळे PMOS ची लक्षणे बिघडू शकतात. दररोज माइंडफुलनेस, योग किंवा दीर्घ श्वसनाचा सराव करा."
+          },
+          "processedFoods": {
+            "title": "प्रक्रिया केलेले अन्न मर्यादित करा",
+            "tip": "अति-प्रक्रिया केलेले अन्न आणि अतिरिक्त साखर इन्सुलिन पातळी वाढवू शकते आणि हार्मोनल असंतुलन बिघडवू शकते. शक्य असेल तेव्हा संपूर्ण, प्रक्रिया न केलेले अन्न निवडा."
+          },
+          "antiInflammatory": {
+            "title": "दाहविरोधी पदार्थांचा विचार करा",
+            "tip": "बेरीज, हिरव्या पालेभाज्या, स्निग्ध मासे आणि हळद यांसारख्या पदार्थांमध्ये दाहविरोधी गुणधर्म असतात जे PMOS-संबंधित दाह कमी करण्यास मदत करू शकतात."
+          },
+          "vitaminD": {
+            "title": "व्हिटॅमिन डी घ्या",
+            "tip": "PMOS असलेल्या अनेक स्त्रियांमध्ये व्हिटॅमिन डीची पातळी कमी असते. दररोज 15-20 मिनिटे उन्हात रहा आणि तुमच्या डॉक्टरांशी पातळी तपासण्याचा विचार करा."
+          }
+        }
+      },
+      "articles": {
+        "heading": "आरोग्य लायब्ररी",
+        "countBadge": "{{count}} लेख",
+        "subtitle": "तुमच्या निरोगी प्रवासासाठी निवडक आरोग्य शिक्षण लेख",
+        "readArticle": "लेख वाचा",
+        "readTime": "{{count}} मिनिटांचे वाचन",
+        "items": {
+          "pcosGuide": {
+            "title": "PMOS समजून घेणे: संपूर्ण मार्गदर्शक",
+            "category": "शिक्षण",
+            "excerpt": "पॉलीसिस्टिक ओव्हरी सिंड्रोमबद्दल सर्वकाही जाणून घ्या — त्याची कारणे, लक्षणे, निदान आणि ते जीवनाच्या सर्व टप्प्यांवर स्त्रियांच्या आरोग्यावर कसे परिणाम करते.",
+            "tags": [
+              "PMOS",
+              "मूलभूत"
+            ]
+          },
+          "naturalManagement": {
+            "title": "PMOS लक्षणे नैसर्गिकरित्या व्यवस्थापित करणे",
+            "category": "आरोग्य",
+            "excerpt": "जीवनशैलीतील बदल, ताण व्यवस्थापन आणि सर्वांगीण आरोग्य पद्धतींद्वारे PMOS लक्षणे कमी करण्याचे पुराव्यावर आधारित नैसर्गिक मार्ग शोधा.",
+            "tags": [
+              "नैसर्गिक",
+              "जीवनशैली"
+            ]
+          },
+          "nutrition": {
+            "title": "PMOS साठी पोषण मार्गदर्शक",
+            "category": "पोषण",
+            "excerpt": "PMOS असलेल्या स्त्रियांसाठी विशेषतः तयार केलेले सर्वसमावेशक पोषण मार्गदर्शक, ज्यामध्ये दाहविरोधी पदार्थ, जेवण नियोजन धोरणे आणि टाळावयाचे पदार्थ यांचा समावेश आहे.",
+            "tags": [
+              "आहार",
+              "अन्न"
+            ]
+          },
+          "exercise": {
+            "title": "व्यायाम आणि PMOS: काय परिणामकारक आहे",
+            "category": "फिटनेस",
+            "excerpt": "PMOS साठी सर्व व्यायाम सारखे नसतात. इन्सुलिन संवेदनशीलता आणि हार्मोन समतोल सुधारण्यासाठी सर्वात प्रभावी वर्कआउट प्रकार, तीव्रता आणि वारंवारता जाणून घ्या.",
+            "tags": [
+              "व्यायाम",
+              "फिटनेस"
+            ]
+          },
+          "mentalWellness": {
+            "title": "मानसिक आरोग्य आणि PMOS",
+            "category": "मानसिक आरोग्य",
+            "excerpt": "PMOS चा भावनिक परिणाम खरा आहे. PMOS आणि चिंता/नैराश्य यांच्यातील संबंध, तसेच भावनिक कल्याण आणि लवचिकतेच्या धोरणांबद्दल जाणून घ्या.",
+            "tags": [
+              "मानसिक आरोग्य",
+              "आरोग्य"
+            ]
+          },
+          "fertility": {
+            "title": "PMOS आणि प्रजनन क्षमता: तुमच्या प्रश्नांची उत्तरे",
+            "category": "प्रजनन क्षमता",
+            "excerpt": "PMOS प्रजनन क्षमतेवर कसा परिणाम करतो, उपलब्ध उपचार पर्याय, यशोगाथा आणि मातृत्वाच्या प्रवासात आधुनिक वैद्यकशास्त्र कशी मदत करू शकते हे जाणून घ्या.",
+            "tags": [
+              "प्रजनन क्षमता",
+              "आशा"
+            ]
+          }
+        }
+      },
+      "awareness": {
+        "heading": "PMOS जागरूकता",
+        "badge": "शैक्षणिक",
+        "subtitle": "PMOS बद्दल जाणून घ्या — ज्ञान हे उत्तम आरोग्याकडे तुमचे पहिले पाऊल आहे",
+        "readMore": "अधिक वाचा",
+        "showLess": "कमी दाखवा",
+        "cards": {
+          "basics": {
+            "title": "PMOS म्हणजे काय?",
+            "category": "मूलभूत",
+            "summary": "पॉलीसिस्टिक ओव्हरी सिंड्रोम (PMOS) हा एक सामान्य हार्मोनल विकार आहे जो प्रजननक्षम वयातील प्रत्येक 10 पैकी 1 स्त्रीला प्रभावित करतो.",
+            "detail": "PMOS अंडाशय आणि स्त्रीबीजनिर्मितीवर परिणाम करतो. तीन मुख्य वैशिष्ट्ये आहेत: अंडाशयात गाठी (सिस्ट), पुरुष हार्मोन्सची (अँड्रोजन) उच्च पातळी, आणि अनियमित किंवा चुकलेली मासिक पाळी. PMOS असलेल्या सर्वच स्त्रियांच्या अंडाशयात सिस्ट असतातच असे नाही."
+          },
+          "symptoms": {
+            "title": "सामान्य लक्षणे",
+            "category": "लक्षणे",
+            "summary": "PMOS ची लक्षणे मोठ्या प्रमाणात बदलू शकतात. ती लवकर ओळखल्याने चांगले व्यवस्थापन आणि जीवनमान मिळते.",
+            "detail": "अनियमित मासिक पाळी, अतिरिक्त अँड्रोजन (उच्च पुरुष हार्मोन पातळी), पॉलीसिस्टिक अंडाशय, वजन वाढणे, मुरुमे, केस पातळ होणे, चेहऱ्यावर/शरीरावर अतिरिक्त केस, आणि त्वचा काळी पडणे ही सर्व सामान्य लक्षणे आहेत. अनेक स्त्रियांमध्ये कोणतीही लक्षणे नसतात."
+          },
+          "myths": {
+            "title": "सामान्य गैरसमज",
+            "category": "शिक्षण",
+            "summary": "PMOS बद्दल अनेक गैरसमज आहेत. चांगले निर्णय घेण्यासाठी सर्वात सामान्य गैरसमज दूर करूया.",
+            "detail": "गैरसमज: PMOS होण्यासाठी सिस्ट असणे आवश्यक आहे. वस्तुस्थिती: नाव दिशाभूल करणारे आहे — PMOS असलेल्या अनेक स्त्रियांमध्ये सिस्ट कधीच विकसित होत नाहीत. गैरसमज: PMOS म्हणजे तुम्ही गर्भवती राहू शकत नाही. वस्तुस्थिती: योग्य उपचारांनी PMOS असलेल्या बहुतेक स्त्रिया गर्भधारणा करू शकतात."
+          },
+          "treatment": {
+            "title": "उपचार पर्याय",
+            "category": "उपचार",
+            "summary": "PMOS वर कोणताही इलाज नाही, परंतु जीवनशैलीतील बदल आणि वैद्यकीय उपचारांद्वारे लक्षणे प्रभावीपणे व्यवस्थापित करता येतात.",
+            "detail": "पर्यायांमध्ये जीवनशैलीतील बदल (आहार, व्यायाम), मासिक पाळी नियमित करण्यासाठी हार्मोनल गर्भनिरोधक, इन्सुलिन प्रतिरोध सुधारण्यासाठी मेटफॉर्मिनसारखी औषधे, अँटी-अँड्रोजन औषधे, आणि आवश्यक असल्यास प्रजनन उपचार यांचा समावेश आहे. नेहमी स्त्रीरोगतज्ज्ञांचा सल्ला घ्या."
+          },
+          "lifestyle": {
+            "title": "निरोगी जीवनशैली",
+            "category": "आरोग्य",
+            "summary": "PMOS च्या व्यवस्थापनात जीवनशैली महत्त्वाची भूमिका बजावते. लहान दैनंदिन बदल लक्षणीय सुधारणा घडवू शकतात.",
+            "detail": "फायबर, कमी चरबीयुक्त प्रथिने आणि आरोग्यदायी स्निग्ध पदार्थांनी समृद्ध संतुलित आहार इन्सुलिन पातळी व्यवस्थापित करण्यास मदत करतो. नियमित शारीरिक हालचाल (बहुतांश दिवशी 30 मिनिटे) अँड्रोजन पातळी कमी करते आणि इन्सुलिन संवेदनशीलता सुधारते. योग, माइंडफुलनेस आणि पुरेशी झोप (7–8 तास) यांद्वारे ताण व्यवस्थापन देखील लक्षणे लक्षणीयरीत्या कमी करते."
+          },
+          "whenToSeeDoctor": {
+            "title": "डॉक्टरांना कधी भेटावे",
+            "category": "वैद्यकीय",
+            "summary": "व्यावसायिक वैद्यकीय सल्ला केव्हा घ्यावा हे जाणून घ्या. लवकर सल्लामसलत केल्याने चांगले आरोग्य परिणाम मिळतात.",
+            "detail": "तुम्हाला खालील अनुभव आल्यास डॉक्टरांना भेटा: अनेक महिने अनियमित किंवा चुकलेली मासिक पाळी, उच्च अँड्रोजन पातळीची लक्षणे (अतिरिक्त केस वाढणे, मुरुमे, पुरुष-प्रकारचे टक्कल पडणे), गर्भवती राहण्यात अडचण, किंवा स्पष्ट कारणाशिवाय वजन वाढणे. स्त्रीरोगतज्ज्ञ किंवा एंडोक्राइनोलॉजिस्ट योग्य निदान आणि उपचार देऊ शकतात."
+          }
+        }
+      },
+      "quotes": {
+        "dotAriaLabel": "अवतरण {{number}}",
+        "authors": {
+          "womensHealth": "महिला आरोग्य",
+          "wellness": "आरोग्य"
+        },
+        "items": {
+          "habits": "छोट्या निरोगी सवयी आजीवन आरोग्य घडवतात.",
+          "awareness": "लवकर जागरूकता चांगल्या आरोग्यसेवा निर्णयांना सक्षम करते.",
+          "selfCare": "स्वतःची काळजी घेणे हे निरोगी भविष्याकडील पहिले पाऊल आहे.",
+          "uniqueJourney": "तुमचा आरोग्य प्रवास अनोखा आहे — रोज त्याचा सन्मान करा.",
+          "empowered": "प्रत्येक स्त्री आपले शरीर समजून घेण्यास आणि सक्षम वाटण्यास पात्र आहे.",
+          "progress": "प्रगती, परिपूर्णता नव्हे, टिकाऊ आरोग्याकडे घेऊन जाते."
+        }
+      }
+    }
+  }
+}

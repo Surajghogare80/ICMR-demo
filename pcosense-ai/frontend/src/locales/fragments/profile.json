@@ -1,0 +1,122 @@
+{
+  "en": {
+    "profile": {
+      "title": "Profile Settings",
+      "subtitle": "Manage your account information and password",
+      "roles": {
+        "admin": "Administrator",
+        "user": "User"
+      },
+      "personal_info": {
+        "section_title": "Personal Information",
+        "full_name_label": "Full Name",
+        "email_label": "Email Address"
+      },
+      "change_password": {
+        "section_title": "Change Password",
+        "current_password_label": "Current Password",
+        "new_password_label": "New Password",
+        "confirm_password_label": "Confirm New Password"
+      },
+      "validation": {
+        "name_required": "Name is required",
+        "name_min_length": "Minimum 2 characters",
+        "current_password_required": "Current password is required",
+        "new_password_required": "New password is required",
+        "new_password_min_length": "Minimum 8 characters"
+      },
+      "buttons": {
+        "save_changes": "Save Changes",
+        "saving": "Saving...",
+        "change_password": "Change Password",
+        "changing": "Changing..."
+      },
+      "toasts": {
+        "profile_updated": "Profile updated successfully!",
+        "profile_update_failed": "Failed to update profile.",
+        "password_changed": "Password changed successfully!",
+        "password_change_failed": "Failed to change password."
+      }
+    }
+  },
+  "hi": {
+    "profile": {
+      "title": "प्रोफ़ाइल सेटिंग्स",
+      "subtitle": "अपनी खाता जानकारी और पासवर्ड प्रबंधित करें",
+      "roles": {
+        "admin": "प्रशासक",
+        "user": "उपयोगकर्ता"
+      },
+      "personal_info": {
+        "section_title": "व्यक्तिगत जानकारी",
+        "full_name_label": "पूरा नाम",
+        "email_label": "ईमेल पता"
+      },
+      "change_password": {
+        "section_title": "पासवर्ड बदलें",
+        "current_password_label": "वर्तमान पासवर्ड",
+        "new_password_label": "नया पासवर्ड",
+        "confirm_password_label": "नए पासवर्ड की पुष्टि करें"
+      },
+      "validation": {
+        "name_required": "नाम आवश्यक है",
+        "name_min_length": "कम से कम 2 अक्षर",
+        "current_password_required": "वर्तमान पासवर्ड आवश्यक है",
+        "new_password_required": "नया पासवर्ड आवश्यक है",
+        "new_password_min_length": "कम से कम 8 अक्षर"
+      },
+      "buttons": {
+        "save_changes": "बदलाव सहेजें",
+        "saving": "सहेजा जा रहा है...",
+        "change_password": "पासवर्ड बदलें",
+        "changing": "बदला जा रहा है..."
+      },
+      "toasts": {
+        "profile_updated": "प्रोफ़ाइल सफलतापूर्वक अपडेट हो गई!",
+        "profile_update_failed": "प्रोफ़ाइल अपडेट करने में विफल।",
+        "password_changed": "पासवर्ड सफलतापूर्वक बदल दिया गया!",
+        "password_change_failed": "पासवर्ड बदलने में विफल।"
+      }
+    }
+  },
+  "mr": {
+    "profile": {
+      "title": "प्रोफाइल सेटिंग्ज",
+      "subtitle": "तुमची खाते माहिती आणि पासवर्ड व्यवस्थापित करा",
+      "roles": {
+        "admin": "प्रशासक",
+        "user": "वापरकर्ता"
+      },
+      "personal_info": {
+        "section_title": "वैयक्तिक माहिती",
+        "full_name_label": "पूर्ण नाव",
+        "email_label": "ईमेल पत्ता"
+      },
+      "change_password": {
+        "section_title": "पासवर्ड बदला",
+        "current_password_label": "सध्याचा पासवर्ड",
+        "new_password_label": "नवीन पासवर्ड",
+        "confirm_password_label": "नवीन पासवर्डची पुष्टी करा"
+      },
+      "validation": {
+        "name_required": "नाव आवश्यक आहे",
+        "name_min_length": "किमान 2 अक्षरे",
+        "current_password_required": "सध्याचा पासवर्ड आवश्यक आहे",
+        "new_password_required": "नवीन पासवर्ड आवश्यक आहे",
+        "new_password_min_length": "किमान 8 अक्षरे"
+      },
+      "buttons": {
+        "save_changes": "बदल जतन करा",
+        "saving": "जतन होत आहे...",
+        "change_password": "पासवर्ड बदला",
+        "changing": "बदलत आहे..."
+      },
+      "toasts": {
+        "profile_updated": "प्रोफाइल यशस्वीरित्या अपडेट झाले!",
+        "profile_update_failed": "प्रोफाइल अपडेट करण्यात अयशस्वी.",
+        "password_changed": "पासवर्ड यशस्वीरित्या बदलला!",
+        "password_change_failed": "पासवर्ड बदलण्यात अयशस्वी."
+      }
+    }
+  }
+}

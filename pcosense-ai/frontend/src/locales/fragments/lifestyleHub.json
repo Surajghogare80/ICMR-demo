@@ -1,0 +1,161 @@
+{
+  "en": {
+    "lifestyleHub": {
+      "hub": {
+        "title": "Lifestyle Hub",
+        "searchPlaceholder": "Search health topics...",
+        "noArticlesFound": "No articles found matching your criteria."
+      },
+      "categories": {
+        "all_categories": "All Categories",
+        "nutrition": "Nutrition",
+        "exercise": "Exercise",
+        "mental_health": "Mental Health",
+        "sleep": "Sleep",
+        "women's_health": "Women's Health"
+      },
+      "article": {
+        "minRead": "min read",
+        "whoBadge": "WHO Guideline-Based Information",
+        "whatIsIt": "What Is It?",
+        "whyImportant": "Why Is It Important?",
+        "benefits": "Benefits",
+        "thingsToAvoid": "Things to Avoid",
+        "recommendations": "Recommendations",
+        "quickTips": "Quick Tips",
+        "bookmark": "Bookmark"
+      },
+      "card": {
+        "readArticle": "Read Article"
+      },
+      "hero": {
+        "previousSlide": "Previous slide",
+        "nextSlide": "Next slide",
+        "slides": {
+          "diet": {
+            "title": "Healthy Diet",
+            "description": "Fuel your body with the right nutrients for hormonal balance."
+          },
+          "exercise": {
+            "title": "Daily Exercise",
+            "description": "Stay active to boost metabolism and improve insulin sensitivity."
+          },
+          "mental": {
+            "title": "Mental Well-being",
+            "description": "Manage stress to keep cortisol levels in check and promote emotional resilience."
+          },
+          "sleep": {
+            "title": "Healthy Sleep",
+            "description": "Get enough quality rest to allow your body to heal and regulate hormones."
+          }
+        }
+      }
+    }
+  },
+  "hi": {
+    "lifestyleHub": {
+      "hub": {
+        "title": "जीवनशैली केंद्र",
+        "searchPlaceholder": "स्वास्थ्य विषय खोजें...",
+        "noArticlesFound": "आपके मानदंडों से मेल खाने वाला कोई लेख नहीं मिला।"
+      },
+      "categories": {
+        "all_categories": "सभी श्रेणियां",
+        "nutrition": "पोषण",
+        "exercise": "व्यायाम",
+        "mental_health": "मानसिक स्वास्थ्य",
+        "sleep": "नींद",
+        "women's_health": "महिला स्वास्थ्य"
+      },
+      "article": {
+        "minRead": "मिनट पठन",
+        "whoBadge": "WHO दिशानिर्देश-आधारित जानकारी",
+        "whatIsIt": "यह क्या है?",
+        "whyImportant": "यह महत्वपूर्ण क्यों है?",
+        "benefits": "लाभ",
+        "thingsToAvoid": "किन बातों से बचें",
+        "recommendations": "सिफारिशें",
+        "quickTips": "त्वरित सुझाव",
+        "bookmark": "बुकमार्क करें"
+      },
+      "card": {
+        "readArticle": "लेख पढ़ें"
+      },
+      "hero": {
+        "previousSlide": "पिछली स्लाइड",
+        "nextSlide": "अगली स्लाइड",
+        "slides": {
+          "diet": {
+            "title": "स्वस्थ आहार",
+            "description": "हार्मोनल संतुलन के लिए अपने शरीर को सही पोषक तत्व दें।"
+          },
+          "exercise": {
+            "title": "दैनिक व्यायाम",
+            "description": "चयापचय बढ़ाने और इंसुलिन संवेदनशीलता में सुधार के लिए सक्रिय रहें।"
+          },
+          "mental": {
+            "title": "मानसिक स्वास्थ्य",
+            "description": "कोर्टिसोल के स्तर को नियंत्रित रखने और भावनात्मक लचीलेपन को बढ़ावा देने के लिए तनाव प्रबंधित करें।"
+          },
+          "sleep": {
+            "title": "स्वस्थ नींद",
+            "description": "अपने शरीर को ठीक होने और हार्मोन विनियमित करने देने के लिए पर्याप्त गुणवत्तापूर्ण आराम लें।"
+          }
+        }
+      }
+    }
+  },
+  "mr": {
+    "lifestyleHub": {
+      "hub": {
+        "title": "जीवनशैली केंद्र",
+        "searchPlaceholder": "आरोग्य विषय शोधा...",
+        "noArticlesFound": "तुमच्या निकषांशी जुळणारा कोणताही लेख सापडला नाही."
+      },
+      "categories": {
+        "all_categories": "सर्व श्रेणी",
+        "nutrition": "पोषण",
+        "exercise": "व्यायाम",
+        "mental_health": "मानसिक आरोग्य",
+        "sleep": "झोप",
+        "women's_health": "महिला आरोग्य"
+      },
+      "article": {
+        "minRead": "मिनिट वाचन",
+        "whoBadge": "WHO मार्गदर्शक तत्त्वांवर आधारित माहिती",
+        "whatIsIt": "हे काय आहे?",
+        "whyImportant": "हे महत्त्वाचे का आहे?",
+        "benefits": "फायदे",
+        "thingsToAvoid": "काय टाळावे",
+        "recommendations": "शिफारसी",
+        "quickTips": "त्वरित टिप्स",
+        "bookmark": "बुकमार्क करा"
+      },
+      "card": {
+        "readArticle": "लेख वाचा"
+      },
+      "hero": {
+        "previousSlide": "मागील स्लाइड",
+        "nextSlide": "पुढील स्लाइड",
+        "slides": {
+          "diet": {
+            "title": "निरोगी आहार",
+            "description": "हार्मोनल संतुलनासाठी तुमच्या शरीराला योग्य पोषक तत्त्वे द्या."
+          },
+          "exercise": {
+            "title": "दैनंदिन व्यायाम",
+            "description": "चयापचय वाढवण्यासाठी आणि इन्सुलिन संवेदनशीलता सुधारण्यासाठी सक्रिय राहा."
+          },
+          "mental": {
+            "title": "मानसिक स्वास्थ्य",
+            "description": "कॉर्टिसोलची पातळी नियंत्रित ठेवण्यासाठी आणि भावनिक लवचिकतेला चालना देण्यासाठी तणाव व्यवस्थापित करा."
+          },
+          "sleep": {
+            "title": "निरोगी झोप",
+            "description": "तुमच्या शरीराला बरे होण्यासाठी आणि हार्मोन्सचे नियमन करण्यासाठी पुरेशी दर्जेदार विश्रांती घ्या."
+          }
+        }
+      }
+    }
+  }
+}

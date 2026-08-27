@@ -4,6 +4,7 @@ import { ArrowForward } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../../constants/index.js';
+import { translateOptionValue } from '../../../utils/optionTranslation.js';
 
 const ArticleCard = ({ article }) => {
   const theme = useTheme();
@@ -65,7 +66,7 @@ const ArticleCard = ({ article }) => {
               boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
             }}
           >
-            {article.icon} {article.category}
+            {article.icon} {translateOptionValue(t, 'lifestyleHub.categories', article.category)}
           </Box>
         </Box>
 
@@ -100,7 +101,7 @@ const ArticleCard = ({ article }) => {
               '&:hover': { bgcolor: 'transparent', color: '#D81B60' }
             }}
           >
-            {t('read_article')}
+            {t('lifestyleHub.card.readArticle')}
           </Button>
         </CardContent>
       </Card>

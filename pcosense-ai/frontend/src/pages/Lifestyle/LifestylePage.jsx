@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import HeroSlideshow from './components/HeroSlideshow.jsx';
 import ArticleCard from './components/ArticleCard.jsx';
 import { lifestyleService } from '../../services/lifestyleService.js';
+import { translateOptionValue } from '../../utils/optionTranslation.js';
 
 const filters = ['All Categories', 'Nutrition', 'Exercise', 'Mental Health', 'Sleep', 'Women\'s Health'];
 
@@ -64,7 +65,7 @@ const LifestylePage = () => {
               WebkitTextFillColor: 'transparent',
             }}
           >
-            {t('lifestyle_hub')}
+            {t('lifestyleHub.hub.title')}
           </Typography>
         </motion.div>
 
@@ -77,7 +78,7 @@ const LifestylePage = () => {
             <Grid item xs={12} md={5}>
               <TextField
                 fullWidth
-                placeholder={t('search_health_topics')}
+                placeholder={t('lifestyleHub.hub.searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 InputProps={{
@@ -100,7 +101,7 @@ const LifestylePage = () => {
                 {filters.map(filter => (
                   <Chip
                     key={filter}
-                    label={filter === 'All Categories' ? t('all_categories') : filter}
+                    label={translateOptionValue(t, 'lifestyleHub.categories', filter)}
                     onClick={() => setActiveFilter(filter)}
                     sx={{
                       fontWeight: 600,
@@ -143,7 +144,7 @@ const LifestylePage = () => {
         
         {!loading && filteredArticles.length === 0 && (
           <Typography variant="h6" align="center" color="text.secondary" sx={{ py: 10 }}>
-            No articles found matching your criteria.
+            {t('lifestyleHub.hub.noArticlesFound')}
           </Typography>
         )}
       </Container>

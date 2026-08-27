@@ -8,74 +8,56 @@ import {
   SelfImprovement, MedicalServices, ExpandMore,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const AWARENESS_CARDS = [
   {
+    id: 'basics',
     emoji: '🔬',
     icon: <Info sx={{ fontSize: 28 }} />,
-    title: 'What is PMOS?',
-    category: 'Basics',
-    categoryColor: '#EC407A',
-    summary: 'Polycystic Ovary Syndrome (PMOS) is a common hormonal disorder affecting 1 in 10 women of reproductive age.',
-    detail: 'PMOS affects the ovaries and ovulation. The three main features are: cysts in the ovaries, high levels of male hormones (androgens), and irregular or skipped periods. Not all women with PMOS will have cysts on their ovaries.',
     accentColor: '#EC407A',
   },
   {
+    id: 'symptoms',
     emoji: '🩺',
     icon: <Warning sx={{ fontSize: 28 }} />,
-    title: 'Common Symptoms',
-    category: 'Symptoms',
-    categoryColor: '#FFA726',
-    summary: 'PMOS symptoms can vary widely. Recognizing them early leads to better management and quality of life.',
-    detail: 'Irregular periods, excess androgen (elevated male hormone levels), polycystic ovaries, weight gain, acne, thinning hair, excess facial/body hair, and skin darkening are all common signs. Many women have no symptoms at all.',
     accentColor: '#FFA726',
   },
   {
+    id: 'myths',
     emoji: '💡',
     icon: <PsychologyAlt sx={{ fontSize: 28 }} />,
-    title: 'Common Myths',
-    category: 'Education',
-    categoryColor: '#7E57C2',
-    summary: "Many misconceptions surround PMOS. Let's debunk the most common ones to empower better decisions.",
-    detail: 'Myth: You must have cysts to have PMOS. Fact: The name is misleading — many women with PMOS never develop cysts. Myth: PMOS means you cannot get pregnant. Fact: Most women with PMOS can conceive with the right treatment.',
     accentColor: '#7E57C2',
   },
   {
+    id: 'treatment',
     emoji: '💊',
     icon: <LocalHospital sx={{ fontSize: 28 }} />,
-    title: 'Treatment Options',
-    category: 'Treatment',
-    categoryColor: '#66BB6A',
-    summary: 'PMOS has no cure, but symptoms can be managed effectively through lifestyle changes and medical treatments.',
-    detail: 'Options include lifestyle modifications (diet, exercise), hormonal birth control to regulate periods, medications like Metformin to improve insulin resistance, anti-androgen medications, and fertility treatments if needed. Always consult a gynecologist.',
     accentColor: '#66BB6A',
   },
   {
+    id: 'lifestyle',
     emoji: '🥗',
     icon: <SelfImprovement sx={{ fontSize: 28 }} />,
-    title: 'Healthy Lifestyle',
-    category: 'Wellness',
-    categoryColor: '#26C6DA',
-    summary: 'Lifestyle plays a powerful role in managing PMOS. Small daily changes can lead to significant improvements.',
-    detail: 'A balanced diet rich in fiber, lean protein, and healthy fats helps manage insulin levels. Regular physical activity (30 minutes most days) reduces androgen levels and improves insulin sensitivity. Stress management through yoga, mindfulness, and adequate sleep (7–8 hours) also significantly reduces symptoms.',
     accentColor: '#26C6DA',
   },
   {
+    id: 'whenToSeeDoctor',
     emoji: '🏥',
     icon: <MedicalServices sx={{ fontSize: 28 }} />,
-    title: 'When to See a Doctor',
-    category: 'Medical',
-    categoryColor: '#F06292',
-    summary: 'Know when to seek professional medical advice. Early consultation leads to better health outcomes.',
-    detail: 'See a doctor if you experience: irregular or missed periods for several months, symptoms of high androgen levels (excess hair growth, acne, male-pattern baldness), difficulty getting pregnant, or weight gain without an obvious cause. A gynecologist or endocrinologist can provide proper diagnosis and treatment.',
     accentColor: '#F06292',
   },
 ];
 
 const AwarenessCard = ({ card, index }) => {
   const [expanded, setExpanded] = useState(false);
+  const { t } = useTranslation();
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
+  const title = t(`dashboard.awareness.cards.${card.id}.title`);
+  const category = t(`dashboard.awareness.cards.${card.id}.category`);
+  const summary = t(`dashboard.awareness.cards.${card.id}.summary`);
+  const detail = t(`dashboard.awareness.cards.${card.id}.detail`);
 
   return (
     <motion.div
@@ -136,7 +118,7 @@ const AwarenessCard = ({ card, index }) => {
             </Box>
             <Box>
               <Chip
-                label={card.category}
+                label={category}
                 size="small"
                 sx={{
                   mb: 0.5,
@@ -148,13 +130,13 @@ const AwarenessCard = ({ card, index }) => {
                 }}
               />
               <Typography variant="subtitle1" fontWeight={700} lineHeight={1.3}>
-                {card.emoji} {card.title}
+                {card.emoji} {title}
               </Typography>
             </Box>
           </Box>
 
           <Typography variant="body2" color="text.secondary" lineHeight={1.7} sx={{ flexGrow: 1, mb: 2 }}>
-            {card.summary}
+            {summary}
           </Typography>
 
           <Collapse in={expanded}>
@@ -172,7 +154,7 @@ const AwarenessCard = ({ card, index }) => {
                 fontSize: '0.82rem',
               }}
             >
-              {card.detail}
+              {detail}
             </Typography>
           </Collapse>
 
@@ -190,9 +172,9 @@ const AwarenessCard = ({ card, index }) => {
             }}
             role="button"
             aria-expanded={expanded}
-            aria-label={expanded ? 'Show less' : 'Read more'}
+            aria-label={expanded ? t('dashboard.awareness.showLess') : t('dashboard.awareness.readMore')}
           >
-            {expanded ? 'Show Less' : 'Read More'}
+            {expanded ? t('dashboard.awareness.showLess') : t('dashboard.awareness.readMore')}
             <motion.div animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.3 }}>
               <ExpandMore sx={{ fontSize: 18 }} />
             </motion.div>
@@ -203,25 +185,28 @@ const AwarenessCard = ({ card, index }) => {
   );
 };
 
-const AwarenessSection = () => (
-  <Box sx={{ mb: 5 }}>
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 0.5 }}>
-        <Typography variant="h5" fontWeight={800}>PMOS Awareness</Typography>
-        <Chip label="Educational" size="small" sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#EC407A', fontWeight: 700, fontSize: '0.7rem' }} />
-      </Box>
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Learn about PMOS — knowledge is your first step toward better health
-      </Typography>
-    </motion.div>
-    <Grid container spacing={2.5}>
-      {AWARENESS_CARDS.map((card, i) => (
-        <Grid item xs={12} sm={6} md={4} key={card.title}>
-          <AwarenessCard card={card} index={i} />
-        </Grid>
-      ))}
-    </Grid>
-  </Box>
-);
+const AwarenessSection = () => {
+  const { t } = useTranslation();
+  return (
+    <Box sx={{ mb: 5 }}>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 0.5 }}>
+          <Typography variant="h5" fontWeight={800}>{t('dashboard.awareness.heading')}</Typography>
+          <Chip label={t('dashboard.awareness.badge')} size="small" sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#EC407A', fontWeight: 700, fontSize: '0.7rem' }} />
+        </Box>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+          {t('dashboard.awareness.subtitle')}
+        </Typography>
+      </motion.div>
+      <Grid container spacing={2.5}>
+        {AWARENESS_CARDS.map((card, i) => (
+          <Grid item xs={12} sm={6} md={4} key={card.id}>
+            <AwarenessCard card={card} index={i} />
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  );
+};
 
 export default AwarenessSection;

@@ -9,37 +9,50 @@ import {
   CheckCircle, ArrowForward, FavoriteOutlined,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import { useTranslation, Trans } from 'react-i18next';
 import { ROUTES } from '../../constants/index.js';
 import { useAuth } from '../../contexts/AuthContext.jsx';
 import { APP_NAME, APP_TAGLINE, APP_DESCRIPTION } from '../../config/appConfig.js';
 
 const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } };
 
-const features = [
-  { icon: <Psychology />, title: 'AI-Powered Screening', desc: 'Advanced multi-factor analysis using clinical and lifestyle data for accurate PMOS risk assessment.', color: '#E91E63' },
-  { icon: <Security />, title: 'Secure & Private', desc: 'Your health data is encrypted and protected with enterprise-grade security. We take privacy seriously.', color: '#F06292' },
-  { icon: <Speed />, title: 'Instant Results', desc: 'Get your PMOS risk assessment in seconds with detailed recommendations and next steps.', color: '#FFA726' },
-  { icon: <Analytics />, title: 'Track History', desc: 'Monitor your health journey over time with prediction history and visual trend analysis.', color: '#66BB6A' },
+const featureMeta = [
+  { key: 'screening', icon: <Psychology />, color: '#E91E63' },
+  { key: 'secure', icon: <Security />, color: '#F06292' },
+  { key: 'instant', icon: <Speed />, color: '#FFA726' },
+  { key: 'history', icon: <Analytics />, color: '#66BB6A' },
 ];
 
-const steps = [
-  { step: '01', title: 'Create Account', desc: 'Register securely and set up your personal health profile.' },
-  { step: '02', title: 'Complete Screening', desc: 'Answer questions in our guided 4-step healthcare wizard.' },
-  { step: '03', title: 'Get Results', desc: 'Receive instant risk assessment with personalized recommendations.' },
-  { step: '04', title: 'Track Progress', desc: 'Monitor changes over time and share results with your doctor.' },
+const stepMeta = [
+  { key: 'account', step: '01' },
+  { key: 'screening', step: '02' },
+  { key: 'results', step: '03' },
+  { key: 'track', step: '04' },
 ];
 
-const faqs = [
-  { q: 'What is PMOS?', a: 'Polycystic Ovary Syndrome (PMOS) is a common hormonal disorder affecting women of reproductive age. It causes irregular periods, excess androgen, and polycystic ovaries.' },
-  { q: 'Is this a medical diagnosis?', a: `No. ${APP_NAME} is a screening tool only. Results are for educational purposes and should be discussed with a qualified gynecologist or endocrinologist.` },
-  { q: 'How accurate is the prediction?', a: 'Our model is trained on clinical datasets and uses multiple risk factors. However, only a licensed medical professional can provide a formal PMOS diagnosis.' },
-  { q: 'Is my data safe?', a: 'Yes. All data is encrypted in transit and at rest. We do not share your health information with third parties.' },
-  { q: 'Can I delete my data?', a: 'Yes. You can delete your prediction history at any time from your dashboard.' },
-];
+const faqKeys = ['whatIsPmos', 'medicalDiagnosis', 'accuracy', 'dataSafe', 'deleteData'];
 
 const LandingPage = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+  const { t } = useTranslation();
+
+  const features = featureMeta.map((f) => ({
+    ...f,
+    title: t(`landing.features.items.${f.key}.title`),
+    desc: t(`landing.features.items.${f.key}.desc`),
+  }));
+
+  const steps = stepMeta.map((s) => ({
+    ...s,
+    title: t(`landing.howItWorks.steps.${s.key}.title`),
+    desc: t(`landing.howItWorks.steps.${s.key}.desc`),
+  }));
+
+  const faqs = faqKeys.map((key) => ({
+    q: t(`landing.faq.items.${key}.q`),
+    a: t(`landing.faq.items.${key}.a`, { appName: APP_NAME }),
+  }));
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
@@ -67,11 +80,11 @@ const LandingPage = () => {
           <Grid container spacing={6} alignItems="center">
             <Grid item xs={12} md={7}>
               <motion.div variants={fadeUp} initial="hidden" animate="visible" transition={{ duration: 0.7 }}>
-                 <Chip label="🧬 AI-Powered Healthcare" size="small" sx={{ mb: 3, bgcolor: 'rgba(233,30,99,0.12)', color: 'primary.main', border: '1px solid rgba(233,30,99,0.2)' }} />
+                 <Chip label={t('landing.hero.badge')} size="small" sx={{ mb: 3, bgcolor: 'rgba(233,30,99,0.12)', color: 'primary.main', border: '1px solid rgba(233,30,99,0.2)' }} />
                 <Typography variant="h1" sx={{ fontSize: { xs: '2.5rem', md: '3.8rem' }, fontWeight: 900, color: (theme) => theme.palette.mode === 'dark' ? '#FFFFFF' : '#2D2D2D', lineHeight: 1.1, mb: 3 }}>
-                  Understand Your
+                  {t('landing.hero.titleLine1')}
                   <Box component="span" sx={{ display: 'block', background: 'linear-gradient(135deg, #EC407A, #F48FB1, #FFA726)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                    PMOS Risk Today
+                    {t('landing.hero.titleLine2')}
                   </Box>
                 </Typography>
                 <Typography variant="h6" sx={{ color: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.65)' : 'text.secondary', fontWeight: 400, lineHeight: 1.8, mb: 5, maxWidth: 520 }}>
@@ -87,7 +100,7 @@ const LandingPage = () => {
                         onClick={() => navigate(ROUTES.PREDICTION)}
                         sx={{ px: 4, py: 1.5, fontSize: '1rem', background: 'linear-gradient(135deg, #EC407A, #F48FB1)', boxShadow: '0 8px 24px rgba(233,30,99,0.3)' }}
                       >
-                        Start Screening
+                        {t('landing.hero.ctaAuthenticated')}
                       </Button>
                       <Button
                         variant="outlined"
@@ -103,7 +116,7 @@ const LandingPage = () => {
                           }
                         }}
                       >
-                        Dashboard
+                        {t('landing.hero.dashboard')}
                       </Button>
                     </>
                   ) : (
@@ -115,7 +128,7 @@ const LandingPage = () => {
                         onClick={() => navigate(ROUTES.REGISTER)}
                         sx={{ px: 4, py: 1.5, fontSize: '1rem', background: 'linear-gradient(135deg, #EC407A, #F48FB1)', boxShadow: '0 8px 24px rgba(233,30,99,0.3)' }}
                       >
-                        Start Free Screening
+                        {t('landing.hero.ctaGuest')}
                       </Button>
                       <Button
                         variant="outlined"
@@ -131,16 +144,16 @@ const LandingPage = () => {
                           }
                         }}
                       >
-                        Login
+                        {t('landing.hero.login')}
                       </Button>
                     </>
                   )}
                 </Box>
                 <Box sx={{ mt: 4, display: 'flex', gap: 3, flexWrap: 'wrap' }}>
-                  {['Free to use', 'Private & secure', 'Instant results'].map((t) => (
-                    <Box key={t} sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
+                  {[t('landing.hero.trust.free'), t('landing.hero.trust.private'), t('landing.hero.trust.instant')].map((label) => (
+                    <Box key={label} sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
                       <CheckCircle sx={{ fontSize: 16, color: '#66BB6A' }} />
-                      <Typography variant="body2" sx={{ color: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'text.secondary' }}>{t}</Typography>
+                      <Typography variant="body2" sx={{ color: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'text.secondary' }}>{label}</Typography>
                     </Box>
                   ))}
                 </Box>
@@ -149,11 +162,11 @@ const LandingPage = () => {
             <Grid item xs={12} md={5}>
               <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }}>
                 <Card sx={{ borderRadius: 4, p: 3, bgcolor: 'background.paper', border: '1px solid', borderColor: 'divider' }}>
-                  <Typography variant="h6" sx={{ mb: 3, fontWeight: 700 }}>🔬 Sample Prediction Result</Typography>
+                  <Typography variant="h6" sx={{ mb: 3, fontWeight: 700 }}>{t('landing.hero.sample.title')}</Typography>
                   {[
-                    { label: 'Risk Level', value: 'Low Risk', color: '#66BB6A' },
-                    { label: 'Probability', value: '26%', color: 'primary.main' },
-                    { label: 'Confidence', value: '98%', color: 'info.main' },
+                    { label: t('landing.hero.sample.riskLevelLabel'), value: t('landing.hero.sample.riskLevelValue'), color: '#66BB6A' },
+                    { label: t('landing.hero.sample.probabilityLabel'), value: t('landing.hero.sample.probabilityValue'), color: 'primary.main' },
+                    { label: t('landing.hero.sample.confidenceLabel'), value: t('landing.hero.sample.confidenceValue'), color: 'info.main' },
                   ].map((item) => (
                     <Box key={item.label} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', py: 1.2, borderBottom: '1px solid', borderColor: 'divider' }}>
                       <Typography variant="body2" color="text.secondary">{item.label}</Typography>
@@ -161,8 +174,12 @@ const LandingPage = () => {
                     </Box>
                   ))}
                   <Box sx={{ mt: 2 }}>
-                    <Typography variant="caption" color="text.secondary">Recommendations</Typography>
-                    {['Maintain healthy lifestyle', 'Exercise regularly', 'Consult doctor if symptoms increase'].map((r) => (
+                    <Typography variant="caption" color="text.secondary">{t('landing.hero.sample.recommendationsTitle')}</Typography>
+                    {[
+                      t('landing.hero.sample.recommendations.lifestyle'),
+                      t('landing.hero.sample.recommendations.exercise'),
+                      t('landing.hero.sample.recommendations.consult'),
+                    ].map((r) => (
                       <Box key={r} sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
                         <CheckCircle sx={{ fontSize: 14, color: '#66BB6A' }} />
                         <Typography variant="caption" color="text.secondary">{r}</Typography>
@@ -179,9 +196,9 @@ const LandingPage = () => {
       {/* Features */}
       <Container maxWidth="lg" sx={{ py: 10 }}>
         <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.6 }}>
-          <Typography variant="h3" fontWeight={800} textAlign="center" gutterBottom>Why {APP_NAME}?</Typography>
+          <Typography variant="h3" fontWeight={800} textAlign="center" gutterBottom>{t('landing.features.title', { appName: APP_NAME })}</Typography>
           <Typography variant="h6" color="text.secondary" textAlign="center" sx={{ mb: 7, fontWeight: 400, maxWidth: 600, mx: 'auto' }}>
-            A comprehensive, evidence-based approach to PMOS risk assessment
+            {t('landing.features.subtitle')}
           </Typography>
         </motion.div>
         <Grid container spacing={3}>
@@ -204,9 +221,9 @@ const LandingPage = () => {
       {/* How It Works */}
       <Box sx={{ bgcolor: 'background.paper', py: 10 }}>
         <Container maxWidth="lg">
-          <Typography variant="h3" fontWeight={800} textAlign="center" gutterBottom>How It Works</Typography>
+          <Typography variant="h3" fontWeight={800} textAlign="center" gutterBottom>{t('landing.howItWorks.title')}</Typography>
           <Typography variant="h6" color="text.secondary" textAlign="center" sx={{ mb: 8, fontWeight: 400 }}>
-            Get your PMOS risk assessment in 4 simple steps
+            {t('landing.howItWorks.subtitle')}
           </Typography>
           <Grid container spacing={4}>
             {steps.map((s, i) => (
@@ -226,13 +243,20 @@ const LandingPage = () => {
 
       {/* About PMOS */}
       <Container maxWidth="md" sx={{ py: 10 }}>
-        <Typography variant="h3" fontWeight={800} textAlign="center" gutterBottom>About PMOS</Typography>
+        <Typography variant="h3" fontWeight={800} textAlign="center" gutterBottom>{t('landing.about.title')}</Typography>
         <Typography variant="body1" color="text.secondary" textAlign="center" lineHeight={1.9} sx={{ mb: 4 }}>
-          Polycystic Ovary Syndrome (PMOS) affects approximately <strong>1 in 10</strong> women of childbearing age worldwide. It is one of the most common endocrine disorders and a leading cause of female infertility. Early detection and lifestyle intervention can significantly improve outcomes.
+          <Trans i18nKey="landing.about.description" components={{ strong: <strong /> }} />
         </Typography>
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center' }}>
-          {['Irregular periods', 'Hormonal imbalance', 'Weight gain', 'Hair thinning', 'Acne', 'Fertility issues'].map((t) => (
-            <Chip key={t} label={t} variant="outlined" icon={<FavoriteOutlined sx={{ fontSize: '14px !important' }} />} />
+          {[
+            t('landing.about.tags.periods'),
+            t('landing.about.tags.hormonal'),
+            t('landing.about.tags.weight'),
+            t('landing.about.tags.hair'),
+            t('landing.about.tags.acne'),
+            t('landing.about.tags.fertility'),
+          ].map((tag) => (
+            <Chip key={tag} label={tag} variant="outlined" icon={<FavoriteOutlined sx={{ fontSize: '14px !important' }} />} />
           ))}
         </Box>
       </Container>
@@ -240,7 +264,7 @@ const LandingPage = () => {
       {/* FAQ */}
       <Box sx={{ bgcolor: 'background.paper', py: 10 }}>
         <Container maxWidth="md">
-          <Typography variant="h3" fontWeight={800} textAlign="center" gutterBottom>Frequently Asked Questions</Typography>
+          <Typography variant="h3" fontWeight={800} textAlign="center" gutterBottom>{t('landing.faq.title')}</Typography>
           <Box sx={{ mt: 5 }}>
             {faqs.map((faq, i) => (
               <Accordion key={i} sx={{ mb: 1.5, borderRadius: '12px !important', border: '1px solid', borderColor: 'divider', boxShadow: 'none', '&:before': { display: 'none' } }}>
@@ -259,9 +283,9 @@ const LandingPage = () => {
       {/* CTA */}
       <Box sx={{ background: 'linear-gradient(135deg, #EC407A, #F48FB1)', py: 10, textAlign: 'center' }}>
         <Container maxWidth="md">
-          <Typography variant="h3" fontWeight={800} color="white" gutterBottom>Take the First Step Today</Typography>
+          <Typography variant="h3" fontWeight={800} color="white" gutterBottom>{t('landing.cta.title')}</Typography>
           <Typography variant="h6" sx={{ color: 'rgba(255,255,255,0.9)', mb: 4, fontWeight: 400 }}>
-            Early awareness can make all the difference. Start your free screening now.
+            {t('landing.cta.subtitle')}
           </Typography>
           <Button
             variant="contained"
@@ -269,7 +293,7 @@ const LandingPage = () => {
             onClick={() => navigate(isAuthenticated ? ROUTES.PREDICTION : ROUTES.REGISTER)}
             sx={{ px: 6, py: 1.8, fontSize: '1.1rem', bgcolor: 'white', color: '#E91E63', fontWeight: 700, '&:hover': { bgcolor: 'rgba(255,255,255,0.9)' } }}
           >
-            {isAuthenticated ? 'Start Screening →' : 'Start Free Screening →'}
+            {isAuthenticated ? t('landing.cta.buttonAuthenticated') : t('landing.cta.buttonGuest')}
           </Button>
         </Container>
       </Box>

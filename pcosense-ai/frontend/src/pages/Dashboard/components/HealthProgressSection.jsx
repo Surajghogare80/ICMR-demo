@@ -4,8 +4,10 @@ import {
   AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
 } from 'recharts';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const CustomTooltip = ({ active, payload, label }) => {
+  const { t } = useTranslation();
   if (active && payload && payload.length) {
     return (
       <Box
@@ -20,7 +22,7 @@ const CustomTooltip = ({ active, payload, label }) => {
       >
         <Typography variant="caption" fontWeight={700} display="block">{label}</Typography>
         <Typography variant="caption" sx={{ color: '#EC407A' }}>
-          Risk: {payload[0]?.value}%
+          {t('dashboard.progress.tooltipRisk', { value: payload[0]?.value })}
         </Typography>
       </Box>
     );
@@ -66,6 +68,7 @@ const MetricBar = ({ label, value, color, max = 100, index }) => {
 };
 
 const HealthProgressSection = ({ predictions }) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
 
@@ -82,21 +85,21 @@ const HealthProgressSection = ({ predictions }) => {
 
   const metrics = [
     {
-      label: 'Risk Probability',
+      label: t('dashboard.progress.metrics.riskProbability'),
       value: latest?.probability ?? null,
       color: latest?.probability > 60 ? '#EF5350' : latest?.probability > 40 ? '#FFA726' : '#66BB6A',
     },
-    { label: 'AI Confidence', value: latest?.confidence ?? null, color: '#7E57C2' },
-    { label: 'Screenings Completed', value: Math.min(predictions?.length ?? 0, 10) * 10, color: '#EC407A', max: 100 },
-    { label: 'Health Engagement', value: Math.min((predictions?.length ?? 0) * 20, 100), color: '#26C6DA' },
+    { label: t('dashboard.progress.metrics.aiConfidence'), value: latest?.confidence ?? null, color: '#7E57C2' },
+    { label: t('dashboard.progress.metrics.screeningsCompleted'), value: Math.min(predictions?.length ?? 0, 10) * 10, color: '#EC407A', max: 100 },
+    { label: t('dashboard.progress.metrics.healthEngagement'), value: Math.min((predictions?.length ?? 0) * 20, 100), color: '#26C6DA' },
   ];
 
   return (
     <Box sx={{ mb: 5 }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-        <Typography variant="h5" fontWeight={800} sx={{ mb: 0.5 }}>Health Progress</Typography>
+        <Typography variant="h5" fontWeight={800} sx={{ mb: 0.5 }}>{t('dashboard.progress.heading')}</Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-          Track your risk trends and health metrics over time
+          {t('dashboard.progress.subtitle')}
         </Typography>
       </motion.div>
 
@@ -118,7 +121,7 @@ const HealthProgressSection = ({ predictions }) => {
               }}
             >
               <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 3 }}>
-                Risk Trend Over Time
+                {t('dashboard.progress.chartTitle')}
               </Typography>
               {chartData.length > 1 ? (
                 <ResponsiveContainer width="100%" height={200}>
@@ -147,7 +150,7 @@ const HealthProgressSection = ({ predictions }) => {
               ) : (
                 <Box sx={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <Typography variant="body2" color="text.disabled" textAlign="center">
-                    Complete 2+ screenings to see your risk trend chart
+                    {t('dashboard.progress.emptyChart')}
                   </Typography>
                 </Box>
               )}
@@ -168,7 +171,7 @@ const HealthProgressSection = ({ predictions }) => {
             }}
           >
             <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 3 }}>
-              Health Metrics
+              {t('dashboard.progress.metricsTitle')}
             </Typography>
             {metrics.map((metric, i) => (
               <MetricBar key={metric.label} {...metric} index={i} />

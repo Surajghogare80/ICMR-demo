@@ -1,0 +1,401 @@
+{
+  "en": {
+    "admin": {
+      "title": "Admin Dashboard",
+      "subtitle": "Platform overview and user management",
+      "actions": {
+        "refresh": "Refresh"
+      },
+      "loading": {
+        "statistics": "Loading statistics...",
+        "users": "Loading users..."
+      },
+      "stats": {
+        "total_users": "Total Users",
+        "total_predictions": "Total Predictions",
+        "high_risk_cases": "High Risk Cases",
+        "low_risk_cases": "Low Risk Cases",
+        "percent_of_total": "{{percent}}% of total"
+      },
+      "roles": {
+        "admin": "Administrator",
+        "user": "User"
+      },
+      "results": {
+        "high_risk": "High Risk",
+        "low_risk": "Low Risk"
+      },
+      "log_actions": {
+        "PREDICTION_CREATED": "Prediction created",
+        "PREDICTION_DELETED": "Prediction deleted",
+        "REGISTER": "Account registered",
+        "LOGIN": "Logged in",
+        "PROFILE_UPDATE": "Profile updated",
+        "PASSWORD_CHANGE": "Password changed",
+        "ADMIN_USER_DELETE": "User deleted by admin"
+      },
+      "users_table": {
+        "title": "User Management",
+        "name": "Name",
+        "role": "Role",
+        "joined": "Joined",
+        "action": "Action",
+        "delete_tooltip": "Delete user"
+      },
+      "activity": {
+        "title": "Recent Activity",
+        "empty": "No activity logs yet."
+      },
+      "predictions_table": {
+        "title": "Recent Predictions",
+        "user": "User",
+        "date": "Date",
+        "result": "Result",
+        "probability": "Probability",
+        "details": "Details",
+        "anonymous": "Anonymous",
+        "view_tooltip": "View prediction details"
+      },
+      "detail_dialog": {
+        "title": "Prediction Details (Admin)",
+        "probability_label": "Probability",
+        "confidence_label": "Confidence",
+        "close": "Close",
+        "sections": {
+          "personal": "Personal",
+          "menstrual": "Menstrual",
+          "blood_standard": "Blood Report (Standard)",
+          "blood_extended": "Blood Report (Extended)",
+          "ultrasound": "Ultrasound",
+          "lifestyle": "Lifestyle"
+        },
+        "fields": {
+          "age": "Age",
+          "weight": "Weight",
+          "height": "Height",
+          "bmi": "BMI",
+          "waist_size": "Waist Size",
+          "hip_size": "Hip Size",
+          "waist_hip_ratio": "Waist : Hip Ratio",
+          "blood_group": "Blood Group",
+          "cycle_length": "Cycle Length",
+          "period_duration": "Period Duration",
+          "regularity": "Regularity",
+          "flow": "Flow",
+          "family_history": "Family History of PMOS",
+          "fsh": "FSH",
+          "lh": "LH",
+          "tsh": "TSH",
+          "amh": "AMH",
+          "haemoglobin": "Haemoglobin",
+          "random_blood_sugar": "Random Blood Sugar",
+          "vitamin_d3": "Vitamin D3",
+          "shbg": "SHBG",
+          "fasting_insulin": "Fasting Insulin",
+          "homa_ir": "HOMA-IR",
+          "follicle_no": "Follicle No.",
+          "avg_follicle_size": "Avg Follicle Size",
+          "ovary_volume": "Ovary Volume",
+          "endometrium": "Endometrium",
+          "fast_food": "Fast Food",
+          "exercise": "Exercise",
+          "stress": "Stress",
+          "sleep": "Sleep"
+        },
+        "units": {
+          "yrs": "yrs",
+          "days": "days",
+          "kg": "kg",
+          "cm": "cm",
+          "inch": "inch",
+          "mIU_mL": "mIU/mL",
+          "mIU_L": "mIU/L",
+          "ng_mL": "ng/mL",
+          "g_dL": "g/dL",
+          "mg_dL": "mg/dL",
+          "uIU_mL": "µIU/mL",
+          "nmol_L": "nmol/L",
+          "mm": "mm",
+          "mL": "mL",
+          "hrs": "hrs"
+        }
+      },
+      "delete_dialog": {
+        "title": "Delete User",
+        "body": "Are you sure you want to permanently delete this user and all their data?",
+        "confirm_button": "Delete User",
+        "deleting": "Deleting..."
+      },
+      "toasts": {
+        "user_deleted": "User deleted successfully.",
+        "user_delete_failed": "Failed to delete user."
+      }
+    }
+  },
+  "hi": {
+    "admin": {
+      "title": "एडमिन डैशबोर्ड",
+      "subtitle": "प्लेटफ़ॉर्म का अवलोकन और उपयोगकर्ता प्रबंधन",
+      "actions": {
+        "refresh": "रीफ़्रेश करें"
+      },
+      "loading": {
+        "statistics": "आंकड़े लोड हो रहे हैं...",
+        "users": "उपयोगकर्ता लोड हो रहे हैं..."
+      },
+      "stats": {
+        "total_users": "कुल उपयोगकर्ता",
+        "total_predictions": "कुल भविष्यवाणियां",
+        "high_risk_cases": "उच्च जोखिम मामले",
+        "low_risk_cases": "कम जोखिम मामले",
+        "percent_of_total": "कुल का {{percent}}%"
+      },
+      "roles": {
+        "admin": "प्रशासक",
+        "user": "उपयोगकर्ता"
+      },
+      "results": {
+        "high_risk": "उच्च जोखिम",
+        "low_risk": "कम जोखिम"
+      },
+      "log_actions": {
+        "PREDICTION_CREATED": "भविष्यवाणी बनाई गई",
+        "PREDICTION_DELETED": "भविष्यवाणी हटाई गई",
+        "REGISTER": "खाता पंजीकृत हुआ",
+        "LOGIN": "लॉगिन हुआ",
+        "PROFILE_UPDATE": "प्रोफ़ाइल अपडेट हुई",
+        "PASSWORD_CHANGE": "पासवर्ड बदला गया",
+        "ADMIN_USER_DELETE": "एडमिन द्वारा उपयोगकर्ता हटाया गया"
+      },
+      "users_table": {
+        "title": "उपयोगकर्ता प्रबंधन",
+        "name": "नाम",
+        "role": "भूमिका",
+        "joined": "शामिल हुए",
+        "action": "कार्रवाई",
+        "delete_tooltip": "उपयोगकर्ता हटाएं"
+      },
+      "activity": {
+        "title": "हाल की गतिविधि",
+        "empty": "अभी तक कोई गतिविधि लॉग नहीं है।"
+      },
+      "predictions_table": {
+        "title": "हाल की भविष्यवाणियां",
+        "user": "उपयोगकर्ता",
+        "date": "तारीख",
+        "result": "परिणाम",
+        "probability": "संभावना",
+        "details": "विवरण",
+        "anonymous": "अज्ञात",
+        "view_tooltip": "भविष्यवाणी का विवरण देखें"
+      },
+      "detail_dialog": {
+        "title": "भविष्यवाणी विवरण (एडमिन)",
+        "probability_label": "संभावना",
+        "confidence_label": "विश्वास स्तर",
+        "close": "बंद करें",
+        "sections": {
+          "personal": "व्यक्तिगत",
+          "menstrual": "मासिक धर्म",
+          "blood_standard": "रक्त रिपोर्ट (मानक)",
+          "blood_extended": "रक्त रिपोर्ट (विस्तृत)",
+          "ultrasound": "अल्ट्रासाउंड",
+          "lifestyle": "जीवनशैली"
+        },
+        "fields": {
+          "age": "आयु",
+          "weight": "वजन",
+          "height": "ऊंचाई",
+          "bmi": "बीएमआई",
+          "waist_size": "कमर का आकार",
+          "hip_size": "कूल्हे का आकार",
+          "waist_hip_ratio": "कमर : कूल्हा अनुपात",
+          "blood_group": "रक्त समूह",
+          "cycle_length": "चक्र की अवधि",
+          "period_duration": "मासिक धर्म की अवधि",
+          "regularity": "नियमितता",
+          "flow": "प्रवाह",
+          "family_history": "PMOS का पारिवारिक इतिहास",
+          "fsh": "एफएसएच",
+          "lh": "एलएच",
+          "tsh": "टीएसएच",
+          "amh": "एएमएच",
+          "haemoglobin": "हीमोग्लोबिन",
+          "random_blood_sugar": "रैंडम ब्लड शुगर",
+          "vitamin_d3": "विटामिन डी3",
+          "shbg": "एसएचबीजी",
+          "fasting_insulin": "फास्टिंग इंसुलिन",
+          "homa_ir": "HOMA-IR",
+          "follicle_no": "फॉलिकल संख्या",
+          "avg_follicle_size": "औसत फॉलिकल आकार",
+          "ovary_volume": "अंडाशय आयतन",
+          "endometrium": "एंडोमेट्रियम",
+          "fast_food": "फास्ट फूड",
+          "exercise": "व्यायाम",
+          "stress": "तनाव",
+          "sleep": "नींद"
+        },
+        "units": {
+          "yrs": "वर्ष",
+          "days": "दिन",
+          "kg": "किग्रा",
+          "cm": "सेमी",
+          "inch": "इंच",
+          "mIU_mL": "mIU/mL",
+          "mIU_L": "mIU/L",
+          "ng_mL": "ng/mL",
+          "g_dL": "g/dL",
+          "mg_dL": "mg/dL",
+          "uIU_mL": "µIU/mL",
+          "nmol_L": "nmol/L",
+          "mm": "मिमी",
+          "mL": "मिली",
+          "hrs": "घंटे"
+        }
+      },
+      "delete_dialog": {
+        "title": "उपयोगकर्ता हटाएं",
+        "body": "क्या आप वाकई इस उपयोगकर्ता और उनका सारा डेटा स्थायी रूप से हटाना चाहते हैं?",
+        "confirm_button": "उपयोगकर्ता हटाएं",
+        "deleting": "हटाया जा रहा है..."
+      },
+      "toasts": {
+        "user_deleted": "उपयोगकर्ता सफलतापूर्वक हटा दिया गया।",
+        "user_delete_failed": "उपयोगकर्ता हटाने में विफल।"
+      }
+    }
+  },
+  "mr": {
+    "admin": {
+      "title": "अॅडमिन डॅशबोर्ड",
+      "subtitle": "प्लॅटफॉर्मचा आढावा आणि वापरकर्ता व्यवस्थापन",
+      "actions": {
+        "refresh": "रीफ्रेश करा"
+      },
+      "loading": {
+        "statistics": "आकडेवारी लोड होत आहे...",
+        "users": "वापरकर्ते लोड होत आहेत..."
+      },
+      "stats": {
+        "total_users": "एकूण वापरकर्ते",
+        "total_predictions": "एकूण भाकिते",
+        "high_risk_cases": "उच्च जोखीम प्रकरणे",
+        "low_risk_cases": "कमी जोखीम प्रकरणे",
+        "percent_of_total": "एकूणपैकी {{percent}}%"
+      },
+      "roles": {
+        "admin": "प्रशासक",
+        "user": "वापरकर्ता"
+      },
+      "results": {
+        "high_risk": "उच्च जोखीम",
+        "low_risk": "कमी जोखीम"
+      },
+      "log_actions": {
+        "PREDICTION_CREATED": "भाकीत तयार केले",
+        "PREDICTION_DELETED": "भाकीत हटवले",
+        "REGISTER": "खाते नोंदणीकृत झाले",
+        "LOGIN": "लॉगिन झाले",
+        "PROFILE_UPDATE": "प्रोफाइल अपडेट झाले",
+        "PASSWORD_CHANGE": "पासवर्ड बदलला",
+        "ADMIN_USER_DELETE": "अॅडमिनने वापरकर्ता हटवला"
+      },
+      "users_table": {
+        "title": "वापरकर्ता व्यवस्थापन",
+        "name": "नाव",
+        "role": "भूमिका",
+        "joined": "सामील झाले",
+        "action": "कृती",
+        "delete_tooltip": "वापरकर्ता हटवा"
+      },
+      "activity": {
+        "title": "अलीकडील क्रियाकलाप",
+        "empty": "अद्याप कोणतेही क्रियाकलाप लॉग नाहीत."
+      },
+      "predictions_table": {
+        "title": "अलीकडील भाकिते",
+        "user": "वापरकर्ता",
+        "date": "तारीख",
+        "result": "निकाल",
+        "probability": "संभाव्यता",
+        "details": "तपशील",
+        "anonymous": "अनामिक",
+        "view_tooltip": "भाकीत तपशील पहा"
+      },
+      "detail_dialog": {
+        "title": "भाकीत तपशील (अॅडमिन)",
+        "probability_label": "संभाव्यता",
+        "confidence_label": "विश्वासार्हता",
+        "close": "बंद करा",
+        "sections": {
+          "personal": "वैयक्तिक",
+          "menstrual": "मासिक पाळी",
+          "blood_standard": "रक्त अहवाल (मानक)",
+          "blood_extended": "रक्त अहवाल (विस्तारित)",
+          "ultrasound": "अल्ट्रासाऊंड",
+          "lifestyle": "जीवनशैली"
+        },
+        "fields": {
+          "age": "वय",
+          "weight": "वजन",
+          "height": "उंची",
+          "bmi": "बीएमआय",
+          "waist_size": "कंबरेचा आकार",
+          "hip_size": "नितंबाचा आकार",
+          "waist_hip_ratio": "कंबर : नितंब गुणोत्तर",
+          "blood_group": "रक्तगट",
+          "cycle_length": "चक्राचा कालावधी",
+          "period_duration": "मासिक पाळीचा कालावधी",
+          "regularity": "नियमितता",
+          "flow": "प्रवाह",
+          "family_history": "PMOS चा कौटुंबिक इतिहास",
+          "fsh": "एफएसएच",
+          "lh": "एलएच",
+          "tsh": "टीएसएच",
+          "amh": "एएमएच",
+          "haemoglobin": "हिमोग्लोबिन",
+          "random_blood_sugar": "रँडम ब्लड शुगर",
+          "vitamin_d3": "व्हिटॅमिन डी3",
+          "shbg": "एसएचबीजी",
+          "fasting_insulin": "फास्टिंग इन्सुलिन",
+          "homa_ir": "HOMA-IR",
+          "follicle_no": "फॉलिकल संख्या",
+          "avg_follicle_size": "सरासरी फॉलिकल आकार",
+          "ovary_volume": "अंडाशय आकारमान",
+          "endometrium": "एंडोमेट्रियम",
+          "fast_food": "फास्ट फूड",
+          "exercise": "व्यायाम",
+          "stress": "ताण",
+          "sleep": "झोप"
+        },
+        "units": {
+          "yrs": "वर्षे",
+          "days": "दिवस",
+          "kg": "किग्रॅ",
+          "cm": "सेमी",
+          "inch": "इंच",
+          "mIU_mL": "mIU/mL",
+          "mIU_L": "mIU/L",
+          "ng_mL": "ng/mL",
+          "g_dL": "g/dL",
+          "mg_dL": "mg/dL",
+          "uIU_mL": "µIU/mL",
+          "nmol_L": "nmol/L",
+          "mm": "मिमी",
+          "mL": "मिली",
+          "hrs": "तास"
+        }
+      },
+      "delete_dialog": {
+        "title": "वापरकर्ता हटवा",
+        "body": "तुम्हाला खात्री आहे की तुम्ही या वापरकर्त्याला आणि त्याचा संपूर्ण डेटा कायमचा हटवू इच्छिता?",
+        "confirm_button": "वापरकर्ता हटवा",
+        "deleting": "हटवत आहे..."
+      },
+      "toasts": {
+        "user_deleted": "वापरकर्ता यशस्वीरित्या हटवला.",
+        "user_delete_failed": "वापरकर्ता हटवण्यात अयशस्वी."
+      }
+    }
+  }
+}

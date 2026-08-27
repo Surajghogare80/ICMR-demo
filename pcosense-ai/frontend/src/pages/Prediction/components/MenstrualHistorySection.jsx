@@ -4,9 +4,13 @@ import {
   Select, MenuItem, Stack, Paper, useTheme, IconButton
 } from '@mui/material';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { FLOW_INTENSITY_OPTIONS } from '../../../constants/index.js';
+import { translateOptionValue } from '../../../utils/optionTranslation.js';
+
+const optionLabel = (t, group, value) => translateOptionValue(t, `options.${group}`, value);
 
 const RegularIcon = (props) => (
   <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
@@ -30,34 +34,26 @@ const AbsentIcon = (props) => (
   </svg>
 );
 
-const REGULARITY_OPTIONS = [
-  {
-    value: 'Regular',
-    title: 'Regular',
-    description: 'Comes every 21–35 days',
-    icon: <RegularIcon />
-  },
-  {
-    value: 'Irregular',
-    title: 'Irregular',
-    description: 'Unpredictable — sometimes early, sometimes late',
-    icon: <IrregularIcon />
-  },
-  {
-    value: 'Absent',
-    title: 'Often absent',
-    description: 'Skipped for months at a time',
-    icon: <AbsentIcon />
-  }
-];
+const REGULARITY_ICONS = { Regular: <RegularIcon />, Irregular: <IrregularIcon />, Absent: <AbsentIcon /> };
 
 const PERIOD_DURATION_OPTIONS = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const MenstrualHistorySection = ({ formData, updateField }) => {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
+  const { t } = useTranslation();
 
   const menstrual = formData?.menstrual || {};
+
+  const REGULARITY_OPTIONS = [
+    { value: 'Regular', key: 'regular', icon: REGULARITY_ICONS.Regular },
+    { value: 'Irregular', key: 'irregular', icon: REGULARITY_ICONS.Irregular },
+    { value: 'Absent', key: 'absent', icon: REGULARITY_ICONS.Absent },
+  ].map((o) => ({
+    ...o,
+    title: t(`prediction.menstrual.regularity_options.${o.key}.title`),
+    description: t(`prediction.menstrual.regularity_options.${o.key}.description`),
+  }));
 
   const handleRegularitySelect = (value) => {
     updateField('menstrual', 'cycleRegularity', value);
@@ -90,7 +86,7 @@ const MenstrualHistorySection = ({ formData, updateField }) => {
       {/* Top Section */}
       <Box sx={{ textAlign: 'center', mb: 3 }}>
         <Typography variant="h5" fontWeight={800} sx={{ color: '#E91E63' }}>
-          Menstrual History
+          {t('prediction.menstrual.title')}
         </Typography>
       </Box>
 
@@ -107,7 +103,7 @@ const MenstrualHistorySection = ({ formData, updateField }) => {
           {/* Card 1: Cycle Regularity */}
           <Paper elevation={0} sx={cardStyle}>
             <Typography variant="h6" fontWeight={700} sx={{ mb: 2, textAlign: 'center' }}>
-              How regular are your periods?
+              {t('prediction.menstrual.regularity_question')}
             </Typography>
 
             <Stack spacing={1} sx={{ flexGrow: 1, justifyContent: 'center' }}>
@@ -176,7 +172,7 @@ const MenstrualHistorySection = ({ formData, updateField }) => {
           {/* Card 2: Period Duration */}
           <Paper elevation={0} sx={cardStyle}>
             <Typography variant="h6" fontWeight={700} sx={{ mb: 2, textAlign: 'center' }}>
-              How long does your period last?
+              {t('prediction.menstrual.duration_question')}
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
@@ -215,7 +211,7 @@ const MenstrualHistorySection = ({ formData, updateField }) => {
                 })}
               </Grid>
               <Typography variant="subtitle1" color="text.secondary" align="center" sx={{ mt: 2, fontWeight: 600 }}>
-                Days
+                {t('prediction.menstrual.days_label')}
               </Typography>
             </Box>
           </Paper>
@@ -223,7 +219,7 @@ const MenstrualHistorySection = ({ formData, updateField }) => {
           {/* Card 3: Average Cycle Length */}
           <Paper elevation={0} sx={cardStyle}>
             <Typography variant="h6" fontWeight={700} sx={{ mb: 1.5, textAlign: 'center' }}>
-              Average Cycle Length
+              {t('prediction.menstrual.avg_cycle_length_title')}
             </Typography>
 
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 'auto', mb: 'auto' }}>
@@ -243,7 +239,7 @@ const MenstrualHistorySection = ({ formData, updateField }) => {
                     {menstrual.cycleLength || 28}
                   </Typography>
                   <Typography variant="subtitle1" fontWeight={700} color="text.secondary" sx={{ whiteSpace: 'nowrap', lineHeight: 1 }}>
-                    days
+                    {t('prediction.menstrual.days_unit')}
                   </Typography>
                 </Box>
                 <IconButton
@@ -263,20 +259,20 @@ const MenstrualHistorySection = ({ formData, updateField }) => {
           {/* Card 4: Flow Intensity */}
           <Paper elevation={0} sx={cardStyle}>
             <Typography variant="h6" fontWeight={700} sx={{ mb: 1.5, textAlign: 'center' }}>
-              Flow Intensity
+              {t('prediction.menstrual.flow_intensity_title')}
             </Typography>
-            
+
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', mt: 'auto', mb: 'auto' }}>
               <FormControl fullWidth sx={{ maxWidth: '300px' }}>
-                <InputLabel>Intensity</InputLabel>
+                <InputLabel>{t('prediction.menstrual.intensity_label')}</InputLabel>
                 <Select
                   value={menstrual.flowIntensity || 'Normal'}
-                  label="Intensity"
+                  label={t('prediction.menstrual.intensity_label')}
                   onChange={(e) => updateField('menstrual', 'flowIntensity', e.target.value)}
                   sx={{ borderRadius: '16px' }}
                 >
                   {FLOW_INTENSITY_OPTIONS.map((o) => (
-                    <MenuItem key={o} value={o}>{o}</MenuItem>
+                    <MenuItem key={o} value={o}>{optionLabel(t, 'flowIntensity', o)}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
