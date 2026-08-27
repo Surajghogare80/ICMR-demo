@@ -13,7 +13,7 @@ import {
 import { motion } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext.jsx';
 import { ROUTES } from '../../constants/index.js';
-import { APP_NAME } from '../../config/appConfig.js';
+import { APP_NAME, APP_FULL_FORM } from '../../config/appConfig.js';
 import LanguageSelector from '../../components/common/LanguageSelector.jsx';
 
 const Navbar = ({ onThemeToggle, isDark }) => {
@@ -59,17 +59,31 @@ const Navbar = ({ onThemeToggle, isDark }) => {
             >
               <Typography sx={{ fontSize: '1.1rem' }}>🧬</Typography>
             </Box>
-            <Typography
-              variant="h6"
-              fontWeight={800}
-              sx={{
-                background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
-              {APP_NAME}
-            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+              <Typography
+                variant="h6"
+                fontWeight={900}
+                sx={{
+                  background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  lineHeight: 1.4,
+                }}
+              >
+                {APP_NAME}
+              </Typography>
+              <Typography
+                variant="caption"
+                sx={{
+                  display: { xs: 'none', sm: 'block' },
+                  color: 'text.secondary',
+                  fontSize: '0.65rem',
+                  lineHeight: 1.1,
+                }}
+              >
+                {APP_FULL_FORM}
+              </Typography>
+            </Box>
           </Box>
         </motion.div>
 

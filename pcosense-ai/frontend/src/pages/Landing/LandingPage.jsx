@@ -78,7 +78,7 @@ const LandingPage = () => {
 
         <Container maxWidth="lg">
           <Grid container spacing={6} alignItems="center">
-            <Grid item xs={12} md={7}>
+            <Grid item xs={12} md={9}>
               <motion.div variants={fadeUp} initial="hidden" animate="visible" transition={{ duration: 0.7 }}>
                  <Chip label={t('landing.hero.badge')} size="small" sx={{ mb: 3, bgcolor: 'rgba(233,30,99,0.12)', color: 'primary.main', border: '1px solid rgba(233,30,99,0.2)' }} />
                 <Typography variant="h1" sx={{ fontSize: { xs: '2.5rem', md: '3.8rem' }, fontWeight: 900, color: (theme) => theme.palette.mode === 'dark' ? '#FFFFFF' : '#2D2D2D', lineHeight: 1.1, mb: 3 }}>
@@ -157,36 +157,6 @@ const LandingPage = () => {
                     </Box>
                   ))}
                 </Box>
-              </motion.div>
-            </Grid>
-            <Grid item xs={12} md={5}>
-              <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }}>
-                <Card sx={{ borderRadius: 4, p: 3, bgcolor: 'background.paper', border: '1px solid', borderColor: 'divider' }}>
-                  <Typography variant="h6" sx={{ mb: 3, fontWeight: 700 }}>{t('landing.hero.sample.title')}</Typography>
-                  {[
-                    { label: t('landing.hero.sample.riskLevelLabel'), value: t('landing.hero.sample.riskLevelValue'), color: '#66BB6A' },
-                    { label: t('landing.hero.sample.probabilityLabel'), value: t('landing.hero.sample.probabilityValue'), color: 'primary.main' },
-                    { label: t('landing.hero.sample.confidenceLabel'), value: t('landing.hero.sample.confidenceValue'), color: 'info.main' },
-                  ].map((item) => (
-                    <Box key={item.label} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', py: 1.2, borderBottom: '1px solid', borderColor: 'divider' }}>
-                      <Typography variant="body2" color="text.secondary">{item.label}</Typography>
-                      <Typography variant="subtitle2" fontWeight={700} sx={{ color: item.color }}>{item.value}</Typography>
-                    </Box>
-                  ))}
-                  <Box sx={{ mt: 2 }}>
-                    <Typography variant="caption" color="text.secondary">{t('landing.hero.sample.recommendationsTitle')}</Typography>
-                    {[
-                      t('landing.hero.sample.recommendations.lifestyle'),
-                      t('landing.hero.sample.recommendations.exercise'),
-                      t('landing.hero.sample.recommendations.consult'),
-                    ].map((r) => (
-                      <Box key={r} sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
-                        <CheckCircle sx={{ fontSize: 14, color: '#66BB6A' }} />
-                        <Typography variant="caption" color="text.secondary">{r}</Typography>
-                      </Box>
-                    ))}
-                  </Box>
-                </Card>
               </motion.div>
             </Grid>
           </Grid>
