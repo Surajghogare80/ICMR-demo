@@ -2,15 +2,15 @@
   "en": {
     "landing": {
       "hero": {
-        "badge": "🧬 AI-Powered Healthcare",
+        "badge": "AI/ML-Powered Healthcare",
         "titleLine1": "Understand Your",
         "titleLine2": "PMOS Risk Today",
         "ctaAuthenticated": "Start Screening",
         "dashboard": "Dashboard",
-        "ctaGuest": "Start Free Screening",
+        "ctaGuest": "Get Started",
         "login": "Login",
         "trust": {
-          "free": "Free to use",
+          "free": "Easy to use",
           "private": "Private & secure",
           "instant": "Instant results"
         },
@@ -35,7 +35,7 @@
         "subtitle": "A comprehensive, evidence-based approach to PMOS risk assessment",
         "items": {
           "screening": {
-            "title": "AI-Powered Screening",
+            "title": "AI/ML-Powered Screening",
             "desc": "Advanced multi-factor analysis using clinical and lifestyle data for accurate PMOS risk assessment."
           },
           "secure": {
