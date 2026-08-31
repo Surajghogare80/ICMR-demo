@@ -20,6 +20,7 @@ import toast from 'react-hot-toast';
 import WheelPicker from '../../components/ui/WheelPicker.jsx';
 import PersonalInfoSection from './components/PersonalInfoSection.jsx';
 import MenstrualHistorySection from './components/MenstrualHistorySection.jsx';
+import ScreeningConsent from './components/ScreeningConsent.jsx';
 import { translateOptionValue } from '../../utils/optionTranslation.js';
 
 // ─── Shared pink outlined button style ────────────────────────────────────────
@@ -94,6 +95,7 @@ const PredictionWizard = () => {
   const navigate      = useNavigate();
   const { user }      = useAuth();
   const { t }         = useTranslation();
+  const [hasGivenConsent, setHasGivenConsent] = useState(false);
   const [screeningMode, setScreeningMode] = useState(null);
   const [selectedMode, setSelectedMode]   = useState(null);
   const [activeStep, setActiveStep]       = useState(0);
@@ -1037,6 +1039,11 @@ const PredictionWizard = () => {
         return null;
     }
   };
+
+  // ─── Consent Gate (must accept before any screening step is reachable) ───────
+  if (!hasGivenConsent) {
+    return <ScreeningConsent onStart={() => setHasGivenConsent(true)} />;
+  }
 
   // ─── Choice Page (screeningMode === null) ────────────────────────────────────
   if (screeningMode === null) {

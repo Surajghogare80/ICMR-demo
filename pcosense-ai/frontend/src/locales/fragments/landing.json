@@ -5,7 +5,7 @@
         "badge": "AI/ML-Powered Healthcare",
         "titleLine1": "Understand Your",
         "titleLine2": "PMOS Risk Today",
-        "ctaAuthenticated": "Start Screening",
+        "ctaAuthenticated": "Get Started",
         "dashboard": "Dashboard",
         "ctaGuest": "Get Started",
         "login": "Login",
@@ -62,7 +62,7 @@
           },
           "screening": {
             "title": "Complete Screening",
-            "desc": "Answer questions in our guided 4-step healthcare wizard."
+            "desc": "Answer questions in our guided some steps healthcare wizard."
           },
           "results": {
             "title": "Get Results",
