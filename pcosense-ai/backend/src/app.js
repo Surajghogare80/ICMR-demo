@@ -6,9 +6,7 @@ import morgan from 'morgan';
 import compression from 'compression';
 import { apiLimiter } from './middlewares/rateLimiter.js';
 import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
-import authRoutes from './routes/auth.js';
 import predictionRoutes from './routes/predictions.js';
-import adminRoutes from './routes/admin.js';
 
 const app = express();
 
@@ -51,9 +49,7 @@ app.get('/health', (req, res) => {
 });
 
 // ─── API Routes ──────────────────────────────────────────────────────────────
-app.use('/api/auth', authRoutes);
 app.use('/api/predictions', predictionRoutes);
-app.use('/api/admin', adminRoutes);
 
 // ─── Error Handling ──────────────────────────────────────────────────────────
 app.use(notFound);

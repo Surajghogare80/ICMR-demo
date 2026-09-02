@@ -10,7 +10,6 @@ import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation, Trans } from 'react-i18next';
 import { predictionService } from '../../services/predictionService.js';
-import { useAuth } from '../../contexts/AuthContext.jsx';
 import { ROUTES } from '../../constants/index.js';
 import { APP_NAME } from '../../config/appConfig.js';
 
@@ -53,13 +52,12 @@ const Blob = ({ sx }) => (
 
 const DashboardPage = () => {
   const { t } = useTranslation();
-  const { user } = useAuth();
   const navigate = useNavigate();
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
   const greetingKey = getGreetingKey();
   const greeting = { text: t(`dashboard.greeting.${greetingKey}`), ...GREETING_META[greetingKey] };
-  const firstName = user?.name?.split(' ')[0] || t('dashboard.greeting.guest');
+  const firstName = t('dashboard.greeting.guest');
 
   const { data: predictionsData, isLoading } = useQuery({
     queryKey: ['predictions'],

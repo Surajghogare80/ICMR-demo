@@ -4,7 +4,10 @@
  * Transforms the raw frontend JSON payload into the exact format
  * expected by the R prediction script based on the model's exact features.
  *
- * Source of Truth: rf_model_new.rds
+ * Source of Truth: modelRegistry.js
+ *   - mode 1 "symptoms_only"  -> RF_Model_1_Dataset_1.rds  (underscore keys)
+ *   - mode 2 "symptoms_blood" -> RF_Model_2_Dataset_2.rds  (underscore keys, incl. blood panel)
+ *   - modes 3-4               -> rf_model_new.rds          (dotted keys)
  * Rule: NO IMPUTATION. If a value is missing, it is mapped to null (which becomes NA in R).
  */
 
@@ -78,24 +81,7 @@ export const mapFeaturesForModel = (input, predictionMode) => {
     if (fsh > 0) lh_fsh = lh / fsh;
   }
   
-  // BMI categorization for Dataset3_RF
-  let bmiCategory = null;
   const bmiNumeric = exactNumOrNull(p.bmi);
-  if (bmiNumeric !== null) {
-    if (bmiNumeric < 18.5) bmiCategory = "Underweight";
-    else if (bmiNumeric < 25) bmiCategory = "Normal";
-    else if (bmiNumeric < 30) bmiCategory = "Overweight";
-    else bmiCategory = "Obese";
-  }
-
-  // Lifestyle Score calculation for Dataset3_RF
-  let lifestyleScore = null;
-  if (l.exerciseFreq && l.fastFoodFreq && l.sleepHours) {
-    const exercise = (l.exerciseFreq === "Yes" || l.exerciseFreq === true) ? 4 : 0;
-    const noFastFood = (l.fastFoodFreq === "No" || l.fastFoodFreq === false) ? 3 : 0;
-    const sleep = (exactNumOrNull(l.sleepHours) >= 7) ? 3 : 0;
-    lifestyleScore = exercise + noFastFood + sleep;
-  }
 
   const extractionMap = {
     // ─── Dataset1_RF Numeric Mappings ─────────────────────────────────────
@@ -141,33 +127,48 @@ export const mapFeaturesForModel = (input, predictionMode) => {
     "Avg..F.size..R...mm.":  includeUsg ? exactNumOrNull(m.avgFollicleSizeRight) : null,
     "Endometrium..mm.":      includeUsg ? exactNumOrNull(m.endometrium) : null,
 
-    // ─── Dataset3_RF Mixed Mappings ───────────────────────────────────────
+    // ─── RF_Model_1_Dataset_1 Mappings (Mode 1: Symptoms Only) ────────────
+    // "BMI" is already defined above (numeric, shared with Dataset1_RF).
     "Age":                   exactNumOrNull(p.age),
-    "BMI_Factor":            bmiCategory, // We will use this in the builder below
-    "Menstrual.Regularity":  m.cycleRegularity ? (m.cycleRegularity === "Irregular" ? "Irregular" : "Regular") : null,
-    "Hirsutism":             (s.hairGrowth !== undefined && s.hairGrowth !== null && s.hairGrowth !== "") ? ((s.hairGrowth === true || s.hairGrowth === "Yes") ? "Yes" : "No") : null,
-    "Acne.Severity":         (() => {
-                               if (!s.acneSeverity && s.pimples === undefined) return null;
-                               const v = s.acneSeverity;
-                               if (v === "Severe" || v === "severe") return "Severe";
-                               if (v === "Moderate" || v === "moderate") return "Moderate";
-                               if (v === "Mild" || v === "mild") return "Mild";
-                               if (v === "None" || v === "none") return "None";
-                               if (s.pimples === true || s.pimples === "Yes") return "Mild";
-                               if (s.pimples === false || s.pimples === "No") return "None";
-                               return null;
-                             })(),
-    "Family.History.of.PCOS": (p.familyHistoryPcos !== undefined && p.familyHistoryPcos !== null && p.familyHistoryPcos !== "") ? ((p.familyHistoryPcos === true || p.familyHistoryPcos === "Yes") ? "Yes" : "No") : null,
-    "Insulin.Resistance":     (p.insulinResistance !== undefined && p.insulinResistance !== null && p.insulinResistance !== "") ? ((p.insulinResistance === true || p.insulinResistance === "Yes") ? "Yes" : "No") : null,
-    "Lifestyle.Score":        lifestyleScore
+    "Weight_Kg":             exactNumOrNull(p.weight),
+    "Height_Cm":             exactNumOrNull(p.height),
+    "Cycle_RI":              mapCycleNumeric(m.cycleRegularity),
+    "Cycle_length":          exactNumOrNull(m.periodDuration),
+    "Hip":                   exactNumOrNull(p.hip),
+    "Waist":                 exactNumOrNull(p.waist),
+    "Waist_Hip_Ratio":       exactNumOrNull(p.waistHipRatio),
+    "Weight_gain":           mapYesNoNumeric(s.weightGain),
+    "hair_growth":           mapYesNoNumeric(s.hairGrowth),
+    "Skin_darkening":        mapYesNoNumeric(s.skinDarkening),
+    "Hair_loss":             mapYesNoNumeric(s.hairLoss),
+    "Pimples":               mapYesNoNumeric(s.pimples),
+    "Fast_food":             mapYesNoNumeric(l.fastFoodFreq),
+    "Reg_Exercise":          mapYesNoNumeric(l.exerciseFreq),
+
+    // ─── RF_Model_2_Dataset_2 Mappings (Mode 2: Symptoms + Blood) ─────────
+    // Shares the underscore physical/symptom keys above; adds the blood panel.
+    "Blood_Group":           includeBlood ? mapBloodGroup(p.bloodGroup) : null,
+    "Pulse_rate":            exactNumOrNull(p.pulseRate),
+    "RR":                    exactNumOrNull(p.respiratoryRate),
+    "Hb":                    includeBlood ? exactNumOrNull(p.haemoglobin) : null,
+    "TSH":                   includeBlood ? exactNumOrNull(p.tsh) : null,
+    "AMH":                   includeBlood ? exactNumOrNull(p.amh) : null,
+    "PRL":                   includeBlood ? exactNumOrNull(p.prl) : null,
+    "Vit_D3":                includeBlood ? exactNumOrNull(p.vitaminD3) : null,
+    "PRG":                   includeBlood ? exactNumOrNull(p.prg) : null,
+    "RBS":                   includeBlood ? exactNumOrNull(p.rbs) : null,
+    "BP_Systolic":           exactNumOrNull(p.bpSystolic),
+    "BP_Diastolic":          exactNumOrNull(p.bpDiastolic),
+    "FSH":                   fsh,
+    "LH":                    lh,
+    "FSH_LH":                fsh_lh,
+    "LH_FSH":                lh_fsh,
   };
 
   // Build the specific payload for the requested model
   const mappedFeatures = {};
   for (const feature of modelConfig.features) {
-    if (feature === "BMI" && predictionMode === "symptoms_only") {
-      mappedFeatures[feature] = extractionMap["BMI_Factor"];
-    } else if (extractionMap[feature] !== undefined) {
+    if (extractionMap[feature] !== undefined) {
       mappedFeatures[feature] = extractionMap[feature];
     } else {
       throw new Error(`Missing extraction logic for required feature: "${feature}"`);

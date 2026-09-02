@@ -11,7 +11,6 @@ import {
 import { ArrowBack, ArrowForward, Science, ListAlt, Biotech, Assignment, RadioButtonUnchecked, CheckCircle, Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { predictionService } from '../../services/predictionService.js';
-import { useAuth } from '../../contexts/AuthContext.jsx';
 import {
   BLOOD_GROUP_OPTIONS, CYCLE_REGULARITY_OPTIONS, FLOW_INTENSITY_OPTIONS,
   FAST_FOOD_OPTIONS, EXERCISE_OPTIONS, STRESS_OPTIONS,
@@ -20,6 +19,7 @@ import toast from 'react-hot-toast';
 import WheelPicker from '../../components/ui/WheelPicker.jsx';
 import PersonalInfoSection from './components/PersonalInfoSection.jsx';
 import MenstrualHistorySection from './components/MenstrualHistorySection.jsx';
+import ScreeningConsent from './components/ScreeningConsent.jsx';
 import { translateOptionValue } from '../../utils/optionTranslation.js';
 
 // ─── Shared pink outlined button style ────────────────────────────────────────
@@ -92,8 +92,8 @@ const translateOption = (t, group, value) => translateOptionValue(t, `options.${
 // ─── Component ────────────────────────────────────────────────────────────────
 const PredictionWizard = () => {
   const navigate      = useNavigate();
-  const { user }      = useAuth();
   const { t }         = useTranslation();
+  const [hasGivenConsent, setHasGivenConsent] = useState(false);
   const [screeningMode, setScreeningMode] = useState(null);
   const [selectedMode, setSelectedMode]   = useState(null);
   const [activeStep, setActiveStep]       = useState(0);
@@ -1037,6 +1037,11 @@ const PredictionWizard = () => {
         return null;
     }
   };
+
+  // ─── Consent Gate (must accept before any screening step is reachable) ───────
+  if (!hasGivenConsent) {
+    return <ScreeningConsent onStart={() => setHasGivenConsent(true)} />;
+  }
 
   // ─── Choice Page (screeningMode === null) ────────────────────────────────────
   if (screeningMode === null) {

@@ -6,12 +6,11 @@ import {
 } from '@mui/material';
 import {
   Psychology, Security, Speed, Analytics, ExpandMore,
-  CheckCircle, ArrowForward, FavoriteOutlined,
+  CheckCircle, ArrowForward, FavoriteOutlined, LockOutlined,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useTranslation, Trans } from 'react-i18next';
 import { ROUTES } from '../../constants/index.js';
-import { useAuth } from '../../contexts/AuthContext.jsx';
 import { APP_NAME, APP_TAGLINE, APP_DESCRIPTION } from '../../config/appConfig.js';
 
 const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } };
@@ -34,7 +33,6 @@ const faqKeys = ['whatIsPmos', 'medicalDiagnosis', 'accuracy', 'dataSafe', 'dele
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
   const { t } = useTranslation();
 
   const features = featureMeta.map((f) => ({
@@ -53,6 +51,12 @@ const LandingPage = () => {
     q: t(`landing.faq.items.${key}.q`),
     a: t(`landing.faq.items.${key}.a`, { appName: APP_NAME }),
   }));
+
+  const privacyPoints = [
+    t('landing.privacy.items.noAccount'),
+    t('landing.privacy.items.localData'),
+    t('landing.privacy.items.noTracking'),
+  ];
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
@@ -78,7 +82,7 @@ const LandingPage = () => {
 
         <Container maxWidth="lg">
           <Grid container spacing={6} alignItems="center">
-            <Grid item xs={12} md={9}>
+            <Grid item xs={12} md={7}>
               <motion.div variants={fadeUp} initial="hidden" animate="visible" transition={{ duration: 0.7 }}>
                  <Chip label={t('landing.hero.badge')} size="small" sx={{ mb: 3, bgcolor: 'rgba(233,30,99,0.12)', color: 'primary.main', border: '1px solid rgba(233,30,99,0.2)' }} />
                 <Typography variant="h1" sx={{ fontSize: { xs: '2.5rem', md: '3.8rem' }, fontWeight: 900, color: (theme) => theme.palette.mode === 'dark' ? '#FFFFFF' : '#2D2D2D', lineHeight: 1.1, mb: 3 }}>
@@ -91,63 +95,31 @@ const LandingPage = () => {
                   {APP_DESCRIPTION}
                 </Typography>
                  <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                  {isAuthenticated ? (
-                    <>
-                      <Button
-                        variant="contained"
-                        size="large"
-                        endIcon={<ArrowForward />}
-                        onClick={() => navigate(ROUTES.PREDICTION)}
-                        sx={{ px: 4, py: 1.5, fontSize: '1rem', background: 'linear-gradient(135deg, #EC407A, #F48FB1)', boxShadow: '0 8px 24px rgba(233,30,99,0.3)' }}
-                      >
-                        {t('landing.hero.ctaAuthenticated')}
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        size="large"
-                        onClick={() => navigate(ROUTES.DASHBOARD)}
-                        sx={{
-                          px: 4, py: 1.5, fontSize: '1rem',
-                          borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(233,30,99,0.4)',
-                          color: (theme) => theme.palette.mode === 'dark' ? '#FFF' : 'primary.main',
-                          '&:hover': {
-                            borderColor: 'primary.main',
-                            bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(233,30,99,0.04)'
-                          }
-                        }}
-                      >
-                        {t('landing.hero.dashboard')}
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button
-                        variant="contained"
-                        size="large"
-                        endIcon={<ArrowForward />}
-                        onClick={() => navigate(ROUTES.REGISTER)}
-                        sx={{ px: 4, py: 1.5, fontSize: '1rem', background: 'linear-gradient(135deg, #EC407A, #F48FB1)', boxShadow: '0 8px 24px rgba(233,30,99,0.3)' }}
-                      >
-                        {t('landing.hero.ctaGuest')}
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        size="large"
-                        onClick={() => navigate(ROUTES.LOGIN)}
-                        sx={{
-                          px: 4, py: 1.5, fontSize: '1rem',
-                          borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(233,30,99,0.4)',
-                          color: (theme) => theme.palette.mode === 'dark' ? '#FFF' : 'primary.main',
-                          '&:hover': {
-                            borderColor: 'primary.main',
-                            bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(233,30,99,0.04)'
-                          }
-                        }}
-                      >
-                        {t('landing.hero.login')}
-                      </Button>
-                    </>
-                  )}
+                  <Button
+                    variant="contained"
+                    size="large"
+                    endIcon={<ArrowForward />}
+                    onClick={() => navigate(ROUTES.PREDICTION)}
+                    sx={{ px: 4, py: 1.5, fontSize: '1rem', background: 'linear-gradient(135deg, #EC407A, #F48FB1)', boxShadow: '0 8px 24px rgba(233,30,99,0.3)' }}
+                  >
+                    {t('landing.hero.ctaAuthenticated')}
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    onClick={() => navigate(ROUTES.DASHBOARD)}
+                    sx={{
+                      px: 4, py: 1.5, fontSize: '1rem',
+                      borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(233,30,99,0.4)',
+                      color: (theme) => theme.palette.mode === 'dark' ? '#FFF' : 'primary.main',
+                      '&:hover': {
+                        borderColor: 'primary.main',
+                        bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(233,30,99,0.04)'
+                      }
+                    }}
+                  >
+                    {t('landing.hero.dashboard')}
+                  </Button>
                 </Box>
                 <Box sx={{ mt: 4, display: 'flex', gap: 3, flexWrap: 'wrap' }}>
                   {[t('landing.hero.trust.free'), t('landing.hero.trust.private'), t('landing.hero.trust.instant')].map((label) => (
@@ -157,6 +129,54 @@ const LandingPage = () => {
                     </Box>
                   ))}
                 </Box>
+              </motion.div>
+            </Grid>
+
+            {/* Privacy card (right side of hero) */}
+            <Grid item xs={12} md={5}>
+              <motion.div variants={fadeUp} initial="hidden" animate="visible" transition={{ duration: 0.7, delay: 0.15 }}>
+                <Card
+                  sx={{
+                    borderRadius: '24px',
+                    border: '1px solid',
+                    borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(233,30,99,0.25)' : 'rgba(233,30,99,0.18)',
+                    background: (theme) => theme.palette.mode === 'dark'
+                      ? 'linear-gradient(135deg, rgba(45,29,35,0.9), rgba(31,13,21,0.9))'
+                      : 'linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,245,249,0.9))',
+                    backdropFilter: 'blur(8px)',
+                    boxShadow: '0 12px 40px rgba(233,30,99,0.15)',
+                  }}
+                >
+                  <CardContent sx={{ p: { xs: 3, md: 4 } }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
+                      <Avatar sx={{ bgcolor: 'rgba(233,30,99,0.12)', color: 'primary.main', width: 44, height: 44 }}>
+                        <LockOutlined />
+                      </Avatar>
+                      <Typography variant="h6" fontWeight={800}>{t('landing.privacy.title')}</Typography>
+                    </Box>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                      {t('landing.privacy.subtitle')}
+                    </Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                      {privacyPoints.map((point) => (
+                        <Box
+                          key={point}
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'flex-start',
+                            gap: 1.2,
+                            p: 1.5,
+                            borderRadius: '14px',
+                            bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(233,30,99,0.06)' : 'rgba(233,30,99,0.04)',
+                          }}
+                        >
+                          <CheckCircle sx={{ fontSize: 20, color: '#66BB6A', mt: '2px', flexShrink: 0 }} />
+                          <Typography variant="body2" fontWeight={600} lineHeight={1.6}>{point}</Typography>
+                        </Box>
+                      ))}
+                    </Box>
+                  </CardContent>
+                </Card>
               </motion.div>
             </Grid>
           </Grid>
@@ -260,10 +280,10 @@ const LandingPage = () => {
           <Button
             variant="contained"
             size="large"
-            onClick={() => navigate(isAuthenticated ? ROUTES.PREDICTION : ROUTES.REGISTER)}
+            onClick={() => navigate(ROUTES.PREDICTION)}
             sx={{ px: 6, py: 1.8, fontSize: '1.1rem', bgcolor: 'white', color: '#E91E63', fontWeight: 700, '&:hover': { bgcolor: 'rgba(255,255,255,0.9)' } }}
           >
-            {isAuthenticated ? t('landing.cta.buttonAuthenticated') : t('landing.cta.buttonGuest')}
+            {t('landing.cta.buttonAuthenticated')}
           </Button>
         </Container>
       </Box>

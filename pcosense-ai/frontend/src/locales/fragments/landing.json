@@ -5,7 +5,7 @@
         "badge": "AI/ML-Powered Healthcare",
         "titleLine1": "Understand Your",
         "titleLine2": "PMOS Risk Today",
-        "ctaAuthenticated": "Start Screening",
+        "ctaAuthenticated": "Get Started",
         "dashboard": "Dashboard",
         "ctaGuest": "Get Started",
         "login": "Login",
@@ -62,7 +62,7 @@
           },
           "screening": {
             "title": "Complete Screening",
-            "desc": "Answer questions in our guided 4-step healthcare wizard."
+            "desc": "Answer questions in our guided some steps healthcare wizard."
           },
           "results": {
             "title": "Get Results",
@@ -109,6 +109,15 @@
             "q": "Can I delete my data?",
             "a": "Yes. You can delete your prediction history at any time from your dashboard."
           }
+        }
+      },
+      "privacy": {
+        "title": "Private by Design",
+        "subtitle": "Your health information stays with you — always.",
+        "items": {
+          "noAccount": "No account, no email, no registration",
+          "localData": "All health data stored locally on your device",
+          "noTracking": "No tracking, no ads, no third-party sharing"
         }
       },
       "cta": {
@@ -231,6 +240,15 @@
           }
         }
       },
+      "privacy": {
+        "title": "डिज़ाइन से ही निजी",
+        "subtitle": "आपकी स्वास्थ्य जानकारी हमेशा आपके पास ही रहती है।",
+        "items": {
+          "noAccount": "कोई खाता नहीं, कोई ईमेल नहीं, कोई पंजीकरण नहीं",
+          "localData": "सभी स्वास्थ्य डेटा आपके डिवाइस पर स्थानीय रूप से संग्रहीत",
+          "noTracking": "कोई ट्रैकिंग नहीं, कोई विज्ञापन नहीं, कोई तृतीय-पक्ष साझाकरण नहीं"
+        }
+      },
       "cta": {
         "title": "आज ही पहला कदम उठाएं",
         "subtitle": "जल्दी जागरूकता पूरा फर्क डाल सकती है। अभी अपनी मुफ़्त स्क्रीनिंग शुरू करें।",
@@ -349,6 +367,15 @@
             "q": "मी माझा डेटा हटवू शकते का?",
             "a": "होय. तुम्ही कधीही तुमच्या डॅशबोर्डवरून तुमचा अंदाज इतिहास हटवू शकता."
           }
+        }
+      },
+      "privacy": {
+        "title": "रचनेतूनच खाजगी",
+        "subtitle": "तुमची आरोग्य माहिती नेहमी तुमच्याकडेच राहते.",
+        "items": {
+          "noAccount": "खाते नाही, ईमेल नाही, नोंदणी नाही",
+          "localData": "सर्व आरोग्य डेटा तुमच्या डिव्हाइसवर स्थानिक पातळीवर साठवला जातो",
+          "noTracking": "ट्रॅकिंग नाही, जाहिराती नाहीत, तृतीय-पक्ष शेअरिंग नाही"
         }
       },
       "cta": {

@@ -2,7 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography, Grid, useTheme, alpha } from '@mui/material';
 import {
-  Science, History, LibraryBooks, Person, BarChart, Settings,
+  Science, History, LibraryBooks, BarChart,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -32,26 +32,12 @@ const ACTIONS = [
     route: ROUTES.DASHBOARD,
   },
   {
-    id: 'myProfile',
-    icon: <Person sx={{ fontSize: 32 }} />,
-    gradient: 'linear-gradient(135deg, #66BB6A, #A5D6A7)',
-    accentColor: '#66BB6A',
-    route: ROUTES.PROFILE,
-  },
-  {
     id: 'reports',
     icon: <BarChart sx={{ fontSize: 32 }} />,
     gradient: 'linear-gradient(135deg, #FFA726, #FFD54F)',
     accentColor: '#FFA726',
     route: ROUTES.HISTORY,
     comingSoon: false,
-  },
-  {
-    id: 'settings',
-    icon: <Settings sx={{ fontSize: 32 }} />,
-    gradient: 'linear-gradient(135deg, #F06292, #F48FB1)',
-    accentColor: '#F06292',
-    route: ROUTES.PROFILE,
   },
 ];
 

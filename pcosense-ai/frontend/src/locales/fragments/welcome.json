@@ -1,0 +1,47 @@
+{
+  "en": {
+    "welcome": {
+      "title": "Welcome",
+      "description": "This tool helps screen for PMOS (Polyendocrine Metabolic Ovarian Syndrome) — a common hormonal condition. Answer a few simple questions and get your result in under 5 minutes.",
+      "what_you_need": "What You'll Need",
+      "time_required": "Under 5 minutes of your time",
+      "period_information": "Basic information about your period pattern",
+      "blood_test": "Recent blood test results (optional — you can skip)",
+      "ultrasound": "Ultrasound report (optional — you can skip)",
+      "medical_disclaimer": "Medical Disclaimer",
+      "medical_disclaimer_content": "This tool is for screening purposes only. It does not diagnose PMOS. Please consult a qualified doctor for diagnosis and treatment.",
+      "consent": "I understand this is a screening tool, not a diagnosis",
+      "start_screening": "Start Screening"
+    }
+  },
+  "hi": {
+    "welcome": {
+      "title": "स्वागत है",
+      "description": "यह टूल PMOS (एक सामान्य हार्मोनल स्थिति) की जांच में मदद करता है। कुछ सरल प्रश्नों के उत्तर दें और 5 मिनट से भी कम समय में अपना परिणाम प्राप्त करें।",
+      "what_you_need": "आपको क्या चाहिए",
+      "time_required": "5 मिनट से भी कम समय",
+      "period_information": "आपके मासिक धर्म पैटर्न की बुनियादी जानकारी",
+      "blood_test": "हाल के रक्त परीक्षण के परिणाम (वैकल्पिक — आप छोड़ सकती हैं)",
+      "ultrasound": "अल्ट्रासाउंड रिपोर्ट (वैकल्पिक — आप छोड़ सकती हैं)",
+      "medical_disclaimer": "चिकित्सा अस्वीकरण",
+      "medical_disclaimer_content": "यह टूल केवल स्क्रीनिंग उद्देश्यों के लिए है। यह PMOS का निदान नहीं करता है। कृपया निदान और उपचार के लिए किसी योग्य डॉक्टर से सलाह लें।",
+      "consent": "मैं समझती हूं कि यह एक स्क्रीनिंग टूल है, निदान नहीं",
+      "start_screening": "स्क्रीनिंग शुरू करें"
+    }
+  },
+  "mr": {
+    "welcome": {
+      "title": "स्वागत आहे",
+      "description": "हे टूल PMOS (एक सामान्य हार्मोनल स्थिती) तपासण्यास मदत करते. काही सोप्या प्रश्नांची उत्तरे द्या आणि 5 मिनिटांपेक्षा कमी वेळात तुमचा निकाल मिळवा.",
+      "what_you_need": "तुम्हाला काय आवश्यक आहे",
+      "time_required": "5 मिनिटांपेक्षा कमी वेळ",
+      "period_information": "तुमच्या मासिक पाळीच्या पद्धतीबद्दल मूलभूत माहिती",
+      "blood_test": "अलीकडील रक्त तपासणी अहवाल (ऐच्छिक — तुम्ही वगळू शकता)",
+      "ultrasound": "अल्ट्रासाऊंड अहवाल (ऐच्छिक — तुम्ही वगळू शकता)",
+      "medical_disclaimer": "वैद्यकीय अस्वीकरण",
+      "medical_disclaimer_content": "हे टूल केवळ स्क्रीनिंगच्या उद्देशाने आहे. हे PMOS चे निदान करत नाही. कृपया निदान आणि उपचारासाठी योग्य डॉक्टरांचा सल्ला घ्या.",
+      "consent": "मला समजते की हे एक स्क्रीनिंग टूल आहे, निदान नाही",
+      "start_screening": "स्क्रीनिंग सुरू करा"
+    }
+  }
+}
