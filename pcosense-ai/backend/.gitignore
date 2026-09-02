@@ -4,6 +4,14 @@ logs/*.log
 uploads/*
 !uploads/.gitkeep
 
-# Large ML model files — do not commit to git
+# Large ML model / data files — do not commit to git
 ai/All_4_RF_Models.rds
 ai/*.rds
+ai/**/*.rds
+ai/**/*.model
+ai/**/*.zip
+ai/Models/
+ai/new xg boost/
+
+# Temp prediction files written at runtime
+ai/**/tmp_predict_*.json

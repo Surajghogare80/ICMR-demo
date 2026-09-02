@@ -3,7 +3,10 @@
  * Prediction Router
  * Orchestrates the full prediction pipeline: Mode Selection -> Mapping -> Validation -> Execution
  *
- * Source: rf_model_new.rds ONLY
+ * Each model in modelRegistry.js names the R script that runs it (defaulting to
+ * predict.R, which loads by id out of rf_model_new.rds). A mode with its own
+ * `script` (currently: symptoms_only -> predict_symptoms_only.R) is executed by
+ * that script alone, which loads only its own .rds file.
  */
 
 import { exec } from "child_process";
@@ -22,7 +25,8 @@ const aiDir      = path.resolve(__dirname, "../../ai");
 
 /**
  * Executes the R prediction script using a temporary JSON file.
- * predict.R uses ONLY rf_model_new.rds
+ * The script run is whichever modelRegistry.js names for this mode (see
+ * `modelInfo.script`), so each mode is pinned to its own model file.
  *
  * @param {string} predictionMode
  * @param {Object} mappedFeatures
@@ -30,16 +34,49 @@ const aiDir      = path.resolve(__dirname, "../../ai");
  */
 const executeRPrediction = async (predictionMode, mappedFeatures) => {
   const modelInfo  = MODELS[predictionMode];
-  const modelId    = modelInfo.id;
-  const modelSource = modelInfo.source;
 
-  const scriptPath = path.resolve(aiDir, "predict.R");
+  let modelId     = modelInfo.id;
+  let modelSource = modelInfo.source;
+  let scriptName  = modelInfo.script || "predict.R";
+
+  // Missing-feature routing (see modelRegistry.js for the mode-2 contract):
+  //   * a MANDATORY field is missing        -> hard alert, run nothing
+  //   * only OPTIONAL field(s) are missing  -> NA-capable fallback model
+  //   * everything present                  -> primary model
+  let routedBy = "primary";
+  if (modelInfo.fallback) {
+    if (Array.isArray(modelInfo.mandatory)) {
+      const missingMandatory = modelInfo.mandatory.filter(
+        (k) => mappedFeatures[k] === null || mappedFeatures[k] === undefined
+      );
+      if (missingMandatory.length > 0) {
+        // Message must contain "missing information" so predictionService
+        // maps it to HTTP 400 and the frontend shows its missing-fields alert.
+        throw new Error(
+          `The trained model requires the following missing information to make a safe prediction: ${missingMandatory.join(", ")}`
+        );
+      }
+    }
+
+    if (modelInfo.fallback.trigger === "missing_optional_features") {
+      // Any null left here can only be an optional field.
+      const anyOptionalMissing = Object.values(mappedFeatures).some((v) => v === null);
+      if (anyOptionalMissing) {
+        modelId     = modelInfo.fallback.id;
+        modelSource = modelInfo.fallback.source;
+        scriptName  = modelInfo.fallback.script;
+        routedBy    = "missing_optional_fallback";
+      }
+    }
+  }
+
+  const scriptPath = path.resolve(aiDir, scriptName);
   const tempPath   = path.resolve(
     aiDir,
     `tmp_predict_${Date.now()}_${Math.random().toString(36).slice(2)}.json`
   );
 
-  console.log(`[Prediction Router] Mode: ${predictionMode} | Model: ${modelId} | Source: ${modelSource}`);
+  console.log(`[Prediction Router] Mode: ${predictionMode} | Model: ${modelId} | Source: ${modelSource} | Routed: ${routedBy}`);
   
   // Log provided vs NA features for transparency
   const provided = Object.keys(mappedFeatures).filter(k => mappedFeatures[k] !== null);
@@ -78,7 +115,9 @@ const executeRPrediction = async (predictionMode, mappedFeatures) => {
       throw new Error(`R Model Error: ${result.error}`);
     }
 
-    return result;
+    // Report the model actually executed (may be the fallback), not the
+    // registry's primary entry.
+    return { ...result, modelUsed: modelId, modelSource, routedBy };
   } catch (err) {
     // Best-effort cleanup on failure
     try { if (fs.existsSync(tempPath)) fs.unlinkSync(tempPath); } catch (_) {}

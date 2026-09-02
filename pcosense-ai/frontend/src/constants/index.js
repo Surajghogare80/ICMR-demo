@@ -3,18 +3,12 @@ export const API_BASE_URL = '/api';
 
 export const ROUTES = {
   HOME: '/',
-  LOGIN: '/login',
-  REGISTER: '/register',
   DASHBOARD: '/dashboard',
   PREDICTION: '/prediction',
   PREDICTION_RESULT: '/prediction/result',
   HISTORY: '/history',
   LIFESTYLE: '/lifestyle',
   LIFESTYLE_ARTICLE: '/lifestyle/:id',
-  PROFILE: '/profile',
-  ADMIN: '/admin',
-  ADMIN_USERS: '/admin/users',
-  ADMIN_LOGS: '/admin/logs',
   NOT_FOUND: '*',
 };
 

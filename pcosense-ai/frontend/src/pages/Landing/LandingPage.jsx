@@ -11,7 +11,6 @@ import {
 import { motion } from 'framer-motion';
 import { useTranslation, Trans } from 'react-i18next';
 import { ROUTES } from '../../constants/index.js';
-import { useAuth } from '../../contexts/AuthContext.jsx';
 import { APP_NAME, APP_TAGLINE, APP_DESCRIPTION } from '../../config/appConfig.js';
 
 const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } };
@@ -34,7 +33,6 @@ const faqKeys = ['whatIsPmos', 'medicalDiagnosis', 'accuracy', 'dataSafe', 'dele
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
   const { t } = useTranslation();
 
   const features = featureMeta.map((f) => ({
@@ -91,63 +89,31 @@ const LandingPage = () => {
                   {APP_DESCRIPTION}
                 </Typography>
                  <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                  {isAuthenticated ? (
-                    <>
-                      <Button
-                        variant="contained"
-                        size="large"
-                        endIcon={<ArrowForward />}
-                        onClick={() => navigate(ROUTES.PREDICTION)}
-                        sx={{ px: 4, py: 1.5, fontSize: '1rem', background: 'linear-gradient(135deg, #EC407A, #F48FB1)', boxShadow: '0 8px 24px rgba(233,30,99,0.3)' }}
-                      >
-                        {t('landing.hero.ctaAuthenticated')}
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        size="large"
-                        onClick={() => navigate(ROUTES.DASHBOARD)}
-                        sx={{
-                          px: 4, py: 1.5, fontSize: '1rem',
-                          borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(233,30,99,0.4)',
-                          color: (theme) => theme.palette.mode === 'dark' ? '#FFF' : 'primary.main',
-                          '&:hover': {
-                            borderColor: 'primary.main',
-                            bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(233,30,99,0.04)'
-                          }
-                        }}
-                      >
-                        {t('landing.hero.dashboard')}
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button
-                        variant="contained"
-                        size="large"
-                        endIcon={<ArrowForward />}
-                        onClick={() => navigate(ROUTES.REGISTER)}
-                        sx={{ px: 4, py: 1.5, fontSize: '1rem', background: 'linear-gradient(135deg, #EC407A, #F48FB1)', boxShadow: '0 8px 24px rgba(233,30,99,0.3)' }}
-                      >
-                        {t('landing.hero.ctaGuest')}
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        size="large"
-                        onClick={() => navigate(ROUTES.LOGIN)}
-                        sx={{
-                          px: 4, py: 1.5, fontSize: '1rem',
-                          borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(233,30,99,0.4)',
-                          color: (theme) => theme.palette.mode === 'dark' ? '#FFF' : 'primary.main',
-                          '&:hover': {
-                            borderColor: 'primary.main',
-                            bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(233,30,99,0.04)'
-                          }
-                        }}
-                      >
-                        {t('landing.hero.login')}
-                      </Button>
-                    </>
-                  )}
+                  <Button
+                    variant="contained"
+                    size="large"
+                    endIcon={<ArrowForward />}
+                    onClick={() => navigate(ROUTES.PREDICTION)}
+                    sx={{ px: 4, py: 1.5, fontSize: '1rem', background: 'linear-gradient(135deg, #EC407A, #F48FB1)', boxShadow: '0 8px 24px rgba(233,30,99,0.3)' }}
+                  >
+                    {t('landing.hero.ctaAuthenticated')}
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    onClick={() => navigate(ROUTES.DASHBOARD)}
+                    sx={{
+                      px: 4, py: 1.5, fontSize: '1rem',
+                      borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(233,30,99,0.4)',
+                      color: (theme) => theme.palette.mode === 'dark' ? '#FFF' : 'primary.main',
+                      '&:hover': {
+                        borderColor: 'primary.main',
+                        bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(233,30,99,0.04)'
+                      }
+                    }}
+                  >
+                    {t('landing.hero.dashboard')}
+                  </Button>
                 </Box>
                 <Box sx={{ mt: 4, display: 'flex', gap: 3, flexWrap: 'wrap' }}>
                   {[t('landing.hero.trust.free'), t('landing.hero.trust.private'), t('landing.hero.trust.instant')].map((label) => (
@@ -260,10 +226,10 @@ const LandingPage = () => {
           <Button
             variant="contained"
             size="large"
-            onClick={() => navigate(isAuthenticated ? ROUTES.PREDICTION : ROUTES.REGISTER)}
+            onClick={() => navigate(ROUTES.PREDICTION)}
             sx={{ px: 6, py: 1.8, fontSize: '1.1rem', bgcolor: 'white', color: '#E91E63', fontWeight: 700, '&:hover': { bgcolor: 'rgba(255,255,255,0.9)' } }}
           >
-            {isAuthenticated ? t('landing.cta.buttonAuthenticated') : t('landing.cta.buttonGuest')}
+            {t('landing.cta.buttonAuthenticated')}
           </Button>
         </Container>
       </Box>

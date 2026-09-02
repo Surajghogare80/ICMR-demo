@@ -1,33 +1,21 @@
 // src/layout/Navbar/Navbar.jsx
-import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
-  AppBar, Toolbar, Typography, IconButton, Button, Avatar,
-  Menu, MenuItem, Box, Tooltip, Divider, Badge, useTheme, alpha,
+  AppBar, Toolbar, Typography, IconButton, Button, Box, Tooltip, useTheme, alpha,
 } from '@mui/material';
 import {
-  DarkMode, LightMode, Notifications, AccountCircle,
-  Dashboard, History, AdminPanelSettings, Logout, Person, Favorite
+  DarkMode, LightMode, Dashboard, History, Favorite,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
-import { useAuth } from '../../contexts/AuthContext.jsx';
 import { ROUTES } from '../../constants/index.js';
 import { APP_NAME, APP_FULL_FORM } from '../../config/appConfig.js';
 import LanguageSelector from '../../components/common/LanguageSelector.jsx';
 
 const Navbar = ({ onThemeToggle, isDark }) => {
   const { t } = useTranslation();
-  const { user, isAuthenticated, isAdmin, logout } = useAuth();
   const navigate = useNavigate();
   const theme = useTheme();
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleLogout = () => {
-    setAnchorEl(null);
-    logout();
-    navigate(ROUTES.HOME);
-  };
 
   return (
     <AppBar
@@ -89,17 +77,12 @@ const Navbar = ({ onThemeToggle, isDark }) => {
 
         <Box sx={{ flexGrow: 1 }} />
 
-        {/* Nav links (authenticated) */}
-        {isAuthenticated && (
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 0.5 }}>
-            <Button startIcon={<Dashboard />} onClick={() => navigate(ROUTES.DASHBOARD)} size="small">{t('nav.dashboard')}</Button>
-            <Button startIcon={<Favorite />} onClick={() => navigate(ROUTES.LIFESTYLE)} size="small">{t('nav.lifestyle')}</Button>
-            <Button startIcon={<History />} onClick={() => navigate(ROUTES.HISTORY)} size="small">{t('nav.history')}</Button>
-            {isAdmin && (
-              <Button startIcon={<AdminPanelSettings />} onClick={() => navigate(ROUTES.ADMIN)} size="small" color="secondary">{t('nav.admin')}</Button>
-            )}
-          </Box>
-        )}
+        {/* Nav links */}
+        <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 0.5 }}>
+          <Button startIcon={<Dashboard />} onClick={() => navigate(ROUTES.DASHBOARD)} size="small">{t('nav.dashboard')}</Button>
+          <Button startIcon={<Favorite />} onClick={() => navigate(ROUTES.LIFESTYLE)} size="small">{t('nav.lifestyle')}</Button>
+          <Button startIcon={<History />} onClick={() => navigate(ROUTES.HISTORY)} size="small">{t('nav.history')}</Button>
+        </Box>
 
         {/* Language selector */}
         <LanguageSelector />
@@ -110,50 +93,6 @@ const Navbar = ({ onThemeToggle, isDark }) => {
             {isDark ? <LightMode /> : <DarkMode />}
           </IconButton>
         </Tooltip>
-
-        {/* Auth buttons / user menu */}
-        {isAuthenticated ? (
-          <>
-            <Tooltip title={user?.name}>
-              <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
-                <Avatar
-                  sx={{ width: 36, height: 36, background: 'linear-gradient(135deg, #EC407A, #F48FB1)', fontSize: '0.9rem', fontWeight: 700 }}
-                >
-                  {user?.name?.charAt(0)?.toUpperCase()}
-                </Avatar>
-              </IconButton>
-            </Tooltip>
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={() => setAnchorEl(null)}
-              PaperProps={{ sx: { borderRadius: 3, minWidth: 200, mt: 1 } }}
-              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-            >
-              <Box sx={{ px: 2, py: 1.5 }}>
-                <Typography variant="subtitle2" fontWeight={700}>{user?.name}</Typography>
-                <Typography variant="caption" color="text.secondary">{user?.email}</Typography>
-              </Box>
-              <Divider />
-              <MenuItem onClick={() => { setAnchorEl(null); navigate(ROUTES.PROFILE); }}>
-                <Person fontSize="small" sx={{ mr: 1.5 }} /> {t('nav.profile')}
-              </MenuItem>
-              <MenuItem onClick={() => { setAnchorEl(null); navigate(ROUTES.DASHBOARD); }}>
-                <Dashboard fontSize="small" sx={{ mr: 1.5 }} /> {t('nav.dashboard')}
-              </MenuItem>
-              <Divider />
-              <MenuItem onClick={handleLogout} sx={{ color: 'error.main' }}>
-                <Logout fontSize="small" sx={{ mr: 1.5 }} /> {t('nav.logout')}
-              </MenuItem>
-            </Menu>
-          </>
-        ) : (
-          <Box sx={{ display: 'flex', gap: 1 }}>
-            <Button variant="outlined" size="small" onClick={() => navigate(ROUTES.LOGIN)}>{t('nav.login')}</Button>
-            <Button variant="contained" size="small" onClick={() => navigate(ROUTES.REGISTER)}>{t('nav.signup')}</Button>
-          </Box>
-        )}
       </Toolbar>
     </AppBar>
   );

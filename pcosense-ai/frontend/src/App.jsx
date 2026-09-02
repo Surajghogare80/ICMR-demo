@@ -5,7 +5,6 @@ import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import { createAppTheme } from './theme/index.js';
-import { AuthProvider } from './contexts/AuthContext.jsx';
 import AppRoutes from './routes/AppRoutes.jsx';
 import Navbar from './layout/Navbar/Navbar.jsx';
 import Footer from './layout/Footer/Footer.jsx';
@@ -28,17 +27,15 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AuthProvider>
-          <BrowserRouter>
-            <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-              <Navbar onThemeToggle={() => setMode((m) => (m === 'dark' ? 'light' : 'dark'))} isDark={mode === 'dark'} />
-              <Box sx={{ flexGrow: 1 }}>
-                <AppRoutes />
-              </Box>
-              <Footer />
+        <BrowserRouter>
+          <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+            <Navbar onThemeToggle={() => setMode((m) => (m === 'dark' ? 'light' : 'dark'))} isDark={mode === 'dark'} />
+            <Box sx={{ flexGrow: 1 }}>
+              <AppRoutes />
             </Box>
-          </BrowserRouter>
-        </AuthProvider>
+            <Footer />
+          </Box>
+        </BrowserRouter>
 
         {/* Global Toast Notifications */}
         <Toaster

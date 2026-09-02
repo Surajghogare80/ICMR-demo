@@ -2,17 +2,16 @@
 /**
  * PREDICTION SERVICE
  *
- * Integrates real R Random Forest model execution via predictionRouter.
- * Fallback to rule-based dummy generation is triggered if R is not installed or model fails.
+ * Stateless: runs the real R model via the prediction routing pipeline and
+ * returns the result. Nothing is persisted server-side — the frontend keeps
+ * prediction history in the browser's localStorage.
  */
-import { predictionRepository } from '../repositories/predictionRepository.js';
-import { activityLogRepository } from '../repositories/activityLogRepository.js';
 import logger from '../utils/logger.js';
 import { runPredictionPipeline } from '../ai/predictionRouter.js';
 
 
 export const predictionService = {
-  async createPrediction({ userId, personal, menstrual, symptoms, lifestyle, predictionMode }, ip) {
+  async createPrediction({ personal, menstrual, symptoms, lifestyle, predictionMode }) {
     const {
       vitaminD3, shbg, fastingInsulin, insulinResistance,
       waist, hip, waistHipRatio, rbs,
@@ -38,13 +37,6 @@ export const predictionService = {
       sleepHours:   lifestyle?.sleepHours ? Number(lifestyle.sleepHours) : undefined,
     };
 
-    const [personalMetric, menstrualHistory, clinicalSymptom, lifestyleHabit] = await Promise.all([
-      predictionRepository.createPersonalMetric({ userId, ...extendedPersonal }),
-      predictionRepository.createMenstrualHistory({ userId, ...menstrual }),
-      predictionRepository.createClinicalSymptom({ userId, ...symptoms }),
-      predictionRepository.createLifestyleHabit({ userId, ...normalizedLifestyle }),
-    ]);
-
     const rInputs = { personal, menstrual, symptoms, lifestyle };
 
     let aiResult;
@@ -52,10 +44,9 @@ export const predictionService = {
       // Execute the centralized prediction routing pipeline
       aiResult = await runPredictionPipeline(rInputs, predictionMode);
       aiResult.engine = 'REAL_R_MODEL';
-      
+
       console.log(`\n======================================================`);
       console.log(`🤖 [PREDICTION ENGINE] ROUTED RF PREDICTION`);
-      console.log(`   User ID     : ${userId}`);
       console.log(`   Mode        : ${aiResult.mode}`);
       console.log(`   Model Used  : ${aiResult.modelUsed}`);
       console.log(`   Result      : ${aiResult.result}`);
@@ -63,7 +54,7 @@ export const predictionService = {
       console.log(`   Confidence  : ${aiResult.confidence}%`);
       console.log(`======================================================\n`);
 
-      logger.info(`[REAL_R_MODEL] Prediction generated using ${aiResult.modelUsed} for user ${userId}: ${aiResult.result}`);
+      logger.info(`[REAL_R_MODEL] Prediction generated using ${aiResult.modelUsed}: ${aiResult.result}`);
     } catch (err) {
       logger.error(`Failed to execute ML R model: ${err.message}`);
       const error = new Error(`Prediction failed: ${err.message}`);
@@ -73,75 +64,18 @@ export const predictionService = {
       throw error;
     }
 
-    const prediction = await predictionRepository.createPrediction({
-      userId,
-      personalMetricId: personalMetric._id,
-      menstrualHistoryId: menstrualHistory._id,
-      clinicalSymptomId: clinicalSymptom._id,
-      lifestyleHabitId: lifestyleHabit._id,
+    // Assemble a plain result object in the shape the frontend expects. The
+    // frontend reassigns `_id` / `createdAt` when it stores this in localStorage.
+    const prediction = {
+      _id: `pred_${Date.now()}`,
+      createdAt: new Date().toISOString(),
       ...aiResult,
-    });
-
-    await activityLogRepository.create({
-      userId,
-      action: 'PREDICTION_CREATED',
-      details: `Prediction created via ${aiResult.engine}: ${aiResult.result} (${aiResult.probability}%)`,
-      ipAddress: ip,
-    });
-
-    logger.info(`Prediction created for user ${userId}: ${aiResult.result}`);
-
-    return {
-      prediction: {
-        ...prediction.toObject ? prediction.toObject() : prediction,
-        personalMetricId: personalMetric,
-        menstrualHistoryId: menstrualHistory,
-      },
-      aiResult,
+      personalMetricId: extendedPersonal,
+      menstrualHistoryId: { ...menstrual },
+      clinicalSymptomId: { ...symptoms },
+      lifestyleHabitId: normalizedLifestyle,
     };
-  },
 
-  async getUserPredictions(userId, options) {
-    return predictionRepository.findByUserId(userId, options);
-  },
-
-  async getPredictionById(id, userId) {
-    const prediction = await predictionRepository.findById(id);
-    if (!prediction) {
-      const error = new Error('Prediction not found.');
-      error.statusCode = 404;
-      throw error;
-    }
-    if (prediction.userId._id.toString() !== userId.toString()) {
-      const error = new Error('Not authorized to view this prediction.');
-      error.statusCode = 403;
-      throw error;
-    }
-    return prediction;
-  },
-
-  async deletePrediction(id, userId, ip) {
-    const prediction = await predictionRepository.findById(id);
-    if (!prediction) {
-      const error = new Error('Prediction not found.');
-      error.statusCode = 404;
-      throw error;
-    }
-    if (prediction.userId._id.toString() !== userId.toString()) {
-      const error = new Error('Not authorized to delete this prediction.');
-      error.statusCode = 403;
-      throw error;
-    }
-
-    await predictionRepository.deleteById(id);
-
-    await activityLogRepository.create({
-      userId,
-      action: 'PREDICTION_DELETED',
-      details: `Prediction ${id} deleted.`,
-      ipAddress: ip,
-    });
-
-    return true;
+    return { prediction, aiResult };
   },
 };

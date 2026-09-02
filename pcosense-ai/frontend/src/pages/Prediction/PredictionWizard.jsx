@@ -11,7 +11,6 @@ import {
 import { ArrowBack, ArrowForward, Science, ListAlt, Biotech, Assignment, RadioButtonUnchecked, CheckCircle, Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { predictionService } from '../../services/predictionService.js';
-import { useAuth } from '../../contexts/AuthContext.jsx';
 import {
   BLOOD_GROUP_OPTIONS, CYCLE_REGULARITY_OPTIONS, FLOW_INTENSITY_OPTIONS,
   FAST_FOOD_OPTIONS, EXERCISE_OPTIONS, STRESS_OPTIONS,
@@ -93,7 +92,6 @@ const translateOption = (t, group, value) => translateOptionValue(t, `options.${
 // ─── Component ────────────────────────────────────────────────────────────────
 const PredictionWizard = () => {
   const navigate      = useNavigate();
-  const { user }      = useAuth();
   const { t }         = useTranslation();
   const [hasGivenConsent, setHasGivenConsent] = useState(false);
   const [screeningMode, setScreeningMode] = useState(null);
