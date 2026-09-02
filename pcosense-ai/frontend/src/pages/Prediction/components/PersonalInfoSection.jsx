@@ -1,12 +1,10 @@
 // src/pages/Prediction/components/PersonalInfoSection.jsx
 import { useEffect } from 'react';
 import {
-  Box, Typography, Grid, IconButton,
+  Box, Typography, Grid,
   ToggleButton, ToggleButtonGroup, Stack
 } from '@mui/material';
 import {
-  Add as AddIcon,
-  Remove as RemoveIcon,
   Favorite as FavoriteIcon,
   MonitorHeart as MonitorHeartIcon,
   FamilyRestroom as FamilyRestroomIcon
@@ -181,69 +179,47 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
   const displayedWaist = waistUnit === 'inch' ? Number((waistCm / 2.54).toFixed(2)) : Number(waistCm.toFixed(2));
   const displayedHip = hipUnit === 'inch' ? Number((hipCm / 2.54).toFixed(2)) : Number(hipCm.toFixed(2));
 
-  // Plus/Minus step handlers
-  const handleWeightStep = (isPlus) => {
-    if (weightUnit === 'lbs') {
-      const newLbs = isPlus
-        ? Math.min(440, displayedWeight + 1)
-        : Math.max(44, displayedWeight - 1);
-      const kgVal = Number((newLbs / 2.20462).toFixed(2));
-      updateMultiplePersonal({ weightKg: kgVal, weight: kgVal });
-    } else {
-      const newKg = isPlus
-        ? Math.min(200, weightKg + 0.5)
-        : Math.max(20, weightKg - 0.5);
-      const kgVal = Number(newKg.toFixed(2));
-      updateMultiplePersonal({ weightKg: kgVal, weight: kgVal });
-    }
+  // Wheel picker ranges (in the currently displayed unit) + change handlers.
+  // Values always convert back to canonical kg/cm before storing.
+  const weightWheel = weightUnit === 'lbs'
+    ? { min: 44, max: 440, step: 1 }
+    : { min: 20, max: 200, step: 0.5 };
+  const heightWheel = heightUnit === 'inch'
+    ? { min: 39, max: 98, step: 0.5 }
+    : { min: 100, max: 250, step: 0.5 };
+  const waistWheel = waistUnit === 'inch'
+    ? { min: 15, max: 70, step: 0.5 }
+    : { min: 40, max: 180, step: 0.5 };
+  const hipWheel = hipUnit === 'inch'
+    ? { min: 20, max: 80, step: 0.5 }
+    : { min: 50, max: 200, step: 0.5 };
+
+  const handleWeightWheel = (val) => {
+    const kgVal = weightUnit === 'lbs'
+      ? Number((Number(val) / 2.20462).toFixed(2))
+      : Number(Number(val).toFixed(2));
+    updateMultiplePersonal({ weightKg: kgVal, weight: kgVal });
   };
 
-  const handleHeightStep = (isPlus) => {
-    if (heightUnit === 'inch') {
-      const newInch = isPlus
-        ? Math.min(98, displayedHeight + 0.5)
-        : Math.max(39, displayedHeight - 0.5);
-      const cmVal = Number((newInch * 2.54).toFixed(2));
-      updateMultiplePersonal({ heightCm: cmVal, height: cmVal });
-    } else {
-      const newCm = isPlus
-        ? Math.min(250, heightCm + 0.5)
-        : Math.max(100, heightCm - 0.5);
-      const cmVal = Number(newCm.toFixed(2));
-      updateMultiplePersonal({ heightCm: cmVal, height: cmVal });
-    }
+  const handleHeightWheel = (val) => {
+    const cmVal = heightUnit === 'inch'
+      ? Number((Number(val) * 2.54).toFixed(2))
+      : Number(Number(val).toFixed(2));
+    updateMultiplePersonal({ heightCm: cmVal, height: cmVal });
   };
 
-  const handleWaistStep = (isPlus) => {
-    if (waistUnit === 'inch') {
-      const newInch = isPlus
-        ? Math.min(70, displayedWaist + 0.5)
-        : Math.max(15, displayedWaist - 0.5);
-      const cmVal = Number((newInch * 2.54).toFixed(2));
-      updateMultiplePersonal({ waistCm: cmVal, waist: cmVal });
-    } else {
-      const newCm = isPlus
-        ? Math.min(180, waistCm + 0.5)
-        : Math.max(40, waistCm - 0.5);
-      const cmVal = Number(newCm.toFixed(2));
-      updateMultiplePersonal({ waistCm: cmVal, waist: cmVal });
-    }
+  const handleWaistWheel = (val) => {
+    const cmVal = waistUnit === 'inch'
+      ? Number((Number(val) * 2.54).toFixed(2))
+      : Number(Number(val).toFixed(2));
+    updateMultiplePersonal({ waistCm: cmVal, waist: cmVal });
   };
 
-  const handleHipStep = (isPlus) => {
-    if (hipUnit === 'inch') {
-      const newInch = isPlus
-        ? Math.min(80, displayedHip + 0.5)
-        : Math.max(20, displayedHip - 0.5);
-      const cmVal = Number((newInch * 2.54).toFixed(2));
-      updateMultiplePersonal({ hipCm: cmVal, hip: cmVal });
-    } else {
-      const newCm = isPlus
-        ? Math.min(200, hipCm + 0.5)
-        : Math.max(50, hipCm - 0.5);
-      const cmVal = Number(newCm.toFixed(2));
-      updateMultiplePersonal({ hipCm: cmVal, hip: cmVal });
-    }
+  const handleHipWheel = (val) => {
+    const cmVal = hipUnit === 'inch'
+      ? Number((Number(val) * 2.54).toFixed(2))
+      : Number(Number(val).toFixed(2));
+    updateMultiplePersonal({ hipCm: cmVal, hip: cmVal });
   };
 
   // Shared borderless column layout style
@@ -256,6 +232,18 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
     height: '100%',
     minHeight: { xs: '115px', md: '125px' },
   };
+
+  // Scaled wrapper so the age-style wheel fits inside a 3-column grid cell
+  const wheelWrapperStyle = {
+    width: '100%',
+    height: '180px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'visible',
+    my: 'auto',
+  };
+  const wheelInnerStyle = { width: '260px', transform: 'scale(0.72)', transformOrigin: 'center center' };
 
   const bmiInfo = getBMIInfo(personal.bmi, t);
   const whrInfo = getWHRInfo(personal.waistHipRatio, t);
@@ -296,7 +284,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                   value={age}
                   onChange={(val) => updatePersonal('age', Number(val))}
                   min={10}
-                  max={60}
+                  max={48}
                   step={1}
                   unit={t('prediction.personal.years_unit')}
                 />
@@ -406,30 +394,18 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                   </ToggleButtonGroup>
                 </Stack>
 
-                <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} sx={{ my: 'auto', py: 0.5, width: '100%' }}>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleWeightStep(false)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
-                  >
-                    <RemoveIcon fontSize="small" />
-                  </IconButton>
-                  <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 0.6, whiteSpace: 'nowrap', px: 0.5 }}>
-                    <Typography variant="h4" fontWeight={900} sx={{ color: '#E91E63', lineHeight: 1, whiteSpace: 'nowrap' }}>
-                      {displayedWeight}
-                    </Typography>
-                    <Typography variant="subtitle1" fontWeight={700} color="text.secondary" sx={{ whiteSpace: 'nowrap', lineHeight: 1 }}>
-                      {t(`units.${weightUnit}`)}
-                    </Typography>
+                <Box sx={wheelWrapperStyle}>
+                  <Box sx={wheelInnerStyle}>
+                    <WheelPicker
+                      value={displayedWeight}
+                      onChange={handleWeightWheel}
+                      min={weightWheel.min}
+                      max={weightWheel.max}
+                      step={weightWheel.step}
+                      unit={t(`units.${weightUnit}`)}
+                    />
                   </Box>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleWeightStep(true)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
-                  >
-                    <AddIcon fontSize="small" />
-                  </IconButton>
-                </Stack>
+                </Box>
               </Box>
             </Grid>
 
@@ -452,30 +428,18 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                   </ToggleButtonGroup>
                 </Stack>
 
-                <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} sx={{ my: 'auto', py: 0.5, width: '100%' }}>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleHeightStep(false)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
-                  >
-                    <RemoveIcon fontSize="small" />
-                  </IconButton>
-                  <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 0.6, whiteSpace: 'nowrap', px: 0.5 }}>
-                    <Typography variant="h4" fontWeight={900} sx={{ color: '#E91E63', lineHeight: 1, whiteSpace: 'nowrap' }}>
-                      {displayedHeight}
-                    </Typography>
-                    <Typography variant="subtitle1" fontWeight={700} color="text.secondary" sx={{ whiteSpace: 'nowrap', lineHeight: 1 }}>
-                      {t(`units.${heightUnit}`)}
-                    </Typography>
+                <Box sx={wheelWrapperStyle}>
+                  <Box sx={wheelInnerStyle}>
+                    <WheelPicker
+                      value={displayedHeight}
+                      onChange={handleHeightWheel}
+                      min={heightWheel.min}
+                      max={heightWheel.max}
+                      step={heightWheel.step}
+                      unit={t(`units.${heightUnit}`)}
+                    />
                   </Box>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleHeightStep(true)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
-                  >
-                    <AddIcon fontSize="small" />
-                  </IconButton>
-                </Stack>
+                </Box>
               </Box>
             </Grid>
 
@@ -543,30 +507,18 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                   </ToggleButtonGroup>
                 </Stack>
 
-                <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} sx={{ my: 'auto', py: 0.5, width: '100%' }}>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleWaistStep(false)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
-                  >
-                    <RemoveIcon fontSize="small" />
-                  </IconButton>
-                  <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 0.6, whiteSpace: 'nowrap', px: 0.5 }}>
-                    <Typography variant="h4" fontWeight={900} sx={{ color: '#E91E63', lineHeight: 1, whiteSpace: 'nowrap' }}>
-                      {displayedWaist}
-                    </Typography>
-                    <Typography variant="subtitle1" fontWeight={700} color="text.secondary" sx={{ whiteSpace: 'nowrap', lineHeight: 1 }}>
-                      {t(`units.${waistUnit}`)}
-                    </Typography>
+                <Box sx={wheelWrapperStyle}>
+                  <Box sx={wheelInnerStyle}>
+                    <WheelPicker
+                      value={displayedWaist}
+                      onChange={handleWaistWheel}
+                      min={waistWheel.min}
+                      max={waistWheel.max}
+                      step={waistWheel.step}
+                      unit={t(`units.${waistUnit}`)}
+                    />
                   </Box>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleWaistStep(true)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
-                  >
-                    <AddIcon fontSize="small" />
-                  </IconButton>
-                </Stack>
+                </Box>
               </Box>
             </Grid>
 
@@ -589,30 +541,18 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                   </ToggleButtonGroup>
                 </Stack>
 
-                <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} sx={{ my: 'auto', py: 0.5, width: '100%' }}>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleHipStep(false)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
-                  >
-                    <RemoveIcon fontSize="small" />
-                  </IconButton>
-                  <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 0.6, whiteSpace: 'nowrap', px: 0.5 }}>
-                    <Typography variant="h4" fontWeight={900} sx={{ color: '#E91E63', lineHeight: 1, whiteSpace: 'nowrap' }}>
-                      {displayedHip}
-                    </Typography>
-                    <Typography variant="subtitle1" fontWeight={700} color="text.secondary" sx={{ whiteSpace: 'nowrap', lineHeight: 1 }}>
-                      {t(`units.${hipUnit}`)}
-                    </Typography>
+                <Box sx={wheelWrapperStyle}>
+                  <Box sx={wheelInnerStyle}>
+                    <WheelPicker
+                      value={displayedHip}
+                      onChange={handleHipWheel}
+                      min={hipWheel.min}
+                      max={hipWheel.max}
+                      step={hipWheel.step}
+                      unit={t(`units.${hipUnit}`)}
+                    />
                   </Box>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleHipStep(true)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
-                  >
-                    <AddIcon fontSize="small" />
-                  </IconButton>
-                </Stack>
+                </Box>
               </Box>
             </Grid>
 
