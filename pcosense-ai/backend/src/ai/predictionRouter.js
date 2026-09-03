@@ -39,13 +39,17 @@ const executeRPrediction = async (predictionMode, mappedFeatures) => {
   let modelSource = modelInfo.source;
   let scriptName  = modelInfo.script || "predict.R";
 
-  // Missing-feature routing (see modelRegistry.js for the mode-2 contract):
-  //   * a MANDATORY field is missing        -> hard alert, run nothing
-  //   * only OPTIONAL field(s) are missing  -> NA-capable fallback model
+  // Missing-feature routing (see modelRegistry.js per-mode contracts):
   //   * everything present                  -> primary model
+  //   * a MANDATORY field is missing        -> hard alert, run nothing
+  //                                            (skipped when fallback.cascade —
+  //                                            the cascade script owns that call)
+  //   * only OPTIONAL field(s) are missing  -> NA-capable fallback model / script
   let routedBy = "primary";
   if (modelInfo.fallback) {
-    if (Array.isArray(modelInfo.mandatory)) {
+    const isCascade = modelInfo.fallback.cascade === true;
+
+    if (!isCascade && Array.isArray(modelInfo.mandatory)) {
       const missingMandatory = modelInfo.mandatory.filter(
         (k) => mappedFeatures[k] === null || mappedFeatures[k] === undefined
       );
@@ -59,13 +63,18 @@ const executeRPrediction = async (predictionMode, mappedFeatures) => {
     }
 
     if (modelInfo.fallback.trigger === "missing_optional_features") {
-      // Any null left here can only be an optional field.
-      const anyOptionalMissing = Object.values(mappedFeatures).some((v) => v === null);
-      if (anyOptionalMissing) {
+      // Gate the primary model on its own predictors only — `passthroughFeatures`
+      // are mapped for a fallback's benefit and must not force the primary path.
+      const passthrough = new Set(modelInfo.fallback.passthroughFeatures || []);
+      const gateKeys = (modelInfo.features || []).filter((k) => !passthrough.has(k));
+      const anyGateMissing = gateKeys.some(
+        (k) => mappedFeatures[k] === null || mappedFeatures[k] === undefined
+      );
+      if (anyGateMissing) {
         modelId     = modelInfo.fallback.id;
         modelSource = modelInfo.fallback.source;
         scriptName  = modelInfo.fallback.script;
-        routedBy    = "missing_optional_fallback";
+        routedBy    = isCascade ? "missing_value_cascade" : "missing_optional_fallback";
       }
     }
   }
@@ -115,9 +124,15 @@ const executeRPrediction = async (predictionMode, mappedFeatures) => {
       throw new Error(`R Model Error: ${result.error}`);
     }
 
-    // Report the model actually executed (may be the fallback), not the
-    // registry's primary entry.
-    return { ...result, modelUsed: modelId, modelSource, routedBy };
+    // Report the model actually executed, not the registry's primary entry.
+    // A cascade script names the ensemble member it landed on via
+    // result.modelUsed / result.modelSource; otherwise use the routed values.
+    return {
+      ...result,
+      modelUsed:   result.modelUsed   || modelId,
+      modelSource: result.modelSource || modelSource,
+      routedBy,
+    };
   } catch (err) {
     // Best-effort cleanup on failure
     try { if (fs.existsSync(tempPath)) fs.unlinkSync(tempPath); } catch (_) {}

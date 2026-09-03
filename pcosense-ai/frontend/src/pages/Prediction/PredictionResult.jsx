@@ -9,10 +9,20 @@ import { CheckCircle, Home, History, Science, Warning } from '@mui/icons-materia
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../constants/index.js';
-import { translateOptionValue } from '../../utils/optionTranslation.js';
 
-// ─── Helper: translate a fixed backend enum value without changing the underlying value ──
-const translateRiskLabel = (t, value) => translateOptionValue(t, 'predictionResult.riskLevels', value);
+// ─── 4-band risk scale, driven by the model probability (0–100) ───────────
+//   0–30   Low PMOS Risk        → green
+//   30–60  Moderate PMOS Risk   → yellow
+//   60–90  PMOS Risk Detected   → orange
+//   90–100 High PMOS Risk       → red
+// `severe` flags the two upper bands (drives the warning icon).
+const getRiskBand = (probability) => {
+  const v = Number(probability) || 0;
+  if (v < 30) return { key: 'low',      color: '#66BB6A', severe: false };
+  if (v < 60) return { key: 'moderate', color: '#FBC02D', severe: false };
+  if (v < 90) return { key: 'detected', color: '#f88131', severe: true  };
+  return               { key: 'high',     color: '#EF5350', severe: true  };
+};
 
 // ─── Helper: one labelled blood value row ─────────────────────────────────
 const BloodRow = ({ label, value, unit }) => {
@@ -41,9 +51,10 @@ const PredictionResult = () => {
     );
   }
 
-  const isHighRisk = result.result === 'High Risk';
-  const color      = isHighRisk ? '#EF5350' : '#66BB6A';
-  const bgColor    = isHighRisk ? 'rgba(239, 83, 80, 0.12)' : 'rgba(102, 187, 106, 0.12)';
+  const band       = getRiskBand(result.probability);
+  const isHighRisk = band.severe;
+  const color      = band.color;
+  const bgColor    = `${color}1F`;
 
   // Personal metric data for blood report section
   const pm = prediction?.personalMetricId || {};
@@ -72,11 +83,11 @@ const PredictionResult = () => {
                 </Box>
               </motion.div>
               <Chip
-                label={translateRiskLabel(t, result.result)}
+                label={t(`predictionResult.riskBands.${band.key}.chip`)}
                 sx={{ bgcolor: bgColor, color, fontWeight: 800, fontSize: '1rem', px: 2, py: 0.5, mb: 2, border: `1px solid ${color}40` }}
               />
               <Typography variant="h4" fontWeight={800} sx={{ color }}>
-                {isHighRisk ? t('predictionResult.headline.high') : t('predictionResult.headline.low')}
+                {t(`predictionResult.riskBands.${band.key}.headline`)}
               </Typography>
               <Typography color="text.secondary" sx={{ mt: 1 }}>
                 {t('predictionResult.subheading')}
@@ -87,7 +98,7 @@ const PredictionResult = () => {
             <CardContent sx={{ p: 4 }}>
               <Grid container spacing={4}>
                 {/* Probability Meter */}
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <Typography variant="subtitle2" color="text.secondary" gutterBottom>{t('predictionResult.metrics.riskProbability')}</Typography>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
                     <Typography variant="h3" fontWeight={900} sx={{ color }}>{result.probability}%</Typography>
@@ -102,23 +113,6 @@ const PredictionResult = () => {
                     <Typography variant="caption" color="text.secondary">50%</Typography>
                     <Typography variant="caption" color="text.secondary">100%</Typography>
                   </Box>
-                </Grid>
-
-                {/* Confidence */}
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle2" color="text.secondary" gutterBottom>{t('predictionResult.metrics.modelConfidence')}</Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
-                    <Typography variant="h3" fontWeight={900} color="text.primary">{result.confidence}%</Typography>
-                  </Box>
-                  <LinearProgress
-                    variant="determinate"
-                    value={result.confidence}
-                    color="secondary"
-                    sx={{ height: 12, borderRadius: 6 }}
-                  />
-                  <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
-                    {t('predictionResult.metrics.aiCertainty')}
-                  </Typography>
                 </Grid>
               </Grid>
             </CardContent>
