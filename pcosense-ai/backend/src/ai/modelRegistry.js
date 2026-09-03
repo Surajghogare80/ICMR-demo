@@ -14,7 +14,15 @@
  *                                 MANDATORY input is a hard alert.
  *                                 See `fallback` / `mandatory` below; routing
  *                                 lives in predictionRouter.js.
- * MODE 3: "symptoms_usg"       -> Dataset1_RF (rf_model_new.rds)
+ * MODE 3: "symptoms_usg"       -> RF_Model_3_Dataset_3.rds when every input is
+ *                                 supplied; Dataset3_xgb.model (a genuine
+ *                                 missing-value-capable XGBoost, trained on
+ *                                 missingness-augmented data — see
+ *                                 backend/ai/train_dataset3_xgboost_missing_capable.R)
+ *                                 when only OPTIONAL inputs are blank. A missing
+ *                                 MANDATORY input is a hard alert.
+ *                                 See `fallback` / `mandatory` below; routing
+ *                                 lives in predictionRouter.js.
  * MODE 4: "symptoms_blood_usg" -> Dataset1_RF (rf_model_new.rds)
  *
  * Missing values are kept as null (which R handles natively as NA).
@@ -122,21 +130,59 @@ const MODELS = {
   },
 
   [PREDICTION_MODES.SYMPTOMS_USG]: {
-    id:          "Dataset1_RF",
-    source:      "rf_model_new.rds",
-    description: "Symptoms + USG Mode (Dataset1_RF)",
+    id:          "RF_Model_3_Dataset_3",
+    source:      "RF_Model_3_Dataset_3.rds",
+    script:      "predict_symptoms_usg.R",
+    description: "Symptoms + Ultrasound Mode (RF_Model_3_Dataset_3 — physical exam, symptom & ovarian ultrasound features; no blood panel)",
+    //
+    // ─── Mode 3 routing (implemented in predictionRouter.js) ──────────────
+    //   1. A `mandatory` field is missing        -> throw MISSING_FEATURES
+    //                                               (the frontend "missing
+    //                                               information" alert; no
+    //                                               model is run).
+    //   2. Only `optional` field(s) are missing  -> Dataset3_xgb.model via the
+    //      (no mandatory gap)                       `fallback` below — a
+    //                                               missing-value-capable
+    //                                               XGBoost (trained on
+    //                                               missingness-augmented data).
+    //   3. Every field is present                -> RF_Model_3_Dataset_3.rds
+    //                                               (the `script` above).
+    //
+    // Both models take the same 21 raw predictor keys. predict_symptoms_usg.R
+    // rebuilds caret's 22-column dummy design matrix (Cycle_RI -> two dummies);
+    // predict_symptoms_usg_xgb.R feeds the raw numeric columns straight to the
+    // booster in Dataset3_missing_capable_meta.rds$all_features order.
+    fallback: {
+      trigger: "missing_optional_features",
+      id:      "Dataset3_xgb_missing_capable",
+      source:  "Dataset3_xgb.model",
+      script:  "predict_symptoms_usg_xgb.R",
+    },
+    // Missing ANY of these -> hard alert (no model runs). This is exactly
+    // Dataset3_missing_capable_meta.rds$mandatory (the 10 top-importance
+    // features the missing-capable XGBoost was NOT allowed to see as NA during
+    // training). It includes both ovarian ultrasound follicle counts and both
+    // average follicle sizes, so mode 3 genuinely requires the ultrasound read.
+    // predict_symptoms_usg_xgb.R re-reads the same list from the .rds meta.
+    mandatory: [
+      "Follicle_No_R", "Follicle_No_L", "hair_growth", "Weight_gain",
+      "Skin_darkening", "Age", "Cycle_RI", "Avg_F_size_L",
+      "Avg_F_size_R", "Weight_Kg",
+    ],
+    // Raw predictor keys. predict_symptoms_usg.R decodes these into the
+    // 22-column caret dummy design matrix baked into the randomForest;
+    // predict_symptoms_usg_xgb.R maps them to
+    // Dataset3_missing_capable_meta.rds$all_features. Everything here NOT in
+    // `mandatory` is optional — the missing-capable XGBoost routes it natively
+    // when blank.
     features: [
-      "Age..yrs.", "Weight..Kg.", "Height.Cm.", "BMI",
-      "Pulse.rate.bpm.", "RR..breaths.min.", "Hb.g.dl.",
-      "Cycle.R.I.", "Cycle.length.days.", "Pregnant.Y.N.",
-      "FSH.mIU.mL.", "LH.mIU.mL.", "FSH.LH", "TSH..mIU.L.",
-      "AMH.ng.mL.", "PRL.ng.mL.", "Vit.D3..ng.mL.", "PRG.ng.mL.",
-      "Hip.inch.", "Waist.inch.", "Waist.Hip.Ratio", "RBS.mg.dl.",
-      "Weight.gain.Y.N.", "hair.growth.Y.N.", "Skin.darkening..Y.N.",
-      "Hair.loss.Y.N.", "Pimples.Y.N.", "Reg.Exercise.Y.N.",
-      "BP._Systolic..mmHg.", "BP._Diastolic..mmHg.",
-      "Follicle.No...L.", "Follicle.No...R.", 
-      "Avg..F.size..L...mm.", "Avg..F.size..R...mm.", "Endometrium..mm."
+      "Age", "Weight_Kg", "Height_Cm", "BMI",
+      "Cycle_RI", "Cycle_length",
+      "Hip", "Waist", "Waist_Hip_Ratio",
+      "Weight_gain", "hair_growth", "Skin_darkening", "Hair_loss", "Pimples",
+      "Fast_food", "Reg_Exercise",
+      "Follicle_No_L", "Follicle_No_R",
+      "Avg_F_size_L", "Avg_F_size_R", "Endometrium",
     ],
   },
 
