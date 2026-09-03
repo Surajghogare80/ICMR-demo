@@ -7,7 +7,8 @@
  * Source of Truth: modelRegistry.js
  *   - mode 1 "symptoms_only"  -> RF_Model_1_Dataset_1.rds  (underscore keys)
  *   - mode 2 "symptoms_blood" -> RF_Model_2_Dataset_2.rds  (underscore keys, incl. blood panel)
- *   - modes 3-4               -> rf_model_new.rds          (dotted keys)
+ *   - mode 3 "symptoms_usg"   -> RF_Model_3_Dataset_3.rds  (underscore keys, incl. ovarian ultrasound)
+ *   - mode 4 "symptoms_blood_usg" -> rf_model_new.rds      (dotted keys)
  * Rule: NO IMPUTATION. If a value is missing, it is mapped to null (which becomes NA in R).
  */
 
@@ -144,6 +145,15 @@ export const mapFeaturesForModel = (input, predictionMode) => {
     "Pimples":               mapYesNoNumeric(s.pimples),
     "Fast_food":             mapYesNoNumeric(l.fastFoodFreq),
     "Reg_Exercise":          mapYesNoNumeric(l.exerciseFreq),
+
+    // ─── RF_Model_3_Dataset_3 Mappings (Mode 3: Symptoms + Ultrasound) ────
+    // Shares every underscore physical/symptom key above; adds the five
+    // ovarian ultrasound fields. Only populated when includeUsg is true.
+    "Follicle_No_L":         includeUsg ? exactNumOrNull(m.follicleNoLeft)       : null,
+    "Follicle_No_R":         includeUsg ? exactNumOrNull(m.follicleNoRight)      : null,
+    "Avg_F_size_L":          includeUsg ? exactNumOrNull(m.avgFollicleSizeLeft)  : null,
+    "Avg_F_size_R":          includeUsg ? exactNumOrNull(m.avgFollicleSizeRight) : null,
+    "Endometrium":           includeUsg ? exactNumOrNull(m.endometrium)          : null,
 
     // ─── RF_Model_2_Dataset_2 Mappings (Mode 2: Symptoms + Blood) ─────────
     // Shares the underscore physical/symptom keys above; adds the blood panel.
