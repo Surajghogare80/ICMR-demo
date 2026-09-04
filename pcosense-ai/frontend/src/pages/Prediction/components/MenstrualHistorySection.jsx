@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Box, Typography, Grid, FormControl, InputLabel,
-  Select, MenuItem, Stack, Paper, useTheme, IconButton
+  Select, MenuItem, Stack, Paper, useTheme, IconButton, InputBase
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -38,12 +38,70 @@ const REGULARITY_ICONS = { Regular: <RegularIcon />, Irregular: <IrregularIcon /
 
 const PERIOD_DURATION_OPTIONS = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
+// Average cycle length bounds: 15–89 days are shown as-is, anything ≥ 90 is capped and rendered as "90+".
+const CYCLE_MIN = 15;
+const CYCLE_MAX = 90;
+const CYCLE_DEFAULT = 28;
+
 const MenstrualHistorySection = ({ formData, updateField }) => {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
   const { t } = useTranslation();
 
   const menstrual = formData?.menstrual || {};
+
+  // ─── Average Cycle Length (manually editable) ──────────────────────────────
+  const cycleNum = Number(menstrual.cycleLength) || CYCLE_DEFAULT;
+  const [cycleFocused, setCycleFocused] = useState(false);
+  const [cycleDraft, setCycleDraft] = useState('');
+  const [cycleError, setCycleError] = useState(false);
+
+  const commitCycle = (value, { markError = false } = {}) => {
+    setCycleError(markError);
+    updateField('menstrual', 'cycleLength', value);
+  };
+
+  // One physical tap can emit several events (touch + synthetic "ghost" click).
+  // This lock guarantees a single tap moves the value by exactly one step.
+  const cycleStepLock = useRef(0);
+  const stepCycle = (delta) => {
+    const now = Date.now();
+    if (now - cycleStepLock.current < 250) return;
+    cycleStepLock.current = now;
+    const base = Number(menstrual.cycleLength) || CYCLE_DEFAULT;
+    const next = Math.min(CYCLE_MAX, Math.max(CYCLE_MIN, base + delta));
+    setCycleDraft(String(next));
+    commitCycle(next);
+  };
+
+  const handleCycleFocus = () => {
+    setCycleFocused(true);
+    setCycleDraft(cycleNum >= CYCLE_MAX ? String(CYCLE_MAX) : String(cycleNum));
+  };
+
+  const handleCycleChange = (e) => {
+    const raw = e.target.value.replace(/[^0-9]/g, '').slice(0, 3);
+    setCycleDraft(raw);
+    if (raw === '') { setCycleError(true); return; }
+    const v = Number(raw);
+    if (v < CYCLE_MIN) {
+      commitCycle(v, { markError: true }); // manual error: below the minimum
+    } else {
+      commitCycle(Math.min(CYCLE_MAX, v));
+    }
+  };
+
+  const handleCycleBlur = () => {
+    setCycleFocused(false);
+    const v = Number(cycleDraft);
+    if (cycleDraft === '' || isNaN(v)) { commitCycle(CYCLE_DEFAULT); return; }
+    if (v < CYCLE_MIN) { commitCycle(v, { markError: true }); return; }
+    commitCycle(Math.min(CYCLE_MAX, v));
+  };
+
+  const cycleDisplay = cycleFocused
+    ? cycleDraft
+    : (cycleNum >= CYCLE_MAX ? '90+' : String(cycleNum));
 
   const REGULARITY_OPTIONS = [
     { value: 'Regular', key: 'regular', icon: REGULARITY_ICONS.Regular },
@@ -226,34 +284,57 @@ const MenstrualHistorySection = ({ formData, updateField }) => {
               <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} sx={{ width: '100%' }}>
                 <IconButton
                   size="small"
-                  onClick={() => {
-                    const current = Number(menstrual.cycleLength) || 28;
-                    updateField('menstrual', 'cycleLength', Math.max(15, current - 1));
-                  }}
+                  onClick={() => stepCycle(-1)}
                   sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
                 >
                   <RemoveIcon fontSize="small" />
                 </IconButton>
-                <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 0.6, whiteSpace: 'nowrap', px: 0.5 }}>
-                  <Typography variant="h4" fontWeight={900} sx={{ color: '#E91E63', lineHeight: 1, whiteSpace: 'nowrap' }}>
-                    {menstrual.cycleLength || 28}
-                  </Typography>
-                  <Typography variant="subtitle1" fontWeight={700} color="text.secondary" sx={{ whiteSpace: 'nowrap', lineHeight: 1 }}>
+                <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 0.75, whiteSpace: 'nowrap', px: 0.5, minWidth: 0 }}>
+                  <InputBase
+                    value={cycleDisplay}
+                    onFocus={handleCycleFocus}
+                    onChange={handleCycleChange}
+                    onBlur={handleCycleBlur}
+                    inputProps={{
+                      inputMode: 'numeric',
+                      pattern: '[0-9]*',
+                      'aria-label': t('prediction.menstrual.avg_cycle_length_title'),
+                    }}
+                    sx={{
+                      fontSize: '1.9rem',
+                      fontWeight: 900,
+                      color: cycleError ? '#D32F2F' : '#E91E63',
+                      lineHeight: 1,
+                      '& input': {
+                        p: 0,
+                        height: 'auto',
+                        width: '3.2ch',
+                        textAlign: 'center',
+                        color: 'inherit',
+                        fontSize: 'inherit',
+                        fontWeight: 'inherit',
+                        lineHeight: 'inherit',
+                      },
+                    }}
+                  />
+                  <Typography component="span" fontWeight={700} color="text.secondary" sx={{ fontSize: '0.95rem', whiteSpace: 'nowrap', lineHeight: 1, flexShrink: 0 }}>
                     {t('prediction.menstrual.days_unit')}
                   </Typography>
                 </Box>
                 <IconButton
                   size="small"
-                  onClick={() => {
-                    const current = Number(menstrual.cycleLength) || 28;
-                    updateField('menstrual', 'cycleLength', Math.min(90, current + 1));
-                  }}
+                  onClick={() => stepCycle(1)}
                   sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
                 >
                   <AddIcon fontSize="small" />
                 </IconButton>
               </Stack>
             </Box>
+            {cycleError && (
+              <Typography variant="caption" color="error" align="center" sx={{ display: 'block', mt: 1.25, fontWeight: 600 }}>
+                {t('prediction.menstrual.cycle_length_min_error')}
+              </Typography>
+            )}
           </Paper>
 
           {/* Card 4: Flow Intensity */}

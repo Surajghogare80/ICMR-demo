@@ -57,8 +57,8 @@
         "subtitle": "Get your PMOS risk assessment in 4 simple steps",
         "steps": {
           "account": {
-            "title": "Create Account",
-            "desc": "Register securely and set up your personal health profile."
+            "title": "Enter your basic details",
+            "desc": "Provide basic information like age, height, and weight to check your PMOS Risk."
           },
           "screening": {
             "title": "Complete Screening",
@@ -76,7 +76,7 @@
       },
       "about": {
         "title": "About PMOS",
-        "description": "Polycystic Ovary Syndrome (PMOS) affects approximately <strong>1 in 10</strong> women of childbearing age worldwide. It is one of the most common endocrine disorders and a leading cause of female infertility. Early detection and lifestyle intervention can significantly improve outcomes.",
+        "description": "Polyendocrine Metabolic Ovarian Syndrome (PMOS) affects approximately <strong>1 in 10</strong> women of childbearing age worldwide. It is one of the most common endocrine disorders and a leading cause of female infertility. Early detection and lifestyle intervention can significantly improve outcomes.",
         "tags": {
           "periods": "Irregular periods",
           "hormonal": "Hormonal imbalance",
@@ -91,7 +91,7 @@
         "items": {
           "whatIsPmos": {
             "q": "What is PMOS?",
-            "a": "Polycystic Ovary Syndrome (PMOS) is a common hormonal disorder affecting women of reproductive age. It causes irregular periods, excess androgen, and polycystic ovaries."
+            "a": "Polyendocrine Metabolic Ovarian Syndrome (PMOS) is a common hormonal disorder affecting women of reproductive age. It causes irregular periods, excess androgen, and polycystic ovaries."
           },
           "medicalDiagnosis": {
             "q": "Is this a medical diagnosis?",
@@ -186,8 +186,8 @@
         "subtitle": "4 आसान चरणों में अपना PMOS जोखिम मूल्यांकन प्राप्त करें",
         "steps": {
           "account": {
-            "title": "खाता बनाएं",
-            "desc": "सुरक्षित रूप से पंजीकरण करें और अपनी व्यक्तिगत स्वास्थ्य प्रोफ़ाइल सेट करें।"
+            "title": "अपनी बुनियादी जानकारी दर्ज करें",
+            "desc": "अपना PMOS जोखिम जांचने के लिए उम्र, कद और वजन जैसी बुनियादी जानकारी दें।"
           },
           "screening": {
             "title": "स्क्रीनिंग पूरी करें",
@@ -205,7 +205,7 @@
       },
       "about": {
         "title": "PMOS के बारे में",
-        "description": "पॉलीसिस्टिक ओवरी सिंड्रोम (PMOS) दुनिया भर में प्रजनन आयु की लगभग <strong>10 में से 1</strong> महिला को प्रभावित करता है। यह सबसे आम अंतःस्रावी विकारों में से एक है और महिला बांझपन का एक प्रमुख कारण है। शीघ्र पहचान और जीवनशैली में हस्तक्षेप परिणामों में उल्लेखनीय सुधार कर सकते हैं।",
+        "description": "पॉलीएंडोक्राइन मेटाबॉलिक ओवेरियन सिंड्रोम (PMOS) दुनिया भर में प्रजनन आयु की लगभग <strong>10 में से 1</strong> महिला को प्रभावित करता है। यह सबसे आम अंतःस्रावी विकारों में से एक है और महिला बांझपन का एक प्रमुख कारण है। शीघ्र पहचान और जीवनशैली में हस्तक्षेप परिणामों में उल्लेखनीय सुधार कर सकते हैं।",
         "tags": {
           "periods": "अनियमित मासिक धर्म",
           "hormonal": "हार्मोनल असंतुलन",
@@ -220,7 +220,7 @@
         "items": {
           "whatIsPmos": {
             "q": "PMOS क्या है?",
-            "a": "पॉलीसिस्टिक ओवरी सिंड्रोम (PMOS) प्रजनन आयु की महिलाओं को प्रभावित करने वाला एक सामान्य हार्मोनल विकार है। इससे अनियमित मासिक धर्म, अतिरिक्त एण्ड्रोजन और पॉलीसिस्टिक अंडाशय होते हैं।"
+            "a": "पॉलीएंडोक्राइन मेटाबॉलिक ओवेरियन सिंड्रोम (PMOS) प्रजनन आयु की महिलाओं को प्रभावित करने वाला एक सामान्य हार्मोनल विकार है। इससे अनियमित मासिक धर्म, अतिरिक्त एण्ड्रोजन और पॉलीसिस्टिक अंडाशय होते हैं।"
           },
           "medicalDiagnosis": {
             "q": "क्या यह एक चिकित्सीय निदान है?",
@@ -315,8 +315,8 @@
         "subtitle": "4 सोप्या पायऱ्यांमध्ये तुमचे PMOS जोखीम मूल्यांकन मिळवा",
         "steps": {
           "account": {
-            "title": "खाते तयार करा",
-            "desc": "सुरक्षितपणे नोंदणी करा आणि तुमची वैयक्तिक आरोग्य प्रोफाइल सेट करा."
+            "title": "तुमची मूलभूत माहिती भरा",
+            "desc": "तुमचा PMOS धोका तपासण्यासाठी वय, उंची आणि वजन यांसारखी मूलभूत माहिती द्या."
           },
           "screening": {
             "title": "स्क्रीनिंग पूर्ण करा",
@@ -334,7 +334,7 @@
       },
       "about": {
         "title": "PMOS विषयी",
-        "description": "पॉलीसिस्टिक ओव्हरी सिंड्रोम (PMOS) जगभरातील प्रजनन वयोगटातील अंदाजे <strong>10 पैकी 1</strong> महिलेला प्रभावित करतो. हा सर्वात सामान्य अंतःस्रावी विकारांपैकी एक आहे आणि महिला वंध्यत्वाचे एक प्रमुख कारण आहे. लवकर निदान आणि जीवनशैलीतील हस्तक्षेप परिणामांमध्ये लक्षणीय सुधारणा करू शकतात.",
+        "description": "पॉलीएंडोक्राइन मेटाबॉलिक ओव्हेरियन सिंड्रोम (PMOS) जगभरातील प्रजनन वयोगटातील अंदाजे <strong>10 पैकी 1</strong> महिलेला प्रभावित करतो. हा सर्वात सामान्य अंतःस्रावी विकारांपैकी एक आहे आणि महिला वंध्यत्वाचे एक प्रमुख कारण आहे. लवकर निदान आणि जीवनशैलीतील हस्तक्षेप परिणामांमध्ये लक्षणीय सुधारणा करू शकतात.",
         "tags": {
           "periods": "अनियमित मासिक पाळी",
           "hormonal": "हार्मोनल असंतुलन",
@@ -349,7 +349,7 @@
         "items": {
           "whatIsPmos": {
             "q": "PMOS म्हणजे काय?",
-            "a": "पॉलीसिस्टिक ओव्हरी सिंड्रोम (PMOS) हा प्रजनन वयोगटातील महिलांना प्रभावित करणारा एक सामान्य हार्मोनल विकार आहे. यामुळे अनियमित मासिक पाळी, जास्त अँड्रोजन आणि पॉलीसिस्टिक अंडाशय होतात."
+            "a": "पॉलीएंडोक्राइन मेटाबॉलिक ओव्हेरियन सिंड्रोम (PMOS) हा प्रजनन वयोगटातील महिलांना प्रभावित करणारा एक सामान्य हार्मोनल विकार आहे. यामुळे अनियमित मासिक पाळी, जास्त अँड्रोजन आणि पॉलीसिस्टिक अंडाशय होतात."
           },
           "medicalDiagnosis": {
             "q": "हे वैद्यकीय निदान आहे का?",

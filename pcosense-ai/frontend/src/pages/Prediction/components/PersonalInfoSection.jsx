@@ -24,7 +24,16 @@ const getBMIInfo = (bmi, t) => {
   if (b < 25) {
     return { status: t('prediction.personal.bmi_status.normal'), color: '#4CAF50', desc: t('prediction.personal.bmi_status.normal_range') };   // Green
   }
-  return { status: t('prediction.personal.bmi_status.overweight_obese'), color: '#FF9800', desc: t('prediction.personal.bmi_status.overweight_range') }; // Orange
+  if (b < 30) {
+    return { status: t('prediction.personal.bmi_status.overweight'), color: '#FF9800', desc: t('prediction.personal.bmi_status.overweight_range') }; // Orange
+  }
+  if (b < 35) {
+    return { status: t('prediction.personal.bmi_status.obesity_1'), color: '#FB8C00', desc: t('prediction.personal.bmi_status.obesity_1_range') }; // Deep orange
+  }
+  if (b < 40) {
+    return { status: t('prediction.personal.bmi_status.obesity_2'), color: '#F4511E', desc: t('prediction.personal.bmi_status.obesity_2_range') }; // Dark orange
+  }
+  return { status: t('prediction.personal.bmi_status.obesity_3'), color: '#F44336', desc: t('prediction.personal.bmi_status.obesity_3_range') }; // Red
 };
 
 // Color & Status helpers for Waist-Hip Ratio

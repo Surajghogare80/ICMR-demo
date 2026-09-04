@@ -200,6 +200,7 @@
         "duration_question": "How long does your period last?",
         "days_label": "Days",
         "avg_cycle_length_title": "Average Cycle Length",
+        "cycle_length_min_error": "Average Cycle Length can't be less than 15 days.",
         "days_unit": "days",
         "flow_intensity_title": "Flow Intensity",
         "intensity_label": "Intensity",
@@ -235,11 +236,17 @@
         "bmi_status": {
           "underweight": "Underweight",
           "normal": "Normal",
-          "overweight_obese": "Overweight / Obese",
+          "overweight": "Overweight / Obesity",
+          "obesity_1": "Obesity (class I)",
+          "obesity_2": "Obesity (class II)",
+          "obesity_3": "Obesity (class III)",
           "enter_weight_height": "Enter weight & height",
           "underweight_range": "≤ 18.4",
           "normal_range": "18.5 – 24.9",
-          "overweight_range": "≥ 25.0"
+          "overweight_range": "25.0 – 29.9",
+          "obesity_1_range": "30.0 – 34.9",
+          "obesity_2_range": "35.0 – 39.9",
+          "obesity_3_range": "≥ 40.0"
         },
         "whr_status": {
           "low": "Low",
@@ -454,6 +461,7 @@
         "duration_question": "आपका पीरियड कितने दिन चलता है?",
         "days_label": "दिन",
         "avg_cycle_length_title": "औसत चक्र अवधि",
+        "cycle_length_min_error": "औसत चक्र अवधि 15 दिनों से कम नहीं हो सकती।",
         "days_unit": "दिन",
         "flow_intensity_title": "प्रवाह तीव्रता",
         "intensity_label": "तीव्रता",
@@ -489,11 +497,17 @@
         "bmi_status": {
           "underweight": "कम वजन",
           "normal": "सामान्य",
-          "overweight_obese": "अधिक वजन / मोटापा",
+          "overweight": "अधिक वजन / मोटापा",
+          "obesity_1": "मोटापा (श्रेणी I)",
+          "obesity_2": "मोटापा (श्रेणी II)",
+          "obesity_3": "मोटापा (श्रेणी III)",
           "enter_weight_height": "वजन और ऊंचाई दर्ज करें",
           "underweight_range": "≤ 18.4",
           "normal_range": "18.5 – 24.9",
-          "overweight_range": "≥ 25.0"
+          "overweight_range": "25.0 – 29.9",
+          "obesity_1_range": "30.0 – 34.9",
+          "obesity_2_range": "35.0 – 39.9",
+          "obesity_3_range": "≥ 40.0"
         },
         "whr_status": {
           "low": "कम",
@@ -708,6 +722,7 @@
         "duration_question": "तुमची पाळी किती दिवस असते?",
         "days_label": "दिवस",
         "avg_cycle_length_title": "सरासरी चक्र कालावधी",
+        "cycle_length_min_error": "सरासरी चक्र कालावधी 15 दिवसांपेक्षा कमी असू शकत नाही.",
         "days_unit": "दिवस",
         "flow_intensity_title": "प्रवाहाची तीव्रता",
         "intensity_label": "तीव्रता",
@@ -743,11 +758,17 @@
         "bmi_status": {
           "underweight": "कमी वजन",
           "normal": "सर्वसाधारण",
-          "overweight_obese": "जास्त वजन / लठ्ठपणा",
+          "overweight": "जास्त वजन / लठ्ठपणा",
+          "obesity_1": "लठ्ठपणा (वर्ग I)",
+          "obesity_2": "लठ्ठपणा (वर्ग II)",
+          "obesity_3": "लठ्ठपणा (वर्ग III)",
           "enter_weight_height": "वजन आणि उंची प्रविष्ट करा",
           "underweight_range": "≤ 18.4",
           "normal_range": "18.5 – 24.9",
-          "overweight_range": "≥ 25.0"
+          "overweight_range": "25.0 – 29.9",
+          "obesity_1_range": "30.0 – 34.9",
+          "obesity_2_range": "35.0 – 39.9",
+          "obesity_3_range": "≥ 40.0"
         },
         "whr_status": {
           "low": "कमी",
