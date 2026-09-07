@@ -71,10 +71,12 @@ const getStepsList = (mode, t) => {
 const getBMIColor = (bmi) => {
   const b = Number(bmi);
   if (!b) return null;
-  if (b < 18.5) return '#2196F3'; // Blue  – Underweight
-  if (b < 25)   return '#4CAF50'; // Green – Normal
-  if (b < 30)   return '#FF9800'; // Orange – Overweight
-  return '#F44336';               // Red   – Obese
+  if (b < 18.5) return '#2196F3'; // Blue        – Underweight
+  if (b < 25)   return '#4CAF50'; // Green       – Normal
+  if (b < 30)   return '#FF9800'; // Orange      – Overweight
+  if (b < 35)   return '#FB8C00'; // Deep orange – Obesity (class I)
+  if (b < 40)   return '#F4511E'; // Dark orange – Obesity (class II)
+  return '#F44336';               // Red         – Obesity (class III)
 };
 
 const getWHRColor = (whr) => {
@@ -987,7 +989,7 @@ const PredictionWizard = () => {
                 {
                   title: t('prediction.review.sections.menstrual_history'),
                   items: [
-                    t('prediction.review.cycle_length_days', { value: formData.menstrual.cycleLength }),
+                    t('prediction.review.cycle_length_days', { value: Number(formData.menstrual.cycleLength) >= 90 ? '90+' : formData.menstrual.cycleLength }),
                     t('prediction.review.regularity', { value: translateOption(t, 'cycleRegularity', formData.menstrual.cycleRegularity) }),
                     t('prediction.review.duration_days', { value: formData.menstrual.periodDuration || t('prediction.review.not_available') }),
                     t('prediction.review.flow', { value: translateOption(t, 'flowIntensity', formData.menstrual.flowIntensity) }),

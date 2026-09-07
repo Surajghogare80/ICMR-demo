@@ -23,7 +23,18 @@
  *                                 MANDATORY input is a hard alert.
  *                                 See `fallback` / `mandatory` below; routing
  *                                 lives in predictionRouter.js.
- * MODE 4: "symptoms_blood_usg" -> Dataset1_RF (rf_model_new.rds)
+ * MODE 4: "symptoms_blood_usg" -> Dataset1_RF (rf_model_new.rds) when every
+ *                                 input is supplied; otherwise a 3-model
+ *                                 missing-value cascade, scored in pure R by
+ *                                 predict_symptoms_blood_usg_missing_capable.R:
+ *                                 DS1_Karnika_Clinical.rds when the 10 DS1
+ *                                 mandatory fields are present, else
+ *                                 DS2_LucasSouza_Synthetic.rds (needs menstrual
+ *                                 regularity + Testosterone), else
+ *                                 DS3_72Countries_Filtered.rds ($mandatory
+ *                                 variant, needs Age + BMI). If none qualifies
+ *                                 it is a hard alert. See `fallback` below;
+ *                                 routing lives in predictionRouter.js.
  *
  * Missing values are kept as null (which R handles natively as NA).
  * No imputation is performed.
@@ -190,6 +201,46 @@ const MODELS = {
     id:          "Dataset1_RF",
     source:      "rf_model_new.rds",
     description: "Symptoms + Blood + USG Full Mode (Dataset1_RF)",
+    //
+    // ─── Mode 4 routing (implemented in predictionRouter.js) ──────────────
+    //   1. Every gate field present             -> rf_model_new.rds / Dataset1_RF
+    //                                              (predict.R, no `script` key).
+    //   2. Any gate field blank                 -> the 3-model missing-value
+    //                                              cascade in `fallback` below,
+    //                                              run by
+    //                                              predict_symptoms_blood_usg_missing_capable.R.
+    //
+    // "Gate fields" = `features` minus `fallback.passthroughFeatures`, i.e. the
+    // 35 clinical predictors DS1 shares with rf_model_new.rds. `Testosterone` is
+    // mapped (featureMapping.js) and passed through to the cascade script only —
+    // it feeds DS2 and must not force the primary RF path when left blank.
+    //
+    // `fallback.cascade = true` tells predictionRouter.js NOT to hard-throw on a
+    // blank `mandatory` field: the cascade script decides between DS1 / DS2 /
+    // DS3 by what data is actually present, and emits the "missing information"
+    // alert itself only when none of the three can run. `mandatory` below is
+    // still the DS1 gate the script re-checks (= DS1_Karnika_Clinical.rds
+    // $mandatory$features), and the list named in that alert.
+    fallback: {
+      trigger:             "missing_optional_features",
+      cascade:             true,
+      passthroughFeatures: ["Testosterone"],
+      id:                  "DS1_Karnika_Clinical_missing_capable",
+      source:              "DS1_Karnika_Clinical.rds",
+      script:              "predict_symptoms_blood_usg_missing_capable.R",
+      // Ordered richest-first. The script reports the one it actually used as
+      // `modelUsed` / `modelSource`.
+      chain: [
+        { id: "DS1_Karnika_Clinical_missing_capable",  source: "DS1_Karnika_Clinical.rds" },
+        { id: "DS2_LucasSouza_Synthetic_missing_capable", source: "DS2_LucasSouza_Synthetic.rds" },
+        { id: "DS3_72Countries_Filtered_mandatory",    source: "DS3_72Countries_Filtered.rds" },
+      ],
+    },
+    mandatory: [
+      "Follicle.No...R.", "Follicle.No...L.", "Weight.gain.Y.N.",
+      "Skin.darkening..Y.N.", "hair.growth.Y.N.", "Cycle.R.I.",
+      "Cycle.length.days.", "Pimples.Y.N.", "Age..yrs.", "Waist.inch.",
+    ],
     features: [
       "Age..yrs.", "Weight..Kg.", "Height.Cm.", "BMI",
       "Pulse.rate.bpm.", "RR..breaths.min.", "Hb.g.dl.",
@@ -200,8 +251,9 @@ const MODELS = {
       "Weight.gain.Y.N.", "hair.growth.Y.N.", "Skin.darkening..Y.N.",
       "Hair.loss.Y.N.", "Pimples.Y.N.", "Reg.Exercise.Y.N.",
       "BP._Systolic..mmHg.", "BP._Diastolic..mmHg.",
-      "Follicle.No...L.", "Follicle.No...R.", 
-      "Avg..F.size..L...mm.", "Avg..F.size..R...mm.", "Endometrium..mm."
+      "Follicle.No...L.", "Follicle.No...R.",
+      "Avg..F.size..L...mm.", "Avg..F.size..R...mm.", "Endometrium..mm.",
+      "Testosterone",
     ],
   },
 };

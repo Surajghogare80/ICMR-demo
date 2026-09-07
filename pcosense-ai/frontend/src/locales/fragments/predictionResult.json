@@ -13,6 +13,12 @@
         "high": "High PMOS Risk Detected",
         "low": "Low PMOS Risk Detected"
       },
+      "riskBands": {
+        "low": { "chip": "Low Risk", "headline": "Low PMOS Risk" },
+        "moderate": { "chip": "Moderate Risk", "headline": "Moderate PMOS Risk" },
+        "detected": { "chip": "PMOS Risk", "headline": "PMOS Risk Detected" },
+        "high": { "chip": "High Risk", "headline": "High PMOS Risk" }
+      },
       "subheading": "Based on your submitted clinical and lifestyle data",
       "metrics": {
         "riskProbability": "Risk Probability",
@@ -67,6 +73,12 @@
         "high": "उच्च PMOS जोखिम पाया गया",
         "low": "कम PMOS जोखिम पाया गया"
       },
+      "riskBands": {
+        "low": { "chip": "कम जोखिम", "headline": "कम PMOS जोखिम" },
+        "moderate": { "chip": "मध्यम जोखिम", "headline": "मध्यम PMOS जोखिम" },
+        "detected": { "chip": "PMOS जोखिम", "headline": "PMOS जोखिम पाया गया" },
+        "high": { "chip": "उच्च जोखिम", "headline": "उच्च PMOS जोखिम" }
+      },
       "subheading": "आपके द्वारा प्रस्तुत नैदानिक और जीवनशैली डेटा के आधार पर",
       "metrics": {
         "riskProbability": "जोखिम संभावना",
@@ -120,6 +132,12 @@
       "headline": {
         "high": "उच्च PMOS जोखीम आढळले",
         "low": "कमी PMOS जोखीम आढळले"
+      },
+      "riskBands": {
+        "low": { "chip": "कमी जोखीम", "headline": "कमी PMOS जोखीम" },
+        "moderate": { "chip": "मध्यम जोखीम", "headline": "मध्यम PMOS जोखीम" },
+        "detected": { "chip": "PMOS जोखीम", "headline": "PMOS जोखीम आढळले" },
+        "high": { "chip": "उच्च जोखीम", "headline": "उच्च PMOS जोखीम" }
       },
       "subheading": "तुम्ही सादर केलेल्या वैद्यकीय आणि जीवनशैली डेटावर आधारित",
       "metrics": {

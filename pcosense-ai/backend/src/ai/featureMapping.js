@@ -173,6 +173,12 @@ export const mapFeaturesForModel = (input, predictionMode) => {
     "LH":                    lh,
     "FSH_LH":                fsh_lh,
     "LH_FSH":                lh_fsh,
+
+    // ─── Mode 4 fallback passthrough ─────────────────────────────────────
+    // Not a feature of any primary model. Carried only so the mode-4
+    // missing-value cascade can reach DS2_LucasSouza_Synthetic.rds, which
+    // needs Testosterone (ng/dL). See modelRegistry.js fallback.passthroughFeatures.
+    "Testosterone":          includeBlood ? exactNumOrNull(p.testosterone) : null,
   };
 
   // Build the specific payload for the requested model
