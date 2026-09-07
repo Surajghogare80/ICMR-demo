@@ -200,6 +200,7 @@
         "duration_question": "How long does your period last?",
         "days_label": "Days",
         "avg_cycle_length_title": "Average Cycle Length",
+        "avg_cycle_length_desc": "The average number of days between the start of one period and the start of the next.",
         "cycle_length_min_error": "Average Cycle Length can't be less than 15 days.",
         "days_unit": "days",
         "flow_intensity_title": "Flow Intensity",

@@ -276,8 +276,11 @@ const MenstrualHistorySection = ({ formData, updateField }) => {
 
           {/* Card 3: Average Cycle Length */}
           <Paper elevation={0} sx={cardStyle}>
-            <Typography variant="h6" fontWeight={700} sx={{ mb: 1.5, textAlign: 'center' }}>
+            <Typography variant="h6" fontWeight={700} sx={{ mb: 0.5, textAlign: 'center' }}>
               {t('prediction.menstrual.avg_cycle_length_title')}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5, textAlign: 'center' }}>
+              {t('prediction.menstrual.avg_cycle_length_desc')}
             </Typography>
 
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 'auto', mb: 'auto' }}>
