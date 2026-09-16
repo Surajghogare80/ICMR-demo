@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
-import { createAppTheme } from './theme/index.js';
+import { createAppTheme, COLORS } from './theme/index.js';
 import AppRoutes from './routes/AppRoutes.jsx';
 import Navbar from './layout/Navbar/Navbar.jsx';
 import Footer from './layout/Footer/Footer.jsx';
@@ -37,7 +37,16 @@ const App = () => {
           </Box>
         </BrowserRouter>
 
-        {/* Global Toast Notifications */}
+        {/*
+          Global Toast Notifications — colorblind-safe by design:
+          - success/error/warning never rely on hue alone. Each severity keeps
+            react-hot-toast's distinct icon glyph (check / cross) AND gets its
+            own thick left border stripe, so shape + border + the message text
+            all carry the meaning, not just color.
+          - error uses vermillion (COLORS.error) instead of red so it doesn't
+            collapse into success-green or warning-amber for red-green color
+            blindness (the most common form).
+        */}
         <Toaster
           position="top-right"
           toastOptions={{
@@ -47,15 +56,18 @@ const App = () => {
               color: mode === 'dark' ? '#F1F5F9' : '#0F172A',
               borderRadius: '12px',
               border: `1px solid ${mode === 'dark' ? 'rgba(148,163,184,0.1)' : 'rgba(21,101,192,0.1)'}`,
+              borderLeft: `5px solid ${mode === 'dark' ? 'rgba(148,163,184,0.4)' : 'rgba(21,101,192,0.3)'}`,
               boxShadow: '0 8px 32px rgba(0,0,0,0.15)',
               fontSize: '0.875rem',
               fontWeight: 500,
             },
             success: {
-              iconTheme: { primary: '#2E7D32', secondary: '#fff' },
+              iconTheme: { primary: COLORS.success, secondary: '#fff' },
+              style: { borderLeft: `5px solid ${COLORS.success}` },
             },
             error: {
-              iconTheme: { primary: '#C62828', secondary: '#fff' },
+              iconTheme: { primary: COLORS.error, secondary: '#fff' },
+              style: { borderLeft: `5px solid ${COLORS.error}` },
             },
           }}
         />

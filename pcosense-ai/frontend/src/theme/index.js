@@ -9,10 +9,15 @@ const COLORS = {
   secondaryLight: '#FFEAF0',
   secondaryDark: '#EC407A',
   accent: '#F06292',
-  success: '#66BB6A',
-  warning: '#FFA726',
-  error: '#EF5350',
-  info: '#F06292',
+  // Colorblind-safe status colors: avoid red/green and blue/purple pairs that
+  // collapse under protanopia/deuteranopia. Success stays green (paired with a
+  // check icon everywhere it's used); error uses a vermillion/orange-red instead
+  // of pure red so it reads distinctly from both success-green and warning-amber;
+  // info uses navy blue, which stays distinct across all common colorblind types.
+  success: '#2E7D32',
+  warning: '#F9A825',
+  error: '#BF360C',
+  info: '#0277BD',
 };
 
 const getDesignTokens = (mode) => ({
