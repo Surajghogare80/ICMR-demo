@@ -52,8 +52,8 @@ const App = () => {
           toastOptions={{
             duration: 4000,
             style: {
-              background: mode === 'dark' ? '#1E293B' : '#FFFFFF',
-              color: mode === 'dark' ? '#F1F5F9' : '#0F172A',
+              background: mode === 'dark' ? COLORS.navy : COLORS.white,
+              color: mode === 'dark' ? COLORS.navyLight : COLORS.navyDark,
               borderRadius: '12px',
               border: `1px solid ${mode === 'dark' ? 'rgba(148,163,184,0.1)' : 'rgba(21,101,192,0.1)'}`,
               borderLeft: `5px solid ${mode === 'dark' ? 'rgba(148,163,184,0.4)' : 'rgba(21,101,192,0.3)'}`,
@@ -62,11 +62,11 @@ const App = () => {
               fontWeight: 500,
             },
             success: {
-              iconTheme: { primary: COLORS.success, secondary: '#fff' },
+              iconTheme: { primary: COLORS.success, secondary: COLORS.white },
               style: { borderLeft: `5px solid ${COLORS.success}` },
             },
             error: {
-              iconTheme: { primary: COLORS.error, secondary: '#fff' },
+              iconTheme: { primary: COLORS.error, secondary: COLORS.white },
               style: { borderLeft: `5px solid ${COLORS.error}` },
             },
           }}

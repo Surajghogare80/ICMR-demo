@@ -5,14 +5,15 @@ import { FormatQuote } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '../../../config/appConfig.js';
+import { COLORS } from '../../../theme/index.js';
 
 const QUOTES = [
-  { id: 'habits', authorKey: null, color: '#EC407A' },
-  { id: 'awareness', authorKey: 'womensHealth', color: '#7E57C2' },
-  { id: 'selfCare', authorKey: 'wellness', color: '#26C6DA' },
-  { id: 'uniqueJourney', authorKey: null, color: '#66BB6A' },
-  { id: 'empowered', authorKey: 'womensHealth', color: '#FFA726' },
-  { id: 'progress', authorKey: 'wellness', color: '#F06292' },
+  { id: 'habits', authorKey: null, color: COLORS.secondaryDark },
+  { id: 'awareness', authorKey: 'womensHealth', color: COLORS.purple },
+  { id: 'selfCare', authorKey: 'wellness', color: COLORS.teal },
+  { id: 'uniqueJourney', authorKey: null, color: COLORS.success },
+  { id: 'empowered', authorKey: 'womensHealth', color: COLORS.orange },
+  { id: 'progress', authorKey: 'wellness', color: COLORS.accent },
 ];
 
 const MotivationalQuotes = () => {
@@ -39,7 +40,7 @@ const MotivationalQuotes = () => {
         position: 'relative',
         overflow: 'hidden',
         background: isDark
-          ? `linear-gradient(135deg, ${alpha(quote.color, 0.15)} 0%, ${alpha('#1A0A0F', 0.8)} 100%)`
+          ? `linear-gradient(135deg, ${alpha(quote.color, 0.15)} 0%, ${alpha(COLORS.darkBg, 0.8)} 100%)`
           : `linear-gradient(135deg, ${alpha(quote.color, 0.06)} 0%, ${alpha(quote.color, 0.02)} 100%)`,
         border: `1px solid ${alpha(quote.color, isDark ? 0.25 : 0.12)}`,
       }}
@@ -90,7 +91,7 @@ const MotivationalQuotes = () => {
             variant="h6"
             fontWeight={700}
             sx={{
-              color: isDark ? '#FFFFFF' : '#2D2D2D',
+              color: isDark ? COLORS.white : COLORS.textDark,
               lineHeight: 1.6,
               fontStyle: 'italic',
               mb: 2,

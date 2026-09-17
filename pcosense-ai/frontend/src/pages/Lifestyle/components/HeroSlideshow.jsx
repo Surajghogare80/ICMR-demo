@@ -3,6 +3,7 @@ import { Box, Typography, IconButton, Button, alpha, useTheme } from '@mui/mater
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { COLORS } from '../../../theme/index.js';
 
 const slides = [
   {
@@ -76,7 +77,7 @@ const HeroSlideshow = () => {
                 left: 0,
                 width: '100%',
                 height: '100%',
-                background: `linear-gradient(to right, ${alpha('#EC407A', 0.85)}, ${alpha('#F48FB1', 0.4)})`,
+                background: `linear-gradient(to right, ${alpha(COLORS.secondaryDark, 0.85)}, ${alpha(COLORS.accentRose, 0.4)})`,
               }}
             />
 
@@ -92,7 +93,7 @@ const HeroSlideshow = () => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 px: { xs: 4, md: 8 },
-                color: '#fff',
+                color: COLORS.white,
               }}
             >
               <motion.div
@@ -110,9 +111,9 @@ const HeroSlideshow = () => {
                   variant="contained"
                   size="large"
                   sx={{
-                    bgcolor: '#fff',
-                    color: '#EC407A',
-                    '&:hover': { bgcolor: '#f5f5f5' },
+                    bgcolor: COLORS.white,
+                    color: COLORS.secondaryDark,
+                    '&:hover': { bgcolor: COLORS.offWhiteHover },
                     borderRadius: 8,
                     px: 4,
                     fontWeight: 700,
@@ -135,9 +136,9 @@ const HeroSlideshow = () => {
           top: '50%',
           left: 16,
           transform: 'translateY(-50%)',
-          bgcolor: alpha('#fff', 0.2),
-          color: '#fff',
-          '&:hover': { bgcolor: alpha('#fff', 0.4) },
+          bgcolor: alpha(COLORS.white, 0.2),
+          color: COLORS.white,
+          '&:hover': { bgcolor: alpha(COLORS.white, 0.4) },
           zIndex: 2,
         }}
       >
@@ -151,9 +152,9 @@ const HeroSlideshow = () => {
           top: '50%',
           right: 16,
           transform: 'translateY(-50%)',
-          bgcolor: alpha('#fff', 0.2),
-          color: '#fff',
-          '&:hover': { bgcolor: alpha('#fff', 0.4) },
+          bgcolor: alpha(COLORS.white, 0.2),
+          color: COLORS.white,
+          '&:hover': { bgcolor: alpha(COLORS.white, 0.4) },
           zIndex: 2,
         }}
       >
@@ -180,7 +181,7 @@ const HeroSlideshow = () => {
               width: index === currentSlide ? 32 : 12,
               height: 12,
               borderRadius: 6,
-              bgcolor: index === currentSlide ? '#fff' : alpha('#fff', 0.5),
+              bgcolor: index === currentSlide ? COLORS.white : alpha(COLORS.white, 0.5),
               cursor: 'pointer',
               transition: 'all 0.3s ease',
             }}

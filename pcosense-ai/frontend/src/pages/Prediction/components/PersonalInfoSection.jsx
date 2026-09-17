@@ -11,44 +11,45 @@ import {
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import WheelPicker from '../../../components/ui/WheelPicker.jsx';
+import { COLORS } from '../../../theme/index.js';
 
 // Color & Status helpers for BMI
 const getBMIInfo = (bmi, t) => {
   const b = Number(bmi);
   if (!b || isNaN(b) || b <= 0) {
-    return { status: '--', color: '#9E9E9E', desc: t('prediction.personal.bmi_status.enter_weight_height') };
+    return { status: '--', color: COLORS.gray, desc: t('prediction.personal.bmi_status.enter_weight_height') };
   }
   if (b < 18.5) {
-    return { status: t('prediction.personal.bmi_status.underweight'), color: '#2196F3', desc: t('prediction.personal.bmi_status.underweight_range') }; // Blue
+    return { status: t('prediction.personal.bmi_status.underweight'), color: COLORS.bmiUnderweight, desc: t('prediction.personal.bmi_status.underweight_range') }; // Blue
   }
   if (b < 25) {
-    return { status: t('prediction.personal.bmi_status.normal'), color: '#4CAF50', desc: t('prediction.personal.bmi_status.normal_range') };   // Green
+    return { status: t('prediction.personal.bmi_status.normal'), color: COLORS.bmiNormal, desc: t('prediction.personal.bmi_status.normal_range') };   // Green
   }
   if (b < 30) {
-    return { status: t('prediction.personal.bmi_status.overweight'), color: '#FF9800', desc: t('prediction.personal.bmi_status.overweight_range') }; // Orange
+    return { status: t('prediction.personal.bmi_status.overweight'), color: COLORS.bmiOverweight, desc: t('prediction.personal.bmi_status.overweight_range') }; // Orange
   }
   if (b < 35) {
-    return { status: t('prediction.personal.bmi_status.obesity_1'), color: '#FB8C00', desc: t('prediction.personal.bmi_status.obesity_1_range') }; // Deep orange
+    return { status: t('prediction.personal.bmi_status.obesity_1'), color: COLORS.bmiObesity1, desc: t('prediction.personal.bmi_status.obesity_1_range') }; // Deep orange
   }
   if (b < 40) {
-    return { status: t('prediction.personal.bmi_status.obesity_2'), color: '#F4511E', desc: t('prediction.personal.bmi_status.obesity_2_range') }; // Dark orange
+    return { status: t('prediction.personal.bmi_status.obesity_2'), color: COLORS.bmiObesity2, desc: t('prediction.personal.bmi_status.obesity_2_range') }; // Dark orange
   }
-  return { status: t('prediction.personal.bmi_status.obesity_3'), color: '#F44336', desc: t('prediction.personal.bmi_status.obesity_3_range') }; // Red
+  return { status: t('prediction.personal.bmi_status.obesity_3'), color: COLORS.bmiObesity3, desc: t('prediction.personal.bmi_status.obesity_3_range') }; // Red
 };
 
 // Color & Status helpers for Waist-Hip Ratio
 const getWHRInfo = (whr, t) => {
   const w = Number(whr);
   if (!w || isNaN(w) || w <= 0) {
-    return { status: '--', color: '#9E9E9E', desc: t('prediction.personal.whr_status.enter_waist_hip') };
+    return { status: '--', color: COLORS.gray, desc: t('prediction.personal.whr_status.enter_waist_hip') };
   }
   if (w < 0.80) {
-    return { status: t('prediction.personal.whr_status.low'), color: '#4CAF50', desc: t('prediction.personal.whr_status.low_desc') };    // Green
+    return { status: t('prediction.personal.whr_status.low'), color: COLORS.bmiNormal, desc: t('prediction.personal.whr_status.low_desc') };    // Green
   }
   if (w < 0.85) {
-    return { status: t('prediction.personal.whr_status.moderate'), color: '#FF9800', desc: t('prediction.personal.whr_status.moderate_desc') }; // Orange
+    return { status: t('prediction.personal.whr_status.moderate'), color: COLORS.bmiOverweight, desc: t('prediction.personal.whr_status.moderate_desc') }; // Orange
   }
-  return { status: t('prediction.personal.whr_status.high'), color: '#F44336', desc: t('prediction.personal.whr_status.high_desc') };            // Red
+  return { status: t('prediction.personal.whr_status.high'), color: COLORS.bmiObesity3, desc: t('prediction.personal.whr_status.high_desc') };            // Red
 };
 
 const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
@@ -318,7 +319,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
             }}
           >
             <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
-              <FamilyRestroomIcon sx={{ fontSize: 24, color: '#E91E63' }} />
+              <FamilyRestroomIcon sx={{ fontSize: 24, color: COLORS.primary }} />
               <Typography variant="h6" fontWeight={800} color="text.primary">
                 {t('prediction.personal.family_history_title')}
               </Typography>
@@ -346,15 +347,15 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                   fontWeight: 800,
                   fontSize: '0.92rem',
                   border: '2px solid rgba(233, 30, 99, 0.35) !important',
-                  color: '#E91E63',
+                  color: COLORS.primary,
                   transition: 'all 0.22s cubic-bezier(0.4, 0, 0.2, 1)',
                   minWidth: '125px',
                   '&.Mui-selected': {
-                    bgcolor: '#E91E63',
-                    color: '#fff',
-                    borderColor: '#E91E63 !important',
+                    bgcolor: COLORS.primary,
+                    color: COLORS.white,
+                    borderColor: `${COLORS.primary} !important`,
                     boxShadow: '0 4px 16px rgba(233, 30, 99, 0.35)',
-                    '&:hover': { bgcolor: '#C2185B' },
+                    '&:hover': { bgcolor: COLORS.primaryDark },
                   },
                   '&:hover': {
                     bgcolor: 'rgba(233, 30, 99, 0.08)',

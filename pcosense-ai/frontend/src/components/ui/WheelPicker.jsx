@@ -1,6 +1,7 @@
 // src/components/ui/WheelPicker.jsx
 import { useRef, useEffect, useState, useMemo } from 'react';
 import { Box, Typography } from '@mui/material';
+import { COLORS } from '../../theme/index.js';
 
 const WheelPicker = ({ value, onChange, min = 0, max = 100, step = 1, unit = '' }) => {
   const containerRef = useRef(null);
@@ -118,8 +119,8 @@ const WheelPicker = ({ value, onChange, min = 0, max = 100, step = 1, unit = '' 
             right: '12px',
             height: `${ITEM_HEIGHT}px`,
             borderRadius: 3,
-            borderTop: '2px solid #E91E63',
-            borderBottom: '2px solid #E91E63',
+            borderTop: `2px solid ${COLORS.primary}`,
+            borderBottom: `2px solid ${COLORS.primary}`,
             bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(233, 30, 99, 0.18)' : 'rgba(233, 30, 99, 0.1)',
             boxShadow: '0 4px 16px rgba(233, 30, 99, 0.12)',
             pointerEvents: 'none',
@@ -230,7 +231,7 @@ const WheelPicker = ({ value, onChange, min = 0, max = 100, step = 1, unit = '' 
                   sx={{
                     fontWeight: isActive ? 800 : 500,
                     fontSize: isActive ? '1.35rem' : '1rem',
-                    color: isActive ? '#E91E63' : 'text.secondary',
+                    color: isActive ? COLORS.primary : 'text.secondary',
                     letterSpacing: isActive ? '-0.5px' : '0px',
                     whiteSpace: 'nowrap',
                   }}

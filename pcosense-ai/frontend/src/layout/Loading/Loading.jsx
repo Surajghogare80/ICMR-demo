@@ -2,6 +2,7 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { COLORS } from '../../theme/index.js';
 
 const Loading = ({ fullScreen = false, message }) => {
   const { t } = useTranslation();
@@ -18,8 +19,8 @@ const Loading = ({ fullScreen = false, message }) => {
           minHeight: '100vh',
           background: (theme) =>
             theme.palette.mode === 'dark'
-              ? 'linear-gradient(135deg, #1A0A0F 0%, #2D1C22 100%)'
-              : 'linear-gradient(135deg, #FFF8FB 0%, #FFEAF0 100%)',
+              ? `linear-gradient(135deg, ${COLORS.darkBg} 0%, ${COLORS.darkPaper} 100%)`
+              : `linear-gradient(135deg, ${COLORS.lightBg} 0%, ${COLORS.lightBgAlt} 100%)`,
         }),
       }}
     >

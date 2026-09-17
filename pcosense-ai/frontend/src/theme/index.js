@@ -2,22 +2,104 @@
 import { createTheme, alpha } from '@mui/material/styles';
 
 const COLORS = {
+  // Brand
   primary: '#E91E63',
   primaryLight: '#F06292',
   primaryDark: '#C2185B',
+  primaryDarker: '#AD1457',
   secondary: '#F8BBD0',
   secondaryLight: '#FFEAF0',
   secondaryDark: '#EC407A',
+  secondaryPale: '#FCE4EC',
   accent: '#F06292',
+  accentRose: '#F48FB1',
+  accentRoseDeep: '#D81B60',
+
   // Colorblind-safe status colors: avoid red/green and blue/purple pairs that
   // collapse under protanopia/deuteranopia. Success stays green (paired with a
   // check icon everywhere it's used); error uses a vermillion/orange-red instead
   // of pure red so it reads distinctly from both success-green and warning-amber;
   // info uses navy blue, which stays distinct across all common colorblind types.
-  success: '#2E7D32',
+  success: '#009E73',
   warning: '#F9A825',
   error: '#BF360C',
   info: '#0277BD',
+
+  // Risk / result bands (prediction probability & screening outcomes)
+  riskLow: '#009E73',
+  riskModerate: '#FBC02D',
+  riskDetected: '#F88131',
+  riskHigh: '#EF5350',
+  riskHighLight: '#EF9A9A',
+  riskUnknown: '#9E9E9E',
+  riskUnknownLight: '#BDBDBD',
+
+  // BMI / WHR status bands
+  bmiUnderweight: '#2196F3',
+  bmiNormal: '#009E73',
+  bmiOverweight: '#FF9800',
+  bmiObesity1: '#FB8C00',
+  bmiObesity2: '#F4511E',
+  bmiObesity3: '#F44336',
+
+  // Decorative accent palette (dashboard cards, icons, gradients)
+  purple: '#7E57C2',
+  purpleLight: '#B39DDB',
+  purpleDark: '#4A148C',
+  purpleAccent: '#BA68C8',
+  purpleSoft: '#CE93D8',
+  purpleBgLight: '#F3E5F5',
+  teal: '#26C6DA',
+  tealLight: '#80DEEA',
+  tealDeep: '#00897B',
+  orange: '#FFA726',
+  orangeLight: '#FFD54F',
+  orangeMid: '#FFB74D',
+  orangePale: '#FFF8E1',
+  orangeDeep: '#FB8C00',
+  orangeDark: '#E65100',
+  blue: '#2196F3',
+  blueLight: '#90CAF9',
+  blueDark: '#1565C0',
+  blueDarker: '#1976D2',
+  red: '#F44336',
+  redSoft: '#EF5350',
+  redSoftLight: '#EF9A9A',
+  redDark: '#C62828',
+  redDarker: '#B71C1C',
+  redMaterial: '#D32F2F',
+
+  // Neutral / gray
+  white: '#FFFFFF',
+  black: '#000000',
+  gray: '#9E9E9E',
+  grayLight: '#BDBDBD',
+  grayMuted: '#757575',
+  offWhite: '#F8F9FA',
+  offWhiteHover: '#F5F5F5',
+  slate: '#64748B',
+  slateLight: '#E2E8F0',
+  slateDark: '#475569',
+  navy: '#1E293B',
+  navyLight: '#F1F5F9',
+  navyDark: '#0F172A',
+
+  // Surfaces
+  darkBg: '#1A0A0F',
+  darkPaper: '#2D1C22',
+  darkPaperAlt: '#2D1D23',
+  darkPaperAlt2: '#1F0D15',
+  lightBg: '#FFF8FB',
+  lightBgAlt: '#FFF0F5',
+  lightBgAlt2: '#FFE4EC',
+  textDark: '#2D2D2D',
+  textMutedDark: '#C2A9B2',
+
+  // One-off illustration colors (menstrual cycle SVG icon)
+  illustrationBlue: '#4299E1',
+  illustrationBlueLight: '#A3D3F7',
+  illustrationPurple: '#8B5CF6',
+  illustrationRose: '#F43F5E',
 };
 
 const getDesignTokens = (mode) => ({
@@ -27,36 +109,36 @@ const getDesignTokens = (mode) => ({
       main: COLORS.primary,
       light: COLORS.primaryLight,
       dark: COLORS.primaryDark,
-      contrastText: '#FFFFFF',
+      contrastText: COLORS.white,
     },
     secondary: {
       main: COLORS.secondary,
       light: COLORS.secondaryLight,
       dark: COLORS.secondaryDark,
-      contrastText: '#2D2D2D',
+      contrastText: COLORS.textDark,
     },
     ...(mode === 'dark'
       ? {
           background: {
-            default: '#1A0A0F', // deep mulberry dark background
-            paper: '#2D1C22',   // dark mulberry paper card
+            default: COLORS.darkBg, // deep mulberry dark background
+            paper: COLORS.darkPaper,   // dark mulberry paper card
           },
           text: {
-            primary: '#FCE4EC',
-            secondary: '#C2A9B2',
+            primary: COLORS.secondaryPale,
+            secondary: COLORS.textMutedDark,
           },
-          divider: alpha('#F8BBD0', 0.12),
+          divider: alpha(COLORS.secondary, 0.12),
         }
       : {
           background: {
-            default: '#FFF8FB', // calming soft light pink/white background
-            paper: '#FFFFFF',
+            default: COLORS.lightBg, // calming soft light pink/white background
+            paper: COLORS.white,
           },
           text: {
-            primary: '#2D2D2D',
-            secondary: '#757575',
+            primary: COLORS.textDark,
+            secondary: COLORS.grayMuted,
           },
-          divider: alpha('#E91E63', 0.08),
+          divider: alpha(COLORS.primary, 0.08),
         }),
     success: { main: COLORS.success },
     warning: { main: COLORS.warning },
@@ -103,28 +185,28 @@ const getDesignTokens = (mode) => ({
           },
         },
         containedPrimary: {
-          background: `linear-gradient(135deg, #EC407A 0%, #F48FB1 100%)`,
-          color: '#FFFFFF',
+          background: `linear-gradient(135deg, ${COLORS.secondaryDark} 0%, ${COLORS.accentRose} 100%)`,
+          color: COLORS.white,
           '&:hover': {
-            background: `linear-gradient(135deg, #E91E63 0%, #EC407A 100%)`,
+            background: `linear-gradient(135deg, ${COLORS.primary} 0%, ${COLORS.secondaryDark} 100%)`,
             boxShadow: '0 8px 24px rgba(233,30,99,0.25)',
           },
         },
         containedSecondary: {
-          background: `linear-gradient(135deg, #F8BBD0 0%, #FFEAF0 100%)`,
-          color: '#C2185B',
+          background: `linear-gradient(135deg, ${COLORS.secondary} 0%, ${COLORS.secondaryLight} 100%)`,
+          color: COLORS.primaryDark,
           '&:hover': {
-            background: `linear-gradient(135deg, #EC407A 0%, #F48FB1 100%)`,
-            color: '#FFFFFF',
+            background: `linear-gradient(135deg, ${COLORS.secondaryDark} 0%, ${COLORS.accentRose} 100%)`,
+            color: COLORS.white,
             boxShadow: '0 8px 24px rgba(233,30,99,0.15)',
           },
         },
         outlinedPrimary: {
-          borderColor: alpha('#E91E63', 0.5),
-          color: '#E91E63',
+          borderColor: alpha(COLORS.primary, 0.5),
+          color: COLORS.primary,
           '&:hover': {
-            borderColor: '#E91E63',
-            background: alpha('#E91E63', 0.04),
+            borderColor: COLORS.primary,
+            background: alpha(COLORS.primary, 0.04),
           },
         },
       },
@@ -150,10 +232,10 @@ const getDesignTokens = (mode) => ({
             borderRadius: 16,
             transition: 'all 0.2s ease',
             '&:hover fieldset': {
-              borderColor: alpha('#E91E63', 0.5),
+              borderColor: alpha(COLORS.primary, 0.5),
             },
             '&.Mui-focused fieldset': {
-              borderColor: '#E91E63',
+              borderColor: COLORS.primary,
               borderWidth: '2px',
             },
           },
@@ -183,7 +265,7 @@ const getDesignTokens = (mode) => ({
         root: { borderRadius: 8, height: 8 },
         bar: {
           borderRadius: 8,
-          background: 'linear-gradient(135deg, #EC407A 0%, #F48FB1 100%)',
+          background: `linear-gradient(135deg, ${COLORS.secondaryDark} 0%, ${COLORS.accentRose} 100%)`,
         },
       },
     },

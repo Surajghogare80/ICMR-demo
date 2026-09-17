@@ -9,43 +9,44 @@ import {
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { COLORS } from '../../../theme/index.js';
 
 const AWARENESS_CARDS = [
   {
     id: 'basics',
     emoji: '🔬',
     icon: <Info sx={{ fontSize: 28 }} />,
-    accentColor: '#EC407A',
+    accentColor: COLORS.secondaryDark,
   },
   {
     id: 'symptoms',
     emoji: '🩺',
     icon: <Warning sx={{ fontSize: 28 }} />,
-    accentColor: '#FFA726',
+    accentColor: COLORS.orange,
   },
   {
     id: 'myths',
     emoji: '💡',
     icon: <PsychologyAlt sx={{ fontSize: 28 }} />,
-    accentColor: '#7E57C2',
+    accentColor: COLORS.purple,
   },
   {
     id: 'treatment',
     emoji: '💊',
     icon: <LocalHospital sx={{ fontSize: 28 }} />,
-    accentColor: '#66BB6A',
+    accentColor: COLORS.success,
   },
   {
     id: 'lifestyle',
     emoji: '🥗',
     icon: <SelfImprovement sx={{ fontSize: 28 }} />,
-    accentColor: '#26C6DA',
+    accentColor: COLORS.teal,
   },
   {
     id: 'whenToSeeDoctor',
     emoji: '🏥',
     icon: <MedicalServices sx={{ fontSize: 28 }} />,
-    accentColor: '#F06292',
+    accentColor: COLORS.accent,
   },
 ];
 
@@ -76,10 +77,10 @@ const AwarenessCard = ({ card, index }) => {
             height: '100%',
             borderRadius: 4,
             p: 3,
-            background: isDark ? alpha(theme.palette.background.paper, 0.6) : '#FFFFFF',
+            background: isDark ? alpha(theme.palette.background.paper, 0.6) : COLORS.white,
             border: `1px solid ${alpha(card.accentColor, isDark ? 0.2 : 0.1)}`,
             boxShadow: isDark
-              ? `0 4px 20px ${alpha('#000', 0.3)}`
+              ? `0 4px 20px ${alpha(COLORS.black, 0.3)}`
               : `0 4px 20px ${alpha(card.accentColor, 0.06)}`,
             position: 'relative',
             overflow: 'hidden',
@@ -192,7 +193,7 @@ const AwarenessSection = () => {
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 0.5 }}>
           <Typography variant="h5" fontWeight={800}>{t('dashboard.awareness.heading')}</Typography>
-          <Chip label={t('dashboard.awareness.badge')} size="small" sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#EC407A', fontWeight: 700, fontSize: '0.7rem' }} />
+          <Chip label={t('dashboard.awareness.badge')} size="small" sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: COLORS.secondaryDark, fontWeight: 700, fontSize: '0.7rem' }} />
         </Box>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
           {t('dashboard.awareness.subtitle')}

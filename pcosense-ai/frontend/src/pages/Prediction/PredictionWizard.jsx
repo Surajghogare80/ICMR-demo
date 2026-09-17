@@ -21,12 +21,13 @@ import PersonalInfoSection from './components/PersonalInfoSection.jsx';
 import MenstrualHistorySection from './components/MenstrualHistorySection.jsx';
 import ScreeningConsent from './components/ScreeningConsent.jsx';
 import { translateOptionValue } from '../../utils/optionTranslation.js';
+import { COLORS } from '../../theme/index.js';
 
 // ─── Shared pink outlined button style ────────────────────────────────────────
 const PINK_BTN_SX = {
   borderRadius: '20px',
-  borderColor: '#E91E63',
-  color: '#E91E63',
+  borderColor: COLORS.primary,
+  color: COLORS.primary,
   px: 2.5,
   fontSize: '0.78rem',
   fontWeight: 600,
@@ -34,8 +35,8 @@ const PINK_BTN_SX = {
   transition: 'all 0.22s',
   '&:hover': {
     bgcolor: 'rgba(233,30,99,0.08)',
-    borderColor: '#C2185B',
-    color: '#C2185B',
+    borderColor: COLORS.primaryDark,
+    color: COLORS.primaryDark,
     transform: 'translateY(-1px)',
     boxShadow: '0 4px 14px rgba(233,30,99,0.22)',
   },
@@ -71,20 +72,20 @@ const getStepsList = (mode, t) => {
 const getBMIColor = (bmi) => {
   const b = Number(bmi);
   if (!b) return null;
-  if (b < 18.5) return '#2196F3'; // Blue        – Underweight
-  if (b < 25)   return '#4CAF50'; // Green       – Normal
-  if (b < 30)   return '#FF9800'; // Orange      – Overweight
-  if (b < 35)   return '#FB8C00'; // Deep orange – Obesity (class I)
-  if (b < 40)   return '#F4511E'; // Dark orange – Obesity (class II)
-  return '#F44336';               // Red         – Obesity (class III)
+  if (b < 18.5) return COLORS.bmiUnderweight; // Blue        – Underweight
+  if (b < 25)   return COLORS.bmiNormal; // Green       – Normal
+  if (b < 30)   return COLORS.bmiOverweight; // Orange      – Overweight
+  if (b < 35)   return COLORS.bmiObesity1; // Deep orange – Obesity (class I)
+  if (b < 40)   return COLORS.bmiObesity2; // Dark orange – Obesity (class II)
+  return COLORS.bmiObesity3;               // Red         – Obesity (class III)
 };
 
 const getWHRColor = (whr) => {
   const w = Number(whr);
   if (!w) return null;
-  if (w < 0.80) return '#4CAF50'; // Green  – Low risk
-  if (w < 0.85) return '#FF9800'; // Orange – Moderate risk
-  return '#F44336';               // Red    – High risk
+  if (w < 0.80) return COLORS.bmiNormal; // Green  – Low risk
+  if (w < 0.85) return COLORS.bmiOverweight; // Orange – Moderate risk
+  return COLORS.bmiObesity3;               // Red    – High risk
 };
 
 // Canonical option values (sent to the backend/model) are never translated —
@@ -529,14 +530,14 @@ const PredictionWizard = () => {
                         height: '100%',
                         cursor: 'pointer',
                         borderRadius: 3,
-                        borderColor: isChecked ? '#E91E63' : 'divider',
+                        borderColor: isChecked ? COLORS.primary : 'divider',
                         bgcolor: isChecked
                           ? (t) => t.palette.mode === 'dark' ? 'rgba(233, 30, 99, 0.12)' : 'rgba(233, 30, 99, 0.04)'
                           : 'background.paper',
                         transform: isChecked ? 'scale(1.02)' : 'scale(1)',
                         transition: 'all 0.2s ease-in-out',
                         '&:hover': {
-                          borderColor: isChecked ? '#E91E63' : 'text.secondary',
+                          borderColor: isChecked ? COLORS.primary : 'text.secondary',
                         }
                       }}
                     >
@@ -545,7 +546,7 @@ const PredictionWizard = () => {
                           {sym.icon}
                         </Typography>
                         <Box sx={{ flexGrow: 1 }}>
-                          <Typography variant="subtitle2" fontWeight={600} color={isChecked ? '#E91E63' : 'text.primary'} sx={{ transition: 'color 0.2s' }}>
+                          <Typography variant="subtitle2" fontWeight={600} color={isChecked ? COLORS.primary : 'text.primary'} sx={{ transition: 'color 0.2s' }}>
                             {sym.label}
                           </Typography>
                           <Typography variant="caption" color="text.secondary">
@@ -556,7 +557,7 @@ const PredictionWizard = () => {
                           checked={isChecked}
                           disableRipple
                           icon={<RadioButtonUnchecked color="action" />}
-                          checkedIcon={<CheckCircle sx={{ color: '#E91E63' }} />}
+                          checkedIcon={<CheckCircle sx={{ color: COLORS.primary }} />}
                           sx={{ p: 0, ml: 2 }}
                         />
                       </Box>
@@ -581,15 +582,15 @@ const PredictionWizard = () => {
             fontWeight: 800,
             fontSize: '0.92rem',
             border: '2px solid rgba(233, 30, 99, 0.35) !important',
-            color: '#E91E63',
+            color: COLORS.primary,
             transition: 'all 0.22s cubic-bezier(0.4, 0, 0.2, 1)',
             minWidth: '125px',
             '&.Mui-selected': {
-              bgcolor: '#E91E63',
-              color: '#fff',
-              borderColor: '#E91E63 !important',
+              bgcolor: COLORS.primary,
+              color: COLORS.white,
+              borderColor: `${COLORS.primary} !important`,
               boxShadow: '0 4px 16px rgba(233, 30, 99, 0.35)',
-              '&:hover': { bgcolor: '#C2185B' },
+              '&:hover': { bgcolor: COLORS.primaryDark },
             },
             '&:hover': {
               bgcolor: 'rgba(233, 30, 99, 0.08)',
@@ -668,13 +669,13 @@ const PredictionWizard = () => {
                 <Stack direction="row" alignItems="center" justifyContent="center" spacing={2}>
                   <IconButton
                     onClick={() => handleSleepStep(false)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 40, height: 40 }}
+                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: COLORS.primary, '&:hover': { bgcolor: COLORS.primary, color: COLORS.white }, width: 40, height: 40 }}
                     aria-label={t('prediction.lifestyle.decrease_sleep_hours')}
                   >
                     <RemoveIcon />
                   </IconButton>
                   <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
-                    <Typography variant="h3" fontWeight={900} sx={{ color: '#E91E63', lineHeight: 1 }}>
+                    <Typography variant="h3" fontWeight={900} sx={{ color: COLORS.primary, lineHeight: 1 }}>
                       {formData.lifestyle.sleepHours || 7}
                     </Typography>
                     <Typography variant="subtitle1" fontWeight={700} color="text.secondary">
@@ -683,7 +684,7 @@ const PredictionWizard = () => {
                   </Box>
                   <IconButton
                     onClick={() => handleSleepStep(true)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 40, height: 40 }}
+                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: COLORS.primary, '&:hover': { bgcolor: COLORS.primary, color: COLORS.white }, width: 40, height: 40 }}
                     aria-label={t('prediction.lifestyle.increase_sleep_hours')}
                   >
                     <AddIcon />
@@ -840,7 +841,7 @@ const PredictionWizard = () => {
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                '&:hover': { borderColor: (t) => t.palette.mode === 'dark' ? '#fff' : '#000' }
+                                '&:hover': { borderColor: (t) => t.palette.mode === 'dark' ? COLORS.white : COLORS.black }
                              }}>
                                 <Typography variant="caption" sx={{ position: 'absolute', top: '-10px', left: '10px', bgcolor: 'background.paper', px: 0.5, color: 'text.secondary', fontSize: '0.75rem' }}>
                                   {t('prediction.blood.insulin_resistance_label')}
@@ -853,9 +854,9 @@ const PredictionWizard = () => {
                                     gap: 1.5, display: 'flex',
                                     '& .MuiToggleButton-root': {
                                       px: 3, py: 0.5, borderRadius: '20px !important', fontWeight: 800, fontSize: '0.85rem',
-                                      border: '2px solid rgba(233, 30, 99, 0.35) !important', color: '#E91E63',
+                                      border: '2px solid rgba(233, 30, 99, 0.35) !important', color: COLORS.primary,
                                       transition: 'all 0.22s', minWidth: '80px', textTransform: 'none',
-                                      '&.Mui-selected': { bgcolor: '#E91E63', color: '#fff', borderColor: '#E91E63 !important', boxShadow: '0 4px 12px rgba(233, 30, 99, 0.3)', '&:hover': { bgcolor: '#C2185B' } },
+                                      '&.Mui-selected': { bgcolor: COLORS.primary, color: COLORS.white, borderColor: `${COLORS.primary} !important`, boxShadow: '0 4px 12px rgba(233, 30, 99, 0.3)', '&:hover': { bgcolor: COLORS.primaryDark } },
                                       '&:hover': { bgcolor: 'rgba(233, 30, 99, 0.08)', transform: 'translateY(-1px)' }
                                     }
                                   }}
@@ -1067,28 +1068,28 @@ const PredictionWizard = () => {
                   title: t('prediction.choice.options.symptoms.title'),
                   tag: t('prediction.choice.options.symptoms.tag'),
                   desc: t('prediction.choice.options.symptoms.desc'),
-                  icon: <ListAlt sx={{ color: (theme) => theme.palette.mode === 'dark' ? '#E2E8F0' : '#64748B' }} />,
+                  icon: <ListAlt sx={{ color: (theme) => theme.palette.mode === 'dark' ? COLORS.slateLight : COLORS.slate }} />,
                 },
                 {
                   id: 'blood',
                   title: t('prediction.choice.options.blood.title'),
                   tag: t('prediction.choice.options.blood.tag'),
                   desc: t('prediction.choice.options.blood.desc'),
-                  icon: <Science sx={{ color: '#E91E63' }} />,
+                  icon: <Science sx={{ color: COLORS.primary }} />,
                 },
                 {
                   id: 'ultrasound',
                   title: t('prediction.choice.options.ultrasound.title'),
                   tag: t('prediction.choice.options.ultrasound.tag'),
                   desc: t('prediction.choice.options.ultrasound.desc'),
-                  icon: <Biotech sx={{ color: '#1976D2' }} />,
+                  icon: <Biotech sx={{ color: COLORS.blueDarker }} />,
                 },
                 {
                   id: 'both',
                   title: t('prediction.choice.options.both.title'),
                   tag: t('prediction.choice.options.both.tag'),
                   desc: t('prediction.choice.options.both.desc'),
-                  icon: <Assignment sx={{ color: '#EF5350' }} />,
+                  icon: <Assignment sx={{ color: COLORS.redSoft }} />,
                 },
               ].map((option) => {
                 const isSelected = selectedMode === option.id;
@@ -1155,10 +1156,10 @@ const PredictionWizard = () => {
                                 color: (t) => {
                                   const d = t.palette.mode === 'dark';
                                   switch (option.id) {
-                                    case 'symptoms':   return d ? '#E2E8F0' : '#475569';
-                                    case 'blood':      return d ? '#F48FB1' : '#C2185B';
-                                    case 'ultrasound': return d ? '#90CAF9' : '#1565C0';
-                                    case 'both':       return d ? '#EF5350' : '#C62828';
+                                    case 'symptoms':   return d ? COLORS.slateLight : COLORS.slateDark;
+                                    case 'blood':      return d ? COLORS.accentRose : COLORS.primaryDark;
+                                    case 'ultrasound': return d ? COLORS.blueLight : COLORS.blueDark;
+                                    case 'both':       return d ? COLORS.redSoft : COLORS.redDark;
                                     default:           return 'text.primary';
                                   }
                                 },
@@ -1192,7 +1193,7 @@ const PredictionWizard = () => {
                 onClick={() => setScreeningMode(selectedMode)}
                 sx={{
                   py: 1.8, fontSize: '1rem', borderRadius: 3,
-                  background: selectedMode ? 'linear-gradient(135deg, #EC407A 0%, #F48FB1 100%)' : undefined,
+                  background: selectedMode ? `linear-gradient(135deg, ${COLORS.secondaryDark} 0%, ${COLORS.accentRose} 100%)` : undefined,
                 }}
               >
                 {t('prediction.choice.start_button')}
@@ -1278,7 +1279,7 @@ const PredictionWizard = () => {
               <Button
                 variant="contained" startIcon={<Science />}
                 onClick={handleSubmit} disabled={isSubmitting}
-                sx={{ background: 'linear-gradient(135deg, #EC407A 0%, #F48FB1 100%)', px: 4 }}
+                sx={{ background: `linear-gradient(135deg, ${COLORS.secondaryDark} 0%, ${COLORS.accentRose} 100%)`, px: 4 }}
               >
                 {isSubmitting ? t('prediction.nav.analyzing') : t('prediction.nav.get_my_result')}
               </Button>

@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { lifestyleService } from '../../services/lifestyleService.js';
 import { ROUTES } from '../../constants/index.js';
 import { translateOptionValue } from '../../utils/optionTranslation.js';
+import { COLORS } from '../../theme/index.js';
 
 const ArticlePage = () => {
   const { id } = useParams();
@@ -76,7 +77,7 @@ const ArticlePage = () => {
           <IconButton
             onClick={() => navigate(ROUTES.LIFESTYLE)}
             aria-label={t('common.back')}
-            sx={{ color: '#fff', mb: 2, bgcolor: 'rgba(255,255,255,0.2)', '&:hover': { bgcolor: 'rgba(255,255,255,0.4)' } }}
+            sx={{ color: COLORS.white, mb: 2, bgcolor: 'rgba(255,255,255,0.2)', '&:hover': { bgcolor: 'rgba(255,255,255,0.4)' } }}
           >
             <ArrowBack />
           </IconButton>
@@ -85,15 +86,15 @@ const ArticlePage = () => {
             <Chip
               icon={<span style={{ paddingLeft: 8 }}>{article.icon}</span>}
               label={translateOptionValue(t, 'lifestyleHub.categories', article.category)}
-              sx={{ bgcolor: '#EC407A', color: '#fff', fontWeight: 700 }}
+              sx={{ bgcolor: COLORS.secondaryDark, color: COLORS.white, fontWeight: 700 }}
             />
             <Chip
               label={`5 ${t('lifestyleHub.article.minRead')}`}
-              sx={{ bgcolor: 'rgba(255,255,255,0.2)', color: '#fff' }}
+              sx={{ bgcolor: 'rgba(255,255,255,0.2)', color: COLORS.white }}
             />
           </Box>
-          
-          <Typography variant="h3" fontWeight={800} color="#fff" sx={{ textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
+
+          <Typography variant="h3" fontWeight={800} color={COLORS.white} sx={{ textShadow: '0 2px 10px rgba(0,0,0,0.3)' }}>
             {article.title}
           </Typography>
         </Container>
@@ -102,7 +103,7 @@ const ArticlePage = () => {
       <Container maxWidth="md" sx={{ mt: -4, position: 'relative', zIndex: 2 }}>
         <Box 
           sx={{ 
-            bgcolor: theme.palette.mode === 'dark' ? theme.palette.background.paper : '#fff',
+            bgcolor: theme.palette.mode === 'dark' ? theme.palette.background.paper : COLORS.white,
             borderRadius: 4,
             p: { xs: 3, md: 5 },
             boxShadow: '0 10px 40px rgba(0,0,0,0.1)',
@@ -115,8 +116,8 @@ const ArticlePage = () => {
                 display: 'flex', 
                 alignItems: 'center', 
                 gap: 1, 
-                color: '#2E7D32',
-                bgcolor: alpha('#2E7D32', 0.1),
+                color: COLORS.success,
+                bgcolor: alpha(COLORS.success, 0.1),
                 px: 2,
                 py: 1,
                 borderRadius: 2,
@@ -167,7 +168,7 @@ const ArticlePage = () => {
           <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
-                <Box sx={{ bgcolor: alpha('#EC407A', 0.05), p: 3, borderRadius: 3, height: '100%' }}>
+                <Box sx={{ bgcolor: alpha(COLORS.secondaryDark, 0.05), p: 3, borderRadius: 3, height: '100%' }}>
                   <Typography variant="h6" fontWeight={700} gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     <CheckCircleOutline color="secondary" /> {t('lifestyleHub.article.benefits')}
                   </Typography>
@@ -183,7 +184,7 @@ const ArticlePage = () => {
             </Grid>
             <Grid item xs={12} md={6}>
               <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}>
-                <Box sx={{ bgcolor: alpha('#d32f2f', 0.05), p: 3, borderRadius: 3, height: '100%' }}>
+                <Box sx={{ bgcolor: alpha(COLORS.redMaterial, 0.05), p: 3, borderRadius: 3, height: '100%' }}>
                   <Typography variant="h6" fontWeight={700} gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     <WarningAmber color="error" /> {t('lifestyleHub.article.thingsToAvoid')}
                   </Typography>
@@ -206,7 +207,7 @@ const ArticlePage = () => {
             <Typography variant="h5" fontWeight={700} color="secondary" gutterBottom>
               {t('lifestyleHub.article.recommendations')}
             </Typography>
-            <Typography variant="body1" paragraph sx={{ lineHeight: 1.8, fontSize: '1.1rem', bgcolor: theme.palette.mode === 'dark' ? alpha('#fff', 0.05) : '#f8f9fa', p: 3, borderRadius: 2, borderLeft: '4px solid #EC407A' }}>
+            <Typography variant="body1" paragraph sx={{ lineHeight: 1.8, fontSize: '1.1rem', bgcolor: theme.palette.mode === 'dark' ? alpha(COLORS.white, 0.05) : COLORS.offWhite, p: 3, borderRadius: 2, borderLeft: `4px solid ${COLORS.secondaryDark}` }}>
               {article.recommendations}
             </Typography>
           </motion.div>

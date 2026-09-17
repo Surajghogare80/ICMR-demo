@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import { ROUTES } from '../../constants/index.js';
 import { APP_NAME, APP_FULL_FORM } from '../../config/appConfig.js';
 import LanguageSelector from '../../components/common/LanguageSelector.jsx';
+import { COLORS } from '../../theme/index.js';
 
 const Navbar = ({ onThemeToggle, isDark }) => {
   const { t } = useTranslation();
@@ -24,7 +25,7 @@ const Navbar = ({ onThemeToggle, isDark }) => {
       sx={{
         background: isDark
           ? alpha(theme.palette.background.paper, 0.85)
-          : alpha('#FFFFFF', 0.85),
+          : alpha(COLORS.white, 0.85),
         backdropFilter: 'blur(20px)',
         borderBottom: `1px solid ${theme.palette.divider}`,
         color: theme.palette.text.primary,
@@ -41,7 +42,7 @@ const Navbar = ({ onThemeToggle, isDark }) => {
             <Box
               sx={{
                 width: 36, height: 36, borderRadius: '10px',
-                background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
+                background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
@@ -52,7 +53,7 @@ const Navbar = ({ onThemeToggle, isDark }) => {
                 variant="h6"
                 fontWeight={900}
                 sx={{
-                  background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
+                  background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`,
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   lineHeight: 1.4,

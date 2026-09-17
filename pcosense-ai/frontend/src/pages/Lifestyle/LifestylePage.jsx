@@ -7,6 +7,7 @@ import HeroSlideshow from './components/HeroSlideshow.jsx';
 import ArticleCard from './components/ArticleCard.jsx';
 import { lifestyleService } from '../../services/lifestyleService.js';
 import { translateOptionValue } from '../../utils/optionTranslation.js';
+import { COLORS } from '../../theme/index.js';
 
 const filters = ['All Categories', 'Nutrition', 'Exercise', 'Mental Health', 'Sleep', 'Women\'s Health'];
 
@@ -60,7 +61,7 @@ const LifestylePage = () => {
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <Typography variant="h4" fontWeight={800} align="center" gutterBottom
             sx={{
-              background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
+              background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`,
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
             }}
@@ -89,7 +90,7 @@ const LifestylePage = () => {
                   ),
                   sx: {
                     borderRadius: 8,
-                    bgcolor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : '#fff',
+                    bgcolor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : COLORS.white,
                     '& fieldset': { border: 'none' },
                     boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
                   }
@@ -105,10 +106,10 @@ const LifestylePage = () => {
                     onClick={() => setActiveFilter(filter)}
                     sx={{
                       fontWeight: 600,
-                      bgcolor: activeFilter === filter ? '#EC407A' : (theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : '#fff'),
-                      color: activeFilter === filter ? '#fff' : 'text.primary',
+                      bgcolor: activeFilter === filter ? COLORS.secondaryDark : (theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : COLORS.white),
+                      color: activeFilter === filter ? COLORS.white : 'text.primary',
                       '&:hover': {
-                        bgcolor: activeFilter === filter ? '#D81B60' : 'rgba(236,64,122,0.1)',
+                        bgcolor: activeFilter === filter ? COLORS.accentRoseDeep : 'rgba(236,64,122,0.1)',
                       },
                       boxShadow: activeFilter === filter ? '0 4px 10px rgba(236,64,122,0.3)' : '0 2px 5px rgba(0,0,0,0.05)',
                       transition: 'all 0.2s',
