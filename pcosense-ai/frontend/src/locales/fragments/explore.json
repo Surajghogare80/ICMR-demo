@@ -1,0 +1,32 @@
+{
+  "en": {
+    "explore": {
+      "title": "Explore topics related to PMOS",
+      "subtitle": "We have developed this app to help women with PMOS find good quality, trustworthy information. Tap a topic to see its articles.",
+      "searchPlaceholder": "Search all topics",
+      "backToTopics": "Explore topics",
+      "readMore": "Read more",
+      "noResults": "No topics match your search."
+    }
+  },
+  "hi": {
+    "explore": {
+      "title": "PMOS से जुड़े विषय एक्सप्लोर करें",
+      "subtitle": "हमने यह ऐप PMOS से जूझ रही महिलाओं को अच्छी गुणवत्ता वाली, भरोसेमंद जानकारी खोजने में मदद के लिए बनाया है। लेख देखने के लिए किसी विषय पर टैप करें।",
+      "searchPlaceholder": "सभी विषय खोजें",
+      "backToTopics": "विषय एक्सप्लोर करें",
+      "readMore": "और पढ़ें",
+      "noResults": "आपकी खोज से मेल खाने वाला कोई विषय नहीं मिला।"
+    }
+  },
+  "mr": {
+    "explore": {
+      "title": "PMOS शी संबंधित विषय एक्सप्लोर करा",
+      "subtitle": "PMOS असलेल्या महिलांना चांगल्या दर्जाची, विश्वासार्ह माहिती मिळावी यासाठी आम्ही हे अ‍ॅप तयार केले आहे. लेख पाहण्यासाठी एखाद्या विषयावर टॅप करा.",
+      "searchPlaceholder": "सर्व विषय शोधा",
+      "backToTopics": "विषय एक्सप्लोर करा",
+      "readMore": "अधिक वाचा",
+      "noResults": "तुमच्या शोधाशी जुळणारा कोणताही विषय सापडला नाही."
+    }
+  }
+}
