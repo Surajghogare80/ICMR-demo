@@ -12,6 +12,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { predictionService } from '../../services/predictionService.js';
 import { ROUTES } from '../../constants/index.js';
 import { APP_NAME } from '../../config/appConfig.js';
+import { COLORS } from '../../theme/index.js';
 
 // Sub-components
 import HeroSlider from './components/HeroSlider.jsx';
@@ -25,9 +26,9 @@ import HealthArticles from './components/HealthArticles.jsx';
 import HealthProgressSection from './components/HealthProgressSection.jsx';
 
 const GREETING_META = {
-  morning: { Icon: WbSunny, color: '#FFA726' },
-  afternoon: { Icon: WbCloudy, color: '#26C6DA' },
-  evening: { Icon: NightsStay, color: '#7E57C2' },
+  morning: { Icon: WbSunny, color: COLORS.orange },
+  afternoon: { Icon: WbCloudy, color: COLORS.teal },
+  evening: { Icon: NightsStay, color: COLORS.purple },
 };
 
 const getGreetingKey = () => {
@@ -114,9 +115,9 @@ const DashboardPage = () => {
               borderRadius: 4,
               p: { xs: 3, md: 4 },
               background: isDark
-                ? `linear-gradient(135deg, ${alpha('#EC407A', 0.2)} 0%, ${alpha('#7E57C2', 0.1)} 100%)`
-                : 'linear-gradient(135deg, #FFF0F5 0%, #F3E5F5 100%)',
-              border: `1px solid ${isDark ? alpha('#EC407A', 0.2) : alpha('#EC407A', 0.1)}`,
+                ? `linear-gradient(135deg, ${alpha(COLORS.secondaryDark, 0.2)} 0%, ${alpha(COLORS.purple, 0.1)} 100%)`
+                : `linear-gradient(135deg, ${COLORS.lightBgAlt} 0%, ${COLORS.purpleBgLight} 100%)`,
+              border: `1px solid ${isDark ? alpha(COLORS.secondaryDark, 0.2) : alpha(COLORS.secondaryDark, 0.1)}`,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
@@ -164,11 +165,11 @@ const DashboardPage = () => {
                   sx={{
                     width: { xs: 56, md: 72 },
                     height: { xs: 56, md: 72 },
-                    background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
+                    background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`,
                     fontSize: { xs: '1.4rem', md: '1.8rem' },
                     fontWeight: 900,
                     boxShadow: '0 12px 32px rgba(233,30,99,0.35)',
-                    border: `3px solid ${isDark ? alpha('#EC407A', 0.3) : 'rgba(255,255,255,0.8)'}`,
+                    border: `3px solid ${isDark ? alpha(COLORS.secondaryDark, 0.3) : 'rgba(255,255,255,0.8)'}`,
                   }}
                 >
                   {firstName.charAt(0).toUpperCase()}
@@ -196,8 +197,8 @@ const DashboardPage = () => {
                   fontWeight={900}
                   sx={{
                     background: isDark
-                      ? 'linear-gradient(135deg, #FCE4EC, #F48FB1)'
-                      : 'linear-gradient(135deg, #C2185B, #EC407A)',
+                      ? `linear-gradient(135deg, ${COLORS.secondaryPale}, ${COLORS.accentRose})`
+                      : `linear-gradient(135deg, ${COLORS.primaryDark}, ${COLORS.secondaryDark})`,
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     lineHeight: 1.2,
@@ -216,7 +217,7 @@ const DashboardPage = () => {
                   }}
                 >
                   <Trans i18nKey="dashboard.welcome.subtitle" values={{ appName: APP_NAME }}>
-                    Welcome back to <Box component="span" sx={{ color: '#EC407A', fontWeight: 700 }}>{{ appName: APP_NAME }}</Box>. Your health journey starts with awareness and early detection.
+                    Welcome back to <Box component="span" sx={{ color: COLORS.secondaryDark, fontWeight: 700 }}>{{ appName: APP_NAME }}</Box>. Your health journey starts with awareness and early detection.
                   </Trans>
                 </Typography>
               </Box>
@@ -229,7 +230,7 @@ const DashboardPage = () => {
                 endIcon={<ArrowForward />}
                 onClick={() => navigate(ROUTES.PREDICTION)}
                 sx={{
-                  background: 'linear-gradient(135deg, #EC407A, #C2185B)',
+                  background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.primaryDark})`,
                   px: { xs: 2.5, md: 3.5 },
                   py: { xs: 1, md: 1.3 },
                   borderRadius: 3,
@@ -238,7 +239,7 @@ const DashboardPage = () => {
                   boxShadow: '0 8px 24px rgba(233,30,99,0.35)',
                   whiteSpace: 'nowrap',
                   '&:hover': {
-                    background: 'linear-gradient(135deg, #C2185B, #AD1457)',
+                    background: `linear-gradient(135deg, ${COLORS.primaryDark}, ${COLORS.primaryDarker})`,
                     boxShadow: '0 12px 32px rgba(233,30,99,0.45)',
                   },
                 }}
@@ -288,7 +289,7 @@ const DashboardPage = () => {
               borderRadius: 4,
               p: { xs: 4, md: 6 },
               textAlign: 'center',
-              background: 'linear-gradient(135deg, #EC407A 0%, #F48FB1 50%, #CE93D8 100%)',
+              background: `linear-gradient(135deg, ${COLORS.secondaryDark} 0%, ${COLORS.accentRose} 50%, ${COLORS.purpleSoft} 100%)`,
               position: 'relative',
               overflow: 'hidden',
               mb: 2,
@@ -327,7 +328,7 @@ const DashboardPage = () => {
               onClick={() => navigate(ROUTES.PREDICTION)}
               sx={{
                 bgcolor: 'white',
-                color: '#E91E63',
+                color: COLORS.primary,
                 fontWeight: 800,
                 px: 4,
                 py: 1.5,

@@ -3,6 +3,7 @@ import { Box, Container, Typography, Link as MUILink, Divider, Grid } from '@mui
 import { Favorite } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '../../config/appConfig.js';
+import { COLORS } from '../../theme/index.js';
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -24,7 +25,7 @@ const Footer = () => {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
             <Typography sx={{ fontSize: '1.2rem' }}>🧬</Typography>
             <Typography variant="h6" fontWeight={800} sx={{
-              background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
+              background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`,
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
             }}>
               {APP_NAME}

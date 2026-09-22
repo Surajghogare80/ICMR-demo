@@ -11,6 +11,7 @@ import PredictionHistoryPage from '../pages/PredictionHistory/PredictionHistoryP
 import NotFoundPage from '../pages/NotFound/NotFoundPage.jsx';
 import LifestylePage from '../pages/Lifestyle/LifestylePage.jsx';
 import ArticlePage from '../pages/Lifestyle/ArticlePage.jsx';
+import ExplorePage from '../pages/Explore/ExplorePage.jsx';
 
 const AppRoutes = () => {
   return (
@@ -22,6 +23,7 @@ const AppRoutes = () => {
       <Route path={ROUTES.HISTORY} element={<PredictionHistoryPage />} />
       <Route path={ROUTES.LIFESTYLE} element={<LifestylePage />} />
       <Route path={ROUTES.LIFESTYLE_ARTICLE} element={<ArticlePage />} />
+      <Route path={ROUTES.EXPLORE} element={<ExplorePage />} />
 
       {/* 404 */}
       <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />

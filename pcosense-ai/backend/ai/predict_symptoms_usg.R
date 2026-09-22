@@ -165,18 +165,21 @@ result_out <- tryCatch({
 
     recommendations <- if (ui_result == "High Risk") {
       c(
-        "Consult a gynecologist or endocrinologist immediately.",
+        "Consult a gynecologist or endocrinologist for a full diagnostic work-up — this screening is not a diagnosis.",
         "Review your ovarian ultrasound findings (follicle count, ovarian volume) with a specialist.",
-        "Get hormonal blood tests (FSH, LH, testosterone, insulin) if you haven't already.",
-        "Follow a low-glycemic index diet to manage insulin resistance.",
-        "Start a regular exercise program (30 min/day, 5 days/week)."
+        "Get hormonal blood tests (FSH, LH, testosterone, fasting insulin) if you haven't already.",
+        "Ask your doctor about screening for type 2 diabetes and insulin resistance — most women with PCOS develop insulin resistance, and more than half develop type 2 diabetes by age 40.",
+        "If you're overweight, losing even 5–10% of your body weight can help restore ovulation and regularize your periods.",
+        "Build regular moderate exercise into your week (about 150 min/week) — it improves insulin sensitivity and can ease PCOS-related mood symptoms.",
+        "Ask your doctor about treatment options such as hormonal birth control, metformin, or — if you're trying to conceive — ovulation-inducing medication."
       )
     } else {
       c(
-        "Maintain your current healthy lifestyle — great work!",
-        "Continue exercising regularly (150 min/week of moderate activity).",
-        "Keep a balanced, nutritious diet rich in vegetables and whole grains.",
-        "Monitor your menstrual cycle and note any irregularities."
+        "Great work — your current habits are supporting a healthy hormonal balance!",
+        "Keep up regular physical activity (about 150 min/week of moderate exercise) — it helps keep insulin and hormone levels balanced.",
+        "Maintain a balanced diet rich in vegetables, whole grains, and lean protein, and keep a healthy weight — this lowers your long-term risk of PCOS and type 2 diabetes.",
+        "Track your menstrual cycle and see a doctor if periods become irregular or more than about 40 days apart.",
+        "See a doctor if you notice new symptoms such as excess hair growth, acne, or unexplained weight gain."
       )
     }
 

@@ -12,14 +12,15 @@ import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../../constants/index.js';
 import { formatLocalizedDate } from '../../../utils/localeFormat.js';
 import { translateOptionValue } from '../../../utils/optionTranslation.js';
+import { COLORS } from '../../../theme/index.js';
 
 // getRiskConfig keeps comparing/storing the original backend value (result) as-is.
 // The `label` field returned here is only ever used for translated display.
 const getRiskConfig = (result) => {
-  if (!result) return { color: '#9E9E9E', label: 'Unknown', gradient: 'linear-gradient(135deg, #9E9E9E, #BDBDBD)' };
-  if (result === 'High Risk') return { color: '#EF5350', label: 'High Risk', gradient: 'linear-gradient(135deg, #EF5350, #EF9A9A)' };
-  if (result === 'Low Risk') return { color: '#66BB6A', label: 'Low Risk', gradient: 'linear-gradient(135deg, #66BB6A, #A5D6A7)' };
-  return { color: '#FFA726', label: result, gradient: 'linear-gradient(135deg, #FFA726, #FFD54F)' };
+  if (!result) return { color: COLORS.riskUnknown, label: 'Unknown', gradient: `linear-gradient(135deg, ${COLORS.riskUnknown}, ${COLORS.riskUnknownLight})` };
+  if (result === 'High Risk') return { color: COLORS.riskHigh, label: 'High Risk', gradient: `linear-gradient(135deg, ${COLORS.riskHigh}, ${COLORS.riskHighLight})` };
+  if (result === 'Low Risk') return { color: COLORS.riskLow, label: 'Low Risk', gradient: `linear-gradient(135deg, ${COLORS.riskLow}, ${COLORS.riskLow})` };
+  return { color: COLORS.orange, label: result, gradient: `linear-gradient(135deg, ${COLORS.orange}, ${COLORS.orangeLight})` };
 };
 
 // Translates a risk label for display only; falls back to the original value
@@ -152,7 +153,7 @@ const RecentPredictions = ({ predictions, isLoading, total }) => {
               size="small"
               endIcon={<ArrowForward sx={{ fontSize: 14 }} />}
               onClick={() => navigate(ROUTES.HISTORY)}
-              sx={{ fontWeight: 700, color: '#EC407A' }}
+              sx={{ fontWeight: 700, color: COLORS.secondaryDark }}
             >
               {t('common.view_all')}
             </Button>
@@ -164,9 +165,9 @@ const RecentPredictions = ({ predictions, isLoading, total }) => {
         sx={{
           borderRadius: 4,
           p: 3,
-          background: isDark ? alpha(theme.palette.background.paper, 0.4) : '#FFFFFF',
+          background: isDark ? alpha(theme.palette.background.paper, 0.4) : COLORS.white,
           border: `1px solid ${theme.palette.divider}`,
-          boxShadow: isDark ? `0 8px 32px ${alpha('#000', 0.3)}` : '0 4px 24px rgba(233,30,99,0.04)',
+          boxShadow: isDark ? `0 8px 32px ${alpha(COLORS.black, 0.3)}` : '0 4px 24px rgba(233,30,99,0.04)',
         }}
       >
         {isLoading ? (
@@ -210,7 +211,7 @@ const RecentPredictions = ({ predictions, isLoading, total }) => {
               variant="contained"
               onClick={() => navigate(ROUTES.PREDICTION)}
               sx={{
-                background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
+                background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`,
                 px: 3,
                 py: 1.2,
                 borderRadius: 3,

@@ -3,16 +3,17 @@ import { useState, useEffect } from 'react';
 import { Box, Typography, useTheme, alpha } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { COLORS } from '../../../theme/index.js';
 
 const HEALTH_TIPS = [
-  { id: 'hydrate', emoji: '💧', color: '#26C6DA' },
-  { id: 'balancedMeals', emoji: '🥗', color: '#66BB6A' },
-  { id: 'exercise', emoji: '🏃', color: '#FFA726' },
-  { id: 'sleep', emoji: '😴', color: '#7E57C2' },
-  { id: 'stress', emoji: '🧘', color: '#F06292' },
-  { id: 'processedFoods', emoji: '🚫', color: '#EF5350' },
-  { id: 'antiInflammatory', emoji: '🌿', color: '#66BB6A' },
-  { id: 'vitaminD', emoji: '☀️', color: '#FFA726' },
+  { id: 'hydrate', emoji: '💧', color: COLORS.teal },
+  { id: 'balancedMeals', emoji: '🥗', color: COLORS.success },
+  { id: 'exercise', emoji: '🏃', color: COLORS.orange },
+  { id: 'sleep', emoji: '😴', color: COLORS.purple },
+  { id: 'stress', emoji: '🧘', color: COLORS.accent },
+  { id: 'processedFoods', emoji: '🚫', color: COLORS.redSoft },
+  { id: 'antiInflammatory', emoji: '🌿', color: COLORS.success },
+  { id: 'vitaminD', emoji: '☀️', color: COLORS.orange },
 ];
 
 const HealthTipsCarousel = () => {
@@ -44,10 +45,10 @@ const HealthTipsCarousel = () => {
           overflow: 'hidden',
           background: isDark
             ? alpha(theme.palette.background.paper, 0.6)
-            : '#FFFFFF',
+            : COLORS.white,
           border: `1px solid ${alpha(tip.color, isDark ? 0.25 : 0.15)}`,
           boxShadow: isDark
-            ? `0 8px 32px ${alpha('#000', 0.4)}`
+            ? `0 8px 32px ${alpha(COLORS.black, 0.4)}`
             : `0 8px 32px ${alpha(tip.color, 0.1)}`,
           position: 'relative',
           minHeight: 180,

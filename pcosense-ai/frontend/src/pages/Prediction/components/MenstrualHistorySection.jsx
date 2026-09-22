@@ -9,28 +9,29 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { FLOW_INTENSITY_OPTIONS } from '../../../constants/index.js';
 import { translateOptionValue } from '../../../utils/optionTranslation.js';
+import { COLORS } from '../../../theme/index.js';
 
 const optionLabel = (t, group, value) => translateOptionValue(t, `options.${group}`, value);
 
 const RegularIcon = (props) => (
   <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <rect x="2" y="4" width="24" height="20" rx="4" fill="#4299E1" />
+    <rect x="2" y="4" width="24" height="20" rx="4" fill={COLORS.illustrationBlue} />
     <path d="M 2 16 C 6 16, 8 12, 11 9 C 14 6, 17 9, 15 13 C 14 15, 10 14, 9 17 C 8 20, 12 21, 15 21 C 19 21, 23 18, 26 16 L 26 20 C 26 22.2 24.2 24 22 24 L 6 24 C 3.8 24 2 22.2 2 20 Z" fill="white" />
-    <circle cx="17" cy="8" r="1.5" fill="#A3D3F7" />
-    <circle cx="21" cy="10" r="1.5" fill="#A3D3F7" />
-    <circle cx="12" cy="5" r="1.5" fill="#A3D3F7" />
+    <circle cx="17" cy="8" r="1.5" fill={COLORS.illustrationBlueLight} />
+    <circle cx="21" cy="10" r="1.5" fill={COLORS.illustrationBlueLight} />
+    <circle cx="12" cy="5" r="1.5" fill={COLORS.illustrationBlueLight} />
   </svg>
 );
 
 const IrregularIcon = (props) => (
   <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <path d="M 3 14 Q 6 19, 9 14 T 15 14 T 21 14 T 27 14" stroke="#8B5CF6" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    <path d="M 3 14 Q 6 19, 9 14 T 15 14 T 21 14 T 27 14" stroke={COLORS.illustrationPurple} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
   </svg>
 );
 
 const AbsentIcon = (props) => (
   <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <circle cx="14" cy="14" r="7" stroke="#F43F5E" strokeWidth="4.5" />
+    <circle cx="14" cy="14" r="7" stroke={COLORS.illustrationRose} strokeWidth="4.5" />
   </svg>
 );
 
@@ -126,7 +127,7 @@ const MenstrualHistorySection = ({ formData, updateField }) => {
     borderRadius: '24px',
     border: '1px solid',
     borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)',
-    bgcolor: isDark ? 'rgba(255,255,255,0.02)' : '#fff',
+    bgcolor: isDark ? 'rgba(255,255,255,0.02)' : COLORS.white,
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -143,7 +144,7 @@ const MenstrualHistorySection = ({ formData, updateField }) => {
     >
       {/* Top Section */}
       <Box sx={{ textAlign: 'center', mb: 3 }}>
-        <Typography variant="h5" fontWeight={800} sx={{ color: '#E91E63' }}>
+        <Typography variant="h5" fontWeight={800} sx={{ color: COLORS.primary }}>
           {t('prediction.menstrual.title')}
         </Typography>
       </Box>
@@ -181,20 +182,20 @@ const MenstrualHistorySection = ({ formData, updateField }) => {
                       borderRadius: '16px',
                       cursor: 'pointer',
                       border: '2px solid',
-                      borderColor: isSelected ? '#E91E63' : (isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.06)'),
+                      borderColor: isSelected ? COLORS.primary : (isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.06)'),
                       bgcolor: isSelected ? 'rgba(233, 30, 99, 0.08)' : 'transparent',
                       transition: 'all 0.3s ease',
                     }}
                   >
                     <Box sx={{
-                      color: isSelected ? '#E91E63' : 'text.secondary',
+                      color: isSelected ? COLORS.primary : 'text.secondary',
                       mr: 2,
                       display: 'flex'
                     }}>
                       {option.icon}
                     </Box>
                     <Box sx={{ flexGrow: 1 }}>
-                      <Typography variant="subtitle1" fontWeight={700} sx={{ color: isSelected ? '#E91E63' : 'text.primary', lineHeight: 1.2, mb: 0 }}>
+                      <Typography variant="subtitle1" fontWeight={700} sx={{ color: isSelected ? COLORS.primary : 'text.primary', lineHeight: 1.2, mb: 0 }}>
                         {option.title}
                       </Typography>
                       <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.3 }}>
@@ -207,18 +208,18 @@ const MenstrualHistorySection = ({ formData, updateField }) => {
                         height: 20,
                         borderRadius: '50%',
                         border: '2px solid',
-                        borderColor: isSelected ? '#E91E63' : 'text.disabled',
+                        borderColor: isSelected ? COLORS.primary : 'text.disabled',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        bgcolor: isSelected ? '#E91E63' : 'transparent',
+                        bgcolor: isSelected ? COLORS.primary : 'transparent',
                         ml: 1,
                         flexShrink: 0,
                         transition: 'all 0.3s ease',
                       }}
                     >
                       {isSelected && (
-                        <Box component={motion.div} initial={{ scale: 0 }} animate={{ scale: 1 }} sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#fff' }} />
+                        <Box component={motion.div} initial={{ scale: 0 }} animate={{ scale: 1 }} sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: COLORS.white }} />
                       )}
                     </Box>
                   </Box>
@@ -253,9 +254,9 @@ const MenstrualHistorySection = ({ formData, updateField }) => {
                           justifyContent: 'center',
                           cursor: 'pointer',
                           border: '2px solid',
-                          borderColor: isSelected ? '#E91E63' : (isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.06)'),
-                          bgcolor: isSelected ? '#E91E63' : 'transparent',
-                          color: isSelected ? '#fff' : 'text.primary',
+                          borderColor: isSelected ? COLORS.primary : (isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.06)'),
+                          bgcolor: isSelected ? COLORS.primary : 'transparent',
+                          color: isSelected ? COLORS.white : 'text.primary',
                           transition: 'all 0.3s ease',
                           fontWeight: 700,
                           fontSize: '1.05rem',
@@ -288,7 +289,7 @@ const MenstrualHistorySection = ({ formData, updateField }) => {
                 <IconButton
                   size="small"
                   onClick={() => stepCycle(-1)}
-                  sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
+                  sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: COLORS.primary, '&:hover': { bgcolor: COLORS.primary, color: COLORS.white }, width: 34, height: 34, flexShrink: 0 }}
                 >
                   <RemoveIcon fontSize="small" />
                 </IconButton>
@@ -306,7 +307,7 @@ const MenstrualHistorySection = ({ formData, updateField }) => {
                     sx={{
                       fontSize: '1.9rem',
                       fontWeight: 900,
-                      color: cycleError ? '#D32F2F' : '#E91E63',
+                      color: cycleError ? COLORS.redMaterial : COLORS.primary,
                       lineHeight: 1,
                       '& input': {
                         p: 0,
@@ -327,7 +328,7 @@ const MenstrualHistorySection = ({ formData, updateField }) => {
                 <IconButton
                   size="small"
                   onClick={() => stepCycle(1)}
-                  sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
+                  sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: COLORS.primary, '&:hover': { bgcolor: COLORS.primary, color: COLORS.white }, width: 34, height: 34, flexShrink: 0 }}
                 >
                   <AddIcon fontSize="small" />
                 </IconButton>

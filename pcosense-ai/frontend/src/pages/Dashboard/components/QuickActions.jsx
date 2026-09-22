@@ -7,35 +7,36 @@ import {
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../../constants/index.js';
+import { COLORS } from '../../../theme/index.js';
 
 const ACTIONS = [
   {
     id: 'startAssessment',
     icon: <Science sx={{ fontSize: 32 }} />,
-    gradient: 'linear-gradient(135deg, #EC407A, #F48FB1)',
-    accentColor: '#EC407A',
+    gradient: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`,
+    accentColor: COLORS.secondaryDark,
     route: ROUTES.PREDICTION,
     featured: true,
   },
   {
     id: 'predictionHistory',
     icon: <History sx={{ fontSize: 32 }} />,
-    gradient: 'linear-gradient(135deg, #7E57C2, #B39DDB)',
-    accentColor: '#7E57C2',
+    gradient: `linear-gradient(135deg, ${COLORS.purple}, ${COLORS.purpleLight})`,
+    accentColor: COLORS.purple,
     route: ROUTES.HISTORY,
   },
   {
     id: 'healthLibrary',
     icon: <LibraryBooks sx={{ fontSize: 32 }} />,
-    gradient: 'linear-gradient(135deg, #26C6DA, #80DEEA)',
-    accentColor: '#26C6DA',
+    gradient: `linear-gradient(135deg, ${COLORS.teal}, ${COLORS.tealLight})`,
+    accentColor: COLORS.teal,
     route: ROUTES.DASHBOARD,
   },
   {
     id: 'reports',
     icon: <BarChart sx={{ fontSize: 32 }} />,
-    gradient: 'linear-gradient(135deg, #FFA726, #FFD54F)',
-    accentColor: '#FFA726',
+    gradient: `linear-gradient(135deg, ${COLORS.orange}, ${COLORS.orangeLight})`,
+    accentColor: COLORS.orange,
     route: ROUTES.HISTORY,
     comingSoon: false,
   },
@@ -76,12 +77,12 @@ const ActionCard = ({ action, index }) => {
               ? `linear-gradient(135deg, ${alpha(action.accentColor, 0.15)} 0%, ${alpha(theme.palette.background.paper, 0.7)} 100%)`
               : action.featured
               ? action.gradient
-              : '#FFFFFF',
+              : COLORS.white,
             border: `1px solid ${isDark ? alpha(action.accentColor, 0.25) : action.featured ? 'transparent' : alpha(action.accentColor, 0.15)}`,
             boxShadow: action.featured
               ? `0 12px 40px ${alpha(action.accentColor, 0.35)}`
               : isDark
-              ? `0 4px 20px ${alpha('#000', 0.3)}`
+              ? `0 4px 20px ${alpha(COLORS.black, 0.3)}`
               : `0 4px 20px ${alpha(action.accentColor, 0.07)}`,
           }}
         >
@@ -106,7 +107,7 @@ const ActionCard = ({ action, index }) => {
               height: 60,
               borderRadius: 3,
               background: action.featured
-                ? alpha('#FFF', 0.25)
+                ? alpha(COLORS.white, 0.25)
                 : action.gradient,
               display: 'flex',
               alignItems: 'center',
@@ -133,7 +134,7 @@ const ActionCard = ({ action, index }) => {
           <Typography
             variant="caption"
             sx={{
-              color: action.featured ? alpha('#FFF', 0.8) : 'text.secondary',
+              color: action.featured ? alpha(COLORS.white, 0.8) : 'text.secondary',
               fontSize: '0.78rem',
             }}
           >

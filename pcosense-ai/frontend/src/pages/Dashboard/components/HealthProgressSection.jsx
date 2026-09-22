@@ -5,6 +5,7 @@ import {
 } from 'recharts';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { COLORS } from '../../../theme/index.js';
 
 const CustomTooltip = ({ active, payload, label }) => {
   const { t } = useTranslation();
@@ -21,7 +22,7 @@ const CustomTooltip = ({ active, payload, label }) => {
         }}
       >
         <Typography variant="caption" fontWeight={700} display="block">{label}</Typography>
-        <Typography variant="caption" sx={{ color: '#EC407A' }}>
+        <Typography variant="caption" sx={{ color: COLORS.secondaryDark }}>
           {t('dashboard.progress.tooltipRisk', { value: payload[0]?.value })}
         </Typography>
       </Box>
@@ -87,11 +88,11 @@ const HealthProgressSection = ({ predictions }) => {
     {
       label: t('dashboard.progress.metrics.riskProbability'),
       value: latest?.probability ?? null,
-      color: latest?.probability > 60 ? '#EF5350' : latest?.probability > 40 ? '#FFA726' : '#66BB6A',
+      color: latest?.probability > 60 ? COLORS.riskHigh : latest?.probability > 40 ? COLORS.orange : COLORS.riskLow,
     },
-    { label: t('dashboard.progress.metrics.aiConfidence'), value: latest?.confidence ?? null, color: '#7E57C2' },
-    { label: t('dashboard.progress.metrics.screeningsCompleted'), value: Math.min(predictions?.length ?? 0, 10) * 10, color: '#EC407A', max: 100 },
-    { label: t('dashboard.progress.metrics.healthEngagement'), value: Math.min((predictions?.length ?? 0) * 20, 100), color: '#26C6DA' },
+    { label: t('dashboard.progress.metrics.aiConfidence'), value: latest?.confidence ?? null, color: COLORS.purple },
+    { label: t('dashboard.progress.metrics.screeningsCompleted'), value: Math.min(predictions?.length ?? 0, 10) * 10, color: COLORS.secondaryDark, max: 100 },
+    { label: t('dashboard.progress.metrics.healthEngagement'), value: Math.min((predictions?.length ?? 0) * 20, 100), color: COLORS.teal },
   ];
 
   return (
@@ -115,9 +116,9 @@ const HealthProgressSection = ({ predictions }) => {
               sx={{
                 borderRadius: 4,
                 p: 3,
-                background: isDark ? alpha(theme.palette.background.paper, 0.5) : '#FFFFFF',
+                background: isDark ? alpha(theme.palette.background.paper, 0.5) : COLORS.white,
                 border: `1px solid ${theme.palette.divider}`,
-                boxShadow: isDark ? `0 8px 32px ${alpha('#000', 0.3)}` : '0 4px 24px rgba(233,30,99,0.04)',
+                boxShadow: isDark ? `0 8px 32px ${alpha(COLORS.black, 0.3)}` : '0 4px 24px rgba(233,30,99,0.04)',
               }}
             >
               <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 3 }}>
@@ -128,22 +129,22 @@ const HealthProgressSection = ({ predictions }) => {
                   <AreaChart data={chartData} margin={{ top: 5, right: 10, bottom: 5, left: -20 }}>
                     <defs>
                       <linearGradient id="riskGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#EC407A" stopOpacity={0.3} />
-                        <stop offset="95%" stopColor="#EC407A" stopOpacity={0.02} />
+                        <stop offset="5%" stopColor={COLORS.secondaryDark} stopOpacity={0.3} />
+                        <stop offset="95%" stopColor={COLORS.secondaryDark} stopOpacity={0.02} />
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke={isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)'} />
-                    <XAxis dataKey="name" tick={{ fontSize: 11, fill: isDark ? '#C2A9B2' : '#9E9E9E' }} />
-                    <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: isDark ? '#C2A9B2' : '#9E9E9E' }} />
+                    <XAxis dataKey="name" tick={{ fontSize: 11, fill: isDark ? COLORS.textMutedDark : COLORS.gray }} />
+                    <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: isDark ? COLORS.textMutedDark : COLORS.gray }} />
                     <Tooltip content={<CustomTooltip />} />
                     <Area
                       type="monotone"
                       dataKey="risk"
-                      stroke="#EC407A"
+                      stroke={COLORS.secondaryDark}
                       strokeWidth={2.5}
                       fill="url(#riskGradient)"
-                      dot={{ fill: '#EC407A', strokeWidth: 2, r: 4 }}
-                      activeDot={{ r: 6, fill: '#EC407A' }}
+                      dot={{ fill: COLORS.secondaryDark, strokeWidth: 2, r: 4 }}
+                      activeDot={{ r: 6, fill: COLORS.secondaryDark }}
                     />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -164,9 +165,9 @@ const HealthProgressSection = ({ predictions }) => {
             sx={{
               borderRadius: 4,
               p: 3,
-              background: isDark ? alpha(theme.palette.background.paper, 0.5) : '#FFFFFF',
+              background: isDark ? alpha(theme.palette.background.paper, 0.5) : COLORS.white,
               border: `1px solid ${theme.palette.divider}`,
-              boxShadow: isDark ? `0 8px 32px ${alpha('#000', 0.3)}` : '0 4px 24px rgba(233,30,99,0.04)',
+              boxShadow: isDark ? `0 8px 32px ${alpha(COLORS.black, 0.3)}` : '0 4px 24px rgba(233,30,99,0.04)',
               height: '100%',
             }}
           >

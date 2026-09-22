@@ -50,6 +50,7 @@
     },
     "nav": {
       "dashboard": "Dashboard",
+      "explore": "Explore",
       "lifestyle": "Lifestyle",
       "history": "History",
       "admin": "Admin",
@@ -174,6 +175,7 @@
     },
     "nav": {
       "dashboard": "डैशबोर्ड",
+      "explore": "एक्सप्लोर",
       "lifestyle": "जीवनशैली",
       "history": "इतिहास",
       "admin": "एडमिन",
@@ -298,6 +300,7 @@
     },
     "nav": {
       "dashboard": "डॅशबोर्ड",
+      "explore": "एक्सप्लोर",
       "lifestyle": "जीवनशैली",
       "history": "इतिहास",
       "admin": "अॅडमिन",

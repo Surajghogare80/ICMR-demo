@@ -9,6 +9,7 @@ import { CheckCircle, Home, History, Science, Warning } from '@mui/icons-materia
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../constants/index.js';
+import { COLORS } from '../../theme/index.js';
 
 // ─── 4-band risk scale, driven by the model probability (0–100) ───────────
 //   0–30   Low PMOS Risk        → green
@@ -18,10 +19,10 @@ import { ROUTES } from '../../constants/index.js';
 // `severe` flags the two upper bands (drives the warning icon).
 const getRiskBand = (probability) => {
   const v = Number(probability) || 0;
-  if (v < 30) return { key: 'low',      color: '#66BB6A', severe: false };
-  if (v < 60) return { key: 'moderate', color: '#FBC02D', severe: false };
-  if (v < 90) return { key: 'detected', color: '#f88131', severe: true  };
-  return               { key: 'high',     color: '#EF5350', severe: true  };
+  if (v < 30) return { key: 'low',      color: COLORS.riskLow, severe: false };
+  if (v < 60) return { key: 'moderate', color: COLORS.riskModerate, severe: false };
+  if (v < 90) return { key: 'detected', color: COLORS.riskDetected, severe: true  };
+  return               { key: 'high',     color: COLORS.riskHigh, severe: true  };
 };
 
 // ─── Helper: one labelled blood value row ─────────────────────────────────

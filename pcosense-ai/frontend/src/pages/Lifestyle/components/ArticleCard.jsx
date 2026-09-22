@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../../constants/index.js';
 import { translateOptionValue } from '../../../utils/optionTranslation.js';
+import { COLORS } from '../../../theme/index.js';
 
 const ArticleCard = ({ article }) => {
   const theme = useTheme();
@@ -24,18 +25,18 @@ const ArticleCard = ({ article }) => {
           flexDirection: 'column',
           borderRadius: 4,
           overflow: 'hidden',
-          bgcolor: theme.palette.mode === 'dark' ? alpha(theme.palette.background.paper, 0.6) : '#fff',
+          bgcolor: theme.palette.mode === 'dark' ? alpha(theme.palette.background.paper, 0.6) : COLORS.white,
           backdropFilter: 'blur(10px)',
-          border: `1px solid ${theme.palette.mode === 'dark' ? alpha('#EC407A', 0.2) : alpha('#EC407A', 0.1)}`,
-          boxShadow: theme.palette.mode === 'dark' 
-            ? '0 10px 30px rgba(0,0,0,0.3)' 
+          border: `1px solid ${theme.palette.mode === 'dark' ? alpha(COLORS.secondaryDark, 0.2) : alpha(COLORS.secondaryDark, 0.1)}`,
+          boxShadow: theme.palette.mode === 'dark'
+            ? '0 10px 30px rgba(0,0,0,0.3)'
             : '0 10px 30px rgba(236,64,122,0.1)',
           transition: 'all 0.3s ease',
           '&:hover': {
-            borderColor: '#EC407A',
-            boxShadow: theme.palette.mode === 'dark' 
-              ? `0 15px 40px ${alpha('#EC407A', 0.3)}` 
-              : `0 15px 40px ${alpha('#EC407A', 0.2)}`,
+            borderColor: COLORS.secondaryDark,
+            boxShadow: theme.palette.mode === 'dark'
+              ? `0 15px 40px ${alpha(COLORS.secondaryDark, 0.3)}`
+              : `0 15px 40px ${alpha(COLORS.secondaryDark, 0.2)}`,
           }
         }}
       >
@@ -54,7 +55,7 @@ const ArticleCard = ({ article }) => {
               top: 16,
               right: 16,
               bgcolor: 'rgba(255, 255, 255, 0.9)',
-              color: '#EC407A',
+              color: COLORS.secondaryDark,
               px: 2,
               py: 0.5,
               borderRadius: 4,
@@ -95,10 +96,10 @@ const ArticleCard = ({ article }) => {
             onClick={() => navigate(ROUTES.LIFESTYLE_ARTICLE.replace(':id', article.id))}
             sx={{
               alignSelf: 'flex-start',
-              color: '#EC407A',
+              color: COLORS.secondaryDark,
               fontWeight: 700,
               p: 0,
-              '&:hover': { bgcolor: 'transparent', color: '#D81B60' }
+              '&:hover': { bgcolor: 'transparent', color: COLORS.accentRoseDeep }
             }}
           >
             {t('lifestyleHub.card.readArticle')}

@@ -8,6 +8,7 @@ import { CheckCircle, WarningAmberRounded, ExpandMore } from '@mui/icons-materia
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '../../../config/appConfig.js';
+import { COLORS } from '../../../theme/index.js';
 
 const DISCLAIMER_PANEL_ID = 'welcome-medical-disclaimer-panel';
 
@@ -45,7 +46,7 @@ const ScreeningConsent = ({ onStart }) => {
             <Box
               sx={{
                 width: 48, height: 48, borderRadius: '14px',
-                background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
+                background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
@@ -55,7 +56,7 @@ const ScreeningConsent = ({ onStart }) => {
               variant="h5"
               fontWeight={900}
               sx={{
-                background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
+                background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`,
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
               }}
@@ -91,7 +92,7 @@ const ScreeningConsent = ({ onStart }) => {
               <Stack spacing={1.2} sx={{ mt: 1.5 }}>
                 {needItems.map((item) => (
                   <Box key={item} sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.2 }}>
-                    <CheckCircle sx={{ fontSize: 18, mt: 0.2, color: '#66BB6A', flexShrink: 0 }} />
+                    <CheckCircle sx={{ fontSize: 18, mt: 0.2, color: COLORS.success, flexShrink: 0 }} />
                     <Typography variant="body2">{item}</Typography>
                   </Box>
                 ))}
@@ -148,7 +149,7 @@ const ScreeningConsent = ({ onStart }) => {
             onClick={handleStartScreening}
             sx={{
               py: 1.8, fontSize: '1rem', borderRadius: 3,
-              background: consentAccepted ? 'linear-gradient(135deg, #EC407A 0%, #F48FB1 100%)' : undefined,
+              background: consentAccepted ? `linear-gradient(135deg, ${COLORS.secondaryDark} 0%, ${COLORS.accentRose} 100%)` : undefined,
             }}
           >
             {t('welcome.start_screening')}

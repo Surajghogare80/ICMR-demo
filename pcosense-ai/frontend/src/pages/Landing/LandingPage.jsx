@@ -12,14 +12,15 @@ import { motion } from 'framer-motion';
 import { useTranslation, Trans } from 'react-i18next';
 import { ROUTES } from '../../constants/index.js';
 import { APP_NAME, APP_TAGLINE, APP_DESCRIPTION } from '../../config/appConfig.js';
+import { COLORS } from '../../theme/index.js';
 
 const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } };
 
 const featureMeta = [
-  { key: 'screening', icon: <Psychology />, color: '#E91E63' },
-  { key: 'secure', icon: <Security />, color: '#F06292' },
-  { key: 'instant', icon: <Speed />, color: '#FFA726' },
-  { key: 'history', icon: <Analytics />, color: '#66BB6A' },
+  { key: 'screening', icon: <Psychology />, color: COLORS.primary },
+  { key: 'secure', icon: <Security />, color: COLORS.primaryLight },
+  { key: 'instant', icon: <Speed />, color: COLORS.orange },
+  { key: 'history', icon: <Analytics />, color: COLORS.success },
 ];
 
 const stepMeta = [
@@ -66,8 +67,8 @@ const LandingPage = () => {
           position: 'relative',
           overflow: 'hidden',
           background: (theme) => theme.palette.mode === 'dark'
-            ? 'linear-gradient(135deg, #1A0A0F 0%, #2D1D23 50%, #1F0D15 100%)'
-            : 'linear-gradient(135deg, #FFF0F5 0%, #FFF8FB 50%, #FFE4EC 100%)',
+            ? `linear-gradient(135deg, ${COLORS.darkBg} 0%, ${COLORS.darkPaperAlt} 50%, ${COLORS.darkPaperAlt2} 100%)`
+            : `linear-gradient(135deg, ${COLORS.lightBgAlt} 0%, ${COLORS.lightBg} 50%, ${COLORS.lightBgAlt2} 100%)`,
           py: { xs: 10, md: 14 },
         }}
       >
@@ -85,9 +86,9 @@ const LandingPage = () => {
             <Grid item xs={12} md={7}>
               <motion.div variants={fadeUp} initial="hidden" animate="visible" transition={{ duration: 0.7 }}>
                  <Chip label={t('landing.hero.badge')} size="small" sx={{ mb: 3, bgcolor: 'rgba(233,30,99,0.12)', color: 'primary.main', border: '1px solid rgba(233,30,99,0.2)' }} />
-                <Typography variant="h1" sx={{ fontSize: { xs: '2.5rem', md: '3.8rem' }, fontWeight: 900, color: (theme) => theme.palette.mode === 'dark' ? '#FFFFFF' : '#2D2D2D', lineHeight: 1.1, mb: 3 }}>
+                <Typography variant="h1" sx={{ fontSize: { xs: '2.5rem', md: '3.8rem' }, fontWeight: 900, color: (theme) => theme.palette.mode === 'dark' ? COLORS.white : COLORS.textDark, lineHeight: 1.1, mb: 3 }}>
                   {t('landing.hero.titleLine1')}
-                  <Box component="span" sx={{ display: 'block', background: 'linear-gradient(135deg, #EC407A, #F48FB1, #FFA726)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                  <Box component="span" sx={{ display: 'block', background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose}, ${COLORS.orange})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                     {t('landing.hero.titleLine2')}
                   </Box>
                 </Typography>
@@ -100,7 +101,7 @@ const LandingPage = () => {
                     size="large"
                     endIcon={<ArrowForward />}
                     onClick={() => navigate(ROUTES.PREDICTION)}
-                    sx={{ px: 4, py: 1.5, fontSize: '1rem', background: 'linear-gradient(135deg, #EC407A, #F48FB1)', boxShadow: '0 8px 24px rgba(233,30,99,0.3)' }}
+                    sx={{ px: 4, py: 1.5, fontSize: '1rem', background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`, boxShadow: '0 8px 24px rgba(233,30,99,0.3)' }}
                   >
                     {t('landing.hero.ctaAuthenticated')}
                   </Button>
@@ -111,7 +112,7 @@ const LandingPage = () => {
                     sx={{
                       px: 4, py: 1.5, fontSize: '1rem',
                       borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(233,30,99,0.4)',
-                      color: (theme) => theme.palette.mode === 'dark' ? '#FFF' : 'primary.main',
+                      color: (theme) => theme.palette.mode === 'dark' ? COLORS.white : 'primary.main',
                       '&:hover': {
                         borderColor: 'primary.main',
                         bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(233,30,99,0.04)'
@@ -124,7 +125,7 @@ const LandingPage = () => {
                 <Box sx={{ mt: 4, display: 'flex', gap: 3, flexWrap: 'wrap' }}>
                   {[t('landing.hero.trust.free'), t('landing.hero.trust.private'), t('landing.hero.trust.instant')].map((label) => (
                     <Box key={label} sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
-                      <CheckCircle sx={{ fontSize: 16, color: '#66BB6A' }} />
+                      <CheckCircle sx={{ fontSize: 16, color: COLORS.success }} />
                       <Typography variant="body2" sx={{ color: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'text.secondary' }}>{label}</Typography>
                     </Box>
                   ))}
@@ -170,7 +171,7 @@ const LandingPage = () => {
                             bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(233,30,99,0.06)' : 'rgba(233,30,99,0.04)',
                           }}
                         >
-                          <CheckCircle sx={{ fontSize: 20, color: '#66BB6A', mt: '2px', flexShrink: 0 }} />
+                          <CheckCircle sx={{ fontSize: 20, color: COLORS.success, mt: '2px', flexShrink: 0 }} />
                           <Typography variant="body2" fontWeight={600} lineHeight={1.6}>{point}</Typography>
                         </Box>
                       ))}
@@ -271,7 +272,7 @@ const LandingPage = () => {
       </Box>
 
       {/* CTA */}
-      <Box sx={{ background: 'linear-gradient(135deg, #EC407A, #F48FB1)', py: 10, textAlign: 'center' }}>
+      <Box sx={{ background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`, py: 10, textAlign: 'center' }}>
         <Container maxWidth="md">
           <Typography variant="h3" fontWeight={800} color="white" gutterBottom>{t('landing.cta.title')}</Typography>
           <Typography variant="h6" sx={{ color: 'rgba(255,255,255,0.9)', mb: 4, fontWeight: 400 }}>
@@ -281,7 +282,7 @@ const LandingPage = () => {
             variant="contained"
             size="large"
             onClick={() => navigate(ROUTES.PREDICTION)}
-            sx={{ px: 6, py: 1.8, fontSize: '1.1rem', bgcolor: 'white', color: '#E91E63', fontWeight: 700, '&:hover': { bgcolor: 'rgba(255,255,255,0.9)' } }}
+            sx={{ px: 6, py: 1.8, fontSize: '1.1rem', bgcolor: 'white', color: COLORS.primary, fontWeight: 700, '&:hover': { bgcolor: 'rgba(255,255,255,0.9)' } }}
           >
             {t('landing.cta.buttonAuthenticated')}
           </Button>

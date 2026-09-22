@@ -5,12 +5,13 @@ import {
   AppBar, Toolbar, Typography, IconButton, Button, Box, Tooltip, useTheme, alpha,
 } from '@mui/material';
 import {
-  DarkMode, LightMode, Dashboard, History, Favorite,
+  DarkMode, LightMode, Dashboard, History, Favorite, Explore,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { ROUTES } from '../../constants/index.js';
 import { APP_NAME, APP_FULL_FORM } from '../../config/appConfig.js';
 import LanguageSelector from '../../components/common/LanguageSelector.jsx';
+import { COLORS } from '../../theme/index.js';
 
 const Navbar = ({ onThemeToggle, isDark }) => {
   const { t } = useTranslation();
@@ -24,7 +25,7 @@ const Navbar = ({ onThemeToggle, isDark }) => {
       sx={{
         background: isDark
           ? alpha(theme.palette.background.paper, 0.85)
-          : alpha('#FFFFFF', 0.85),
+          : alpha(COLORS.white, 0.85),
         backdropFilter: 'blur(20px)',
         borderBottom: `1px solid ${theme.palette.divider}`,
         color: theme.palette.text.primary,
@@ -41,7 +42,7 @@ const Navbar = ({ onThemeToggle, isDark }) => {
             <Box
               sx={{
                 width: 36, height: 36, borderRadius: '10px',
-                background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
+                background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
@@ -52,7 +53,7 @@ const Navbar = ({ onThemeToggle, isDark }) => {
                 variant="h6"
                 fontWeight={900}
                 sx={{
-                  background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
+                  background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`,
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   lineHeight: 1.4,
@@ -80,6 +81,7 @@ const Navbar = ({ onThemeToggle, isDark }) => {
         {/* Nav links */}
         <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 0.5 }}>
           <Button startIcon={<Dashboard />} onClick={() => navigate(ROUTES.DASHBOARD)} size="small">{t('nav.dashboard')}</Button>
+          <Button startIcon={<Explore />} onClick={() => navigate(ROUTES.EXPLORE)} size="small">{t('nav.explore')}</Button>
           <Button startIcon={<Favorite />} onClick={() => navigate(ROUTES.LIFESTYLE)} size="small">{t('nav.lifestyle')}</Button>
           <Button startIcon={<History />} onClick={() => navigate(ROUTES.HISTORY)} size="small">{t('nav.history')}</Button>
         </Box>

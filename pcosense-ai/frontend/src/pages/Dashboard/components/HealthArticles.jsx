@@ -8,48 +8,49 @@ import {
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { COLORS } from '../../../theme/index.js';
 
 const ARTICLES = [
   {
     id: 'pcosGuide',
-    categoryColor: '#EC407A',
+    categoryColor: COLORS.secondaryDark,
     icon: <MenuBook sx={{ fontSize: 28, color: 'white' }} />,
-    iconBg: 'linear-gradient(135deg, #EC407A, #F48FB1)',
+    iconBg: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`,
     readMinutes: 8,
   },
   {
     id: 'naturalManagement',
-    categoryColor: '#66BB6A',
+    categoryColor: COLORS.success,
     icon: <SelfImprovement sx={{ fontSize: 28, color: 'white' }} />,
-    iconBg: 'linear-gradient(135deg, #66BB6A, #A5D6A7)',
+    iconBg: `linear-gradient(135deg, ${COLORS.success}, ${COLORS.success})`,
     readMinutes: 6,
   },
   {
     id: 'nutrition',
-    categoryColor: '#FFA726',
+    categoryColor: COLORS.orange,
     icon: <Restaurant sx={{ fontSize: 28, color: 'white' }} />,
-    iconBg: 'linear-gradient(135deg, #FFA726, #FFD54F)',
+    iconBg: `linear-gradient(135deg, ${COLORS.orange}, ${COLORS.orangeLight})`,
     readMinutes: 10,
   },
   {
     id: 'exercise',
-    categoryColor: '#7E57C2',
+    categoryColor: COLORS.purple,
     icon: <FitnessCenter sx={{ fontSize: 28, color: 'white' }} />,
-    iconBg: 'linear-gradient(135deg, #7E57C2, #B39DDB)',
+    iconBg: `linear-gradient(135deg, ${COLORS.purple}, ${COLORS.purpleLight})`,
     readMinutes: 7,
   },
   {
     id: 'mentalWellness',
-    categoryColor: '#26C6DA',
+    categoryColor: COLORS.teal,
     icon: <Psychology sx={{ fontSize: 28, color: 'white' }} />,
-    iconBg: 'linear-gradient(135deg, #26C6DA, #80DEEA)',
+    iconBg: `linear-gradient(135deg, ${COLORS.teal}, ${COLORS.tealLight})`,
     readMinutes: 9,
   },
   {
     id: 'fertility',
-    categoryColor: '#F06292',
+    categoryColor: COLORS.accent,
     icon: <Favorite sx={{ fontSize: 28, color: 'white' }} />,
-    iconBg: 'linear-gradient(135deg, #F06292, #F48FB1)',
+    iconBg: `linear-gradient(135deg, ${COLORS.accent}, ${COLORS.accentRose})`,
     readMinutes: 11,
   },
 ];
@@ -80,10 +81,10 @@ const ArticleCard = ({ article, index }) => {
             height: '100%',
             borderRadius: 4,
             overflow: 'hidden',
-            background: isDark ? alpha(theme.palette.background.paper, 0.6) : '#FFFFFF',
+            background: isDark ? alpha(theme.palette.background.paper, 0.6) : COLORS.white,
             border: `1px solid ${alpha(article.categoryColor, isDark ? 0.2 : 0.1)}`,
             boxShadow: isDark
-              ? `0 4px 20px ${alpha('#000', 0.3)}`
+              ? `0 4px 20px ${alpha(COLORS.black, 0.3)}`
               : `0 4px 20px ${alpha(article.categoryColor, 0.06)}`,
             display: 'flex',
             flexDirection: 'column',
@@ -187,7 +188,7 @@ const HealthArticles = () => {
           <Chip
             label={t('dashboard.articles.countBadge', { count: ARTICLES.length })}
             size="small"
-            sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#EC407A', fontWeight: 700, fontSize: '0.7rem' }}
+            sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: COLORS.secondaryDark, fontWeight: 700, fontSize: '0.7rem' }}
           />
         </Box>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
