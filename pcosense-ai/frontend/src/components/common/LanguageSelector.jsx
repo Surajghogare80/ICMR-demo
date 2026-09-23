@@ -5,10 +5,25 @@ import { IconButton, Menu, MenuItem, ListItemText, Tooltip } from '@mui/material
 import { Translate } from '@mui/icons-material';
 import { changeLanguage, SUPPORTED_LANGUAGES } from '../../i18n.js';
 
-const LANGUAGE_LABEL_KEYS = {
-  en: 'language.english',
-  hi: 'language.hindi',
-  mr: 'language.marathi',
+// Each language's name is shown in its own native script regardless of the
+// currently active UI language (the standard pattern - a Bengali speaker
+// recognizes "বাংলা" instantly; retranslating "Bengali" into whichever
+// language happens to be active would be both harder to maintain and less
+// recognizable to the reader).
+const NATIVE_LANGUAGE_NAMES = {
+  en: 'English',
+  hi: 'हिन्दी',
+  mr: 'मराठी',
+  bn: 'বাংলা',
+  te: 'తెలుగు',
+  ta: 'தமிழ்',
+  gu: 'ગુજરાતી',
+  kn: 'ಕನ್ನಡ',
+  or: 'ଓଡ଼ିଆ',
+  pa: 'ਪੰਜਾਬੀ',
+  ml: 'മലയാളം',
+  ur: 'اردو',
+  as: 'অসমীয়া',
 };
 
 const LanguageSelector = () => {
@@ -47,7 +62,7 @@ const LanguageSelector = () => {
             selected={i18n.language === lang}
             onClick={() => handleSelect(lang)}
           >
-            <ListItemText>{t(LANGUAGE_LABEL_KEYS[lang])}</ListItemText>
+            <ListItemText>{NATIVE_LANGUAGE_NAMES[lang] || lang}</ListItemText>
           </MenuItem>
         ))}
       </Menu>

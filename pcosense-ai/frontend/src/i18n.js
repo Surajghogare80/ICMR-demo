@@ -14,7 +14,7 @@ import core from './locales/core.json';
 const fragmentModules = import.meta.glob('./locales/fragments/*.json', { eager: true });
 const fragments = [core, ...Object.values(fragmentModules).map((mod) => mod.default)];
 
-export const SUPPORTED_LANGUAGES = ['en', 'hi', 'mr'];
+export const SUPPORTED_LANGUAGES = ['en', 'hi', 'mr', 'bn', 'te', 'ta', 'gu', 'kn', 'or', 'pa', 'ml', 'ur', 'as'];
 export const STORAGE_KEY = 'prabha_language';
 
 const resources = SUPPORTED_LANGUAGES.reduce((acc, lng) => {

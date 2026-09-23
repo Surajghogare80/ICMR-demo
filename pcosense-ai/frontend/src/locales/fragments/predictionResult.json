@@ -178,5 +178,605 @@
         "uIU_mL": "µIU/mL"
       }
     }
+  },
+  "bn": {
+    "predictionResult": {
+      "noResult": {
+        "message": "কোনো ফলাফল পাওয়া যায়নি। অনুগ্রহ করে প্রথমে স্ক্রিনিং সম্পূর্ণ করুন।",
+        "startButton": "স্ক্রিনিং শুরু করুন"
+      },
+      "riskLevels": {
+        "high_risk": "উচ্চ ঝুঁকি",
+        "low_risk": "কম ঝুঁকি"
+      },
+      "headline": {
+        "high": "উচ্চ PMOS ঝুঁকি সনাক্ত হয়েছে",
+        "low": "কম PMOS ঝুঁকি সনাক্ত হয়েছে"
+      },
+      "riskBands": {
+        "low": { "chip": "কম ঝুঁকি", "headline": "কম PMOS ঝুঁকি" },
+        "moderate": { "chip": "মাঝারি ঝুঁকি", "headline": "মাঝারি PMOS ঝুঁকি" },
+        "detected": { "chip": "PMOS ঝুঁকি", "headline": "PMOS ঝুঁকি সনাক্ত হয়েছে" },
+        "high": { "chip": "উচ্চ ঝুঁকি", "headline": "উচ্চ PMOS ঝুঁকি" }
+      },
+      "subheading": "আপনার জমা দেওয়া ক্লিনিক্যাল এবং জীবনযাত্রার তথ্যের ভিত্তিতে",
+      "metrics": {
+        "riskProbability": "ঝুঁকির সম্ভাবনা",
+        "modelConfidence": "মডেল নির্ভরযোগ্যতা",
+        "aiCertainty": "AI মডেল নিশ্চয়তা স্কোর"
+      },
+      "bloodReport": {
+        "title": "🔬 রক্ত রিপোর্ট সারাংশ",
+        "standardMarkers": "স্ট্যান্ডার্ড মার্কার",
+        "extendedMarkers": "বিস্তারিত মার্কার",
+        "labels": {
+          "fsh": "FSH",
+          "lh": "LH",
+          "tsh": "TSH",
+          "amh": "AMH",
+          "hb": "হিমোগ্লোবিন",
+          "rbs": "র‍্যান্ডম ব্লাড সুগার",
+          "vitD3": "ভিটামিন D3",
+          "shbg": "SHBG",
+          "fastingInsulin": "ফাস্টিং ইনসুলিন",
+          "insulinResistance": "ইনসুলিন রেজিস্ট্যান্স (HOMA-IR)"
+        }
+      },
+      "recommendations": {
+        "title": "📋 ব্যক্তিগতকৃত সুপারিশ"
+      },
+      "actions": {
+        "dashboard": "ড্যাশবোর্ডে যান",
+        "history": "ইতিহাস দেখুন",
+        "newScreening": "নতুন স্ক্রিনিং"
+      },
+      "units": {
+        "mIU_mL": "mIU/mL",
+        "g_dL": "g/dL",
+        "mg_dL": "mg/dL",
+        "nmol_L": "nmol/L",
+        "uIU_mL": "µIU/mL"
+      }
+    }
+  },
+  "te": {
+    "predictionResult": {
+      "noResult": {
+        "message": "ఫలితం కనుగొనబడలేదు. దయచేసి ముందుగా స్క్రీనింగ్‌ను పూర్తి చేయండి.",
+        "startButton": "స్క్రీనింగ్ ప్రారంభించండి"
+      },
+      "riskLevels": {
+        "high_risk": "అధిక రిస్క్",
+        "low_risk": "తక్కువ రిస్క్"
+      },
+      "headline": {
+        "high": "అధిక PMOS రిస్క్ గుర్తించబడింది",
+        "low": "తక్కువ PMOS రిస్క్ గుర్తించబడింది"
+      },
+      "riskBands": {
+        "low": { "chip": "తక్కువ రిస్క్", "headline": "తక్కువ PMOS రిస్క్" },
+        "moderate": { "chip": "మధ్యస్థ రిస్క్", "headline": "మధ్యస్థ PMOS రిస్క్" },
+        "detected": { "chip": "PMOS రిస్క్", "headline": "PMOS రిస్క్ గుర్తించబడింది" },
+        "high": { "chip": "అధిక రిస్క్", "headline": "అధిక PMOS రిస్క్" }
+      },
+      "subheading": "మీరు సమర్పించిన క్లినికల్ మరియు జీవనశైలి డేటా ఆధారంగా",
+      "metrics": {
+        "riskProbability": "రిస్క్ సంభావ్యత",
+        "modelConfidence": "మోడల్ విశ్వసనీయత",
+        "aiCertainty": "AI మోడల్ నిశ్చయత స్కోరు"
+      },
+      "bloodReport": {
+        "title": "🔬 రక్త నివేదిక సారాంశం",
+        "standardMarkers": "ప్రామాణిక మార్కర్లు",
+        "extendedMarkers": "విస్తరించిన మార్కర్లు",
+        "labels": {
+          "fsh": "FSH",
+          "lh": "LH",
+          "tsh": "TSH",
+          "amh": "AMH",
+          "hb": "హిమోగ్లోబిన్",
+          "rbs": "రాండమ్ బ్లడ్ షుగర్",
+          "vitD3": "విటమిన్ D3",
+          "shbg": "SHBG",
+          "fastingInsulin": "ఫాస్టింగ్ ఇన్సులిన్",
+          "insulinResistance": "ఇన్సులిన్ రెసిస్టెన్స్ (HOMA-IR)"
+        }
+      },
+      "recommendations": {
+        "title": "📋 వ్యక్తిగతీకరించిన సిఫార్సులు"
+      },
+      "actions": {
+        "dashboard": "డాష్‌బోర్డ్‌కు వెళ్లండి",
+        "history": "చరిత్రను చూడండి",
+        "newScreening": "కొత్త స్క్రీనింగ్"
+      },
+      "units": {
+        "mIU_mL": "mIU/mL",
+        "g_dL": "g/dL",
+        "mg_dL": "mg/dL",
+        "nmol_L": "nmol/L",
+        "uIU_mL": "µIU/mL"
+      }
+    }
+  },
+  "ta": {
+    "predictionResult": {
+      "noResult": {
+        "message": "முடிவு எதுவும் கிடைக்கவில்லை. முதலில் ஸ்கிரீனிங்கை முடிக்கவும்.",
+        "startButton": "ஸ்கிரீனிங்கைத் தொடங்குங்கள்"
+      },
+      "riskLevels": {
+        "high_risk": "அதிக ஆபத்து",
+        "low_risk": "குறைந்த ஆபத்து"
+      },
+      "headline": {
+        "high": "அதிக PMOS ஆபத்து கண்டறியப்பட்டது",
+        "low": "குறைந்த PMOS ஆபத்து கண்டறியப்பட்டது"
+      },
+      "riskBands": {
+        "low": { "chip": "குறைந்த ஆபத்து", "headline": "குறைந்த PMOS ஆபத்து" },
+        "moderate": { "chip": "மிதமான ஆபத்து", "headline": "மிதமான PMOS ஆபத்து" },
+        "detected": { "chip": "PMOS ஆபத்து", "headline": "PMOS ஆபத்து கண்டறியப்பட்டது" },
+        "high": { "chip": "அதிக ஆபத்து", "headline": "அதிக PMOS ஆபத்து" }
+      },
+      "subheading": "நீங்கள் சமர்ப்பித்த மருத்துவ மற்றும் வாழ்க்கை முறை தரவுகளின் அடிப்படையில்",
+      "metrics": {
+        "riskProbability": "ஆபத்து நிகழ்தகவு",
+        "modelConfidence": "மாடல் நம்பகத்தன்மை",
+        "aiCertainty": "AI மாடல் உறுதித்தன்மை மதிப்பெண்"
+      },
+      "bloodReport": {
+        "title": "🔬 இரத்த அறிக்கை சுருக்கம்",
+        "standardMarkers": "நிலையான குறிப்பான்கள்",
+        "extendedMarkers": "விரிவான குறிப்பான்கள்",
+        "labels": {
+          "fsh": "FSH",
+          "lh": "LH",
+          "tsh": "TSH",
+          "amh": "AMH",
+          "hb": "ஹீமோகுளோபின்",
+          "rbs": "ரேண்டம் பிளட் சுகர்",
+          "vitD3": "வைட்டமின் D3",
+          "shbg": "SHBG",
+          "fastingInsulin": "வெறும்வயிற்று இன்சுலின்",
+          "insulinResistance": "இன்சுலின் எதிர்ப்பு (HOMA-IR)"
+        }
+      },
+      "recommendations": {
+        "title": "📋 தனிப்பயனாக்கப்பட்ட பரிந்துரைகள்"
+      },
+      "actions": {
+        "dashboard": "டாஷ்போர்டுக்குச் செல்லவும்",
+        "history": "வரலாற்றைக் காண்க",
+        "newScreening": "புதிய ஸ்கிரீனிங்"
+      },
+      "units": {
+        "mIU_mL": "mIU/mL",
+        "g_dL": "g/dL",
+        "mg_dL": "mg/dL",
+        "nmol_L": "nmol/L",
+        "uIU_mL": "µIU/mL"
+      }
+    }
+  },
+  "gu": {
+    "predictionResult": {
+      "noResult": {
+        "message": "કોઈ પરિણામ મળ્યું નથી. કૃપા કરીને પહેલા સ્ક્રીનિંગ પૂર્ણ કરો.",
+        "startButton": "સ્ક્રીનિંગ શરૂ કરો"
+      },
+      "riskLevels": {
+        "high_risk": "ઉચ્ચ જોખમ",
+        "low_risk": "ઓછું જોખમ"
+      },
+      "headline": {
+        "high": "ઉચ્ચ PMOS જોખમ મળ્યું",
+        "low": "ઓછું PMOS જોખમ મળ્યું"
+      },
+      "riskBands": {
+        "low": { "chip": "ઓછું જોખમ", "headline": "ઓછું PMOS જોખમ" },
+        "moderate": { "chip": "મધ્યમ જોખમ", "headline": "મધ્યમ PMOS જોખમ" },
+        "detected": { "chip": "PMOS જોખમ", "headline": "PMOS જોખમ મળ્યું" },
+        "high": { "chip": "ઉચ્ચ જોખમ", "headline": "ઉચ્ચ PMOS જોખમ" }
+      },
+      "subheading": "તમે સબમિટ કરેલા ક્લિનિકલ અને જીવનશૈલી ડેટાના આધારે",
+      "metrics": {
+        "riskProbability": "જોખમ સંભાવના",
+        "modelConfidence": "મોડેલ વિશ્વસનીયતા",
+        "aiCertainty": "AI મોડેલ નિશ્ચિતતા સ્કોર"
+      },
+      "bloodReport": {
+        "title": "🔬 રક્ત અહેવાલ સારાંશ",
+        "standardMarkers": "માનક માર્કર્સ",
+        "extendedMarkers": "વિસ્તૃત માર્કર્સ",
+        "labels": {
+          "fsh": "FSH",
+          "lh": "LH",
+          "tsh": "TSH",
+          "amh": "AMH",
+          "hb": "હિમોગ્લોબિન",
+          "rbs": "રેન્ડમ બ્લડ સુગર",
+          "vitD3": "વિટામિન D3",
+          "shbg": "SHBG",
+          "fastingInsulin": "ફાસ્ટિંગ ઇન્સ્યુલિન",
+          "insulinResistance": "ઇન્સ્યુલિન પ્રતિકાર (HOMA-IR)"
+        }
+      },
+      "recommendations": {
+        "title": "📋 વ્યક્તિગત ભલામણો"
+      },
+      "actions": {
+        "dashboard": "ડેશબોર્ડ પર જાઓ",
+        "history": "ઇતિહાસ જુઓ",
+        "newScreening": "નવું સ્ક્રીનિંગ"
+      },
+      "units": {
+        "mIU_mL": "mIU/mL",
+        "g_dL": "g/dL",
+        "mg_dL": "mg/dL",
+        "nmol_L": "nmol/L",
+        "uIU_mL": "µIU/mL"
+      }
+    }
+  },
+  "kn": {
+    "predictionResult": {
+      "noResult": {
+        "message": "ಯಾವುದೇ ಫಲಿತಾಂಶ ಕಂಡುಬಂದಿಲ್ಲ. ದಯವಿಟ್ಟು ಮೊದಲು ಸ್ಕ್ರೀನಿಂಗ್ ಪೂರ್ಣಗೊಳಿಸಿ.",
+        "startButton": "ಸ್ಕ್ರೀನಿಂಗ್ ಪ್ರಾರಂಭಿಸಿ"
+      },
+      "riskLevels": {
+        "high_risk": "ಹೆಚ್ಚಿನ ಅಪಾಯ",
+        "low_risk": "ಕಡಿಮೆ ಅಪಾಯ"
+      },
+      "headline": {
+        "high": "ಹೆಚ್ಚಿನ PMOS ಅಪಾಯ ಪತ್ತೆಯಾಗಿದೆ",
+        "low": "ಕಡಿಮೆ PMOS ಅಪಾಯ ಪತ್ತೆಯಾಗಿದೆ"
+      },
+      "riskBands": {
+        "low": { "chip": "ಕಡಿಮೆ ಅಪಾಯ", "headline": "ಕಡಿಮೆ PMOS ಅಪಾಯ" },
+        "moderate": { "chip": "ಮಧ್ಯಮ ಅಪಾಯ", "headline": "ಮಧ್ಯಮ PMOS ಅಪಾಯ" },
+        "detected": { "chip": "PMOS ಅಪಾಯ", "headline": "PMOS ಅಪಾಯ ಪತ್ತೆಯಾಗಿದೆ" },
+        "high": { "chip": "ಹೆಚ್ಚಿನ ಅಪಾಯ", "headline": "ಹೆಚ್ಚಿನ PMOS ಅಪಾಯ" }
+      },
+      "subheading": "ನೀವು ಸಲ್ಲಿಸಿದ ಕ್ಲಿನಿಕಲ್ ಮತ್ತು ಜೀವನಶೈಲಿ ಡೇಟಾದ ಆಧಾರದ ಮೇಲೆ",
+      "metrics": {
+        "riskProbability": "ಅಪಾಯದ ಸಂಭವನೀಯತೆ",
+        "modelConfidence": "ಮಾದರಿ ವಿಶ್ವಾಸಾರ್ಹತೆ",
+        "aiCertainty": "AI ಮಾದರಿ ಖಚಿತತೆ ಸ್ಕೋರ್"
+      },
+      "bloodReport": {
+        "title": "🔬 ರಕ್ತ ವರದಿ ಸಾರಾಂಶ",
+        "standardMarkers": "ಪ್ರಮಾಣಿತ ಮಾರ್ಕರ್‌ಗಳು",
+        "extendedMarkers": "ವಿಸ್ತೃತ ಮಾರ್ಕರ್‌ಗಳು",
+        "labels": {
+          "fsh": "FSH",
+          "lh": "LH",
+          "tsh": "TSH",
+          "amh": "AMH",
+          "hb": "ಹಿಮೋಗ್ಲೋಬಿನ್",
+          "rbs": "ರಾಂಡಮ್ ಬ್ಲಡ್ ಶುಗರ್",
+          "vitD3": "ವಿಟಮಿನ್ D3",
+          "shbg": "SHBG",
+          "fastingInsulin": "ಫಾಸ್ಟಿಂಗ್ ಇನ್ಸುಲಿನ್",
+          "insulinResistance": "ಇನ್ಸುಲಿನ್ ಪ್ರತಿರೋಧ (HOMA-IR)"
+        }
+      },
+      "recommendations": {
+        "title": "📋 ವೈಯಕ್ತೀಕರಿಸಿದ ಶಿಫಾರಸುಗಳು"
+      },
+      "actions": {
+        "dashboard": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಹೋಗಿ",
+        "history": "ಇತಿಹಾಸ ವೀಕ್ಷಿಸಿ",
+        "newScreening": "ಹೊಸ ಸ್ಕ್ರೀನಿಂಗ್"
+      },
+      "units": {
+        "mIU_mL": "mIU/mL",
+        "g_dL": "g/dL",
+        "mg_dL": "mg/dL",
+        "nmol_L": "nmol/L",
+        "uIU_mL": "µIU/mL"
+      }
+    }
+  },
+  "or": {
+    "predictionResult": {
+      "noResult": {
+        "message": "କୌଣସି ଫଳାଫଳ ମିଳିଲା ନାହିଁ। ଦୟାକରି ପ୍ରଥମେ ସ୍କ୍ରିନିଂ ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ।",
+        "startButton": "ସ୍କ୍ରିନିଂ ଆରମ୍ଭ କରନ୍ତୁ"
+      },
+      "riskLevels": {
+        "high_risk": "ଉଚ୍ଚ ବିପଦ",
+        "low_risk": "କମ୍ ବିପଦ"
+      },
+      "headline": {
+        "high": "ଉଚ୍ଚ PMOS ବିପଦ ଚିହ୍ନଟ ହେଲା",
+        "low": "କମ୍ PMOS ବିପଦ ଚିହ୍ନଟ ହେଲା"
+      },
+      "riskBands": {
+        "low": { "chip": "କମ୍ ବିପଦ", "headline": "କମ୍ PMOS ବିପଦ" },
+        "moderate": { "chip": "ମଧ୍ୟମ ବିପଦ", "headline": "ମଧ୍ୟମ PMOS ବିପଦ" },
+        "detected": { "chip": "PMOS ବିପଦ", "headline": "PMOS ବିପଦ ଚିହ୍ନଟ ହେଲା" },
+        "high": { "chip": "ଉଚ୍ଚ ବିପଦ", "headline": "ଉଚ୍ଚ PMOS ବିପଦ" }
+      },
+      "subheading": "ଆପଣ ପ୍ରଦାନ କରିଥିବା କ୍ଲିନିକାଲ୍ ଏବଂ ଜୀବନଶୈଳୀ ତଥ୍ୟ ଉପରେ ଆଧାରିତ",
+      "metrics": {
+        "riskProbability": "ବିପଦ ସମ୍ଭାବନା",
+        "modelConfidence": "ମଡେଲ୍ ବିଶ୍ୱସନୀୟତା",
+        "aiCertainty": "AI ମଡେଲ୍ ନିଶ୍ଚିତତା ସ୍କୋର୍"
+      },
+      "bloodReport": {
+        "title": "🔬 ରକ୍ତ ରିପୋର୍ଟ ସାରାଂଶ",
+        "standardMarkers": "ମାନକ ମାର୍କର୍",
+        "extendedMarkers": "ବିସ୍ତୃତ ମାର୍କର୍",
+        "labels": {
+          "fsh": "FSH",
+          "lh": "LH",
+          "tsh": "TSH",
+          "amh": "AMH",
+          "hb": "ହେମୋଗ୍ଲୋବିନ୍",
+          "rbs": "ରାଣ୍ଡମ୍ ବ୍ଲଡ୍ ସୁଗାର୍",
+          "vitD3": "ଭିଟାମିନ୍ D3",
+          "shbg": "SHBG",
+          "fastingInsulin": "ଫାଷ୍ଟିଂ ଇନସୁଲିନ୍",
+          "insulinResistance": "ଇନସୁଲିନ୍ ପ୍ରତିରୋଧ (HOMA-IR)"
+        }
+      },
+      "recommendations": {
+        "title": "📋 ବ୍ୟକ୍ତିଗତ ସୁପାରିଶ"
+      },
+      "actions": {
+        "dashboard": "ଡ୍ୟାସବୋର୍ଡକୁ ଯାଆନ୍ତୁ",
+        "history": "ଇତିହାସ ଦେଖନ୍ତୁ",
+        "newScreening": "ନୂତନ ସ୍କ୍ରିନିଂ"
+      },
+      "units": {
+        "mIU_mL": "mIU/mL",
+        "g_dL": "g/dL",
+        "mg_dL": "mg/dL",
+        "nmol_L": "nmol/L",
+        "uIU_mL": "µIU/mL"
+      }
+    }
+  },
+  "pa": {
+    "predictionResult": {
+      "noResult": {
+        "message": "ਕੋਈ ਨਤੀਜਾ ਨਹੀਂ ਮਿਲਿਆ। ਕਿਰਪਾ ਕਰਕੇ ਪਹਿਲਾਂ ਸਕ੍ਰੀਨਿੰਗ ਪੂਰੀ ਕਰੋ।",
+        "startButton": "ਸਕ੍ਰੀਨਿੰਗ ਸ਼ੁਰੂ ਕਰੋ"
+      },
+      "riskLevels": {
+        "high_risk": "ਉੱਚ ਜੋਖਮ",
+        "low_risk": "ਘੱਟ ਜੋਖਮ"
+      },
+      "headline": {
+        "high": "ਉੱਚ PMOS ਜੋਖਮ ਪਾਇਆ ਗਿਆ",
+        "low": "ਘੱਟ PMOS ਜੋਖਮ ਪਾਇਆ ਗਿਆ"
+      },
+      "riskBands": {
+        "low": { "chip": "ਘੱਟ ਜੋਖਮ", "headline": "ਘੱਟ PMOS ਜੋਖਮ" },
+        "moderate": { "chip": "ਦਰਮਿਆਨਾ ਜੋਖਮ", "headline": "ਦਰਮਿਆਨਾ PMOS ਜੋਖਮ" },
+        "detected": { "chip": "PMOS ਜੋਖਮ", "headline": "PMOS ਜੋਖਮ ਪਾਇਆ ਗਿਆ" },
+        "high": { "chip": "ਉੱਚ ਜੋਖਮ", "headline": "ਉੱਚ PMOS ਜੋਖਮ" }
+      },
+      "subheading": "ਤੁਹਾਡੇ ਵੱਲੋਂ ਪੇਸ਼ ਕੀਤੇ ਗਏ ਕਲੀਨਿਕਲ ਅਤੇ ਜੀਵਨ ਸ਼ੈਲੀ ਡੇਟਾ ਦੇ ਆਧਾਰ 'ਤੇ",
+      "metrics": {
+        "riskProbability": "ਜੋਖਮ ਸੰਭਾਵਨਾ",
+        "modelConfidence": "ਮਾਡਲ ਭਰੋਸੇਯੋਗਤਾ",
+        "aiCertainty": "AI ਮਾਡਲ ਨਿਸ਼ਚਿਤਤਾ ਸਕੋਰ"
+      },
+      "bloodReport": {
+        "title": "🔬 ਖੂਨ ਦੀ ਰਿਪੋਰਟ ਸੰਖੇਪ",
+        "standardMarkers": "ਮਿਆਰੀ ਮਾਰਕਰ",
+        "extendedMarkers": "ਵਿਸਤ੍ਰਿਤ ਮਾਰਕਰ",
+        "labels": {
+          "fsh": "FSH",
+          "lh": "LH",
+          "tsh": "TSH",
+          "amh": "AMH",
+          "hb": "ਹੀਮੋਗਲੋਬਿਨ",
+          "rbs": "ਰੈਂਡਮ ਬਲੱਡ ਸ਼ੂਗਰ",
+          "vitD3": "ਵਿਟਾਮਿਨ D3",
+          "shbg": "SHBG",
+          "fastingInsulin": "ਫਾਸਟਿੰਗ ਇਨਸੁਲਿਨ",
+          "insulinResistance": "ਇਨਸੁਲਿਨ ਪ੍ਰਤੀਰੋਧ (HOMA-IR)"
+        }
+      },
+      "recommendations": {
+        "title": "📋 ਵਿਅਕਤੀਗਤ ਸਿਫ਼ਾਰਸ਼ਾਂ"
+      },
+      "actions": {
+        "dashboard": "ਡੈਸ਼ਬੋਰਡ 'ਤੇ ਜਾਓ",
+        "history": "ਇਤਿਹਾਸ ਵੇਖੋ",
+        "newScreening": "ਨਵੀਂ ਸਕ੍ਰੀਨਿੰਗ"
+      },
+      "units": {
+        "mIU_mL": "mIU/mL",
+        "g_dL": "g/dL",
+        "mg_dL": "mg/dL",
+        "nmol_L": "nmol/L",
+        "uIU_mL": "µIU/mL"
+      }
+    }
+  },
+  "ml": {
+    "predictionResult": {
+      "noResult": {
+        "message": "ഫലം കണ്ടെത്തിയില്ല. ആദ്യം സ്ക്രീനിംഗ് പൂർത്തിയാക്കുക.",
+        "startButton": "സ്ക്രീനിംഗ് ആരംഭിക്കുക"
+      },
+      "riskLevels": {
+        "high_risk": "ഉയർന്ന അപകടസാധ്യത",
+        "low_risk": "കുറഞ്ഞ അപകടസാധ്യത"
+      },
+      "headline": {
+        "high": "ഉയർന്ന PMOS അപകടസാധ്യത കണ്ടെത്തി",
+        "low": "കുറഞ്ഞ PMOS അപകടസാധ്യത കണ്ടെത്തി"
+      },
+      "riskBands": {
+        "low": { "chip": "കുറഞ്ഞ അപകടസാധ്യത", "headline": "കുറഞ്ഞ PMOS അപകടസാധ്യത" },
+        "moderate": { "chip": "മിതമായ അപകടസാധ്യത", "headline": "മിതമായ PMOS അപകടസാധ്യത" },
+        "detected": { "chip": "PMOS അപകടസാധ്യത", "headline": "PMOS അപകടസാധ്യത കണ്ടെത്തി" },
+        "high": { "chip": "ഉയർന്ന അപകടസാധ്യത", "headline": "ഉയർന്ന PMOS അപകടസാധ്യത" }
+      },
+      "subheading": "നിങ്ങൾ സമർപ്പിച്ച ക്ലിനിക്കൽ, ജീവിതശൈലി ഡാറ്റയുടെ അടിസ്ഥാനത്തിൽ",
+      "metrics": {
+        "riskProbability": "അപകടസാധ്യത",
+        "modelConfidence": "മോഡൽ വിശ്വാസ്യത",
+        "aiCertainty": "AI മോഡൽ കൃത്യതാ സ്കോർ"
+      },
+      "bloodReport": {
+        "title": "🔬 രക്ത റിപ്പോർട്ട് സംഗ്രഹം",
+        "standardMarkers": "സ്റ്റാൻഡേർഡ് മാർക്കറുകൾ",
+        "extendedMarkers": "വിപുലീകൃത മാർക്കറുകൾ",
+        "labels": {
+          "fsh": "FSH",
+          "lh": "LH",
+          "tsh": "TSH",
+          "amh": "AMH",
+          "hb": "ഹീമോഗ്ലോബിൻ",
+          "rbs": "റാൻഡം ബ്ലഡ് ഷുഗർ",
+          "vitD3": "വിറ്റാമിൻ D3",
+          "shbg": "SHBG",
+          "fastingInsulin": "ഫാസ്റ്റിംഗ് ഇൻസുലിൻ",
+          "insulinResistance": "ഇൻസുലിൻ പ്രതിരോധം (HOMA-IR)"
+        }
+      },
+      "recommendations": {
+        "title": "📋 വ്യക്തിഗതമാക്കിയ ശുപാർശകൾ"
+      },
+      "actions": {
+        "dashboard": "ഡാഷ്‌ബോർഡിലേക്ക് പോകുക",
+        "history": "ചരിത്രം കാണുക",
+        "newScreening": "പുതിയ സ്ക്രീനിംഗ്"
+      },
+      "units": {
+        "mIU_mL": "mIU/mL",
+        "g_dL": "g/dL",
+        "mg_dL": "mg/dL",
+        "nmol_L": "nmol/L",
+        "uIU_mL": "µIU/mL"
+      }
+    }
+  },
+  "ur": {
+    "predictionResult": {
+      "noResult": {
+        "message": "کوئی نتیجہ نہیں ملا۔ براہ کرم پہلے اسکریننگ مکمل کریں۔",
+        "startButton": "اسکریننگ شروع کریں"
+      },
+      "riskLevels": {
+        "high_risk": "زیادہ خطرہ",
+        "low_risk": "کم خطرہ"
+      },
+      "headline": {
+        "high": "زیادہ PMOS خطرہ معلوم ہوا",
+        "low": "کم PMOS خطرہ معلوم ہوا"
+      },
+      "riskBands": {
+        "low": { "chip": "کم خطرہ", "headline": "کم PMOS خطرہ" },
+        "moderate": { "chip": "درمیانہ خطرہ", "headline": "درمیانہ PMOS خطرہ" },
+        "detected": { "chip": "PMOS خطرہ", "headline": "PMOS خطرہ معلوم ہوا" },
+        "high": { "chip": "زیادہ خطرہ", "headline": "زیادہ PMOS خطرہ" }
+      },
+      "subheading": "آپ کے جمع کردہ طبی اور طرزِ زندگی کے ڈیٹا کی بنیاد پر",
+      "metrics": {
+        "riskProbability": "خطرے کا امکان",
+        "modelConfidence": "ماڈل کا اعتماد",
+        "aiCertainty": "AI ماڈل یقین کا اسکور"
+      },
+      "bloodReport": {
+        "title": "🔬 خون کی رپورٹ کا خلاصہ",
+        "standardMarkers": "معیاری مارکرز",
+        "extendedMarkers": "تفصیلی مارکرز",
+        "labels": {
+          "fsh": "FSH",
+          "lh": "LH",
+          "tsh": "TSH",
+          "amh": "AMH",
+          "hb": "ہیموگلوبن",
+          "rbs": "رینڈم بلڈ شوگر",
+          "vitD3": "وٹامن D3",
+          "shbg": "SHBG",
+          "fastingInsulin": "فاسٹنگ انسولین",
+          "insulinResistance": "انسولین مزاحمت (HOMA-IR)"
+        }
+      },
+      "recommendations": {
+        "title": "📋 ذاتی نوعیت کی تجاویز"
+      },
+      "actions": {
+        "dashboard": "ڈیش بورڈ پر جائیں",
+        "history": "تاریخ دیکھیں",
+        "newScreening": "نئی اسکریننگ"
+      },
+      "units": {
+        "mIU_mL": "mIU/mL",
+        "g_dL": "g/dL",
+        "mg_dL": "mg/dL",
+        "nmol_L": "nmol/L",
+        "uIU_mL": "µIU/mL"
+      }
+    }
+  },
+  "as": {
+    "predictionResult": {
+      "noResult": {
+        "message": "কোনো ফলাফল পোৱা নগ'ল। অনুগ্ৰহ কৰি প্ৰথমে স্ক্ৰীনিং সম্পূৰ্ণ কৰক।",
+        "startButton": "স্ক্ৰীনিং আৰম্ভ কৰক"
+      },
+      "riskLevels": {
+        "high_risk": "উচ্চ বিপদ",
+        "low_risk": "কম বিপদ"
+      },
+      "headline": {
+        "high": "উচ্চ PMOS বিপদ চিহ্নিত হ'ল",
+        "low": "কম PMOS বিপদ চিহ্নিত হ'ল"
+      },
+      "riskBands": {
+        "low": { "chip": "কম বিপদ", "headline": "কম PMOS বিপদ" },
+        "moderate": { "chip": "মধ্যম বিপদ", "headline": "মধ্যম PMOS বিপদ" },
+        "detected": { "chip": "PMOS বিপদ", "headline": "PMOS বিপদ চিহ্নিত হ'ল" },
+        "high": { "chip": "উচ্চ বিপদ", "headline": "উচ্চ PMOS বিপদ" }
+      },
+      "subheading": "আপুনি দাখিল কৰা ক্লিনিকেল আৰু জীৱনশৈলী তথ্যৰ ভিত্তিত",
+      "metrics": {
+        "riskProbability": "বিপদৰ সম্ভাৱনা",
+        "modelConfidence": "মডেলৰ বিশ্বাসযোগ্যতা",
+        "aiCertainty": "AI মডেলৰ নিশ্চিততা স্ক'ৰ"
+      },
+      "bloodReport": {
+        "title": "🔬 তেজৰ প্ৰতিবেদন সাৰাংশ",
+        "standardMarkers": "মানক মাৰ্কাৰ",
+        "extendedMarkers": "সম্প্ৰসাৰিত মাৰ্কাৰ",
+        "labels": {
+          "fsh": "FSH",
+          "lh": "LH",
+          "tsh": "TSH",
+          "amh": "AMH",
+          "hb": "হিমোগ্লোবিন",
+          "rbs": "ৰেণ্ডম ব্লাড সুগাৰ",
+          "vitD3": "ভিটামিন D3",
+          "shbg": "SHBG",
+          "fastingInsulin": "ফাষ্টিং ইনচুলিন",
+          "insulinResistance": "ইনচুলিন প্ৰতিৰোধ (HOMA-IR)"
+        }
+      },
+      "recommendations": {
+        "title": "📋 ব্যক্তিগতকৃত পৰামৰ্শ"
+      },
+      "actions": {
+        "dashboard": "ডেশ্ববৰ্ডলৈ যাওক",
+        "history": "ইতিহাস চাওক",
+        "newScreening": "নতুন স্ক্ৰীনিং"
+      },
+      "units": {
+        "mIU_mL": "mIU/mL",
+        "g_dL": "g/dL",
+        "mg_dL": "mg/dL",
+        "nmol_L": "nmol/L",
+        "uIU_mL": "µIU/mL"
+      }
+    }
   }
 }

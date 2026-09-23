@@ -118,5 +118,405 @@
         "password_change_failed": "पासवर्ड बदलण्यात अयशस्वी."
       }
     }
+  },
+  "bn": {
+    "profile": {
+      "title": "প্রোফাইল সেটিংস",
+      "subtitle": "আপনার অ্যাকাউন্ট তথ্য এবং পাসওয়ার্ড পরিচালনা করুন",
+      "roles": {
+        "admin": "প্রশাসক",
+        "user": "ব্যবহারকারী"
+      },
+      "personal_info": {
+        "section_title": "ব্যক্তিগত তথ্য",
+        "full_name_label": "পুরো নাম",
+        "email_label": "ইমেল ঠিকানা"
+      },
+      "change_password": {
+        "section_title": "পাসওয়ার্ড পরিবর্তন করুন",
+        "current_password_label": "বর্তমান পাসওয়ার্ড",
+        "new_password_label": "নতুন পাসওয়ার্ড",
+        "confirm_password_label": "নতুন পাসওয়ার্ড নিশ্চিত করুন"
+      },
+      "validation": {
+        "name_required": "নাম আবশ্যক",
+        "name_min_length": "কমপক্ষে 2 অক্ষর",
+        "current_password_required": "বর্তমান পাসওয়ার্ড আবশ্যক",
+        "new_password_required": "নতুন পাসওয়ার্ড আবশ্যক",
+        "new_password_min_length": "কমপক্ষে 8 অক্ষর"
+      },
+      "buttons": {
+        "save_changes": "পরিবর্তন সংরক্ষণ করুন",
+        "saving": "সংরক্ষণ করা হচ্ছে...",
+        "change_password": "পাসওয়ার্ড পরিবর্তন করুন",
+        "changing": "পরিবর্তন করা হচ্ছে..."
+      },
+      "toasts": {
+        "profile_updated": "প্রোফাইল সফলভাবে আপডেট হয়েছে!",
+        "profile_update_failed": "প্রোফাইল আপডেট করতে ব্যর্থ।",
+        "password_changed": "পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে!",
+        "password_change_failed": "পাসওয়ার্ড পরিবর্তন করতে ব্যর্থ।"
+      }
+    }
+  },
+  "te": {
+    "profile": {
+      "title": "ప్రొఫైల్ సెట్టింగ్‌లు",
+      "subtitle": "మీ ఖాతా సమాచారం మరియు పాస్‌వర్డ్‌ను నిర్వహించండి",
+      "roles": {
+        "admin": "నిర్వాహకుడు",
+        "user": "వినియోగదారు"
+      },
+      "personal_info": {
+        "section_title": "వ్యక్తిగత సమాచారం",
+        "full_name_label": "పూర్తి పేరు",
+        "email_label": "ఇమెయిల్ చిరునామా"
+      },
+      "change_password": {
+        "section_title": "పాస్‌వర్డ్ మార్చండి",
+        "current_password_label": "ప్రస్తుత పాస్‌వర్డ్",
+        "new_password_label": "కొత్త పాస్‌వర్డ్",
+        "confirm_password_label": "కొత్త పాస్‌వర్డ్‌ను నిర్ధారించండి"
+      },
+      "validation": {
+        "name_required": "పేరు అవసరం",
+        "name_min_length": "కనీసం 2 అక్షరాలు",
+        "current_password_required": "ప్రస్తుత పాస్‌వర్డ్ అవసరం",
+        "new_password_required": "కొత్త పాస్‌వర్డ్ అవసరం",
+        "new_password_min_length": "కనీసం 8 అక్షరాలు"
+      },
+      "buttons": {
+        "save_changes": "మార్పులను సేవ్ చేయండి",
+        "saving": "సేవ్ అవుతోంది...",
+        "change_password": "పాస్‌వర్డ్ మార్చండి",
+        "changing": "మారుస్తోంది..."
+      },
+      "toasts": {
+        "profile_updated": "ప్రొఫైల్ విజయవంతంగా అప్‌డేట్ చేయబడింది!",
+        "profile_update_failed": "ప్రొఫైల్ అప్‌డేట్ చేయడంలో విఫలమైంది.",
+        "password_changed": "పాస్‌వర్డ్ విజయవంతంగా మార్చబడింది!",
+        "password_change_failed": "పాస్‌వర్డ్ మార్చడంలో విఫలమైంది."
+      }
+    }
+  },
+  "ta": {
+    "profile": {
+      "title": "சுயவிவர அமைப்புகள்",
+      "subtitle": "உங்கள் கணக்குத் தகவல் மற்றும் கடவுச்சொல்லை நிர்வகிக்கவும்",
+      "roles": {
+        "admin": "நிர்வாகி",
+        "user": "பயனர்"
+      },
+      "personal_info": {
+        "section_title": "தனிப்பட்ட தகவல்",
+        "full_name_label": "முழு பெயர்",
+        "email_label": "மின்னஞ்சல் முகவரி"
+      },
+      "change_password": {
+        "section_title": "கடவுச்சொல்லை மாற்றவும்",
+        "current_password_label": "தற்போதைய கடவுச்சொல்",
+        "new_password_label": "புதிய கடவுச்சொல்",
+        "confirm_password_label": "புதிய கடவுச்சொல்லை உறுதிப்படுத்தவும்"
+      },
+      "validation": {
+        "name_required": "பெயர் தேவை",
+        "name_min_length": "குறைந்தது 2 எழுத்துகள்",
+        "current_password_required": "தற்போதைய கடவுச்சொல் தேவை",
+        "new_password_required": "புதிய கடவுச்சொல் தேவை",
+        "new_password_min_length": "குறைந்தது 8 எழுத்துகள்"
+      },
+      "buttons": {
+        "save_changes": "மாற்றங்களைச் சேமி",
+        "saving": "சேமிக்கிறது...",
+        "change_password": "கடவுச்சொல்லை மாற்று",
+        "changing": "மாற்றுகிறது..."
+      },
+      "toasts": {
+        "profile_updated": "சுயவிவரம் வெற்றிகரமாகப் புதுப்பிக்கப்பட்டது!",
+        "profile_update_failed": "சுயவிவரத்தைப் புதுப்பிக்க முடியவில்லை.",
+        "password_changed": "கடவுச்சொல் வெற்றிகரமாக மாற்றப்பட்டது!",
+        "password_change_failed": "கடவுச்சொல்லை மாற்ற முடியவில்லை."
+      }
+    }
+  },
+  "gu": {
+    "profile": {
+      "title": "પ્રોફાઇલ સેટિંગ્સ",
+      "subtitle": "તમારી ખાતાની માહિતી અને પાસવર્ડનું સંચાલન કરો",
+      "roles": {
+        "admin": "સંચાલક",
+        "user": "વપરાશકર્તા"
+      },
+      "personal_info": {
+        "section_title": "વ્યક્તિગત માહિતી",
+        "full_name_label": "પૂરું નામ",
+        "email_label": "ઇમેઇલ સરનામું"
+      },
+      "change_password": {
+        "section_title": "પાસવર્ડ બદલો",
+        "current_password_label": "વર્તમાન પાસવર્ડ",
+        "new_password_label": "નવો પાસવર્ડ",
+        "confirm_password_label": "નવા પાસવર્ડની પુષ્ટિ કરો"
+      },
+      "validation": {
+        "name_required": "નામ જરૂરી છે",
+        "name_min_length": "ઓછામાં ઓછા 2 અક્ષરો",
+        "current_password_required": "વર્તમાન પાસવર્ડ જરૂરી છે",
+        "new_password_required": "નવો પાસવર્ડ જરૂરી છે",
+        "new_password_min_length": "ઓછામાં ઓછા 8 અક્ષરો"
+      },
+      "buttons": {
+        "save_changes": "ફેરફારો સાચવો",
+        "saving": "સાચવી રહ્યું છે...",
+        "change_password": "પાસવર્ડ બદલો",
+        "changing": "બદલી રહ્યું છે..."
+      },
+      "toasts": {
+        "profile_updated": "પ્રોફાઇલ સફળતાપૂર્વક અપડેટ થઈ!",
+        "profile_update_failed": "પ્રોફાઇલ અપડેટ કરવામાં નિષ્ફળ.",
+        "password_changed": "પાસવર્ડ સફળતાપૂર્વક બદલાયો!",
+        "password_change_failed": "પાસવર્ડ બદલવામાં નિષ્ફળ."
+      }
+    }
+  },
+  "kn": {
+    "profile": {
+      "title": "ಪ್ರೊಫೈಲ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
+      "subtitle": "ನಿಮ್ಮ ಖಾತೆ ಮಾಹಿತಿ ಮತ್ತು ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ನಿರ್ವಹಿಸಿ",
+      "roles": {
+        "admin": "ನಿರ್ವಾಹಕ",
+        "user": "ಬಳಕೆದಾರ"
+      },
+      "personal_info": {
+        "section_title": "ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ",
+        "full_name_label": "ಪೂರ್ಣ ಹೆಸರು",
+        "email_label": "ಇಮೇಲ್ ವಿಳಾಸ"
+      },
+      "change_password": {
+        "section_title": "ಪಾಸ್‌ವರ್ಡ್ ಬದಲಾಯಿಸಿ",
+        "current_password_label": "ಪ್ರಸ್ತುತ ಪಾಸ್‌ವರ್ಡ್",
+        "new_password_label": "ಹೊಸ ಪಾಸ್‌ವರ್ಡ್",
+        "confirm_password_label": "ಹೊಸ ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ದೃಢೀಕರಿಸಿ"
+      },
+      "validation": {
+        "name_required": "ಹೆಸರು ಅಗತ್ಯವಿದೆ",
+        "name_min_length": "ಕನಿಷ್ಠ 2 ಅಕ್ಷರಗಳು",
+        "current_password_required": "ಪ್ರಸ್ತುತ ಪಾಸ್‌ವರ್ಡ್ ಅಗತ್ಯವಿದೆ",
+        "new_password_required": "ಹೊಸ ಪಾಸ್‌ವರ್ಡ್ ಅಗತ್ಯವಿದೆ",
+        "new_password_min_length": "ಕನಿಷ್ಠ 8 ಅಕ್ಷರಗಳು"
+      },
+      "buttons": {
+        "save_changes": "ಬದಲಾವಣೆಗಳನ್ನು ಉಳಿಸಿ",
+        "saving": "ಉಳಿಸಲಾಗುತ್ತಿದೆ...",
+        "change_password": "ಪಾಸ್‌ವರ್ಡ್ ಬದಲಾಯಿಸಿ",
+        "changing": "ಬದಲಾಯಿಸಲಾಗುತ್ತಿದೆ..."
+      },
+      "toasts": {
+        "profile_updated": "ಪ್ರೊಫೈಲ್ ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ!",
+        "profile_update_failed": "ಪ್ರೊಫೈಲ್ ನವೀಕರಿಸಲು ವಿಫಲವಾಗಿದೆ.",
+        "password_changed": "ಪಾಸ್‌ವರ್ಡ್ ಯಶಸ್ವಿಯಾಗಿ ಬದಲಾಯಿಸಲಾಗಿದೆ!",
+        "password_change_failed": "ಪಾಸ್‌ವರ್ಡ್ ಬದಲಾಯಿಸಲು ವಿಫಲವಾಗಿದೆ."
+      }
+    }
+  },
+  "or": {
+    "profile": {
+      "title": "ପ୍ରୋଫାଇଲ୍ ସେଟିଂସ୍",
+      "subtitle": "ଆପଣଙ୍କ ଖାତା ସୂଚନା ଏବଂ ପାସୱାର୍ଡ ପରିଚାଳନା କରନ୍ତୁ",
+      "roles": {
+        "admin": "ପ୍ରଶାସକ",
+        "user": "ବ୍ୟବହାରକାରୀ"
+      },
+      "personal_info": {
+        "section_title": "ବ୍ୟକ୍ତିଗତ ସୂଚନା",
+        "full_name_label": "ପୂର୍ଣ୍ଣ ନାମ",
+        "email_label": "ଇମେଲ୍ ଠିକଣା"
+      },
+      "change_password": {
+        "section_title": "ପାସୱାର୍ଡ ପରିବର୍ତ୍ତନ କରନ୍ତୁ",
+        "current_password_label": "ସାମ୍ପ୍ରତିକ ପାସୱାର୍ଡ",
+        "new_password_label": "ନୂତନ ପାସୱାର୍ଡ",
+        "confirm_password_label": "ନୂତନ ପାସୱାର୍ଡ ନିଶ୍ଚିତ କରନ୍ତୁ"
+      },
+      "validation": {
+        "name_required": "ନାମ ଆବଶ୍ୟକ",
+        "name_min_length": "ସର୍ବନିମ୍ନ 2 ଅକ୍ଷର",
+        "current_password_required": "ସାମ୍ପ୍ରତିକ ପାସୱାର୍ଡ ଆବଶ୍ୟକ",
+        "new_password_required": "ନୂତନ ପାସୱାର୍ଡ ଆବଶ୍ୟକ",
+        "new_password_min_length": "ସର୍ବନିମ୍ନ 8 ଅକ୍ଷର"
+      },
+      "buttons": {
+        "save_changes": "ପରିବର୍ତ୍ତନଗୁଡ଼ିକ ସେଭ୍ କରନ୍ତୁ",
+        "saving": "ସେଭ୍ ହେଉଛି...",
+        "change_password": "ପାସୱାର୍ଡ ପରିବର୍ତ୍ତନ କରନ୍ତୁ",
+        "changing": "ପରିବର୍ତ୍ତନ ହେଉଛି..."
+      },
+      "toasts": {
+        "profile_updated": "ପ୍ରୋଫାଇଲ୍ ସଫଳତାର ସହିତ ଅପଡେଟ୍ ହେଲା!",
+        "profile_update_failed": "ପ୍ରୋଫାଇଲ୍ ଅପଡେଟ୍ କରିବାରେ ବିଫଳ।",
+        "password_changed": "ପାସୱାର୍ଡ ସଫଳତାର ସହିତ ପରିବର୍ତ୍ତନ ହେଲା!",
+        "password_change_failed": "ପାସୱାର୍ଡ ପରିବର୍ତ୍ତନ କରିବାରେ ବିଫଳ।"
+      }
+    }
+  },
+  "pa": {
+    "profile": {
+      "title": "ਪ੍ਰੋਫਾਈਲ ਸੈਟਿੰਗਾਂ",
+      "subtitle": "ਆਪਣੀ ਖਾਤਾ ਜਾਣਕਾਰੀ ਅਤੇ ਪਾਸਵਰਡ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ",
+      "roles": {
+        "admin": "ਪ੍ਰਸ਼ਾਸਕ",
+        "user": "ਵਰਤੋਂਕਾਰ"
+      },
+      "personal_info": {
+        "section_title": "ਨਿੱਜੀ ਜਾਣਕਾਰੀ",
+        "full_name_label": "ਪੂਰਾ ਨਾਮ",
+        "email_label": "ਈਮੇਲ ਪਤਾ"
+      },
+      "change_password": {
+        "section_title": "ਪਾਸਵਰਡ ਬਦਲੋ",
+        "current_password_label": "ਮੌਜੂਦਾ ਪਾਸਵਰਡ",
+        "new_password_label": "ਨਵਾਂ ਪਾਸਵਰਡ",
+        "confirm_password_label": "ਨਵੇਂ ਪਾਸਵਰਡ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ"
+      },
+      "validation": {
+        "name_required": "ਨਾਮ ਜ਼ਰੂਰੀ ਹੈ",
+        "name_min_length": "ਘੱਟੋ-ਘੱਟ 2 ਅੱਖਰ",
+        "current_password_required": "ਮੌਜੂਦਾ ਪਾਸਵਰਡ ਜ਼ਰੂਰੀ ਹੈ",
+        "new_password_required": "ਨਵਾਂ ਪਾਸਵਰਡ ਜ਼ਰੂਰੀ ਹੈ",
+        "new_password_min_length": "ਘੱਟੋ-ਘੱਟ 8 ਅੱਖਰ"
+      },
+      "buttons": {
+        "save_changes": "ਬਦਲਾਅ ਸੰਭਾਲੋ",
+        "saving": "ਸੰਭਾਲਿਆ ਜਾ ਰਿਹਾ ਹੈ...",
+        "change_password": "ਪਾਸਵਰਡ ਬਦਲੋ",
+        "changing": "ਬਦਲਿਆ ਜਾ ਰਿਹਾ ਹੈ..."
+      },
+      "toasts": {
+        "profile_updated": "ਪ੍ਰੋਫਾਈਲ ਸਫਲਤਾਪੂਰਵਕ ਅੱਪਡੇਟ ਹੋ ਗਈ!",
+        "profile_update_failed": "ਪ੍ਰੋਫਾਈਲ ਅੱਪਡੇਟ ਕਰਨ ਵਿੱਚ ਅਸਫਲ।",
+        "password_changed": "ਪਾਸਵਰਡ ਸਫਲਤਾਪੂਰਵਕ ਬਦਲਿਆ ਗਿਆ!",
+        "password_change_failed": "ਪਾਸਵਰਡ ਬਦਲਣ ਵਿੱਚ ਅਸਫਲ।"
+      }
+    }
+  },
+  "ml": {
+    "profile": {
+      "title": "പ്രൊഫൈൽ ക്രമീകരണങ്ങൾ",
+      "subtitle": "നിങ്ങളുടെ അക്കൗണ്ട് വിവരങ്ങളും പാസ്‌വേഡും നിയന്ത്രിക്കുക",
+      "roles": {
+        "admin": "അഡ്മിനിസ്ട്രേറ്റർ",
+        "user": "ഉപയോക്താവ്"
+      },
+      "personal_info": {
+        "section_title": "വ്യക്തിഗത വിവരങ്ങൾ",
+        "full_name_label": "മുഴുവൻ പേര്",
+        "email_label": "ഇമെയിൽ വിലാസം"
+      },
+      "change_password": {
+        "section_title": "പാസ്‌വേഡ് മാറ്റുക",
+        "current_password_label": "നിലവിലെ പാസ്‌വേഡ്",
+        "new_password_label": "പുതിയ പാസ്‌വേഡ്",
+        "confirm_password_label": "പുതിയ പാസ്‌വേഡ് സ്ഥിരീകരിക്കുക"
+      },
+      "validation": {
+        "name_required": "പേര് ആവശ്യമാണ്",
+        "name_min_length": "കുറഞ്ഞത് 2 അക്ഷരങ്ങൾ",
+        "current_password_required": "നിലവിലെ പാസ്‌വേഡ് ആവശ്യമാണ്",
+        "new_password_required": "പുതിയ പാസ്‌വേഡ് ആവശ്യമാണ്",
+        "new_password_min_length": "കുറഞ്ഞത് 8 അക്ഷരങ്ങൾ"
+      },
+      "buttons": {
+        "save_changes": "മാറ്റങ്ങൾ സംരക്ഷിക്കുക",
+        "saving": "സംരക്ഷിക്കുന്നു...",
+        "change_password": "പാസ്‌വേഡ് മാറ്റുക",
+        "changing": "മാറ്റുന്നു..."
+      },
+      "toasts": {
+        "profile_updated": "പ്രൊഫൈൽ വിജയകരമായി അപ്‌ഡേറ്റ് ചെയ്തു!",
+        "profile_update_failed": "പ്രൊഫൈൽ അപ്‌ഡേറ്റ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു.",
+        "password_changed": "പാസ്‌വേഡ് വിജയകരമായി മാറ്റി!",
+        "password_change_failed": "പാസ്‌വേഡ് മാറ്റുന്നതിൽ പരാജയപ്പെട്ടു."
+      }
+    }
+  },
+  "ur": {
+    "profile": {
+      "title": "پروفائل کی ترتیبات",
+      "subtitle": "اپنے اکاؤنٹ کی معلومات اور پاس ورڈ کا نظم کریں",
+      "roles": {
+        "admin": "ایڈمنسٹریٹر",
+        "user": "صارف"
+      },
+      "personal_info": {
+        "section_title": "ذاتی معلومات",
+        "full_name_label": "پورا نام",
+        "email_label": "ای میل ایڈریس"
+      },
+      "change_password": {
+        "section_title": "پاس ورڈ تبدیل کریں",
+        "current_password_label": "موجودہ پاس ورڈ",
+        "new_password_label": "نیا پاس ورڈ",
+        "confirm_password_label": "نئے پاس ورڈ کی تصدیق کریں"
+      },
+      "validation": {
+        "name_required": "نام ضروری ہے",
+        "name_min_length": "کم از کم 2 حروف",
+        "current_password_required": "موجودہ پاس ورڈ ضروری ہے",
+        "new_password_required": "نیا پاس ورڈ ضروری ہے",
+        "new_password_min_length": "کم از کم 8 حروف"
+      },
+      "buttons": {
+        "save_changes": "تبدیلیاں محفوظ کریں",
+        "saving": "محفوظ ہو رہا ہے...",
+        "change_password": "پاس ورڈ تبدیل کریں",
+        "changing": "تبدیل ہو رہا ہے..."
+      },
+      "toasts": {
+        "profile_updated": "پروفائل کامیابی سے اپ ڈیٹ ہو گئی!",
+        "profile_update_failed": "پروفائل اپ ڈیٹ کرنے میں ناکامی۔",
+        "password_changed": "پاس ورڈ کامیابی سے تبدیل ہو گیا!",
+        "password_change_failed": "پاس ورڈ تبدیل کرنے میں ناکامی۔"
+      }
+    }
+  },
+  "as": {
+    "profile": {
+      "title": "প্ৰ'ফাইল ছেটিংছ",
+      "subtitle": "আপোনাৰ একাউণ্টৰ তথ্য আৰু পাছৱৰ্ড পৰিচালনা কৰক",
+      "roles": {
+        "admin": "প্ৰশাসক",
+        "user": "ব্যৱহাৰকাৰী"
+      },
+      "personal_info": {
+        "section_title": "ব্যক্তিগত তথ্য",
+        "full_name_label": "সম্পূৰ্ণ নাম",
+        "email_label": "ইমেইল ঠিকনা"
+      },
+      "change_password": {
+        "section_title": "পাছৱৰ্ড সলনি কৰক",
+        "current_password_label": "বৰ্তমানৰ পাছৱৰ্ড",
+        "new_password_label": "নতুন পাছৱৰ্ড",
+        "confirm_password_label": "নতুন পাছৱৰ্ড নিশ্চিত কৰক"
+      },
+      "validation": {
+        "name_required": "নাম আৱশ্যকীয়",
+        "name_min_length": "কমেও 2 আখৰ",
+        "current_password_required": "বৰ্তমানৰ পাছৱৰ্ড আৱশ্যকীয়",
+        "new_password_required": "নতুন পাছৱৰ্ড আৱশ্যকীয়",
+        "new_password_min_length": "কমেও 8 আখৰ"
+      },
+      "buttons": {
+        "save_changes": "সলনিসমূহ ছেভ কৰক",
+        "saving": "ছেভ কৰা হৈ আছে...",
+        "change_password": "পাছৱৰ্ড সলনি কৰক",
+        "changing": "সলনি কৰা হৈ আছে..."
+      },
+      "toasts": {
+        "profile_updated": "প্ৰ'ফাইল সফলতাৰে আপডেট হ'ল!",
+        "profile_update_failed": "প্ৰ'ফাইল আপডেট কৰাত বিফল।",
+        "password_changed": "পাছৱৰ্ড সফলতাৰে সলনি কৰা হ'ল!",
+        "password_change_failed": "পাছৱৰ্ড সলনি কৰাত বিফল।"
+      }
+    }
   }
 }
