@@ -6,7 +6,23 @@
       "searchPlaceholder": "Search all topics",
       "backToTopics": "Explore topics",
       "readMore": "Read more",
-      "noResults": "No topics match your search."
+      "noResults": "No topics match your search.",
+      "article": {
+        "topics": "Topics",
+        "readTime": "Read time",
+        "minRead": "min read",
+        "bookmark": "Bookmark",
+        "bookmarked": "Bookmarked",
+        "bookmarkAdded": "Saved to your bookmarks",
+        "bookmarkRemoved": "Removed from bookmarks",
+        "share": "Share",
+        "linkCopied": "Link copied to clipboard",
+        "shareFailed": "Couldn't share this link",
+        "relatedTopics": "Related in this topic",
+        "notFoundTitle": "Article not found",
+        "backToExplore": "Back to Explore",
+        "searchAllTopics": "Search all topics"
+      }
     }
   },
   "hi": {
@@ -16,7 +32,23 @@
       "searchPlaceholder": "सभी विषय खोजें",
       "backToTopics": "विषय एक्सप्लोर करें",
       "readMore": "और पढ़ें",
-      "noResults": "आपकी खोज से मेल खाने वाला कोई विषय नहीं मिला।"
+      "noResults": "आपकी खोज से मेल खाने वाला कोई विषय नहीं मिला।",
+      "article": {
+        "topics": "विषय",
+        "readTime": "पढ़ने का समय",
+        "minRead": "मिनट पठन",
+        "bookmark": "बुकमार्क करें",
+        "bookmarked": "बुकमार्क किया गया",
+        "bookmarkAdded": "आपके बुकमार्क में सहेजा गया",
+        "bookmarkRemoved": "बुकमार्क से हटाया गया",
+        "share": "साझा करें",
+        "linkCopied": "लिंक क्लिपबोर्ड पर कॉपी हो गया",
+        "shareFailed": "इस लिंक को साझा नहीं किया जा सका",
+        "relatedTopics": "इस विषय में संबंधित लेख",
+        "notFoundTitle": "लेख नहीं मिला",
+        "backToExplore": "एक्सप्लोर पर वापस जाएं",
+        "searchAllTopics": "सभी विषय खोजें"
+      }
     }
   },
   "mr": {
@@ -26,7 +58,23 @@
       "searchPlaceholder": "सर्व विषय शोधा",
       "backToTopics": "विषय एक्सप्लोर करा",
       "readMore": "अधिक वाचा",
-      "noResults": "तुमच्या शोधाशी जुळणारा कोणताही विषय सापडला नाही."
+      "noResults": "तुमच्या शोधाशी जुळणारा कोणताही विषय सापडला नाही.",
+      "article": {
+        "topics": "विषय",
+        "readTime": "वाचनाचा वेळ",
+        "minRead": "मिनिट वाचन",
+        "bookmark": "बुकमार्क करा",
+        "bookmarked": "बुकमार्क केले",
+        "bookmarkAdded": "तुमच्या बुकमार्कमध्ये जतन केले",
+        "bookmarkRemoved": "बुकमार्कमधून काढले",
+        "share": "शेअर करा",
+        "linkCopied": "लिंक क्लिपबोर्डवर कॉपी केली",
+        "shareFailed": "ही लिंक शेअर करता आली नाही",
+        "relatedTopics": "या विषयातील संबंधित लेख",
+        "notFoundTitle": "लेख सापडला नाही",
+        "backToExplore": "एक्सप्लोरवर परत जा",
+        "searchAllTopics": "सर्व विषय शोधा"
+      }
     }
   }
 }

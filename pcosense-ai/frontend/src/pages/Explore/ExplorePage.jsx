@@ -4,9 +4,9 @@ import { Box, Container, Typography, Grid, TextField, InputAdornment, Button } f
 import { Search, ArrowBack } from '@mui/icons-material';
 import { AnimatePresence, motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import CategoryPhotoCard from './components/CategoryPhotoCard.jsx';
 import SubpointPhotoCard from './components/SubpointPhotoCard.jsx';
-import SubpointArticleDialog from './components/SubpointArticleDialog.jsx';
 import ScrollReveal from './components/ScrollReveal.jsx';
 import { EXPLORE_CATEGORIES } from './exploreData.js';
 import { HERO_IMAGE } from './topicImages.js';
@@ -16,8 +16,8 @@ const CARD_COLUMNS = 3;
 
 const ExplorePage = () => {
   const { t } = useTranslation();
-  const [activeCategoryId, setActiveCategoryId] = useState(null);
-  const [openSubpoint, setOpenSubpoint] = useState(null);
+  const location = useLocation();
+  const [activeCategoryId, setActiveCategoryId] = useState(location.state?.categoryId ?? null);
   const [searchQuery, setSearchQuery] = useState('');
 
   const heroRef = useRef(null);
@@ -178,7 +178,7 @@ const ExplorePage = () => {
                 {visibleSubpoints.map((subpoint, index) => (
                   <Grid item xs={12} sm={6} md={4} key={subpoint.id}>
                     <ScrollReveal delay={(index % CARD_COLUMNS) * 0.1} style={{ height: '100%' }}>
-                      <SubpointPhotoCard subpoint={subpoint} onOpen={setOpenSubpoint} />
+                      <SubpointPhotoCard subpoint={subpoint} categoryId={activeCategory.id} />
                     </ScrollReveal>
                   </Grid>
                 ))}
@@ -191,8 +191,6 @@ const ExplorePage = () => {
             </motion.div>
           )}
         </AnimatePresence>
-
-        <SubpointArticleDialog subpoint={openSubpoint} open={Boolean(openSubpoint)} onClose={() => setOpenSubpoint(null)} />
       </Container>
     </Box>
   );

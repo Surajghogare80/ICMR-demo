@@ -2,18 +2,20 @@
 import { Card, CardActionArea, Box, Typography } from '@mui/material';
 import { MenuBook } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { COLORS } from '../../../theme/index.js';
 
 // A subtab: a real photo, the topic title, and a "Read more" affordance.
 // Clicking it opens the article content for that topic.
-const SubpointPhotoCard = ({ subpoint, onOpen }) => {
+const SubpointPhotoCard = ({ subpoint, categoryId }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.2 }} style={{ height: '100%' }}>
       <Card elevation={0} sx={{ height: '100%', overflow: 'hidden' }}>
-        <CardActionArea onClick={() => onOpen(subpoint)} sx={{ height: '100%' }}>
+        <CardActionArea onClick={() => navigate(`/explore/${categoryId}/${subpoint.id}`)} sx={{ height: '100%' }}>
           <Box
             component="img"
             src={subpoint.image}

@@ -10,6 +10,7 @@ export const ROUTES = {
   LIFESTYLE: '/lifestyle',
   LIFESTYLE_ARTICLE: '/lifestyle/:id',
   EXPLORE: '/explore',
+  EXPLORE_ARTICLE: '/explore/:categoryId/:articleId',
   NOT_FOUND: '*',
 };
 
