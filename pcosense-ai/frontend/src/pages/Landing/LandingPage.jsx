@@ -11,7 +11,7 @@ import {
 import { motion } from 'framer-motion';
 import { useTranslation, Trans } from 'react-i18next';
 import { ROUTES } from '../../constants/index.js';
-import { APP_NAME, APP_TAGLINE, APP_DESCRIPTION } from '../../config/appConfig.js';
+import { APP_NAME } from '../../config/appConfig.js';
 import { COLORS } from '../../theme/index.js';
 
 const fadeUp = { hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } };
@@ -93,7 +93,7 @@ const LandingPage = () => {
                   </Box>
                 </Typography>
                 <Typography variant="h6" sx={{ color: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.65)' : 'text.secondary', fontWeight: 400, lineHeight: 1.8, mb: 5, maxWidth: 520 }}>
-                  {APP_DESCRIPTION}
+                  {t('landing.hero.description')}
                 </Typography>
                  <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                   <Button

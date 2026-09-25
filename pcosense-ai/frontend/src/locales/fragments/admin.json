@@ -397,5 +397,1335 @@
         "user_delete_failed": "वापरकर्ता हटवण्यात अयशस्वी."
       }
     }
+  },
+  "bn": {
+    "admin": {
+      "title": "অ্যাডমিন ড্যাশবোর্ড",
+      "subtitle": "প্ল্যাটফর্ম ওভারভিউ এবং ব্যবহারকারী ব্যবস্থাপনা",
+      "actions": {
+        "refresh": "রিফ্রেশ করুন"
+      },
+      "loading": {
+        "statistics": "পরিসংখ্যান লোড হচ্ছে...",
+        "users": "ব্যবহারকারীরা লোড হচ্ছে..."
+      },
+      "stats": {
+        "total_users": "মোট ব্যবহারকারী",
+        "total_predictions": "মোট পূর্বাভাস",
+        "high_risk_cases": "উচ্চ ঝুঁকির ক্ষেত্রে",
+        "low_risk_cases": "কম ঝুঁকির ক্ষেত্রে",
+        "percent_of_total": "মোটের {{percent}}%"
+      },
+      "roles": {
+        "admin": "প্রশাসক",
+        "user": "ব্যবহারকারী"
+      },
+      "results": {
+        "high_risk": "উচ্চ ঝুঁকি",
+        "low_risk": "কম ঝুঁকি"
+      },
+      "log_actions": {
+        "PREDICTION_CREATED": "পূর্বাভাস তৈরি হয়েছে",
+        "PREDICTION_DELETED": "পূর্বাভাস মুছে ফেলা হয়েছে",
+        "REGISTER": "অ্যাকাউন্ট নিবন্ধিত হয়েছে",
+        "LOGIN": "লগইন হয়েছে",
+        "PROFILE_UPDATE": "প্রোফাইল আপডেট হয়েছে",
+        "PASSWORD_CHANGE": "পাসওয়ার্ড পরিবর্তিত হয়েছে",
+        "ADMIN_USER_DELETE": "প্রশাসক দ্বারা ব্যবহারকারী মুছে ফেলা হয়েছে"
+      },
+      "users_table": {
+        "title": "ব্যবহারকারী ব্যবস্থাপনা",
+        "name": "নাম",
+        "role": "ভূমিকা",
+        "joined": "যোগদান করেছেন",
+        "action": "কার্যক্রম",
+        "delete_tooltip": "ব্যবহারকারী মুছুন"
+      },
+      "activity": {
+        "title": "সাম্প্রতিক কার্যক্রম",
+        "empty": "এখনও কোনো কার্যক্রম লগ নেই।"
+      },
+      "predictions_table": {
+        "title": "সাম্প্রতিক পূর্বাভাস",
+        "user": "ব্যবহারকারী",
+        "date": "তারিখ",
+        "result": "ফলাফল",
+        "probability": "সম্ভাবনা",
+        "details": "বিবরণ",
+        "anonymous": "অজ্ঞাত",
+        "view_tooltip": "পূর্বাভাসের বিবরণ দেখুন"
+      },
+      "detail_dialog": {
+        "title": "পূর্বাভাসের বিবরণ (অ্যাডমিন)",
+        "probability_label": "সম্ভাবনা",
+        "confidence_label": "আস্থার মাত্রা",
+        "close": "বন্ধ করুন",
+        "sections": {
+          "personal": "ব্যক্তিগত",
+          "menstrual": "ঋতুস্রাব",
+          "blood_standard": "রক্ত রিপোর্ট (স্ট্যান্ডার্ড)",
+          "blood_extended": "রক্ত রিপোর্ট (বিস্তারিত)",
+          "ultrasound": "আল্ট্রাসাউন্ড",
+          "lifestyle": "জীবনযাত্রা"
+        },
+        "fields": {
+          "age": "বয়স",
+          "weight": "ওজন",
+          "height": "উচ্চতা",
+          "bmi": "বিএমআই",
+          "waist_size": "কোমরের মাপ",
+          "hip_size": "নিতম্বের মাপ",
+          "waist_hip_ratio": "কোমর : নিতম্ব অনুপাত",
+          "blood_group": "রক্তের গ্রুপ",
+          "cycle_length": "চক্রের দৈর্ঘ্য",
+          "period_duration": "ঋতুস্রাবের সময়কাল",
+          "regularity": "নিয়মিততা",
+          "flow": "প্রবাহ",
+          "family_history": "PMOS-এর পারিবারিক ইতিহাস",
+          "fsh": "এফএসএইচ",
+          "lh": "এলএইচ",
+          "tsh": "টিএসএইচ",
+          "amh": "এএমএইচ",
+          "haemoglobin": "হিমোগ্লোবিন",
+          "random_blood_sugar": "র‍্যান্ডম ব্লাড সুগার",
+          "vitamin_d3": "ভিটামিন ডি৩",
+          "shbg": "এসএইচবিজি",
+          "fasting_insulin": "ফাস্টিং ইনসুলিন",
+          "homa_ir": "HOMA-IR",
+          "follicle_no": "ফলিকল সংখ্যা",
+          "avg_follicle_size": "গড় ফলিকল আকার",
+          "ovary_volume": "ডিম্বাশয়ের আয়তন",
+          "endometrium": "এন্ডোমেট্রিয়াম",
+          "fast_food": "ফাস্ট ফুড",
+          "exercise": "ব্যায়াম",
+          "stress": "মানসিক চাপ",
+          "sleep": "ঘুম"
+        },
+        "units": {
+          "yrs": "বছর",
+          "days": "দিন",
+          "kg": "কেজি",
+          "cm": "সেমি",
+          "inch": "ইঞ্চি",
+          "mIU_mL": "mIU/mL",
+          "mIU_L": "mIU/L",
+          "ng_mL": "ng/mL",
+          "g_dL": "g/dL",
+          "mg_dL": "mg/dL",
+          "uIU_mL": "µIU/mL",
+          "nmol_L": "nmol/L",
+          "mm": "মিমি",
+          "mL": "মিলি",
+          "hrs": "ঘণ্টা"
+        }
+      },
+      "delete_dialog": {
+        "title": "ব্যবহারকারী মুছুন",
+        "body": "আপনি কি নিশ্চিত যে আপনি এই ব্যবহারকারী এবং তাদের সমস্ত ডেটা স্থায়ীভাবে মুছে ফেলতে চান?",
+        "confirm_button": "ব্যবহারকারী মুছুন",
+        "deleting": "মুছে ফেলা হচ্ছে..."
+      },
+      "toasts": {
+        "user_deleted": "ব্যবহারকারী সফলভাবে মুছে ফেলা হয়েছে।",
+        "user_delete_failed": "ব্যবহারকারী মুছতে ব্যর্থ হয়েছে।"
+      }
+    }
+  },
+  "te": {
+    "admin": {
+      "title": "అడ్మిన్ డాష్‌బోర్డ్",
+      "subtitle": "ప్లాట్‌ఫారమ్ అవలోకనం మరియు వినియోగదారు నిర్వహణ",
+      "actions": {
+        "refresh": "రిఫ్రెష్ చేయండి"
+      },
+      "loading": {
+        "statistics": "గణాంకాలు లోడ్ అవుతున్నాయి...",
+        "users": "వినియోగదారులు లోడ్ అవుతున్నారు..."
+      },
+      "stats": {
+        "total_users": "మొత్తం వినియోగదారులు",
+        "total_predictions": "మొత్తం అంచనాలు",
+        "high_risk_cases": "అధిక ప్రమాద కేసులు",
+        "low_risk_cases": "తక్కువ ప్రమాద కేసులు",
+        "percent_of_total": "మొత్తంలో {{percent}}%"
+      },
+      "roles": {
+        "admin": "నిర్వాహకుడు",
+        "user": "వినియోగదారు"
+      },
+      "results": {
+        "high_risk": "అధిక ప్రమాదం",
+        "low_risk": "తక్కువ ప్రమాదం"
+      },
+      "log_actions": {
+        "PREDICTION_CREATED": "అంచనా సృష్టించబడింది",
+        "PREDICTION_DELETED": "అంచనా తొలగించబడింది",
+        "REGISTER": "ఖాతా నమోదు చేయబడింది",
+        "LOGIN": "లాగిన్ అయ్యారు",
+        "PROFILE_UPDATE": "ప్రొఫైల్ అప్‌డేట్ చేయబడింది",
+        "PASSWORD_CHANGE": "పాస్‌వర్డ్ మార్చబడింది",
+        "ADMIN_USER_DELETE": "అడ్మిన్ ద్వారా వినియోగదారు తొలగించబడింది"
+      },
+      "users_table": {
+        "title": "వినియోగదారు నిర్వహణ",
+        "name": "పేరు",
+        "role": "పాత్ర",
+        "joined": "చేరిన తేదీ",
+        "action": "చర్య",
+        "delete_tooltip": "వినియోగదారుని తొలగించండి"
+      },
+      "activity": {
+        "title": "ఇటీవలి కార్యకలాపాలు",
+        "empty": "ఇంకా ఎలాంటి కార్యకలాప లాగ్‌లు లేవు."
+      },
+      "predictions_table": {
+        "title": "ఇటీవలి అంచనాలు",
+        "user": "వినియోగదారు",
+        "date": "తేదీ",
+        "result": "ఫలితం",
+        "probability": "సంభావ్యత",
+        "details": "వివరాలు",
+        "anonymous": "అనామకం",
+        "view_tooltip": "అంచనా వివరాలను చూడండి"
+      },
+      "detail_dialog": {
+        "title": "అంచనా వివరాలు (అడ్మిన్)",
+        "probability_label": "సంభావ్యత",
+        "confidence_label": "విశ్వసనీయత",
+        "close": "మూసివేయండి",
+        "sections": {
+          "personal": "వ్యక్తిగతం",
+          "menstrual": "ఋతుస్రావం",
+          "blood_standard": "రక్త నివేదిక (ప్రామాణికం)",
+          "blood_extended": "రక్త నివేదిక (విస్తృతం)",
+          "ultrasound": "అల్ట్రాసౌండ్",
+          "lifestyle": "జీవనశైలి"
+        },
+        "fields": {
+          "age": "వయస్సు",
+          "weight": "బరువు",
+          "height": "ఎత్తు",
+          "bmi": "బీఎంఐ",
+          "waist_size": "నడుము కొలత",
+          "hip_size": "పిరుదుల కొలత",
+          "waist_hip_ratio": "నడుము : పిరుదుల నిష్పత్తి",
+          "blood_group": "రక్త గ్రూప్",
+          "cycle_length": "చక్రం నిడివి",
+          "period_duration": "ఋతుస్రావ వ్యవధి",
+          "regularity": "క్రమబద్ధత",
+          "flow": "ప్రవాహం",
+          "family_history": "PMOS యొక్క కుటుంబ చరిత్ర",
+          "fsh": "ఎఫ్ఎస్హెచ్",
+          "lh": "ఎల్హెచ్",
+          "tsh": "టిఎస్హెచ్",
+          "amh": "ఏఎంహెచ్",
+          "haemoglobin": "హిమోగ్లోబిన్",
+          "random_blood_sugar": "రాండమ్ బ్లడ్ షుగర్",
+          "vitamin_d3": "విటమిన్ డి3",
+          "shbg": "ఎస్హెచ్బీజీ",
+          "fasting_insulin": "ఫాస్టింగ్ ఇన్సులిన్",
+          "homa_ir": "HOMA-IR",
+          "follicle_no": "ఫోలికల్ సంఖ్య",
+          "avg_follicle_size": "సగటు ఫోలికల్ పరిమాణం",
+          "ovary_volume": "అండాశయ ఘనపరిమాణం",
+          "endometrium": "ఎండోమెట్రియం",
+          "fast_food": "ఫాస్ట్ ఫుడ్",
+          "exercise": "వ్యాయామం",
+          "stress": "ఒత్తిడి",
+          "sleep": "నిద్ర"
+        },
+        "units": {
+          "yrs": "సంవత్సరాలు",
+          "days": "రోజులు",
+          "kg": "కిలో",
+          "cm": "సెం.మీ",
+          "inch": "అంగుళం",
+          "mIU_mL": "mIU/mL",
+          "mIU_L": "mIU/L",
+          "ng_mL": "ng/mL",
+          "g_dL": "g/dL",
+          "mg_dL": "mg/dL",
+          "uIU_mL": "µIU/mL",
+          "nmol_L": "nmol/L",
+          "mm": "మి.మీ",
+          "mL": "మి.లీ",
+          "hrs": "గంటలు"
+        }
+      },
+      "delete_dialog": {
+        "title": "వినియోగదారుని తొలగించండి",
+        "body": "మీరు ఖచ్చితంగా ఈ వినియోగదారుని మరియు వారి మొత్తం డేటాను శాశ్వతంగా తొలగించాలనుకుంటున్నారా?",
+        "confirm_button": "వినియోగదారుని తొలగించండి",
+        "deleting": "తొలగిస్తోంది..."
+      },
+      "toasts": {
+        "user_deleted": "వినియోగదారు విజయవంతంగా తొలగించబడ్డారు.",
+        "user_delete_failed": "వినియోగదారుని తొలగించడంలో విఫలమైంది."
+      }
+    }
+  },
+  "ta": {
+    "admin": {
+      "title": "நிர்வாக டாஷ்போர்டு",
+      "subtitle": "தளத்தின் மேலோட்டமும் பயனர் மேலாண்மையும்",
+      "actions": {
+        "refresh": "புதுப்பிக்கவும்"
+      },
+      "loading": {
+        "statistics": "புள்ளிவிவரங்கள் ஏற்றப்படுகின்றன...",
+        "users": "பயனர்கள் ஏற்றப்படுகின்றனர்..."
+      },
+      "stats": {
+        "total_users": "மொத்த பயனர்கள்",
+        "total_predictions": "மொத்த கணிப்புகள்",
+        "high_risk_cases": "அதிக ஆபத்து வழக்குகள்",
+        "low_risk_cases": "குறைந்த ஆபத்து வழக்குகள்",
+        "percent_of_total": "மொத்தத்தில் {{percent}}%"
+      },
+      "roles": {
+        "admin": "நிர்வாகி",
+        "user": "பயனர்"
+      },
+      "results": {
+        "high_risk": "அதிக ஆபத்து",
+        "low_risk": "குறைந்த ஆபத்து"
+      },
+      "log_actions": {
+        "PREDICTION_CREATED": "கணிப்பு உருவாக்கப்பட்டது",
+        "PREDICTION_DELETED": "கணிப்பு நீக்கப்பட்டது",
+        "REGISTER": "கணக்கு பதிவு செய்யப்பட்டது",
+        "LOGIN": "உள்நுழைந்தார்",
+        "PROFILE_UPDATE": "சுயவிவரம் புதுப்பிக்கப்பட்டது",
+        "PASSWORD_CHANGE": "கடவுச்சொல் மாற்றப்பட்டது",
+        "ADMIN_USER_DELETE": "நிர்வாகியால் பயனர் நீக்கப்பட்டார்"
+      },
+      "users_table": {
+        "title": "பயனர் மேலாண்மை",
+        "name": "பெயர்",
+        "role": "பங்கு",
+        "joined": "சேர்ந்த தேதி",
+        "action": "செயல்",
+        "delete_tooltip": "பயனரை நீக்கவும்"
+      },
+      "activity": {
+        "title": "சமீபத்திய செயல்பாடுகள்",
+        "empty": "இதுவரை செயல்பாட்டு பதிவுகள் இல்லை."
+      },
+      "predictions_table": {
+        "title": "சமீபத்திய கணிப்புகள்",
+        "user": "பயனர்",
+        "date": "தேதி",
+        "result": "முடிவு",
+        "probability": "நிகழ்தகவு",
+        "details": "விவரங்கள்",
+        "anonymous": "அநாமதேயம்",
+        "view_tooltip": "கணிப்பு விவரங்களைக் காண்க"
+      },
+      "detail_dialog": {
+        "title": "கணிப்பு விவரங்கள் (நிர்வாகி)",
+        "probability_label": "நிகழ்தகவு",
+        "confidence_label": "நம்பகத்தன்மை",
+        "close": "மூடு",
+        "sections": {
+          "personal": "தனிப்பட்ட",
+          "menstrual": "மாதவிடாய்",
+          "blood_standard": "இரத்த அறிக்கை (தரநிலை)",
+          "blood_extended": "இரத்த அறிக்கை (விரிவாக்கப்பட்டது)",
+          "ultrasound": "அல்ட்ராசவுண்ட்",
+          "lifestyle": "வாழ்க்கை முறை"
+        },
+        "fields": {
+          "age": "வயது",
+          "weight": "எடை",
+          "height": "உயரம்",
+          "bmi": "பிஎம்ஐ",
+          "waist_size": "இடுப்பு அளவு",
+          "hip_size": "இடுப்பு பின்புற அளவு",
+          "waist_hip_ratio": "இடுப்பு : இடுப்பு பின்புற விகிதம்",
+          "blood_group": "இரத்த வகை",
+          "cycle_length": "சுழற்சி நீளம்",
+          "period_duration": "மாதவிடாய் காலம்",
+          "regularity": "ஒழுங்குமுறை",
+          "flow": "ஓட்டம்",
+          "family_history": "PMOS குடும்ப வரலாறு",
+          "fsh": "எஃப்எஸ்எச்",
+          "lh": "எல்எச்",
+          "tsh": "டிஎஸ்எச்",
+          "amh": "ஏஎம்எச்",
+          "haemoglobin": "ஹீமோகுளோபின்",
+          "random_blood_sugar": "ரேண்டம் ரத்த சர்க்கரை",
+          "vitamin_d3": "வைட்டமின் டி3",
+          "shbg": "எஸ்எச்பிஜி",
+          "fasting_insulin": "உண்ணாநோன்பு இன்சுலின்",
+          "homa_ir": "HOMA-IR",
+          "follicle_no": "ஃபோலிக்கிள் எண்",
+          "avg_follicle_size": "சராசரி ஃபோலிக்கிள் அளவு",
+          "ovary_volume": "சூலக அளவு",
+          "endometrium": "எண்டோமெட்ரியம்",
+          "fast_food": "துரித உணவு",
+          "exercise": "உடற்பயிற்சி",
+          "stress": "மன அழுத்தம்",
+          "sleep": "தூக்கம்"
+        },
+        "units": {
+          "yrs": "ஆண்டுகள்",
+          "days": "நாட்கள்",
+          "kg": "கிலோ",
+          "cm": "செமீ",
+          "inch": "அங்குலம்",
+          "mIU_mL": "mIU/mL",
+          "mIU_L": "mIU/L",
+          "ng_mL": "ng/mL",
+          "g_dL": "g/dL",
+          "mg_dL": "mg/dL",
+          "uIU_mL": "µIU/mL",
+          "nmol_L": "nmol/L",
+          "mm": "மிமீ",
+          "mL": "மிலி",
+          "hrs": "மணிநேரம்"
+        }
+      },
+      "delete_dialog": {
+        "title": "பயனரை நீக்கவும்",
+        "body": "இந்தப் பயனரையும் அவர்களின் அனைத்து தரவையும் நிரந்தரமாக நீக்க விரும்புகிறீர்களா?",
+        "confirm_button": "பயனரை நீக்கவும்",
+        "deleting": "நீக்கப்படுகிறது..."
+      },
+      "toasts": {
+        "user_deleted": "பயனர் வெற்றிகரமாக நீக்கப்பட்டார்.",
+        "user_delete_failed": "பயனரை நீக்குவதில் தோல்வி."
+      }
+    }
+  },
+  "gu": {
+    "admin": {
+      "title": "એડમિન ડેશબોર્ડ",
+      "subtitle": "પ્લેટફોર્મની ઝાંખી અને વપરાશકર્તા સંચાલન",
+      "actions": {
+        "refresh": "રિફ્રેશ કરો"
+      },
+      "loading": {
+        "statistics": "આંકડા લોડ થઈ રહ્યા છે...",
+        "users": "વપરાશકર્તાઓ લોડ થઈ રહ્યા છે..."
+      },
+      "stats": {
+        "total_users": "કુલ વપરાશકર્તાઓ",
+        "total_predictions": "કુલ આગાહીઓ",
+        "high_risk_cases": "ઉચ્ચ જોખમ કેસો",
+        "low_risk_cases": "ઓછા જોખમ કેસો",
+        "percent_of_total": "કુલમાંથી {{percent}}%"
+      },
+      "roles": {
+        "admin": "પ્રશાસક",
+        "user": "વપરાશકર્તા"
+      },
+      "results": {
+        "high_risk": "ઉચ્ચ જોખમ",
+        "low_risk": "ઓછું જોખમ"
+      },
+      "log_actions": {
+        "PREDICTION_CREATED": "આગાહી બનાવવામાં આવી",
+        "PREDICTION_DELETED": "આગાહી કાઢી નાખવામાં આવી",
+        "REGISTER": "ખાતું નોંધાયું",
+        "LOGIN": "લૉગિન થયું",
+        "PROFILE_UPDATE": "પ્રોફાઇલ અપડેટ થઈ",
+        "PASSWORD_CHANGE": "પાસવર્ડ બદલાયો",
+        "ADMIN_USER_DELETE": "એડમિન દ્વારા વપરાશકર્તા કાઢી નાખવામાં આવ્યો"
+      },
+      "users_table": {
+        "title": "વપરાશકર્તા સંચાલન",
+        "name": "નામ",
+        "role": "ભૂમિકા",
+        "joined": "જોડાયા",
+        "action": "ક્રિયા",
+        "delete_tooltip": "વપરાશકર્તાને કાઢી નાખો"
+      },
+      "activity": {
+        "title": "તાજેતરની પ્રવૃત્તિ",
+        "empty": "હજુ સુધી કોઈ પ્રવૃત્તિ લોગ નથી."
+      },
+      "predictions_table": {
+        "title": "તાજેતરની આગાહીઓ",
+        "user": "વપરાશકર્તા",
+        "date": "તારીખ",
+        "result": "પરિણામ",
+        "probability": "સંભાવના",
+        "details": "વિગતો",
+        "anonymous": "અનામી",
+        "view_tooltip": "આગાહીની વિગતો જુઓ"
+      },
+      "detail_dialog": {
+        "title": "આગાહીની વિગતો (એડમિન)",
+        "probability_label": "સંભાવના",
+        "confidence_label": "વિશ્વસનીયતા",
+        "close": "બંધ કરો",
+        "sections": {
+          "personal": "વ્યક્તિગત",
+          "menstrual": "માસિક",
+          "blood_standard": "રક્ત અહેવાલ (પ્રમાણભૂત)",
+          "blood_extended": "રક્ત અહેવાલ (વિસ્તૃત)",
+          "ultrasound": "અલ્ટ્રાસાઉન્ડ",
+          "lifestyle": "જીવનશૈલી"
+        },
+        "fields": {
+          "age": "ઉંમર",
+          "weight": "વજન",
+          "height": "ઊંચાઈ",
+          "bmi": "બીએમઆઈ",
+          "waist_size": "કમરનું માપ",
+          "hip_size": "થાપાનું માપ",
+          "waist_hip_ratio": "કમર : થાપા ગુણોત્તર",
+          "blood_group": "રક્ત જૂથ",
+          "cycle_length": "ચક્રની લંબાઈ",
+          "period_duration": "માસિકનો સમયગાળો",
+          "regularity": "નિયમિતતા",
+          "flow": "પ્રવાહ",
+          "family_history": "PMOS નો પારિવારિક ઇતિહાસ",
+          "fsh": "એફએસએચ",
+          "lh": "એલએચ",
+          "tsh": "ટીએસએચ",
+          "amh": "એએમએચ",
+          "haemoglobin": "હિમોગ્લોબિન",
+          "random_blood_sugar": "રેન્ડમ બ્લડ સુગર",
+          "vitamin_d3": "વિટામિન ડી3",
+          "shbg": "એસએચબીજી",
+          "fasting_insulin": "ફાસ્ટિંગ ઇન્સ્યુલિન",
+          "homa_ir": "HOMA-IR",
+          "follicle_no": "ફોલિકલ સંખ્યા",
+          "avg_follicle_size": "સરેરાશ ફોલિકલ કદ",
+          "ovary_volume": "અંડાશય કદ",
+          "endometrium": "એન્ડોમેટ્રિયમ",
+          "fast_food": "ફાસ્ટ ફૂડ",
+          "exercise": "કસરત",
+          "stress": "તણાવ",
+          "sleep": "ઊંઘ"
+        },
+        "units": {
+          "yrs": "વર્ષ",
+          "days": "દિવસ",
+          "kg": "કિગ્રા",
+          "cm": "સેમી",
+          "inch": "ઇંચ",
+          "mIU_mL": "mIU/mL",
+          "mIU_L": "mIU/L",
+          "ng_mL": "ng/mL",
+          "g_dL": "g/dL",
+          "mg_dL": "mg/dL",
+          "uIU_mL": "µIU/mL",
+          "nmol_L": "nmol/L",
+          "mm": "મિમી",
+          "mL": "મિલી",
+          "hrs": "કલાક"
+        }
+      },
+      "delete_dialog": {
+        "title": "વપરાશકર્તાને કાઢી નાખો",
+        "body": "શું તમે ખરેખર આ વપરાશકર્તા અને તેમનો તમામ ડેટા કાયમી ધોરણે કાઢી નાખવા માંગો છો?",
+        "confirm_button": "વપરાશકર્તાને કાઢી નાખો",
+        "deleting": "કાઢી રહ્યા છીએ..."
+      },
+      "toasts": {
+        "user_deleted": "વપરાશકર્તા સફળતાપૂર્વક કાઢી નાખવામાં આવ્યો.",
+        "user_delete_failed": "વપરાશકર્તાને કાઢી નાખવામાં નિષ્ફળ."
+      }
+    }
+  },
+  "kn": {
+    "admin": {
+      "title": "ಅಡ್ಮಿನ್ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+      "subtitle": "ಪ್ಲಾಟ್‌ಫಾರ್ಮ್ ಅವಲೋಕನ ಮತ್ತು ಬಳಕೆದಾರ ನಿರ್ವಹಣೆ",
+      "actions": {
+        "refresh": "ರಿಫ್ರೆಶ್ ಮಾಡಿ"
+      },
+      "loading": {
+        "statistics": "ಅಂಕಿಅಂಶಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ...",
+        "users": "ಬಳಕೆದಾರರು ಲೋಡ್ ಆಗುತ್ತಿದ್ದಾರೆ..."
+      },
+      "stats": {
+        "total_users": "ಒಟ್ಟು ಬಳಕೆದಾರರು",
+        "total_predictions": "ಒಟ್ಟು ಭವಿಷ್ಯನುಡಿಗಳು",
+        "high_risk_cases": "ಹೆಚ್ಚಿನ ಅಪಾಯದ ಪ್ರಕರಣಗಳು",
+        "low_risk_cases": "ಕಡಿಮೆ ಅಪಾಯದ ಪ್ರಕರಣಗಳು",
+        "percent_of_total": "ಒಟ್ಟಿನ {{percent}}%"
+      },
+      "roles": {
+        "admin": "ನಿರ್ವಾಹಕ",
+        "user": "ಬಳಕೆದಾರ"
+      },
+      "results": {
+        "high_risk": "ಹೆಚ್ಚಿನ ಅಪಾಯ",
+        "low_risk": "ಕಡಿಮೆ ಅಪಾಯ"
+      },
+      "log_actions": {
+        "PREDICTION_CREATED": "ಭವಿಷ್ಯನುಡಿ ರಚಿಸಲಾಗಿದೆ",
+        "PREDICTION_DELETED": "ಭವಿಷ್ಯನುಡಿ ಅಳಿಸಲಾಗಿದೆ",
+        "REGISTER": "ಖಾತೆ ನೋಂದಣಿಯಾಗಿದೆ",
+        "LOGIN": "ಲಾಗಿನ್ ಆಗಿದೆ",
+        "PROFILE_UPDATE": "ಪ್ರೊಫೈಲ್ ಅಪ್‌ಡೇಟ್ ಆಗಿದೆ",
+        "PASSWORD_CHANGE": "ಪಾಸ್‌ವರ್ಡ್ ಬದಲಾಗಿದೆ",
+        "ADMIN_USER_DELETE": "ಅಡ್ಮಿನ್‌ನಿಂದ ಬಳಕೆದಾರರನ್ನು ಅಳಿಸಲಾಗಿದೆ"
+      },
+      "users_table": {
+        "title": "ಬಳಕೆದಾರ ನಿರ್ವಹಣೆ",
+        "name": "ಹೆಸರು",
+        "role": "ಪಾತ್ರ",
+        "joined": "ಸೇರಿದ ದಿನಾಂಕ",
+        "action": "ಕ್ರಿಯೆ",
+        "delete_tooltip": "ಬಳಕೆದಾರರನ್ನು ಅಳಿಸಿ"
+      },
+      "activity": {
+        "title": "ಇತ್ತೀಚಿನ ಚಟುವಟಿಕೆ",
+        "empty": "ಇನ್ನೂ ಯಾವುದೇ ಚಟುವಟಿಕೆ ಲಾಗ್‌ಗಳಿಲ್ಲ."
+      },
+      "predictions_table": {
+        "title": "ಇತ್ತೀಚಿನ ಭವಿಷ್ಯನುಡಿಗಳು",
+        "user": "ಬಳಕೆದಾರ",
+        "date": "ದಿನಾಂಕ",
+        "result": "ಫಲಿತಾಂಶ",
+        "probability": "ಸಂಭವನೀಯತೆ",
+        "details": "ವಿವರಗಳು",
+        "anonymous": "ಅನಾಮಧೇಯ",
+        "view_tooltip": "ಭವಿಷ್ಯನುಡಿ ವಿವರಗಳನ್ನು ವೀಕ್ಷಿಸಿ"
+      },
+      "detail_dialog": {
+        "title": "ಭವಿಷ್ಯನುಡಿ ವಿವರಗಳು (ಅಡ್ಮಿನ್)",
+        "probability_label": "ಸಂಭವನೀಯತೆ",
+        "confidence_label": "ವಿಶ್ವಾಸಾರ್ಹತೆ",
+        "close": "ಮುಚ್ಚಿ",
+        "sections": {
+          "personal": "ವೈಯಕ್ತಿಕ",
+          "menstrual": "ಮುಟ್ಟಿನ",
+          "blood_standard": "ರಕ್ತ ವರದಿ (ಪ್ರಮಾಣಿತ)",
+          "blood_extended": "ರಕ್ತ ವರದಿ (ವಿಸ್ತೃತ)",
+          "ultrasound": "ಅಲ್ಟ್ರಾಸೌಂಡ್",
+          "lifestyle": "ಜೀವನಶೈಲಿ"
+        },
+        "fields": {
+          "age": "ವಯಸ್ಸು",
+          "weight": "ತೂಕ",
+          "height": "ಎತ್ತರ",
+          "bmi": "ಬಿಎಂಐ",
+          "waist_size": "ಸೊಂಟದ ಅಳತೆ",
+          "hip_size": "ಹಿಪ್ ಅಳತೆ",
+          "waist_hip_ratio": "ಸೊಂಟ : ಹಿಪ್ ಅನುಪಾತ",
+          "blood_group": "ರಕ್ತ ಗುಂಪು",
+          "cycle_length": "ಚಕ್ರದ ಅವಧಿ",
+          "period_duration": "ಮುಟ್ಟಿನ ಅವಧಿ",
+          "regularity": "ನಿಯಮಿತತೆ",
+          "flow": "ಹರಿವು",
+          "family_history": "PMOS ನ ಕುಟುಂಬ ಇತಿಹಾಸ",
+          "fsh": "ಎಫ್‌ಎಸ್‌ಎಚ್",
+          "lh": "ಎಲ್‌ಎಚ್",
+          "tsh": "ಟಿಎಸ್‌ಎಚ್",
+          "amh": "ಎಎಂಎಚ್",
+          "haemoglobin": "ಹಿಮೋಗ್ಲೋಬಿನ್",
+          "random_blood_sugar": "ರಾಂಡಮ್ ಬ್ಲಡ್ ಶುಗರ್",
+          "vitamin_d3": "ವಿಟಮಿನ್ ಡಿ3",
+          "shbg": "ಎಸ್‌ಎಚ್‌ಬಿಜಿ",
+          "fasting_insulin": "ಫಾಸ್ಟಿಂಗ್ ಇನ್ಸುಲಿನ್",
+          "homa_ir": "HOMA-IR",
+          "follicle_no": "ಫಾಲಿಕಲ್ ಸಂಖ್ಯೆ",
+          "avg_follicle_size": "ಸರಾಸರಿ ಫಾಲಿಕಲ್ ಗಾತ್ರ",
+          "ovary_volume": "ಅಂಡಾಶಯದ ಗಾತ್ರ",
+          "endometrium": "ಎಂಡೊಮೆಟ್ರಿಯಂ",
+          "fast_food": "ಫಾಸ್ಟ್ ಫುಡ್",
+          "exercise": "ವ್ಯಾಯಾಮ",
+          "stress": "ಒತ್ತಡ",
+          "sleep": "ನಿದ್ರೆ"
+        },
+        "units": {
+          "yrs": "ವರ್ಷಗಳು",
+          "days": "ದಿನಗಳು",
+          "kg": "ಕೆಜಿ",
+          "cm": "ಸೆಂ.ಮೀ",
+          "inch": "ಇಂಚು",
+          "mIU_mL": "mIU/mL",
+          "mIU_L": "mIU/L",
+          "ng_mL": "ng/mL",
+          "g_dL": "g/dL",
+          "mg_dL": "mg/dL",
+          "uIU_mL": "µIU/mL",
+          "nmol_L": "nmol/L",
+          "mm": "ಮಿ.ಮೀ",
+          "mL": "ಮಿ.ಲೀ",
+          "hrs": "ಗಂಟೆಗಳು"
+        }
+      },
+      "delete_dialog": {
+        "title": "ಬಳಕೆದಾರರನ್ನು ಅಳಿಸಿ",
+        "body": "ಈ ಬಳಕೆದಾರ ಮತ್ತು ಅವರ ಎಲ್ಲಾ ಡೇಟಾವನ್ನು ಶಾಶ್ವತವಾಗಿ ಅಳಿಸಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?",
+        "confirm_button": "ಬಳಕೆದಾರರನ್ನು ಅಳಿಸಿ",
+        "deleting": "ಅಳಿಸಲಾಗುತ್ತಿದೆ..."
+      },
+      "toasts": {
+        "user_deleted": "ಬಳಕೆದಾರರನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಅಳಿಸಲಾಗಿದೆ.",
+        "user_delete_failed": "ಬಳಕೆದಾರರನ್ನು ಅಳಿಸಲು ವಿಫಲವಾಗಿದೆ."
+      }
+    }
+  },
+  "or": {
+    "admin": {
+      "title": "ଆଡମିନ ଡ୍ୟାସବୋର୍ଡ",
+      "subtitle": "ପ୍ଲାଟଫର୍ମ ସମୀକ୍ଷା ଏବଂ ଉପଯୋଗକର୍ତ୍ତା ପରିଚାଳନା",
+      "actions": {
+        "refresh": "ରିଫ୍ରେସ୍ କରନ୍ତୁ"
+      },
+      "loading": {
+        "statistics": "ପରିସଂଖ୍ୟାନ ଲୋଡ୍ ହେଉଛି...",
+        "users": "ଉପଯୋଗକର୍ତ୍ତାମାନେ ଲୋଡ୍ ହେଉଛନ୍ତି..."
+      },
+      "stats": {
+        "total_users": "ମୋଟ ଉପଯୋଗକର୍ତ୍ତା",
+        "total_predictions": "ମୋଟ ପୂର୍ବାନୁମାନ",
+        "high_risk_cases": "ଉଚ୍ଚ ବିପଦ ମାମଲା",
+        "low_risk_cases": "କମ ବିପଦ ମାମଲା",
+        "percent_of_total": "ମୋଟର {{percent}}%"
+      },
+      "roles": {
+        "admin": "ପ୍ରଶାସକ",
+        "user": "ଉପଯୋଗକର୍ତ୍ତା"
+      },
+      "results": {
+        "high_risk": "ଉଚ୍ଚ ବିପଦ",
+        "low_risk": "କମ ବିପଦ"
+      },
+      "log_actions": {
+        "PREDICTION_CREATED": "ପୂର୍ବାନୁମାନ ସୃଷ୍ଟି ହୋଇଛି",
+        "PREDICTION_DELETED": "ପୂର୍ବାନୁମାନ ବିଲୋପ ହୋଇଛି",
+        "REGISTER": "ଖାତା ପଞ୍ଜୀକୃତ ହୋଇଛି",
+        "LOGIN": "ଲଗଇନ୍ ହୋଇଛି",
+        "PROFILE_UPDATE": "ପ୍ରୋଫାଇଲ୍ ଅପଡେଟ୍ ହୋଇଛି",
+        "PASSWORD_CHANGE": "ପାସୱାର୍ଡ ପରିବର୍ତ୍ତନ ହୋଇଛି",
+        "ADMIN_USER_DELETE": "ଆଡମିନ୍ ଦ୍ୱାରା ଉପଯୋଗକର୍ତ୍ତା ବିଲୋପ ହୋଇଛି"
+      },
+      "users_table": {
+        "title": "ଉପଯୋଗକର୍ତ୍ତା ପରିଚାଳନା",
+        "name": "ନାମ",
+        "role": "ଭୂମିକା",
+        "joined": "ଯୋଗଦେଲେ",
+        "action": "କାର୍ଯ୍ୟ",
+        "delete_tooltip": "ଉପଯୋଗକର୍ତ୍ତାଙ୍କୁ ବିଲୋପ କରନ୍ତୁ"
+      },
+      "activity": {
+        "title": "ସାମ୍ପ୍ରତିକ କାର୍ଯ୍ୟକଳାପ",
+        "empty": "ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି କାର୍ଯ୍ୟକଳାପ ଲଗ୍ ନାହିଁ।"
+      },
+      "predictions_table": {
+        "title": "ସାମ୍ପ୍ରତିକ ପୂର୍ବାନୁମାନ",
+        "user": "ଉପଯୋଗକର୍ତ୍ତା",
+        "date": "ତାରିଖ",
+        "result": "ଫଳାଫଳ",
+        "probability": "ସମ୍ଭାବନା",
+        "details": "ବିବରଣୀ",
+        "anonymous": "ଅଜ୍ଞାତ",
+        "view_tooltip": "ପୂର୍ବାନୁମାନ ବିବରଣୀ ଦେଖନ୍ତୁ"
+      },
+      "detail_dialog": {
+        "title": "ପୂର୍ବାନୁମାନ ବିବରଣୀ (ଆଡମିନ)",
+        "probability_label": "ସମ୍ଭାବନା",
+        "confidence_label": "ବିଶ୍ୱାସନୀୟତା",
+        "close": "ବନ୍ଦ କରନ୍ତୁ",
+        "sections": {
+          "personal": "ବ୍ୟକ୍ତିଗତ",
+          "menstrual": "ଋତୁସ୍ରାବ",
+          "blood_standard": "ରକ୍ତ ରିପୋର୍ଟ (ମାନକ)",
+          "blood_extended": "ରକ୍ତ ରିପୋର୍ଟ (ବିସ୍ତୃତ)",
+          "ultrasound": "ଆଲଟ୍ରାସାଉଣ୍ଡ",
+          "lifestyle": "ଜୀବନଶୈଳୀ"
+        },
+        "fields": {
+          "age": "ବୟସ",
+          "weight": "ଓଜନ",
+          "height": "ଉଚ୍ଚତା",
+          "bmi": "ବିଏମଆଇ",
+          "waist_size": "କଟିଦେଶ ମାପ",
+          "hip_size": "ନିତମ୍ବ ମାପ",
+          "waist_hip_ratio": "କଟି : ନିତମ୍ବ ଅନୁପାତ",
+          "blood_group": "ରକ୍ତ ଗୋଷ୍ଠୀ",
+          "cycle_length": "ଚକ୍ର ଅବଧି",
+          "period_duration": "ଋତୁସ୍ରାବ ଅବଧି",
+          "regularity": "ନିୟମିତତା",
+          "flow": "ପ୍ରବାହ",
+          "family_history": "PMOS ର ପାରିବାରିକ ଇତିହାସ",
+          "fsh": "ଏଫଏସଏଚ",
+          "lh": "ଏଲଏଚ",
+          "tsh": "ଟିଏସଏଚ",
+          "amh": "ଏଏମଏଚ",
+          "haemoglobin": "ହେମୋଗ୍ଲୋବିନ",
+          "random_blood_sugar": "ରାଣ୍ଡମ ବ୍ଲଡ୍ ସୁଗାର",
+          "vitamin_d3": "ଭିଟାମିନ ଡି3",
+          "shbg": "ଏସଏଚବିଜି",
+          "fasting_insulin": "ଫାଷ୍ଟିଂ ଇନସୁଲିନ",
+          "homa_ir": "HOMA-IR",
+          "follicle_no": "ଫୋଲିକଲ ସଂଖ୍ୟା",
+          "avg_follicle_size": "ହାରାହାରି ଫୋଲିକଲ ଆକାର",
+          "ovary_volume": "ଅଣ୍ଡାଶୟ ଆୟତନ",
+          "endometrium": "ଏଣ୍ଡୋମେଟ୍ରିୟମ",
+          "fast_food": "ଫାଷ୍ଟ ଫୁଡ୍",
+          "exercise": "ବ୍ୟାୟାମ",
+          "stress": "ମାନସିକ ଚାପ",
+          "sleep": "ନିଦ"
+        },
+        "units": {
+          "yrs": "ବର୍ଷ",
+          "days": "ଦିନ",
+          "kg": "କେଜି",
+          "cm": "ସେମି",
+          "inch": "ଇଞ୍ଚ",
+          "mIU_mL": "mIU/mL",
+          "mIU_L": "mIU/L",
+          "ng_mL": "ng/mL",
+          "g_dL": "g/dL",
+          "mg_dL": "mg/dL",
+          "uIU_mL": "µIU/mL",
+          "nmol_L": "nmol/L",
+          "mm": "ମିମି",
+          "mL": "ମିଲି",
+          "hrs": "ଘଣ୍ଟା"
+        }
+      },
+      "delete_dialog": {
+        "title": "ଉପଯୋଗକର୍ତ୍ତାଙ୍କୁ ବିଲୋପ କରନ୍ତୁ",
+        "body": "ଆପଣ ନିଶ୍ଚିତ କି ଆପଣ ଏହି ଉପଯୋଗକର୍ତ୍ତା ଏବଂ ସେମାନଙ୍କର ସମସ୍ତ ତଥ୍ୟ ସ୍ଥାୟୀ ଭାବରେ ବିଲୋପ କରିବାକୁ ଚାହୁଁଛନ୍ତି?",
+        "confirm_button": "ଉପଯୋଗକର୍ତ୍ତାଙ୍କୁ ବିଲୋପ କରନ୍ତୁ",
+        "deleting": "ବିଲୋପ ହେଉଛି..."
+      },
+      "toasts": {
+        "user_deleted": "ଉପଯୋଗକର୍ତ୍ତା ସଫଳତାର ସହ ବିଲୋପ ହେଲେ।",
+        "user_delete_failed": "ଉପଯୋଗକର୍ତ୍ତାଙ୍କୁ ବିଲୋପ କରିବାରେ ବିଫଳ।"
+      }
+    }
+  },
+  "pa": {
+    "admin": {
+      "title": "ਐਡਮਿਨ ਡੈਸ਼ਬੋਰਡ",
+      "subtitle": "ਪਲੇਟਫਾਰਮ ਦੀ ਸੰਖੇਪ ਜਾਣਕਾਰੀ ਅਤੇ ਉਪਭੋਗਤਾ ਪ੍ਰਬੰਧਨ",
+      "actions": {
+        "refresh": "ਰਿਫ੍ਰੈਸ਼ ਕਰੋ"
+      },
+      "loading": {
+        "statistics": "ਅੰਕੜੇ ਲੋਡ ਹੋ ਰਹੇ ਹਨ...",
+        "users": "ਉਪਭੋਗਤਾ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
+      },
+      "stats": {
+        "total_users": "ਕੁੱਲ ਉਪਭੋਗਤਾ",
+        "total_predictions": "ਕੁੱਲ ਭਵਿੱਖਬਾਣੀਆਂ",
+        "high_risk_cases": "ਉੱਚ ਜੋਖਮ ਮਾਮਲੇ",
+        "low_risk_cases": "ਘੱਟ ਜੋਖਮ ਮਾਮਲੇ",
+        "percent_of_total": "ਕੁੱਲ ਦਾ {{percent}}%"
+      },
+      "roles": {
+        "admin": "ਪ੍ਰਸ਼ਾਸਕ",
+        "user": "ਉਪਭੋਗਤਾ"
+      },
+      "results": {
+        "high_risk": "ਉੱਚ ਜੋਖਮ",
+        "low_risk": "ਘੱਟ ਜੋਖਮ"
+      },
+      "log_actions": {
+        "PREDICTION_CREATED": "ਭਵਿੱਖਬਾਣੀ ਬਣਾਈ ਗਈ",
+        "PREDICTION_DELETED": "ਭਵਿੱਖਬਾਣੀ ਮਿਟਾਈ ਗਈ",
+        "REGISTER": "ਖਾਤਾ ਰਜਿਸਟਰ ਹੋਇਆ",
+        "LOGIN": "ਲੌਗਇਨ ਹੋਇਆ",
+        "PROFILE_UPDATE": "ਪ੍ਰੋਫਾਈਲ ਅੱਪਡੇਟ ਹੋਈ",
+        "PASSWORD_CHANGE": "ਪਾਸਵਰਡ ਬਦਲਿਆ ਗਿਆ",
+        "ADMIN_USER_DELETE": "ਐਡਮਿਨ ਦੁਆਰਾ ਉਪਭੋਗਤਾ ਮਿਟਾਇਆ ਗਿਆ"
+      },
+      "users_table": {
+        "title": "ਉਪਭੋਗਤਾ ਪ੍ਰਬੰਧਨ",
+        "name": "ਨਾਮ",
+        "role": "ਭੂਮਿਕਾ",
+        "joined": "ਸ਼ਾਮਲ ਹੋਏ",
+        "action": "ਕਾਰਵਾਈ",
+        "delete_tooltip": "ਉਪਭੋਗਤਾ ਮਿਟਾਓ"
+      },
+      "activity": {
+        "title": "ਹਾਲੀਆ ਗਤੀਵਿਧੀ",
+        "empty": "ਹਾਲੇ ਤੱਕ ਕੋਈ ਗਤੀਵਿਧੀ ਲੌਗ ਨਹੀਂ ਹੈ।"
+      },
+      "predictions_table": {
+        "title": "ਹਾਲੀਆ ਭਵਿੱਖਬਾਣੀਆਂ",
+        "user": "ਉਪਭੋਗਤਾ",
+        "date": "ਮਿਤੀ",
+        "result": "ਨਤੀਜਾ",
+        "probability": "ਸੰਭਾਵਨਾ",
+        "details": "ਵੇਰਵੇ",
+        "anonymous": "ਅਗਿਆਤ",
+        "view_tooltip": "ਭਵਿੱਖਬਾਣੀ ਦੇ ਵੇਰਵੇ ਵੇਖੋ"
+      },
+      "detail_dialog": {
+        "title": "ਭਵਿੱਖਬਾਣੀ ਵੇਰਵੇ (ਐਡਮਿਨ)",
+        "probability_label": "ਸੰਭਾਵਨਾ",
+        "confidence_label": "ਭਰੋਸੇਯੋਗਤਾ",
+        "close": "ਬੰਦ ਕਰੋ",
+        "sections": {
+          "personal": "ਨਿੱਜੀ",
+          "menstrual": "ਮਾਹਵਾਰੀ",
+          "blood_standard": "ਖੂਨ ਰਿਪੋਰਟ (ਮਿਆਰੀ)",
+          "blood_extended": "ਖੂਨ ਰਿਪੋਰਟ (ਵਿਸਤ੍ਰਿਤ)",
+          "ultrasound": "ਅਲਟਰਾਸਾਊਂਡ",
+          "lifestyle": "ਜੀਵਨ ਸ਼ੈਲੀ"
+        },
+        "fields": {
+          "age": "ਉਮਰ",
+          "weight": "ਭਾਰ",
+          "height": "ਕੱਦ",
+          "bmi": "ਬੀਐਮਆਈ",
+          "waist_size": "ਕਮਰ ਦਾ ਆਕਾਰ",
+          "hip_size": "ਕੁੱਲ੍ਹੇ ਦਾ ਆਕਾਰ",
+          "waist_hip_ratio": "ਕਮਰ : ਕੁੱਲ੍ਹਾ ਅਨੁਪਾਤ",
+          "blood_group": "ਖੂਨ ਦਾ ਗਰੁੱਪ",
+          "cycle_length": "ਚੱਕਰ ਦੀ ਮਿਆਦ",
+          "period_duration": "ਮਾਹਵਾਰੀ ਦੀ ਮਿਆਦ",
+          "regularity": "ਨਿਯਮਿਤਤਾ",
+          "flow": "ਵਹਾਅ",
+          "family_history": "PMOS ਦਾ ਪਰਿਵਾਰਕ ਇਤਿਹਾਸ",
+          "fsh": "ਐਫਐਸਐਚ",
+          "lh": "ਐਲਐਚ",
+          "tsh": "ਟੀਐਸਐਚ",
+          "amh": "ਏਐਮਐਚ",
+          "haemoglobin": "ਹੀਮੋਗਲੋਬਿਨ",
+          "random_blood_sugar": "ਰੈਂਡਮ ਬਲੱਡ ਸ਼ੂਗਰ",
+          "vitamin_d3": "ਵਿਟਾਮਿਨ ਡੀ3",
+          "shbg": "ਐਸਐਚਬੀਜੀ",
+          "fasting_insulin": "ਫਾਸਟਿੰਗ ਇੰਸੁਲਿਨ",
+          "homa_ir": "HOMA-IR",
+          "follicle_no": "ਫੋਲੀਕਲ ਸੰਖਿਆ",
+          "avg_follicle_size": "ਔਸਤ ਫੋਲੀਕਲ ਆਕਾਰ",
+          "ovary_volume": "ਅੰਡਕੋਸ਼ ਆਇਤਨ",
+          "endometrium": "ਐਂਡੋਮੈਟ੍ਰਿਅਮ",
+          "fast_food": "ਫਾਸਟ ਫੂਡ",
+          "exercise": "ਕਸਰਤ",
+          "stress": "ਤਣਾਅ",
+          "sleep": "ਨੀਂਦ"
+        },
+        "units": {
+          "yrs": "ਸਾਲ",
+          "days": "ਦਿਨ",
+          "kg": "ਕਿਲੋ",
+          "cm": "ਸੈਮੀ",
+          "inch": "ਇੰਚ",
+          "mIU_mL": "mIU/mL",
+          "mIU_L": "mIU/L",
+          "ng_mL": "ng/mL",
+          "g_dL": "g/dL",
+          "mg_dL": "mg/dL",
+          "uIU_mL": "µIU/mL",
+          "nmol_L": "nmol/L",
+          "mm": "ਮਿਮੀ",
+          "mL": "ਮਿਲੀ",
+          "hrs": "ਘੰਟੇ"
+        }
+      },
+      "delete_dialog": {
+        "title": "ਉਪਭੋਗਤਾ ਮਿਟਾਓ",
+        "body": "ਕੀ ਤੁਸੀਂ ਯਕੀਨੀ ਤੌਰ 'ਤੇ ਇਸ ਉਪਭੋਗਤਾ ਅਤੇ ਉਹਨਾਂ ਦੇ ਸਾਰੇ ਡੇਟਾ ਨੂੰ ਸਥਾਈ ਤੌਰ 'ਤੇ ਮਿਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?",
+        "confirm_button": "ਉਪਭੋਗਤਾ ਮਿਟਾਓ",
+        "deleting": "ਮਿਟਾਇਆ ਜਾ ਰਿਹਾ ਹੈ..."
+      },
+      "toasts": {
+        "user_deleted": "ਉਪਭੋਗਤਾ ਸਫਲਤਾਪੂਰਵਕ ਮਿਟਾ ਦਿੱਤਾ ਗਿਆ।",
+        "user_delete_failed": "ਉਪਭੋਗਤਾ ਨੂੰ ਮਿਟਾਉਣ ਵਿੱਚ ਅਸਫਲ।"
+      }
+    }
+  },
+  "ml": {
+    "admin": {
+      "title": "അഡ്മിൻ ഡാഷ്ബോർഡ്",
+      "subtitle": "പ്ലാറ്റ്ഫോം അവലോകനവും ഉപയോക്തൃ മാനേജ്മെന്റും",
+      "actions": {
+        "refresh": "പുതുക്കുക"
+      },
+      "loading": {
+        "statistics": "സ്ഥിതിവിവരക്കണക്കുകൾ ലോഡ് ചെയ്യുന്നു...",
+        "users": "ഉപയോക്താക്കളെ ലോഡ് ചെയ്യുന്നു..."
+      },
+      "stats": {
+        "total_users": "ആകെ ഉപയോക്താക്കൾ",
+        "total_predictions": "ആകെ പ്രവചനങ്ങൾ",
+        "high_risk_cases": "ഉയർന്ന അപകടസാധ്യതയുള്ള കേസുകൾ",
+        "low_risk_cases": "കുറഞ്ഞ അപകടസാധ്യതയുള്ള കേസുകൾ",
+        "percent_of_total": "ആകെയുടെ {{percent}}%"
+      },
+      "roles": {
+        "admin": "അഡ്മിനിസ്ട്രേറ്റർ",
+        "user": "ഉപയോക്താവ്"
+      },
+      "results": {
+        "high_risk": "ഉയർന്ന അപകടസാധ്യത",
+        "low_risk": "കുറഞ്ഞ അപകടസാധ്യത"
+      },
+      "log_actions": {
+        "PREDICTION_CREATED": "പ്രവചനം സൃഷ്ടിച്ചു",
+        "PREDICTION_DELETED": "പ്രവചനം ഇല്ലാതാക്കി",
+        "REGISTER": "അക്കൗണ്ട് രജിസ്റ്റർ ചെയ്തു",
+        "LOGIN": "ലോഗിൻ ചെയ്തു",
+        "PROFILE_UPDATE": "പ്രൊഫൈൽ അപ്ഡേറ്റ് ചെയ്തു",
+        "PASSWORD_CHANGE": "പാസ്‌വേഡ് മാറ്റി",
+        "ADMIN_USER_DELETE": "അഡ്മിൻ ഉപയോക്താവിനെ ഇല്ലാതാക്കി"
+      },
+      "users_table": {
+        "title": "ഉപയോക്തൃ മാനേജ്മെന്റ്",
+        "name": "പേര്",
+        "role": "പങ്ക്",
+        "joined": "ചേർന്ന തീയതി",
+        "action": "പ്രവർത്തനം",
+        "delete_tooltip": "ഉപയോക്താവിനെ ഇല്ലാതാക്കുക"
+      },
+      "activity": {
+        "title": "സമീപകാല പ്രവർത്തനം",
+        "empty": "ഇതുവരെ പ്രവർത്തന ലോഗുകളൊന്നുമില്ല."
+      },
+      "predictions_table": {
+        "title": "സമീപകാല പ്രവചനങ്ങൾ",
+        "user": "ഉപയോക്താവ്",
+        "date": "തീയതി",
+        "result": "ഫലം",
+        "probability": "സാധ്യത",
+        "details": "വിശദാംശങ്ങൾ",
+        "anonymous": "അജ്ഞാതം",
+        "view_tooltip": "പ്രവചന വിശദാംശങ്ങൾ കാണുക"
+      },
+      "detail_dialog": {
+        "title": "പ്രവചന വിശദാംശങ്ങൾ (അഡ്മിൻ)",
+        "probability_label": "സാധ്യത",
+        "confidence_label": "വിശ്വാസ്യത",
+        "close": "അടയ്ക്കുക",
+        "sections": {
+          "personal": "വ്യക്തിഗതം",
+          "menstrual": "ആർത്തവം",
+          "blood_standard": "രക്ത റിപ്പോർട്ട് (സ്റ്റാൻഡേർഡ്)",
+          "blood_extended": "രക്ത റിപ്പോർട്ട് (വിപുലീകൃതം)",
+          "ultrasound": "അൾട്രാസൗണ്ട്",
+          "lifestyle": "ജീവിതശൈലി"
+        },
+        "fields": {
+          "age": "പ്രായം",
+          "weight": "ഭാരം",
+          "height": "ഉയരം",
+          "bmi": "ബിഎംഐ",
+          "waist_size": "അരയുടെ അളവ്",
+          "hip_size": "ഇടുപ്പിന്റെ അളവ്",
+          "waist_hip_ratio": "അര : ഇടുപ്പ് അനുപാതം",
+          "blood_group": "രക്തഗ്രൂപ്പ്",
+          "cycle_length": "ചക്രത്തിന്റെ ദൈർഘ്യം",
+          "period_duration": "ആർത്തവ കാലയളവ്",
+          "regularity": "ക്രമം",
+          "flow": "ഒഴുക്ക്",
+          "family_history": "PMOS ന്റെ കുടുംബ ചരിത്രം",
+          "fsh": "എഫ്എസ്എച്ച്",
+          "lh": "എൽഎച്ച്",
+          "tsh": "ടിഎസ്എച്ച്",
+          "amh": "എഎംഎച്ച്",
+          "haemoglobin": "ഹീമോഗ്ലോബിൻ",
+          "random_blood_sugar": "റാൻഡം ബ്ലഡ് ഷുഗർ",
+          "vitamin_d3": "വിറ്റാമിൻ ഡി3",
+          "shbg": "എസ്എച്ച്ബിജി",
+          "fasting_insulin": "ഫാസ്റ്റിംഗ് ഇൻസുലിൻ",
+          "homa_ir": "HOMA-IR",
+          "follicle_no": "ഫോളിക്കിൾ എണ്ണം",
+          "avg_follicle_size": "ശരാശരി ഫോളിക്കിൾ വലുപ്പം",
+          "ovary_volume": "അണ്ഡാശയ വ്യാപ്തം",
+          "endometrium": "എൻഡോമെട്രിയം",
+          "fast_food": "ഫാസ്റ്റ് ഫുഡ്",
+          "exercise": "വ്യായാമം",
+          "stress": "സമ്മർദ്ദം",
+          "sleep": "ഉറക്കം"
+        },
+        "units": {
+          "yrs": "വർഷം",
+          "days": "ദിവസം",
+          "kg": "കിലോ",
+          "cm": "സെ.മീ",
+          "inch": "ഇഞ്ച്",
+          "mIU_mL": "mIU/mL",
+          "mIU_L": "mIU/L",
+          "ng_mL": "ng/mL",
+          "g_dL": "g/dL",
+          "mg_dL": "mg/dL",
+          "uIU_mL": "µIU/mL",
+          "nmol_L": "nmol/L",
+          "mm": "മി.മീ",
+          "mL": "മി.ലി",
+          "hrs": "മണിക്കൂർ"
+        }
+      },
+      "delete_dialog": {
+        "title": "ഉപയോക്താവിനെ ഇല്ലാതാക്കുക",
+        "body": "ഈ ഉപയോക്താവിനെയും അവരുടെ എല്ലാ ഡാറ്റയും ശാശ്വതമായി ഇല്ലാതാക്കണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ?",
+        "confirm_button": "ഉപയോക്താവിനെ ഇല്ലാതാക്കുക",
+        "deleting": "ഇല്ലാതാക്കുന്നു..."
+      },
+      "toasts": {
+        "user_deleted": "ഉപയോക്താവിനെ വിജയകരമായി ഇല്ലാതാക്കി.",
+        "user_delete_failed": "ഉപയോക്താവിനെ ഇല്ലാതാക്കുന്നതിൽ പരാജയപ്പെട്ടു."
+      }
+    }
+  },
+  "ur": {
+    "admin": {
+      "title": "ایڈمن ڈیش بورڈ",
+      "subtitle": "پلیٹ فارم کا جائزہ اور صارف کا انتظام",
+      "actions": {
+        "refresh": "ریفریش کریں"
+      },
+      "loading": {
+        "statistics": "اعداد و شمار لوڈ ہو رہے ہیں...",
+        "users": "صارفین لوڈ ہو رہے ہیں..."
+      },
+      "stats": {
+        "total_users": "کل صارفین",
+        "total_predictions": "کل پیشگوئیاں",
+        "high_risk_cases": "زیادہ خطرے کے کیسز",
+        "low_risk_cases": "کم خطرے کے کیسز",
+        "percent_of_total": "کل کا {{percent}}%"
+      },
+      "roles": {
+        "admin": "منتظم",
+        "user": "صارف"
+      },
+      "results": {
+        "high_risk": "زیادہ خطرہ",
+        "low_risk": "کم خطرہ"
+      },
+      "log_actions": {
+        "PREDICTION_CREATED": "پیشگوئی بنائی گئی",
+        "PREDICTION_DELETED": "پیشگوئی حذف کی گئی",
+        "REGISTER": "اکاؤنٹ رجسٹر ہوا",
+        "LOGIN": "لاگ ان ہوا",
+        "PROFILE_UPDATE": "پروفائل اپ ڈیٹ ہوئی",
+        "PASSWORD_CHANGE": "پاس ورڈ تبدیل ہوا",
+        "ADMIN_USER_DELETE": "ایڈمن نے صارف کو حذف کیا"
+      },
+      "users_table": {
+        "title": "صارف کا انتظام",
+        "name": "نام",
+        "role": "کردار",
+        "joined": "شمولیت کی تاریخ",
+        "action": "عمل",
+        "delete_tooltip": "صارف کو حذف کریں"
+      },
+      "activity": {
+        "title": "حالیہ سرگرمی",
+        "empty": "ابھی تک کوئی سرگرمی لاگ موجود نہیں ہے۔"
+      },
+      "predictions_table": {
+        "title": "حالیہ پیشگوئیاں",
+        "user": "صارف",
+        "date": "تاریخ",
+        "result": "نتیجہ",
+        "probability": "امکان",
+        "details": "تفصیلات",
+        "anonymous": "نامعلوم",
+        "view_tooltip": "پیشگوئی کی تفصیلات دیکھیں"
+      },
+      "detail_dialog": {
+        "title": "پیشگوئی کی تفصیلات (ایڈمن)",
+        "probability_label": "امکان",
+        "confidence_label": "اعتماد کی سطح",
+        "close": "بند کریں",
+        "sections": {
+          "personal": "ذاتی",
+          "menstrual": "ماہواری",
+          "blood_standard": "خون کی رپورٹ (معیاری)",
+          "blood_extended": "خون کی رپورٹ (تفصیلی)",
+          "ultrasound": "الٹراساؤنڈ",
+          "lifestyle": "طرز زندگی"
+        },
+        "fields": {
+          "age": "عمر",
+          "weight": "وزن",
+          "height": "قد",
+          "bmi": "بی ایم آئی",
+          "waist_size": "کمر کا سائز",
+          "hip_size": "کولہے کا سائز",
+          "waist_hip_ratio": "کمر : کولہا تناسب",
+          "blood_group": "خون کا گروپ",
+          "cycle_length": "سائیکل کی مدت",
+          "period_duration": "ماہواری کا دورانیہ",
+          "regularity": "باقاعدگی",
+          "flow": "بہاؤ",
+          "family_history": "PMOS کی خاندانی تاریخ",
+          "fsh": "ایف ایس ایچ",
+          "lh": "ایل ایچ",
+          "tsh": "ٹی ایس ایچ",
+          "amh": "اے ایم ایچ",
+          "haemoglobin": "ہیموگلوبن",
+          "random_blood_sugar": "رینڈم بلڈ شوگر",
+          "vitamin_d3": "وٹامن ڈی3",
+          "shbg": "ایس ایچ بی جی",
+          "fasting_insulin": "فاسٹنگ انسولین",
+          "homa_ir": "HOMA-IR",
+          "follicle_no": "فولیکل کی تعداد",
+          "avg_follicle_size": "اوسط فولیکل سائز",
+          "ovary_volume": "بیضہ دانی کا حجم",
+          "endometrium": "اینڈومیٹریئم",
+          "fast_food": "فاسٹ فوڈ",
+          "exercise": "ورزش",
+          "stress": "تناؤ",
+          "sleep": "نیند"
+        },
+        "units": {
+          "yrs": "سال",
+          "days": "دن",
+          "kg": "کلوگرام",
+          "cm": "سینٹی میٹر",
+          "inch": "انچ",
+          "mIU_mL": "mIU/mL",
+          "mIU_L": "mIU/L",
+          "ng_mL": "ng/mL",
+          "g_dL": "g/dL",
+          "mg_dL": "mg/dL",
+          "uIU_mL": "µIU/mL",
+          "nmol_L": "nmol/L",
+          "mm": "ملی میٹر",
+          "mL": "ملی لیٹر",
+          "hrs": "گھنٹے"
+        }
+      },
+      "delete_dialog": {
+        "title": "صارف کو حذف کریں",
+        "body": "کیا آپ واقعی اس صارف اور اس کا تمام ڈیٹا مستقل طور پر حذف کرنا چاہتے ہیں؟",
+        "confirm_button": "صارف کو حذف کریں",
+        "deleting": "حذف کیا جا رہا ہے..."
+      },
+      "toasts": {
+        "user_deleted": "صارف کامیابی سے حذف کر دیا گیا۔",
+        "user_delete_failed": "صارف کو حذف کرنے میں ناکامی۔"
+      }
+    }
+  },
+  "as": {
+    "admin": {
+      "title": "এডমিন ডেশ্ববৰ্ড",
+      "subtitle": "প্লেটফৰ্মৰ অৱলোকন আৰু ব্যৱহাৰকাৰী ব্যৱস্থাপনা",
+      "actions": {
+        "refresh": "ৰিফ্ৰেছ কৰক"
+      },
+      "loading": {
+        "statistics": "পৰিসংখ্যা লোড হৈ আছে...",
+        "users": "ব্যৱহাৰকাৰী লোড হৈ আছে..."
+      },
+      "stats": {
+        "total_users": "মুঠ ব্যৱহাৰকাৰী",
+        "total_predictions": "মুঠ ভৱিষ্যদ্বাণী",
+        "high_risk_cases": "উচ্চ জোখিমৰ ক্ষেত্ৰ",
+        "low_risk_cases": "কম জোখিমৰ ক্ষেত্ৰ",
+        "percent_of_total": "মুঠৰ {{percent}}%"
+      },
+      "roles": {
+        "admin": "প্ৰশাসক",
+        "user": "ব্যৱহাৰকাৰী"
+      },
+      "results": {
+        "high_risk": "উচ্চ জোখিম",
+        "low_risk": "কম জোখিম"
+      },
+      "log_actions": {
+        "PREDICTION_CREATED": "ভৱিষ্যদ্বাণী সৃষ্টি কৰা হ'ল",
+        "PREDICTION_DELETED": "ভৱিষ্যদ্বাণী মচি পেলোৱা হ'ল",
+        "REGISTER": "একাউণ্ট পঞ্জীয়ন কৰা হ'ল",
+        "LOGIN": "লগইন কৰা হ'ল",
+        "PROFILE_UPDATE": "প্ৰ'ফাইল আপডেট কৰা হ'ল",
+        "PASSWORD_CHANGE": "পাছৱৰ্ড সলনি কৰা হ'ল",
+        "ADMIN_USER_DELETE": "এডমিনে ব্যৱহাৰকাৰী মচি পেলালে"
+      },
+      "users_table": {
+        "title": "ব্যৱহাৰকাৰী ব্যৱস্থাপনা",
+        "name": "নাম",
+        "role": "ভূমিকা",
+        "joined": "যোগদান কৰা তাৰিখ",
+        "action": "কাৰ্য",
+        "delete_tooltip": "ব্যৱহাৰকাৰী মচক"
+      },
+      "activity": {
+        "title": "শেহতীয়া কাৰ্যকলাপ",
+        "empty": "এতিয়ালৈকে কোনো কাৰ্যকলাপ লগ নাই।"
+      },
+      "predictions_table": {
+        "title": "শেহতীয়া ভৱিষ্যদ্বাণী",
+        "user": "ব্যৱহাৰকাৰী",
+        "date": "তাৰিখ",
+        "result": "ফলাফল",
+        "probability": "সম্ভাৱনা",
+        "details": "বিৱৰণ",
+        "anonymous": "অজ্ঞাত",
+        "view_tooltip": "ভৱিষ্যদ্বাণীৰ বিৱৰণ চাওক"
+      },
+      "detail_dialog": {
+        "title": "ভৱিষ্যদ্বাণীৰ বিৱৰণ (এডমিন)",
+        "probability_label": "সম্ভাৱনা",
+        "confidence_label": "বিশ্বাসযোগ্যতা",
+        "close": "বন্ধ কৰক",
+        "sections": {
+          "personal": "ব্যক্তিগত",
+          "menstrual": "ঋতুস্ৰাব",
+          "blood_standard": "তেজৰ প্ৰতিবেদন (প্ৰামাণিক)",
+          "blood_extended": "তেজৰ প্ৰতিবেদন (বিস্তৃত)",
+          "ultrasound": "আল্ট্ৰাছাউণ্ড",
+          "lifestyle": "জীৱনশৈলী"
+        },
+        "fields": {
+          "age": "বয়স",
+          "weight": "ওজন",
+          "height": "উচ্চতা",
+          "bmi": "বিএমআই",
+          "waist_size": "কঁকালৰ জোখ",
+          "hip_size": "নিতম্বৰ জোখ",
+          "waist_hip_ratio": "কঁকাল : নিতম্ব অনুপাত",
+          "blood_group": "তেজৰ গোট",
+          "cycle_length": "চক্ৰৰ দৈৰ্ঘ্য",
+          "period_duration": "ঋতুস্ৰাবৰ সময়সীমা",
+          "regularity": "নিয়মিততা",
+          "flow": "প্ৰবাহ",
+          "family_history": "PMOS ৰ পাৰিবাৰিক ইতিহাস",
+          "fsh": "এফএছএইচ",
+          "lh": "এলএইচ",
+          "tsh": "টিএছএইচ",
+          "amh": "এএমএইচ",
+          "haemoglobin": "হিমোগ্লোবিন",
+          "random_blood_sugar": "ৰেণ্ডম ব্লাড শ্বুগাৰ",
+          "vitamin_d3": "ভিটামিন ডি3",
+          "shbg": "এছএইচবিজি",
+          "fasting_insulin": "ফাষ্টিং ইনচুলিন",
+          "homa_ir": "HOMA-IR",
+          "follicle_no": "ফলিকল সংখ্যা",
+          "avg_follicle_size": "গড় ফলিকল আকাৰ",
+          "ovary_volume": "ডিম্বাশয়ৰ আয়তন",
+          "endometrium": "এণ্ডোমেট্ৰিয়াম",
+          "fast_food": "ফাষ্ট ফুড",
+          "exercise": "ব্যায়াম",
+          "stress": "মানসিক চাপ",
+          "sleep": "টোপনি"
+        },
+        "units": {
+          "yrs": "বছৰ",
+          "days": "দিন",
+          "kg": "কিলোগ্ৰাম",
+          "cm": "চেমি",
+          "inch": "ইঞ্চি",
+          "mIU_mL": "mIU/mL",
+          "mIU_L": "mIU/L",
+          "ng_mL": "ng/mL",
+          "g_dL": "g/dL",
+          "mg_dL": "mg/dL",
+          "uIU_mL": "µIU/mL",
+          "nmol_L": "nmol/L",
+          "mm": "মিমি",
+          "mL": "মিলি",
+          "hrs": "ঘণ্টা"
+        }
+      },
+      "delete_dialog": {
+        "title": "ব্যৱহাৰকাৰী মচক",
+        "body": "আপুনি নিশ্চিতভাৱে এই ব্যৱহাৰকাৰী আৰু তেওঁৰ সকলো তথ্য স্থায়ীভাৱে মচি পেলাব বিচাৰেনে?",
+        "confirm_button": "ব্যৱহাৰকাৰী মচক",
+        "deleting": "মচি থকা হৈছে..."
+      },
+      "toasts": {
+        "user_deleted": "ব্যৱহাৰকাৰী সফলতাৰে মচি পেলোৱা হ'ল।",
+        "user_delete_failed": "ব্যৱহাৰকাৰী মচাত ব্যৰ্থ হ'ল।"
+      }
+    }
   }
 }
