@@ -5,11 +5,11 @@ import {
   AppBar, Toolbar, Typography, IconButton, Button, Box, Tooltip, useTheme, alpha,
 } from '@mui/material';
 import {
-  DarkMode, LightMode, Dashboard, History, Favorite, Explore,
+  DarkMode, LightMode, Dashboard, History, Explore,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { ROUTES } from '../../constants/index.js';
-import { APP_NAME, APP_FULL_FORM } from '../../config/appConfig.js';
+import { APP_NAME } from '../../config/appConfig.js';
 import LanguageSelector from '../../components/common/LanguageSelector.jsx';
 import { COLORS } from '../../theme/index.js';
 
@@ -70,7 +70,7 @@ const Navbar = ({ onThemeToggle, isDark }) => {
                   lineHeight: 1.1,
                 }}
               >
-                {APP_FULL_FORM}
+                {t('brand.tagline')}
               </Typography>
             </Box>
           </Box>
@@ -82,7 +82,6 @@ const Navbar = ({ onThemeToggle, isDark }) => {
         <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 0.5 }}>
           <Button startIcon={<Dashboard />} onClick={() => navigate(ROUTES.DASHBOARD)} size="small">{t('nav.dashboard')}</Button>
           <Button startIcon={<Explore />} onClick={() => navigate(ROUTES.EXPLORE)} size="small">{t('nav.explore')}</Button>
-          <Button startIcon={<Favorite />} onClick={() => navigate(ROUTES.LIFESTYLE)} size="small">{t('nav.lifestyle')}</Button>
           <Button startIcon={<History />} onClick={() => navigate(ROUTES.HISTORY)} size="small">{t('nav.history')}</Button>
         </Box>
 

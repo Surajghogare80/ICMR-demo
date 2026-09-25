@@ -51,7 +51,6 @@
     "nav": {
       "dashboard": "Dashboard",
       "explore": "Explore",
-      "lifestyle": "Lifestyle",
       "history": "History",
       "admin": "Admin",
       "profile": "Profile",
@@ -173,7 +172,6 @@
     "nav": {
       "dashboard": "डैशबोर्ड",
       "explore": "एक्सप्लोर",
-      "lifestyle": "जीवनशैली",
       "history": "इतिहास",
       "admin": "एडमिन",
       "profile": "प्रोफ़ाइल",
@@ -295,7 +293,6 @@
     "nav": {
       "dashboard": "डॅशबोर्ड",
       "explore": "एक्सप्लोर",
-      "lifestyle": "जीवनशैली",
       "history": "इतिहास",
       "admin": "अॅडमिन",
       "profile": "प्रोफाइल",
@@ -417,7 +414,6 @@
     "nav": {
       "dashboard": "ড্যাশবোর্ড",
       "explore": "এক্সপ্লোর",
-      "lifestyle": "জীবনযাত্রা",
       "history": "ইতিহাস",
       "admin": "অ্যাডমিন",
       "profile": "প্রোফাইল",
@@ -539,7 +535,6 @@
     "nav": {
       "dashboard": "డాష్‌బోర్డ్",
       "explore": "అన్వేషించండి",
-      "lifestyle": "జీవనశైలి",
       "history": "చరిత్ర",
       "admin": "అడ్మిన్",
       "profile": "ప్రొఫైల్",
@@ -661,7 +656,6 @@
     "nav": {
       "dashboard": "டாஷ்போர்டு",
       "explore": "ஆராயுங்கள்",
-      "lifestyle": "வாழ்க்கை முறை",
       "history": "வரலாறு",
       "admin": "நிர்வாகி",
       "profile": "சுயவிவரம்",
@@ -783,7 +777,6 @@
     "nav": {
       "dashboard": "ડેશબોર્ડ",
       "explore": "એક્સપ્લોર",
-      "lifestyle": "જીવનશૈલી",
       "history": "ઇતિહાસ",
       "admin": "એડમિન",
       "profile": "પ્રોફાઇલ",
@@ -905,7 +898,6 @@
     "nav": {
       "dashboard": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
       "explore": "ಅನ್ವೇಷಿಸಿ",
-      "lifestyle": "ಜೀವನಶೈಲಿ",
       "history": "ಇತಿಹಾಸ",
       "admin": "ನಿರ್ವಾಹಕ",
       "profile": "ಪ್ರೊಫೈಲ್",
@@ -1027,7 +1019,6 @@
     "nav": {
       "dashboard": "ଡ୍ୟାସବୋର୍ଡ",
       "explore": "ଅନ୍ୱେଷଣ",
-      "lifestyle": "ଜୀବନଶୈଳୀ",
       "history": "ଇତିହାସ",
       "admin": "ଆଡମିନ୍",
       "profile": "ପ୍ରୋଫାଇଲ୍",
@@ -1149,7 +1140,6 @@
     "nav": {
       "dashboard": "ਡੈਸ਼ਬੋਰਡ",
       "explore": "ਐਕਸਪਲੋਰ",
-      "lifestyle": "ਜੀਵਨ ਸ਼ੈਲੀ",
       "history": "ਇਤਿਹਾਸ",
       "admin": "ਐਡਮਿਨ",
       "profile": "ਪ੍ਰੋਫਾਈਲ",
@@ -1271,7 +1261,6 @@
     "nav": {
       "dashboard": "ഡാഷ്‌ബോർഡ്",
       "explore": "എക്സ്പ്ലോർ",
-      "lifestyle": "ജീവിതശൈലി",
       "history": "ചരിത്രം",
       "admin": "അഡ്മിൻ",
       "profile": "പ്രൊഫൈൽ",
@@ -1393,7 +1382,6 @@
     "nav": {
       "dashboard": "ڈیش بورڈ",
       "explore": "دریافت کریں",
-      "lifestyle": "طرزِ زندگی",
       "history": "تاریخ",
       "admin": "ایڈمن",
       "profile": "پروفائل",
@@ -1515,7 +1503,6 @@
     "nav": {
       "dashboard": "ডেশ্ববৰ্ড",
       "explore": "অন্বেষণ কৰক",
-      "lifestyle": "জীৱনশৈলী",
       "history": "ইতিহাস",
       "admin": "এডমিন",
       "profile": "প্ৰ'ফাইল",

@@ -1,8 +1,8 @@
 // src/components/common/LanguageSelector.jsx
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconButton, Menu, MenuItem, ListItemText, Tooltip } from '@mui/material';
-import { Translate } from '@mui/icons-material';
+import { Button, Menu, MenuItem, ListItemText } from '@mui/material';
+import { Translate, KeyboardArrowDown } from '@mui/icons-material';
 import { changeLanguage, SUPPORTED_LANGUAGES } from '../../i18n.js';
 
 // Each language's name is shown in its own native script regardless of the
@@ -37,17 +37,23 @@ const LanguageSelector = () => {
     }
   };
 
+  // i18n.language can report a region-qualified tag from browser detection
+  // (e.g. "en-GB", "hi-IN") even though only the base code is ever actually
+  // selectable here, so normalize before looking up the display name.
+  const baseLanguage = i18n.language?.split('-')[0].toLowerCase();
+  const currentLanguageName = NATIVE_LANGUAGE_NAMES[baseLanguage] || i18n.language;
+
   return (
     <>
-      <Tooltip title={t('language.select_language')}>
-        <IconButton
-          size="small"
-          onClick={(e) => setAnchorEl(e.currentTarget)}
-          aria-label={t('language.select_language')}
-        >
-          <Translate fontSize="small" />
-        </IconButton>
-      </Tooltip>
+      <Button
+        size="small"
+        startIcon={<Translate fontSize="small" />}
+        endIcon={<KeyboardArrowDown fontSize="small" />}
+        onClick={(e) => setAnchorEl(e.currentTarget)}
+        aria-label={t('language.select_language')}
+      >
+        {currentLanguageName}
+      </Button>
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -59,7 +65,7 @@ const LanguageSelector = () => {
         {SUPPORTED_LANGUAGES.map((lang) => (
           <MenuItem
             key={lang}
-            selected={i18n.language === lang}
+            selected={baseLanguage === lang}
             onClick={() => handleSelect(lang)}
           >
             <ListItemText>{NATIVE_LANGUAGE_NAMES[lang] || lang}</ListItemText>

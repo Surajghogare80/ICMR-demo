@@ -9,8 +9,6 @@ import PredictionWizard from '../pages/Prediction/PredictionWizard.jsx';
 import PredictionResult from '../pages/Prediction/PredictionResult.jsx';
 import PredictionHistoryPage from '../pages/PredictionHistory/PredictionHistoryPage.jsx';
 import NotFoundPage from '../pages/NotFound/NotFoundPage.jsx';
-import LifestylePage from '../pages/Lifestyle/LifestylePage.jsx';
-import ArticlePage from '../pages/Lifestyle/ArticlePage.jsx';
 import ExplorePage from '../pages/Explore/ExplorePage.jsx';
 import ExploreArticlePage from '../pages/Explore/ExploreArticlePage.jsx';
 
@@ -22,8 +20,6 @@ const AppRoutes = () => {
       <Route path={ROUTES.PREDICTION} element={<PredictionWizard />} />
       <Route path={ROUTES.PREDICTION_RESULT} element={<PredictionResult />} />
       <Route path={ROUTES.HISTORY} element={<PredictionHistoryPage />} />
-      <Route path={ROUTES.LIFESTYLE} element={<LifestylePage />} />
-      <Route path={ROUTES.LIFESTYLE_ARTICLE} element={<ArticlePage />} />
       <Route path={ROUTES.EXPLORE} element={<ExplorePage />} />
       <Route path={ROUTES.EXPLORE_ARTICLE} element={<ExploreArticlePage />} />
 

@@ -7,8 +7,6 @@ export const ROUTES = {
   PREDICTION: '/prediction',
   PREDICTION_RESULT: '/prediction/result',
   HISTORY: '/history',
-  LIFESTYLE: '/lifestyle',
-  LIFESTYLE_ARTICLE: '/lifestyle/:id',
   EXPLORE: '/explore',
   EXPLORE_ARTICLE: '/explore/:categoryId/:articleId',
   NOT_FOUND: '*',
