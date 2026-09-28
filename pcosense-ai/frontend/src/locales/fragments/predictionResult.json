@@ -48,7 +48,33 @@
       "actions": {
         "dashboard": "Go to Dashboard",
         "history": "View History",
-        "newScreening": "New Screening"
+        "newScreening": "New Screening",
+        "downloadReport": "Download PDF Report"
+      },
+      "report": {
+        "title": "Your Screening Result",
+        "subtitle": "This result is for screening only, not a medical diagnosis.",
+        "fileName": "PMOS-Screening-Report",
+        "probabilityLabel": "PMOS probability",
+        "whatToDoNext": "What to do next",
+        "bands": {
+          "low": {
+            "pill": "Low likelihood of PMOS",
+            "text": "Your answers suggest that PMOS is less likely. This does not mean you definitely don't have PMOS. If you have concerns, talk to a doctor."
+          },
+          "moderate": {
+            "pill": "Moderate likelihood of PMOS",
+            "text": "Your answers suggest a moderate chance of PMOS. This is not a diagnosis. Consider discussing your symptoms with a doctor."
+          },
+          "detected": {
+            "pill": "High likelihood of PMOS",
+            "text": "Your answers suggest that PMOS is likely. This is not a diagnosis. Please talk to a doctor for a proper evaluation."
+          },
+          "high": {
+            "pill": "Very high likelihood of PMOS",
+            "text": "Your answers strongly suggest PMOS. This is not a diagnosis. Please see a gynecologist or endocrinologist for a proper evaluation."
+          }
+        }
       },
       "units": {
         "mIU_mL": "mIU/mL",

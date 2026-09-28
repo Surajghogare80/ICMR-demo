@@ -5,11 +5,12 @@ import {
   LinearProgress, Chip, Alert, List, ListItem, ListItemIcon, ListItemText,
   Divider,
 } from '@mui/material';
-import { CheckCircle, Home, History, Science, Warning } from '@mui/icons-material';
+import { CheckCircle, Home, History, Science, Warning, PictureAsPdf } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../constants/index.js';
 import { COLORS } from '../../theme/index.js';
+import PredictionReport, { printReport } from './PredictionReport.jsx';
 
 // ─── 4-band risk scale, driven by the model probability (0–100) ───────────
 //   0–30   Low PMOS Risk        → green
@@ -196,6 +197,15 @@ const PredictionResult = () => {
 
           {/* Actions */}
           <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center' }}>
+            <Button
+              variant="contained"
+              color="secondary"
+              startIcon={<PictureAsPdf />}
+              onClick={() => printReport(`${t('predictionResult.report.fileName')}-${new Date().toISOString().slice(0, 10)}`)}
+              sx={{ px: 4 }}
+            >
+              {t('predictionResult.actions.downloadReport')}
+            </Button>
             <Button variant="contained" startIcon={<Home />} onClick={() => navigate(ROUTES.DASHBOARD)} sx={{ px: 4 }}>
               {t('predictionResult.actions.dashboard')}
             </Button>
@@ -208,6 +218,7 @@ const PredictionResult = () => {
           </Box>
         </motion.div>
       </Container>
+      <PredictionReport result={result} band={band} />
     </Box>
   );
 };
