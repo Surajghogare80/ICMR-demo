@@ -11,6 +11,7 @@ import PredictionHistoryPage from '../pages/PredictionHistory/PredictionHistoryP
 import NotFoundPage from '../pages/NotFound/NotFoundPage.jsx';
 import ExplorePage from '../pages/Explore/ExplorePage.jsx';
 import ExploreArticlePage from '../pages/Explore/ExploreArticlePage.jsx';
+import TermsAndConditions from '../pages/Legal/TermsAndConditions.jsx';
 
 const AppRoutes = () => {
   return (
@@ -22,6 +23,7 @@ const AppRoutes = () => {
       <Route path={ROUTES.HISTORY} element={<PredictionHistoryPage />} />
       <Route path={ROUTES.EXPLORE} element={<ExplorePage />} />
       <Route path={ROUTES.EXPLORE_ARTICLE} element={<ExploreArticlePage />} />
+      <Route path={ROUTES.TERMS} element={<TermsAndConditions />} />
 
       {/* 404 */}
       <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />

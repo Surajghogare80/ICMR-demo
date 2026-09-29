@@ -1,0 +1,77 @@
+{
+  "en": {
+    "legal": {
+      "terms": {
+        "pageTitle": "Terms & Conditions",
+        "effectiveDateLabel": "Effective Date",
+        "effectiveDateValue": "To be announced",
+        "versionLabel": "Version",
+        "versionValue": "1.0",
+        "intro": "These Terms & Conditions govern your use of the MAP PMOS application. By using the application, you agree to these terms.",
+        "sections": [
+          {
+            "title": "1. About MAP PMOS",
+            "paragraphs": [
+              "MAP PMOS is an informational and screening-support application designed to help users understand and assess information related to PMOS.",
+              "The application does not replace medical consultation, diagnosis, or treatment by a qualified healthcare professional."
+            ]
+          },
+          {
+            "title": "2. Medical Disclaimer",
+            "paragraphs": [
+              "Any screening result, prediction, score, or information provided by MAP PMOS is for informational and screening purposes only and should not be considered a medical diagnosis.",
+              "Results may be affected by the accuracy and completeness of the information entered by the user. Users should consult a qualified healthcare professional for diagnosis, treatment, or medical advice.",
+              "MAP PMOS should not be used as the sole basis for making medical decisions."
+            ]
+          },
+          {
+            "title": "3. User Information",
+            "paragraphs": [
+              "Users may enter clinical, reproductive, hormonal, biochemical, ultrasound, lifestyle, and other relevant information into the application.",
+              "Users are responsible for ensuring that the information provided is accurate and complete."
+            ]
+          },
+          {
+            "title": "4. Data and Privacy",
+            "paragraphs": [
+              "MAP PMOS does not require users to create an account or log in.",
+              "User-provided information is not stored on MAP PMOS servers or retained by the Operator. Information entered into the application remains subject to the application's technical operation and the user's device settings.",
+              "For further information regarding data handling and privacy, please refer to the Privacy Policy."
+            ]
+          },
+          {
+            "title": "5. Use of the Application",
+            "paragraphs": [
+              "The application must be used only for its intended purpose. Users must not attempt to misuse, modify, reverse engineer, disrupt, or gain unauthorized access to the application or its underlying systems."
+            ]
+          },
+          {
+            "title": "6. Accuracy and Availability",
+            "paragraphs": [
+              "While reasonable efforts are made to maintain the accuracy and functionality of MAP PMOS, the Operator does not guarantee that the application will always be available, error-free, or accurate for every individual."
+            ]
+          },
+          {
+            "title": "7. Intellectual Property",
+            "paragraphs": [
+              "All content, software, graphics, designs, logos, and other materials within MAP PMOS are owned by or licensed to the Operator and may not be reproduced, modified, or distributed without authorization."
+            ]
+          },
+          {
+            "title": "8. Changes to the Terms",
+            "paragraphs": [
+              "These Terms may be updated from time to time. Any updated version will be made available through the application and will take effect from the date specified therein."
+            ]
+          },
+          {
+            "title": "9. Contact",
+            "paragraphs": [
+              "For questions regarding these Terms & Conditions, please contact:"
+            ]
+          }
+        ],
+        "contactValue": "To be announced"
+      }
+    }
+  }
+}

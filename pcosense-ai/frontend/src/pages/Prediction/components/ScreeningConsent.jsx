@@ -1,19 +1,22 @@
 // src/pages/Prediction/components/ScreeningConsent.jsx
 import { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Box, Container, Typography, Card, CardContent, Checkbox,
-  FormControlLabel, Button, Collapse, Stack,
+  FormControlLabel, Button, Collapse, Stack, Link,
 } from '@mui/material';
 import { CheckCircle, WarningAmberRounded, ExpandMore } from '@mui/icons-material';
 import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { COLORS } from '../../../theme/index.js';
+import { ROUTES } from '../../../constants/index.js';
 
 const DISCLAIMER_PANEL_ID = 'welcome-medical-disclaimer-panel';
 
 const ScreeningConsent = ({ onStart }) => {
   const { t } = useTranslation();
   const [consentAccepted, setConsentAccepted] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [disclaimerOpen, setDisclaimerOpen] = useState(false);
 
   const toggleDisclaimer = () => setDisclaimerOpen((prev) => !prev);
@@ -25,8 +28,10 @@ const ScreeningConsent = ({ onStart }) => {
     }
   };
 
+  const canStart = consentAccepted && termsAccepted;
+
   const handleStartScreening = () => {
-    if (!consentAccepted) return;
+    if (!canStart) return;
     onStart();
   };
 
@@ -110,7 +115,7 @@ const ScreeningConsent = ({ onStart }) => {
           </Card>
 
           <FormControlLabel
-            sx={{ mb: 3, alignItems: 'flex-start', ml: 0 }}
+            sx={{ mb: 1, alignItems: 'flex-start', ml: 0 }}
             control={
               <Checkbox
                 checked={consentAccepted}
@@ -121,15 +126,43 @@ const ScreeningConsent = ({ onStart }) => {
             label={<Typography variant="body2">{t('welcome.consent')}</Typography>}
           />
 
+          <FormControlLabel
+            sx={{ mb: 3, alignItems: 'flex-start', ml: 0 }}
+            control={
+              <Checkbox
+                checked={termsAccepted}
+                onChange={(event) => setTermsAccepted(event.target.checked)}
+                sx={{ mt: -0.7 }}
+              />
+            }
+            label={
+              <Typography variant="body2">
+                <Trans
+                  i18nKey="welcome.termsConsent"
+                  components={{
+                    termsLink: (
+                      <Link
+                        component={RouterLink}
+                        to={ROUTES.TERMS}
+                        onClick={(event) => event.stopPropagation()}
+                        sx={{ fontWeight: 600 }}
+                      />
+                    ),
+                  }}
+                />
+              </Typography>
+            }
+          />
+
           <Button
             variant="contained"
             fullWidth
             size="large"
-            disabled={!consentAccepted}
+            disabled={!canStart}
             onClick={handleStartScreening}
             sx={{
               py: 1.8, fontSize: '1rem', borderRadius: 3,
-              background: consentAccepted ? `linear-gradient(135deg, ${COLORS.secondaryDark} 0%, ${COLORS.accentRose} 100%)` : undefined,
+              background: canStart ? `linear-gradient(135deg, ${COLORS.secondaryDark} 0%, ${COLORS.accentRose} 100%)` : undefined,
             }}
           >
             {t('welcome.start_screening')}

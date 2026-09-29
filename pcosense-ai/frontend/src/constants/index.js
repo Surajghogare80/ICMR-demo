@@ -9,6 +9,7 @@ export const ROUTES = {
   HISTORY: '/history',
   EXPLORE: '/explore',
   EXPLORE_ARTICLE: '/explore/:categoryId/:articleId',
+  TERMS: '/terms-and-conditions',
   NOT_FOUND: '*',
 };
 
