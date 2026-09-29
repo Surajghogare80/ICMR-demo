@@ -88,7 +88,8 @@ const HealthProgressSection = ({ predictions }) => {
     {
       label: t('dashboard.progress.metrics.riskProbability'),
       value: latest?.probability ?? null,
-      color: latest?.probability > 60 ? COLORS.riskHigh : latest?.probability > 40 ? COLORS.orange : COLORS.riskLow,
+      // Same 3-band split as the screening result page: low 0-30, moderate 30-60, high 60-100.
+      color: latest?.probability >= 60 ? COLORS.riskHigh : latest?.probability >= 30 ? COLORS.riskModerate : COLORS.riskLow,
     },
     { label: t('dashboard.progress.metrics.aiConfidence'), value: latest?.confidence ?? null, color: COLORS.purple },
     { label: t('dashboard.progress.metrics.screeningsCompleted'), value: Math.min(predictions?.length ?? 0, 10) * 10, color: COLORS.secondaryDark, max: 100 },

@@ -2,7 +2,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { Box, Typography, Avatar, Grid, useTheme, alpha } from '@mui/material';
 import {
-  Science, TrendingUp, Shield, CalendarToday, Analytics, FavoriteOutlined,
+  Science, TrendingUp, TrendingDown, Shield, CalendarToday, Analytics, FavoriteOutlined,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -173,7 +173,9 @@ const HealthSummaryCards = ({ predictions, total }) => {
       subtitle: latestPrediction
         ? formatLocalizedDate(latestPrediction.createdAt, i18n.language, { day: 'numeric', month: 'short', year: 'numeric' })
         : t('dashboard.healthSummary.cards.lastAssessment.subtitleEmpty'),
-      icon: <TrendingUp sx={{ fontSize: 22, color: 'white' }} />,
+      icon: latestPrediction?.result === 'High Risk'
+        ? <TrendingUp sx={{ fontSize: 22, color: 'white' }} />
+        : <TrendingDown sx={{ fontSize: 22, color: 'white' }} />,
       gradient: latestPrediction?.result === 'High Risk'
         ? `linear-gradient(135deg, ${COLORS.riskHigh}, ${COLORS.riskHighLight})`
         : `linear-gradient(135deg, ${COLORS.riskLow}, ${COLORS.riskLow})`,

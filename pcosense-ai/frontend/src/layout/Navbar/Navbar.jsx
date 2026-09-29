@@ -39,7 +39,7 @@ const Navbar = ({ onThemeToggle, isDark }) => {
             to={ROUTES.HOME}
             sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.75, sm: 1 }, minWidth: 0, textDecoration: 'none' }}
           >
-            <Box component="img" src="/LOGO.jpg" alt="PRABHA MOS" sx={{ width: { xs: 56, sm: 84 }, height: { xs: 56, sm: 84 }, objectFit: 'cover', borderRadius: '22%', flexShrink: 0 }} />
+            <Box component="img" src="/LOGO.jpg" alt="MapPMOS" sx={{ width: { xs: 56, sm: 84 }, height: { xs: 56, sm: 84 }, objectFit: 'cover', borderRadius: '22%', flexShrink: 0 }} />
             <Box sx={{ display: 'flex', flexDirection: 'column', lineHeight: 1, minWidth: 0 }}>
               <Typography
                 variant="h6"

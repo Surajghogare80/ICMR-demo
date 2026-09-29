@@ -6,32 +6,41 @@
 import { createPortal } from 'react-dom';
 import { GlobalStyles } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { RISK_BANDS } from '../../theme/index.js';
 
 const REPORT_ID = 'pmos-print-report';
 
-// accent = ring/badge colour, dark = text, bg = card fill, border = card/pill outline
-const PALETTE = {
-  low:      { accent: '#22C55E', dark: '#166534', bg: '#F0FDF4', border: '#86EFAC', ring: '#BBF7D0', ringOuter: '#DCFCE7' },
-  moderate: { accent: '#EAB308', dark: '#854D0E', bg: '#FEFCE8', border: '#FDE047', ring: '#FEF08A', ringOuter: '#FEF9C3' },
-  detected: { accent: '#F97316', dark: '#9A3412', bg: '#FFF7ED', border: '#FDBA74', ring: '#FED7AA', ringOuter: '#FFEDD5' },
-  high:     { accent: '#EF4444', dark: '#991B1B', bg: '#FEF2F2', border: '#FCA5A5', ring: '#FECACA', ringOuter: '#FEE2E2' },
+// Each risk band renders its own icon glyph inside the badge — not just its own
+// color — so the printed report stays legible for colorblind readers too.
+// Shares the same colorblind-safe hues as the live result screen (RISK_BANDS).
+const ICON_GLYPHS = {
+  // check mark — low
+  check: <path d="M75 91l10 10 20-22" fill="none" stroke="#fff" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />,
+  // "i" dot + stem — moderate
+  info: (
+    <>
+      <circle cx="90" cy="70" r="4.5" fill="#fff" />
+      <path d="M90 83v22" stroke="#fff" strokeWidth="6" strokeLinecap="round" />
+    </>
+  ),
+  // exclamation mark — detected
+  warning: <path d="M90 68v26M90 104v1.5" stroke="#fff" strokeWidth="6" strokeLinecap="round" />,
+  // X mark — high
+  cancel: <path d="M79 79l22 22M101 79l-22 22" stroke="#fff" strokeWidth="6" strokeLinecap="round" />,
 };
 
-const StatusIcon = ({ p, severe }) => (
+const StatusIcon = ({ p, icon }) => (
   <svg width="180" height="180" viewBox="0 0 180 180" role="img" aria-hidden="true">
     <circle cx="90" cy="90" r="88" fill={p.ringOuter} />
     <circle cx="90" cy="90" r="68" fill={p.ring} />
-    <circle cx="90" cy="90" r="46" fill={p.accent} />
-    <circle cx="90" cy="90" r="19" fill="none" stroke="#fff" strokeWidth="4" />
-    {severe
-      ? <path d="M90 80v12M90 98v1" stroke="#fff" strokeWidth="4.5" strokeLinecap="round" />
-      : <path d="M81 90.5l6.5 6.5L99.5 84" fill="none" stroke="#fff" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" />}
+    <circle cx="90" cy="90" r="46" fill={p.color} />
+    {ICON_GLYPHS[icon] || ICON_GLYPHS.check}
   </svg>
 );
 
 const PredictionReport = ({ result, band }) => {
   const { t } = useTranslation();
-  const p = PALETTE[band.key] || PALETTE.low;
+  const p = RISK_BANDS[band.key] || RISK_BANDS.low;
   const recommendations = Array.isArray(result.recommendation) ? result.recommendation : [];
 
   return createPortal(
@@ -63,7 +72,7 @@ const PredictionReport = ({ result, band }) => {
 
         {/* Result card */}
         <div style={{ background: p.bg, border: `2px solid ${p.border}`, borderRadius: 20, padding: '28px 24px', textAlign: 'center', breakInside: 'avoid' }}>
-          <StatusIcon p={p} severe={band.severe} />
+          <StatusIcon p={p} icon={p.icon} />
           <div style={{ fontSize: 52, fontWeight: 800, color: p.dark, lineHeight: 1.1 }}>{result.probability}%</div>
           <div style={{ fontSize: 11, color: '#9ca3af', marginTop: 2 }}>{t('predictionResult.report.probabilityLabel')}</div>
 
@@ -72,7 +81,7 @@ const PredictionReport = ({ result, band }) => {
             borderRadius: 999, background: p.ringOuter, border: `2px solid ${p.border}`,
             fontSize: 18, fontWeight: 700, color: p.dark,
           }}>
-            <span style={{ width: 14, height: 14, borderRadius: '50%', background: p.accent, display: 'inline-block' }} />
+            <span style={{ width: 14, height: 14, borderRadius: '50%', background: p.color, display: 'inline-block' }} />
             {t(`predictionResult.report.bands.${band.key}.pill`)}
           </div>
 
@@ -91,7 +100,7 @@ const PredictionReport = ({ result, band }) => {
             {recommendations.map((rec, i) => (
               <div key={i} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', marginBottom: 12, breakInside: 'avoid' }}>
                 <span style={{
-                  flex: '0 0 22px', width: 22, height: 22, borderRadius: '50%', background: p.accent, color: '#fff',
+                  flex: '0 0 22px', width: 22, height: 22, borderRadius: '50%', background: p.color, color: '#fff',
                   fontSize: 12, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>{i + 1}</span>
                 <span style={{ fontSize: 13.5, color: '#374151' }}>{rec}</span>

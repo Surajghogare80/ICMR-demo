@@ -21,7 +21,7 @@ const Footer = () => {
     <Container maxWidth="lg">
       <Grid container spacing={3} alignItems="center">
         <Grid item xs={12} md={4}>
-          <Box component="img" src="/LOGO.jpg" alt="PRABHA MOS" sx={{ width: 88, height: 88, objectFit: 'cover', borderRadius: '22%', mb: 1 }} />
+          <Box component="img" src="/LOGO.jpg" alt="MapPMOS" sx={{ width: 88, height: 88, objectFit: 'cover', borderRadius: '22%', mb: 1 }} />
           <Typography variant="body2" color="text.secondary">
             {t('brand.tagline')}
           </Typography>
