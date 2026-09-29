@@ -31,28 +31,22 @@ const Navbar = ({ onThemeToggle, isDark }) => {
         color: theme.palette.text.primary,
       }}
     >
-      <Toolbar sx={{ gap: 1 }}>
+      <Toolbar sx={{ gap: 1, minHeight: { xs: 92, sm: 100 } }}>
         {/* Logo */}
         <motion.div whileHover={{ scale: 1.03 }}>
           <Box
             component={Link}
             to={ROUTES.HOME}
-            sx={{ display: 'flex', alignItems: 'center', gap: 1, textDecoration: 'none' }}
+            sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.75, sm: 1 }, minWidth: 0, textDecoration: 'none' }}
           >
-            <Box
-              sx={{
-                width: 36, height: 36, borderRadius: '10px',
-                background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}
-            >
-              <Typography sx={{ fontSize: '1.1rem' }}>🧬</Typography>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+            <Box component="img" src="/LOGO.jpg" alt="PRABHA MOS" sx={{ width: { xs: 56, sm: 84 }, height: { xs: 56, sm: 84 }, objectFit: 'cover', borderRadius: '22%', flexShrink: 0 }} />
+            <Box sx={{ display: 'flex', flexDirection: 'column', lineHeight: 1, minWidth: 0 }}>
               <Typography
                 variant="h6"
                 fontWeight={900}
                 sx={{
+                  fontSize: { xs: '1rem', sm: '1.25rem' },
+                  whiteSpace: 'nowrap',
                   background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`,
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
@@ -68,6 +62,7 @@ const Navbar = ({ onThemeToggle, isDark }) => {
                   color: 'text.secondary',
                   fontSize: '0.65rem',
                   lineHeight: 1.1,
+                  maxWidth: 240,
                 }}
               >
                 {t('brand.tagline')}

@@ -7,7 +7,6 @@ import {
 import { CheckCircle, WarningAmberRounded, ExpandMore } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { APP_NAME } from '../../../config/appConfig.js';
 import { COLORS } from '../../../theme/index.js';
 
 const DISCLAIMER_PANEL_ID = 'welcome-medical-disclaimer-panel';
@@ -43,26 +42,7 @@ const ScreeningConsent = ({ onStart }) => {
       <Container maxWidth="sm">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, mb: 4 }}>
-            <Box
-              sx={{
-                width: 48, height: 48, borderRadius: '14px',
-                background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}
-            >
-              <Typography sx={{ fontSize: '1.4rem' }} aria-hidden="true">🧬</Typography>
-            </Box>
-            <Typography
-              variant="h5"
-              fontWeight={900}
-              sx={{
-                background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
-              {APP_NAME}
-            </Typography>
+            <Box component="img" src="/LOGO.jpg" alt="PRABHA MOS" sx={{ width: 176, height: 176, objectFit: 'contain' }} />
           </Box>
 
           <Typography variant="h4" fontWeight={800} textAlign="center" gutterBottom component="h1">
