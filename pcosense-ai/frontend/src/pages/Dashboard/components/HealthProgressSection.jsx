@@ -7,28 +7,80 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { COLORS } from '../../../theme/index.js';
 
-const CustomTooltip = ({ active, payload, label }) => {
-  const { t } = useTranslation();
-  if (active && payload && payload.length) {
+// Builds up to 6 most-recent-first data points (oldest first) for a single
+// personalMetricId field, so BMI/Weight/Waist-Hip Ratio can each be trended
+// independently — a prediction missing that field just leaves a gap.
+const buildMetricTrend = (predictions, key) => (predictions || [])
+  .slice(0, 6)
+  .reverse()
+  .map((p, i) => {
+    const raw = p.personalMetricId?.[key];
+    return {
+      name: `S${i + 1}`,
+      value: raw !== undefined && raw !== null && raw !== '' ? Number(raw) : null,
+    };
+  });
+
+const MetricTrendTooltip = ({ active, payload, label, metricLabel, unit }) => {
+  if (active && payload && payload.length && payload[0].value != null) {
     return (
       <Box
         sx={{
-          p: 1.5,
-          borderRadius: 2,
-          bgcolor: 'background.paper',
-          border: '1px solid',
-          borderColor: 'divider',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+          p: 1.2, borderRadius: 2, bgcolor: 'background.paper', border: '1px solid',
+          borderColor: 'divider', boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
         }}
       >
         <Typography variant="caption" fontWeight={700} display="block">{label}</Typography>
-        <Typography variant="caption" sx={{ color: COLORS.secondaryDark }}>
-          {t('dashboard.progress.tooltipRisk', { value: payload[0]?.value })}
+        <Typography variant="caption" color="text.secondary">
+          {metricLabel}: {payload[0].value}{unit}
         </Typography>
       </Box>
     );
   }
   return null;
+};
+
+const MetricTrendChart = ({ title, data, color, unit, emptyMessage }) => {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === 'dark';
+  const hasEnoughData = data.filter((d) => d.value != null).length > 1;
+  const gradientId = `trendGradient-${title.replace(/[^a-zA-Z0-9]/g, '')}`;
+
+  return (
+    <Box>
+      <Typography variant="body2" fontWeight={700} sx={{ mb: 1 }}>{title}</Typography>
+      {hasEnoughData ? (
+        <ResponsiveContainer width="100%" height={130}>
+          <AreaChart data={data} margin={{ top: 5, right: 5, bottom: 0, left: -20 }}>
+            <defs>
+              <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor={color} stopOpacity={0.3} />
+                <stop offset="95%" stopColor={color} stopOpacity={0.02} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke={isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)'} />
+            <XAxis dataKey="name" tick={{ fontSize: 10, fill: isDark ? COLORS.textMutedDark : COLORS.gray }} />
+            <YAxis domain={['auto', 'auto']} width={30} tick={{ fontSize: 10, fill: isDark ? COLORS.textMutedDark : COLORS.gray }} />
+            <Tooltip content={(props) => <MetricTrendTooltip {...props} metricLabel={title} unit={unit} />} />
+            <Area
+              type="monotone"
+              dataKey="value"
+              stroke={color}
+              strokeWidth={2.5}
+              fill={`url(#${gradientId})`}
+              connectNulls
+              dot={{ fill: color, strokeWidth: 2, r: 3 }}
+              activeDot={{ r: 5, fill: color }}
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      ) : (
+        <Box sx={{ height: 130, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Typography variant="caption" color="text.disabled" textAlign="center">{emptyMessage}</Typography>
+        </Box>
+      )}
+    </Box>
+  );
 };
 
 const MetricBar = ({ label, value, color, max = 100, index }) => {
@@ -41,7 +93,7 @@ const MetricBar = ({ label, value, color, max = 100, index }) => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
     >
-      <Box sx={{ mb: 2.5 }}>
+      <Box>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.8 }}>
           <Typography variant="body2" fontWeight={600} sx={{ color: 'text.primary' }}>
             {label}
@@ -73,16 +125,13 @@ const HealthProgressSection = ({ predictions }) => {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
 
-  // Build chart data from predictions (most recent 6, oldest first)
-  const chartData = (predictions || [])
-    .slice(0, 6)
-    .reverse()
-    .map((p, i) => ({
-      name: `S${i + 1}`,
-      risk: p.probability,
-    }));
-
   const latest = predictions?.[0];
+
+  const bodyMetricCharts = [
+    { key: 'bmi', label: t('dashboard.progress.bmiLabel'), color: COLORS.blueDark, unit: '' },
+    { key: 'weight', label: t('dashboard.progress.weightLabel'), color: COLORS.tealDeep, unit: ` ${t('units.kg')}` },
+    { key: 'waistHipRatio', label: t('dashboard.progress.whrLabel'), color: COLORS.purpleAccent, unit: '' },
+  ];
 
   const metrics = [
     {
@@ -96,6 +145,15 @@ const HealthProgressSection = ({ predictions }) => {
     { label: t('dashboard.progress.metrics.healthEngagement'), value: Math.min((predictions?.length ?? 0) * 20, 100), color: COLORS.teal },
   ];
 
+  const cardSx = {
+    borderRadius: 4,
+    p: 3,
+    background: isDark ? alpha(theme.palette.background.paper, 0.5) : COLORS.white,
+    border: `1px solid ${theme.palette.divider}`,
+    boxShadow: isDark ? `0 8px 32px ${alpha(COLORS.black, 0.3)}` : '0 4px 24px rgba(233,30,99,0.04)',
+    height: '100%',
+  };
+
   return (
     <Box sx={{ mb: 5 }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
@@ -106,78 +164,41 @@ const HealthProgressSection = ({ predictions }) => {
       </motion.div>
 
       <Grid container spacing={3}>
-        {/* Chart */}
-        <Grid item xs={12} md={7}>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.97 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-          >
-            <Box
-              sx={{
-                borderRadius: 4,
-                p: 3,
-                background: isDark ? alpha(theme.palette.background.paper, 0.5) : COLORS.white,
-                border: `1px solid ${theme.palette.divider}`,
-                boxShadow: isDark ? `0 8px 32px ${alpha(COLORS.black, 0.3)}` : '0 4px 24px rgba(233,30,99,0.04)',
-              }}
+        {/* Body metric trend charts: BMI, Weight, Waist-Hip Ratio */}
+        {bodyMetricCharts.map((m, i) => (
+          <Grid item xs={12} sm={6} md={4} key={m.key}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: i * 0.05 }}
+              style={{ height: '100%' }}
             >
-              <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 3 }}>
-                {t('dashboard.progress.chartTitle')}
-              </Typography>
-              {chartData.length > 1 ? (
-                <ResponsiveContainer width="100%" height={200}>
-                  <AreaChart data={chartData} margin={{ top: 5, right: 10, bottom: 5, left: -20 }}>
-                    <defs>
-                      <linearGradient id="riskGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor={COLORS.secondaryDark} stopOpacity={0.3} />
-                        <stop offset="95%" stopColor={COLORS.secondaryDark} stopOpacity={0.02} />
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke={isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)'} />
-                    <XAxis dataKey="name" tick={{ fontSize: 11, fill: isDark ? COLORS.textMutedDark : COLORS.gray }} />
-                    <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: isDark ? COLORS.textMutedDark : COLORS.gray }} />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Area
-                      type="monotone"
-                      dataKey="risk"
-                      stroke={COLORS.secondaryDark}
-                      strokeWidth={2.5}
-                      fill="url(#riskGradient)"
-                      dot={{ fill: COLORS.secondaryDark, strokeWidth: 2, r: 4 }}
-                      activeDot={{ r: 6, fill: COLORS.secondaryDark }}
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
-              ) : (
-                <Box sx={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Typography variant="body2" color="text.disabled" textAlign="center">
-                    {t('dashboard.progress.emptyChart')}
-                  </Typography>
-                </Box>
-              )}
-            </Box>
-          </motion.div>
-        </Grid>
+              <Box sx={cardSx}>
+                <MetricTrendChart
+                  title={m.label}
+                  data={buildMetricTrend(predictions, m.key)}
+                  color={m.color}
+                  unit={m.unit}
+                  emptyMessage={t('dashboard.progress.emptyMetricChart')}
+                />
+              </Box>
+            </motion.div>
+          </Grid>
+        ))}
 
         {/* Metric bars */}
-        <Grid item xs={12} md={5}>
-          <Box
-            sx={{
-              borderRadius: 4,
-              p: 3,
-              background: isDark ? alpha(theme.palette.background.paper, 0.5) : COLORS.white,
-              border: `1px solid ${theme.palette.divider}`,
-              boxShadow: isDark ? `0 8px 32px ${alpha(COLORS.black, 0.3)}` : '0 4px 24px rgba(233,30,99,0.04)',
-              height: '100%',
-            }}
-          >
+        <Grid item xs={12}>
+          <Box sx={cardSx}>
             <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 3 }}>
               {t('dashboard.progress.metricsTitle')}
             </Typography>
-            {metrics.map((metric, i) => (
-              <MetricBar key={metric.label} {...metric} index={i} />
-            ))}
+            <Grid container spacing={3}>
+              {metrics.map((metric, i) => (
+                <Grid item xs={12} sm={6} key={metric.label}>
+                  <MetricBar {...metric} index={i} />
+                </Grid>
+              ))}
+            </Grid>
           </Box>
         </Grid>
       </Grid>

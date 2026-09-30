@@ -47,7 +47,7 @@ const ScreeningConsent = ({ onStart }) => {
       <Container maxWidth="sm">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, mb: 4 }}>
-            <Box component="img" src="/LOGO.jpg" alt="MapPMOS" sx={{ width: 176, height: 176, objectFit: 'contain' }} />
+            <Box component="img" src="/LOGO.jpg" alt="MapPMOS" sx={{ width: 176, height: 176, objectFit: 'cover', borderRadius: '22%' }} />
           </Box>
 
           <Typography variant="h4" fontWeight={800} textAlign="center" gutterBottom component="h1">
