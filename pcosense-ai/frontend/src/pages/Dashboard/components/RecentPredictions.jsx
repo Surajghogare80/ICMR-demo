@@ -5,7 +5,7 @@ import {
   useTheme, alpha,
 } from '@mui/material';
 import {
-  Science, ArrowForward, TrendingUp, TrendingDown, CalendarToday,
+  Science, ArrowForward, TrendingUp, TrendingDown, HelpOutline, CalendarToday,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -16,11 +16,13 @@ import { COLORS } from '../../../theme/index.js';
 
 // getRiskConfig keeps comparing/storing the original backend value (result) as-is.
 // The `label` field returned here is only ever used for translated display.
+// `icon` is kept in lockstep with `color` so the row's icon never mismatches
+// its background tint (e.g. an unknown/other result never renders as if it were "Low").
 const getRiskConfig = (result) => {
-  if (!result) return { color: COLORS.riskUnknown, label: 'Unknown', gradient: `linear-gradient(135deg, ${COLORS.riskUnknown}, ${COLORS.riskUnknownLight})` };
-  if (result === 'High Risk') return { color: COLORS.riskHigh, label: 'High Risk', gradient: `linear-gradient(135deg, ${COLORS.riskHigh}, ${COLORS.riskHighLight})` };
-  if (result === 'Low Risk') return { color: COLORS.riskLow, label: 'Low Risk', gradient: `linear-gradient(135deg, ${COLORS.riskLow}, ${COLORS.riskLow})` };
-  return { color: COLORS.orange, label: result, gradient: `linear-gradient(135deg, ${COLORS.orange}, ${COLORS.orangeLight})` };
+  if (!result) return { color: COLORS.riskUnknown, label: 'Unknown', icon: HelpOutline, gradient: `linear-gradient(135deg, ${COLORS.riskUnknown}, ${COLORS.riskUnknownLight})` };
+  if (result === 'High Risk') return { color: COLORS.riskHigh, label: 'High Risk', icon: TrendingUp, gradient: `linear-gradient(135deg, ${COLORS.riskHigh}, ${COLORS.riskHighLight})` };
+  if (result === 'Low Risk') return { color: COLORS.riskLow, label: 'Low Risk', icon: TrendingDown, gradient: `linear-gradient(135deg, ${COLORS.riskLow}, ${COLORS.riskLow})` };
+  return { color: COLORS.orange, label: result, icon: HelpOutline, gradient: `linear-gradient(135deg, ${COLORS.orange}, ${COLORS.orangeLight})` };
 };
 
 // Translates a risk label for display only; falls back to the original value
@@ -72,9 +74,7 @@ const PredictionRow = ({ prediction, index }) => {
             boxShadow: `0 4px 12px ${alpha(risk.color, 0.3)}`,
           }}
         >
-          {prediction.result === 'High Risk'
-            ? <TrendingUp sx={{ color: 'white', fontSize: 20 }} />
-            : <TrendingDown sx={{ color: 'white', fontSize: 20 }} />}
+          <risk.icon sx={{ color: 'white', fontSize: 20 }} />
         </Box>
 
         {/* Main info */}

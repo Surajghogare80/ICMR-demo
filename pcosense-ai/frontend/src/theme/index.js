@@ -25,12 +25,14 @@ const COLORS = {
   error: '#BF360C',
   info: '#0277BD',
 
-  // Risk / result bands (prediction probability & screening outcomes)
+  // Risk / result bands (prediction probability & screening outcomes: low
+  // 0-30, moderate 30-60, high 60-100). Tuned to stay distinct from each
+  // other in both hue AND lightness so they still separate under
+  // protanopia/deuteranopia.
   riskLow: '#009E73',
   riskModerate: '#FBC02D',
-  riskDetected: '#F88131',
-  riskHigh: '#EF5350',
-  riskHighLight: '#EF9A9A',
+  riskHigh: '#B71C1C',
+  riskHighLight: '#E57373',
   riskUnknown: '#9E9E9E',
   riskUnknownLight: '#BDBDBD',
 
@@ -275,4 +277,28 @@ const getDesignTokens = (mode) => ({
 export const createAppTheme = (mode = 'light') =>
   createTheme(getDesignTokens(mode));
 
-export { COLORS };
+// Single source of truth for the 3-band risk scale (low/moderate/high, mapped
+// from probability 0–30/30–60/60–100) used across the live UI and the printed
+// PDF report, so both always show the same colorblind-safe hues. `dark` is a
+// higher-contrast text color for use on the band's light `bg` tint; `icon`
+// names the distinct glyph each band pairs with (see components/common/RiskIcon.jsx)
+// so meaning never rests on color alone.
+const RISK_BANDS = {
+  low: {
+    color: COLORS.riskLow, dark: '#065F46', icon: 'check',
+    bg: alpha(COLORS.riskLow, 0.08), border: alpha(COLORS.riskLow, 0.35),
+    ring: alpha(COLORS.riskLow, 0.55), ringOuter: alpha(COLORS.riskLow, 0.18),
+  },
+  moderate: {
+    color: COLORS.riskModerate, dark: '#854D0E', icon: 'info',
+    bg: alpha(COLORS.riskModerate, 0.08), border: alpha(COLORS.riskModerate, 0.35),
+    ring: alpha(COLORS.riskModerate, 0.55), ringOuter: alpha(COLORS.riskModerate, 0.18),
+  },
+  high: {
+    color: COLORS.riskHigh, dark: '#7F1D1D', icon: 'cancel',
+    bg: alpha(COLORS.riskHigh, 0.08), border: alpha(COLORS.riskHigh, 0.35),
+    ring: alpha(COLORS.riskHigh, 0.55), ringOuter: alpha(COLORS.riskHigh, 0.18),
+  },
+};
+
+export { COLORS, RISK_BANDS };

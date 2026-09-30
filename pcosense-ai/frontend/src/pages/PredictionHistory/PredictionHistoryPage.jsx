@@ -7,7 +7,7 @@ import {
   TablePagination, Dialog, DialogTitle, DialogContent, DialogActions,
   Alert, Tooltip, alpha, Divider, Grid,
 } from '@mui/material';
-import { Delete, Visibility, Science, Close } from '@mui/icons-material';
+import { Delete, Visibility, Science, Close, TrendingUp, TrendingDown } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
@@ -292,9 +292,14 @@ const PredictionHistoryPage = () => {
                           </TableCell>
                           <TableCell>{getResultChip(p.result)}</TableCell>
                           <TableCell>
-                            <Typography variant="body2" fontWeight={700} color={p.probability >= 50 ? 'error.main' : 'success.main'}>
-                              {p.probability}%
-                            </Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                              {p.probability >= 50
+                                ? <TrendingUp fontSize="small" color="error" />
+                                : <TrendingDown fontSize="small" color="success" />}
+                              <Typography variant="body2" fontWeight={700} color={p.probability >= 50 ? 'error.main' : 'success.main'}>
+                                {p.probability}%
+                              </Typography>
+                            </Box>
                           </TableCell>
                           <TableCell>
                             <Typography variant="body2">{p.confidence}%</Typography>

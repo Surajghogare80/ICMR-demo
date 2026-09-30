@@ -5,24 +5,25 @@ import {
   LinearProgress, Chip, Alert, List, ListItem, ListItemIcon, ListItemText,
   Divider,
 } from '@mui/material';
-import { CheckCircle, Home, History, Science, Warning } from '@mui/icons-material';
+import { CheckCircle, Home, History, Science, PictureAsPdf } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../constants/index.js';
-import { COLORS } from '../../theme/index.js';
+import { RISK_BANDS } from '../../theme/index.js';
+import RiskIcon from '../../components/common/RiskIcon.jsx';
+import PredictionReport, { printReport } from './PredictionReport.jsx';
 
-// ─── 4-band risk scale, driven by the model probability (0–100) ───────────
-//   0–30   Low PMOS Risk        → green
-//   30–60  Moderate PMOS Risk   → yellow
-//   60–90  PMOS Risk Detected   → orange
-//   90–100 High PMOS Risk       → red
-// `severe` flags the two upper bands (drives the warning icon).
+// ─── 3-band risk scale, driven by the model probability (0–100) ───────────
+//   0–30   Low PMOS Risk        → green,  check icon
+//   30–60  Moderate PMOS Risk   → yellow, info icon
+//   60–100 High PMOS Risk       → red,    cancel icon
+// Each band gets its own color AND its own icon shape (see RISK_BANDS), so
+// severity is never conveyed by color alone.
 const getRiskBand = (probability) => {
   const v = Number(probability) || 0;
-  if (v < 30) return { key: 'low',      color: COLORS.riskLow, severe: false };
-  if (v < 60) return { key: 'moderate', color: COLORS.riskModerate, severe: false };
-  if (v < 90) return { key: 'detected', color: COLORS.riskDetected, severe: true  };
-  return               { key: 'high',     color: COLORS.riskHigh, severe: true  };
+  if (v < 30) return { key: 'low',      ...RISK_BANDS.low };
+  if (v < 60) return { key: 'moderate', ...RISK_BANDS.moderate };
+  return               { key: 'high',     ...RISK_BANDS.high };
 };
 
 // ─── Helper: one labelled blood value row ─────────────────────────────────
@@ -53,7 +54,6 @@ const PredictionResult = () => {
   }
 
   const band       = getRiskBand(result.probability);
-  const isHighRisk = band.severe;
   const color      = band.color;
   const bgColor    = `${color}1F`;
 
@@ -80,7 +80,7 @@ const PredictionResult = () => {
                 transition={{ type: 'spring', stiffness: 200, delay: 0.3 }}
               >
                 <Box sx={{ width: 80, height: 80, borderRadius: '50%', bgcolor: bgColor, display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 'auto', mb: 2, border: `3px solid ${color}` }}>
-                  {isHighRisk ? <Warning sx={{ fontSize: 40, color }} /> : <CheckCircle sx={{ fontSize: 40, color }} />}
+                  <RiskIcon icon={band.icon} sx={{ fontSize: 40, color }} />
                 </Box>
               </motion.div>
               <Chip
@@ -100,6 +100,9 @@ const PredictionResult = () => {
               <Grid container spacing={4}>
                 {/* Probability Meter */}
                 <Grid item xs={12}>
+                  <Alert severity="info" variant="outlined" sx={{ mb: 2.5 }}>
+                    {t('predictionResult.screeningDisclaimer')}
+                  </Alert>
                   <Typography variant="subtitle2" color="text.secondary" gutterBottom>{t('predictionResult.metrics.riskProbability')}</Typography>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
                     <Typography variant="h3" fontWeight={900} sx={{ color }}>{result.probability}%</Typography>
@@ -196,6 +199,15 @@ const PredictionResult = () => {
 
           {/* Actions */}
           <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center' }}>
+            <Button
+              variant="contained"
+              color="secondary"
+              startIcon={<PictureAsPdf />}
+              onClick={() => printReport(`${t('predictionResult.report.fileName')}-${new Date().toISOString().slice(0, 10)}`)}
+              sx={{ px: 4 }}
+            >
+              {t('predictionResult.actions.downloadReport')}
+            </Button>
             <Button variant="contained" startIcon={<Home />} onClick={() => navigate(ROUTES.DASHBOARD)} sx={{ px: 4 }}>
               {t('predictionResult.actions.dashboard')}
             </Button>
@@ -208,6 +220,7 @@ const PredictionResult = () => {
           </Box>
         </motion.div>
       </Container>
+      <PredictionReport result={result} band={band} />
     </Box>
   );
 };

@@ -194,10 +194,17 @@ const LandingPage = () => {
         </motion.div>
         <Grid container spacing={3}>
           {features.map((f, i) => (
-            <Grid key={f.title} item xs={12} sm={6} md={3}>
-              <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }}>
-                <Card sx={{ height: '100%', p: 0.5, transition: 'transform 0.3s', '&:hover': { transform: 'translateY(-8px)' } }}>
-                  <CardContent>
+            <Grid key={f.title} item xs={12} sm={6} md={3} sx={{ display: 'flex' }}>
+              <motion.div
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                style={{ width: '100%', display: 'flex' }}
+              >
+                <Card sx={{ height: '100%', width: '100%', p: 0.5, transition: 'transform 0.3s', '&:hover': { transform: 'translateY(-8px)' } }}>
+                  <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                     <Avatar sx={{ bgcolor: `${f.color}20`, color: f.color, mb: 2, width: 52, height: 52 }}>{f.icon}</Avatar>
                     <Typography variant="h6" fontWeight={700} gutterBottom>{f.title}</Typography>
                     <Typography variant="body2" color="text.secondary" lineHeight={1.7}>{f.desc}</Typography>
