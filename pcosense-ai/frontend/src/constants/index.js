@@ -10,6 +10,7 @@ export const ROUTES = {
   EXPLORE: '/explore',
   EXPLORE_ARTICLE: '/explore/:categoryId/:articleId',
   TERMS: '/terms-and-conditions',
+  PRIVACY: '/privacy-policy',
   NOT_FOUND: '*',
 };
 

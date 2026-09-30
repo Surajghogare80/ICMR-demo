@@ -12,6 +12,7 @@ import NotFoundPage from '../pages/NotFound/NotFoundPage.jsx';
 import ExplorePage from '../pages/Explore/ExplorePage.jsx';
 import ExploreArticlePage from '../pages/Explore/ExploreArticlePage.jsx';
 import TermsAndConditions from '../pages/Legal/TermsAndConditions.jsx';
+import PrivacyPolicy from '../pages/Legal/PrivacyPolicy.jsx';
 
 const AppRoutes = () => {
   return (
@@ -24,6 +25,7 @@ const AppRoutes = () => {
       <Route path={ROUTES.EXPLORE} element={<ExplorePage />} />
       <Route path={ROUTES.EXPLORE_ARTICLE} element={<ExploreArticlePage />} />
       <Route path={ROUTES.TERMS} element={<TermsAndConditions />} />
+      <Route path={ROUTES.PRIVACY} element={<PrivacyPolicy />} />
 
       {/* 404 */}
       <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />

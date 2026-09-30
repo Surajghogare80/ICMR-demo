@@ -1,16 +1,16 @@
-// src/pages/Legal/TermsAndConditions.jsx
-import { useNavigate, useLocation, Link as RouterLink } from 'react-router-dom';
-import { Box, Container, Typography, Card, CardContent, Button, Divider, Stack, Link } from '@mui/material';
+// src/pages/Legal/PrivacyPolicy.jsx
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Box, Container, Typography, Card, CardContent, Button, Divider, Stack } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import { motion } from 'framer-motion';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../constants/index.js';
 
-const TermsAndConditions = () => {
+const PrivacyPolicy = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
-  const sections = t('legal.terms.sections', { returnObjects: true });
+  const sections = t('legal.privacy.sections', { returnObjects: true });
 
   // location.key === 'default' means this page was loaded directly (e.g. a
   // refresh or a bookmarked link) rather than navigated to from within the
@@ -30,19 +30,22 @@ const TermsAndConditions = () => {
           <Card>
             <CardContent sx={{ p: { xs: 3, sm: 5 } }}>
               <Typography variant="h4" fontWeight={800} gutterBottom>
-                {t('legal.terms.pageTitle')}
+                {t('legal.privacy.pageTitle')}
+              </Typography>
+              <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
+                {t('legal.privacy.subtitle')}
               </Typography>
               <Stack direction="row" spacing={3} sx={{ mb: 3 }}>
                 <Typography variant="body2" color="text.secondary">
-                  {t('legal.terms.effectiveDateLabel')}: {t('legal.terms.effectiveDateValue')}
+                  {t('legal.privacy.effectiveDateLabel')}: {t('legal.privacy.effectiveDateValue')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {t('legal.terms.versionLabel')}: {t('legal.terms.versionValue')}
+                  {t('legal.privacy.versionLabel')}: {t('legal.privacy.versionValue')}
                 </Typography>
               </Stack>
 
               <Typography variant="body1" sx={{ mb: 3, lineHeight: 1.8 }}>
-                {t('legal.terms.intro')}
+                {t('legal.privacy.intro')}
               </Typography>
 
               <Divider sx={{ mb: 3 }} />
@@ -54,16 +57,9 @@ const TermsAndConditions = () => {
                       {section.title}
                     </Typography>
                     <Stack spacing={1.5}>
-                      {section.paragraphs.map((_paragraph, j) => (
+                      {section.paragraphs.map((paragraph, j) => (
                         <Typography key={j} variant="body2" color="text.secondary" lineHeight={1.8}>
-                          <Trans
-                            i18nKey={`legal.terms.sections.${i}.paragraphs.${j}`}
-                            components={{
-                              privacyLink: (
-                                <Link component={RouterLink} to={ROUTES.PRIVACY} sx={{ fontWeight: 600 }} />
-                              ),
-                            }}
-                          />
+                          {paragraph}
                         </Typography>
                       ))}
                     </Stack>
@@ -72,7 +68,7 @@ const TermsAndConditions = () => {
               </Stack>
 
               <Typography variant="body2" color="text.secondary" sx={{ mt: 1.5 }}>
-                {t('legal.terms.contactValue')}
+                {t('legal.privacy.contactValue')}
               </Typography>
 
               <Divider sx={{ my: 4 }} />
@@ -88,4 +84,4 @@ const TermsAndConditions = () => {
   );
 };
 
-export default TermsAndConditions;
+export default PrivacyPolicy;
