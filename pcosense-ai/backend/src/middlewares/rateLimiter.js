@@ -13,13 +13,6 @@ const createLimiter = (windowMs, max, message) =>
     },
   });
 
-// Strict limiter for auth endpoints
-export const authLimiter = createLimiter(
-  15 * 60 * 1000, // 15 minutes
-  20,
-  'Too many authentication attempts. Please try again after 15 minutes.'
-);
-
 // General API limiter
 export const apiLimiter = createLimiter(
   15 * 60 * 1000, // 15 minutes

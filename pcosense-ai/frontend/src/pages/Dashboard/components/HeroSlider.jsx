@@ -7,73 +7,60 @@ import {
   LocalHospital, Favorite, Restaurant, Psychology, MenuBook,
 } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../../constants/index.js';
+import { COLORS } from '../../../theme/index.js';
 
 const SLIDES = [
   {
     id: 0,
+    key: 'earlyDetection',
     emoji: '🌸',
     icon: <LocalHospital sx={{ fontSize: 64 }} />,
-    title: 'Early Detection Saves Lives',
-    subtitle: 'Detect PCOS early using AI-powered health screening and understand your body better.',
-    cta: 'Start Assessment',
     ctaRoute: ROUTES.PREDICTION,
-    gradient: 'linear-gradient(135deg, #EC407A 0%, #F48FB1 50%, #FFEAF0 100%)',
-    accentColor: '#EC407A',
+    gradient: `linear-gradient(135deg, ${COLORS.secondaryDark} 0%, ${COLORS.accentRose} 50%, ${COLORS.secondaryLight} 100%)`,
+    accentColor: COLORS.secondaryDark,
     illustration: 'flower',
-    tags: ['AI-Powered', 'Early Detection', 'Free'],
   },
   {
     id: 1,
+    key: 'betterHealthcare',
     emoji: '💗',
     icon: <Favorite sx={{ fontSize: 64 }} />,
-    title: 'Every Woman Deserves Better Healthcare',
-    subtitle: 'Monitor symptoms, understand your risks, and stay informed with personalized health insights.',
-    cta: 'Learn More',
     ctaRoute: ROUTES.PREDICTION,
-    gradient: 'linear-gradient(135deg, #F06292 0%, #EC407A 50%, #FCE4EC 100%)',
-    accentColor: '#F06292',
+    gradient: `linear-gradient(135deg, ${COLORS.accent} 0%, ${COLORS.secondaryDark} 50%, ${COLORS.secondaryPale} 100%)`,
+    accentColor: COLORS.accent,
     illustration: 'heart',
-    tags: ['Personal', 'Insights', 'Wellness'],
   },
   {
     id: 2,
+    key: 'healthyLifestyle',
     emoji: '🥗',
     icon: <Restaurant sx={{ fontSize: 64 }} />,
-    title: 'Healthy Lifestyle Matters',
-    subtitle: 'Balanced diet, regular exercise, quality sleep, and stress management — your health pillars.',
-    cta: 'Health Tips',
     ctaRoute: ROUTES.DASHBOARD,
-    gradient: 'linear-gradient(135deg, #66BB6A 0%, #A5D6A7 50%, #E8F5E9 100%)',
-    accentColor: '#66BB6A',
+    gradient: `linear-gradient(135deg, ${COLORS.success} 0%, ${COLORS.success} 50%, ${COLORS.success} 100%)`,
+    accentColor: COLORS.success,
     illustration: 'leaf',
-    tags: ['Diet', 'Exercise', 'Sleep', 'Stress'],
   },
   {
     id: 3,
+    key: 'aiPrediction',
     emoji: '🩺',
     icon: <Psychology sx={{ fontSize: 64 }} />,
-    title: 'AI-Assisted Prediction',
-    subtitle: 'Advanced machine learning helping women understand their health risks and take action early.',
-    cta: 'View Features',
     ctaRoute: ROUTES.PREDICTION,
-    gradient: 'linear-gradient(135deg, #7E57C2 0%, #BA68C8 50%, #F3E5F5 100%)',
-    accentColor: '#7E57C2',
+    gradient: `linear-gradient(135deg, ${COLORS.purple} 0%, ${COLORS.purpleAccent} 50%, ${COLORS.purpleBgLight} 100%)`,
+    accentColor: COLORS.purple,
     illustration: 'brain',
-    tags: ['Machine Learning', 'Prediction', 'Accurate'],
   },
   {
     id: 4,
+    key: 'learnAboutPmos',
     emoji: '📚',
     icon: <MenuBook sx={{ fontSize: 64 }} />,
-    title: 'Learn About PCOS',
-    subtitle: 'Understand symptoms, causes, treatments, and lifestyle strategies for managing PCOS effectively.',
-    cta: 'Read Articles',
     ctaRoute: ROUTES.DASHBOARD,
-    gradient: 'linear-gradient(135deg, #FFA726 0%, #FFB74D 50%, #FFF8E1 100%)',
-    accentColor: '#FFA726',
+    gradient: `linear-gradient(135deg, ${COLORS.orange} 0%, ${COLORS.orangeMid} 50%, ${COLORS.orangePale} 100%)`,
+    accentColor: COLORS.orange,
     illustration: 'book',
-    tags: ['Symptoms', 'Causes', 'Treatment', 'Lifestyle'],
   },
 ];
 
@@ -127,6 +114,7 @@ const SlideIllustration = ({ type, color }) => {
 };
 
 const HeroSlider = () => {
+  const { t } = useTranslation();
   const [current, setCurrent] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
@@ -143,6 +131,10 @@ const HeroSlider = () => {
   }, [isHovered, next]);
 
   const slide = SLIDES[current];
+  const slideTitle = t(`dashboard.hero.slides.${slide.key}.title`);
+  const slideSubtitle = t(`dashboard.hero.slides.${slide.key}.subtitle`);
+  const slideCta = t(`dashboard.hero.slides.${slide.key}.cta`);
+  const slideTags = t(`dashboard.hero.slides.${slide.key}.tags`, { returnObjects: true });
 
   return (
     <Box
@@ -161,7 +153,7 @@ const HeroSlider = () => {
           <Box
             sx={{
               background: isDark
-                ? `linear-gradient(135deg, ${alpha(slide.accentColor, 0.25)} 0%, ${alpha('#1A0A0F', 0.95)} 100%)`
+                ? `linear-gradient(135deg, ${alpha(slide.accentColor, 0.25)} 0%, ${alpha(COLORS.darkBg, 0.95)} 100%)`
                 : slide.gradient,
               minHeight: { xs: 320, md: 380 },
               position: 'relative',
@@ -222,31 +214,31 @@ const HeroSlider = () => {
                   variant="h4"
                   fontWeight={900}
                   sx={{
-                    color: isDark ? '#FFFFFF' : (slide.id === 2 ? '#2E7D32' : slide.id === 3 ? '#4A148C' : slide.id === 4 ? '#E65100' : '#B71C1C'),
+                    color: isDark ? COLORS.white : (slide.id === 2 ? COLORS.success : slide.id === 3 ? COLORS.purpleDark : slide.id === 4 ? COLORS.orangeDark : COLORS.redDarker),
                     mb: 2,
                     lineHeight: 1.2,
                     fontSize: { xs: '1.5rem', md: '2rem' },
                     textShadow: isDark ? `0 0 30px ${alpha(slide.accentColor, 0.5)}` : 'none',
                   }}
                 >
-                  {slide.title}
+                  {slideTitle}
                 </Typography>
                 <Typography
                   variant="body1"
                   sx={{
-                    color: isDark ? alpha('#FFF', 0.75) : alpha('#000', 0.65),
+                    color: isDark ? alpha(COLORS.white, 0.75) : alpha(COLORS.black, 0.65),
                     mb: 3,
                     lineHeight: 1.7,
                     maxWidth: 480,
                     fontSize: { xs: '0.9rem', md: '1rem' },
                   }}
                 >
-                  {slide.subtitle}
+                  {slideSubtitle}
                 </Typography>
 
                 {/* Tags */}
                 <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 3 }}>
-                  {slide.tags.map((tag) => (
+                  {slideTags.map((tag) => (
                     <Box
                       key={tag}
                       sx={{
@@ -255,7 +247,7 @@ const HeroSlider = () => {
                         borderRadius: 20,
                         bgcolor: isDark ? alpha(slide.accentColor, 0.2) : alpha(slide.accentColor, 0.12),
                         border: `1px solid ${alpha(slide.accentColor, 0.3)}`,
-                        color: isDark ? slide.accentColor : slide.id === 2 ? '#2E7D32' : slide.id === 3 ? '#4A148C' : slide.accentColor,
+                        color: isDark ? slide.accentColor : slide.id === 2 ? COLORS.success : slide.id === 3 ? COLORS.purpleDark : slide.accentColor,
                         fontSize: '0.75rem',
                         fontWeight: 600,
                       }}
@@ -273,12 +265,12 @@ const HeroSlider = () => {
                     background: isDark
                       ? `linear-gradient(135deg, ${slide.accentColor}, ${alpha(slide.accentColor, 0.7)})`
                       : slide.id === 2
-                      ? 'linear-gradient(135deg, #2E7D32, #66BB6A)'
+                      ? `linear-gradient(135deg, ${COLORS.success}, ${COLORS.success})`
                       : slide.id === 3
-                      ? 'linear-gradient(135deg, #4A148C, #7E57C2)'
+                      ? `linear-gradient(135deg, ${COLORS.purpleDark}, ${COLORS.purple})`
                       : slide.id === 4
-                      ? 'linear-gradient(135deg, #E65100, #FFA726)'
-                      : 'linear-gradient(135deg, #EC407A, #C2185B)',
+                      ? `linear-gradient(135deg, ${COLORS.orangeDark}, ${COLORS.orange})`
+                      : `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.primaryDark})`,
                     color: 'white',
                     px: 4,
                     py: 1.2,
@@ -292,7 +284,7 @@ const HeroSlider = () => {
                     },
                   }}
                 >
-                  {slide.cta} →
+                  {slideCta} →
                 </Button>
               </motion.div>
             </Box>
@@ -302,8 +294,8 @@ const HeroSlider = () => {
 
       {/* Prev / Next Buttons */}
       {[
-        { icon: <ArrowBackIos sx={{ fontSize: 16 }} />, onClick: prev, side: 'left', ariaLabel: 'Previous slide' },
-        { icon: <ArrowForwardIos sx={{ fontSize: 16 }} />, onClick: next, side: 'right', ariaLabel: 'Next slide' },
+        { icon: <ArrowBackIos sx={{ fontSize: 16 }} />, onClick: prev, side: 'left', ariaLabel: t('dashboard.hero.prevSlide') },
+        { icon: <ArrowForwardIos sx={{ fontSize: 16 }} />, onClick: next, side: 'right', ariaLabel: t('dashboard.hero.nextSlide') },
       ].map(({ icon, onClick, side, ariaLabel }) => (
         <IconButton
           key={side}
@@ -314,13 +306,13 @@ const HeroSlider = () => {
             top: '50%',
             [side]: 16,
             transform: 'translateY(-50%)',
-            bgcolor: alpha('#000', 0.25),
+            bgcolor: alpha(COLORS.black, 0.25),
             color: 'white',
             backdropFilter: 'blur(4px)',
             zIndex: 10,
             width: 40,
             height: 40,
-            '&:hover': { bgcolor: alpha('#000', 0.45) },
+            '&:hover': { bgcolor: alpha(COLORS.black, 0.45) },
           }}
         >
           {icon}
@@ -344,12 +336,12 @@ const HeroSlider = () => {
             key={s.id}
             onClick={() => setCurrent(i)}
             role="button"
-            aria-label={`Go to slide ${i + 1}`}
+            aria-label={t('dashboard.hero.goToSlide', { number: i + 1 })}
             sx={{
               width: i === current ? 24 : 8,
               height: 8,
               borderRadius: 4,
-              bgcolor: i === current ? 'white' : alpha('#FFF', 0.45),
+              bgcolor: i === current ? 'white' : alpha(COLORS.white, 0.45),
               cursor: 'pointer',
               transition: 'all 0.3s ease',
             }}

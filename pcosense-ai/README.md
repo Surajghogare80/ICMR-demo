@@ -1,6 +1,6 @@
 # PRABHA 🩺
 
-> **AI-Based PCOS Prediction Web Application**  
+> **AI-Based PMOS Prediction Web Application**  
 > A production-ready MERN Stack healthcare platform with AI integration-ready architecture.
 
 ---
@@ -8,7 +8,7 @@
 ## 🏗️ Project Structure (Monorepo)
 
 ```
-pcosense-ai/
+pmosense-ai/
 ├── frontend/          # React 19 + Vite + Material UI
 ├── backend/           # Node.js + Express + MongoDB Atlas
 ├── docs/              # API docs & architecture notes

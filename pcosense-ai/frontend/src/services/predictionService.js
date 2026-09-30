@@ -1,46 +1,36 @@
 // src/services/predictionService.js
 import api from './api.js';
+import { historyStore } from './historyStore.js';
 
 export const predictionService = {
   async create(data) {
     const res = await api.post('/predictions', data);
+    // Backend is stateless — persist the result in the browser for history.
+    const stored = historyStore.addPrediction(res.data?.data?.prediction || {});
+    if (res.data?.data) {
+      res.data.data.prediction = stored;
+    }
     return res.data;
   },
 
   async getAll(params = {}) {
-    const res = await api.get('/predictions', { params });
-    return res.data;
+    return {
+      success: true,
+      message: 'Predictions loaded.',
+      data: historyStore.listPredictions({
+        page: params.page || 1,
+        limit: params.limit || 10,
+      }),
+    };
   },
 
   async getById(id) {
-    const res = await api.get(`/predictions/${id}`);
-    return res.data;
+    const prediction = historyStore.getPrediction(id);
+    return { success: !!prediction, data: { prediction } };
   },
 
   async delete(id) {
-    const res = await api.delete(`/predictions/${id}`);
-    return res.data;
-  },
-};
-
-export const adminService = {
-  async getDashboard() {
-    const res = await api.get('/admin/dashboard');
-    return res.data;
-  },
-
-  async getAllUsers(params = {}) {
-    const res = await api.get('/admin/users', { params });
-    return res.data;
-  },
-
-  async deleteUser(id) {
-    const res = await api.delete(`/admin/users/${id}`);
-    return res.data;
-  },
-
-  async getLogs(params = {}) {
-    const res = await api.get('/admin/logs', { params });
-    return res.data;
+    historyStore.removePrediction(id);
+    return { success: true, message: 'Prediction deleted.' };
   },
 };

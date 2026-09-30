@@ -3,22 +3,27 @@ import { useState, useEffect } from 'react';
 import { Box, Typography, useTheme, alpha } from '@mui/material';
 import { FormatQuote } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '../../../config/appConfig.js';
+import { COLORS } from '../../../theme/index.js';
 
 const QUOTES = [
-  { text: 'Small healthy habits create lifelong wellness.', author: APP_NAME, color: '#EC407A' },
-  { text: 'Early awareness empowers better healthcare decisions.', author: 'Women\'s Health', color: '#7E57C2' },
-  { text: 'Taking care of yourself is the first step toward a healthier future.', author: 'Wellness', color: '#26C6DA' },
-  { text: 'Your health journey is unique — honor it every single day.', author: APP_NAME, color: '#66BB6A' },
-  { text: 'Every woman deserves to understand her body and feel empowered.', author: 'Women\'s Health', color: '#FFA726' },
-  { text: 'Progress, not perfection, is what leads to lasting health.', author: 'Wellness', color: '#F06292' },
+  { id: 'habits', authorKey: null, color: COLORS.secondaryDark },
+  { id: 'awareness', authorKey: 'womensHealth', color: COLORS.purple },
+  { id: 'selfCare', authorKey: 'wellness', color: COLORS.teal },
+  { id: 'uniqueJourney', authorKey: null, color: COLORS.success },
+  { id: 'empowered', authorKey: 'womensHealth', color: COLORS.orange },
+  { id: 'progress', authorKey: 'wellness', color: COLORS.accent },
 ];
 
 const MotivationalQuotes = () => {
+  const { t } = useTranslation();
   const [current, setCurrent] = useState(0);
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
   const quote = QUOTES[current];
+  const quoteText = t(`dashboard.quotes.items.${quote.id}`);
+  const quoteAuthor = quote.authorKey ? t(`dashboard.quotes.authors.${quote.authorKey}`) : APP_NAME;
 
   useEffect(() => {
     const id = setInterval(() => setCurrent((c) => (c + 1) % QUOTES.length), 6000);
@@ -35,7 +40,7 @@ const MotivationalQuotes = () => {
         position: 'relative',
         overflow: 'hidden',
         background: isDark
-          ? `linear-gradient(135deg, ${alpha(quote.color, 0.15)} 0%, ${alpha('#1A0A0F', 0.8)} 100%)`
+          ? `linear-gradient(135deg, ${alpha(quote.color, 0.15)} 0%, ${alpha(COLORS.darkBg, 0.8)} 100%)`
           : `linear-gradient(135deg, ${alpha(quote.color, 0.06)} 0%, ${alpha(quote.color, 0.02)} 100%)`,
         border: `1px solid ${alpha(quote.color, isDark ? 0.25 : 0.12)}`,
       }}
@@ -86,7 +91,7 @@ const MotivationalQuotes = () => {
             variant="h6"
             fontWeight={700}
             sx={{
-              color: isDark ? '#FFFFFF' : '#2D2D2D',
+              color: isDark ? COLORS.white : COLORS.textDark,
               lineHeight: 1.6,
               fontStyle: 'italic',
               mb: 2,
@@ -95,14 +100,14 @@ const MotivationalQuotes = () => {
               fontSize: { xs: '1rem', md: '1.2rem' },
             }}
           >
-            "{quote.text}"
+            "{quoteText}"
           </Typography>
           <Typography
             variant="caption"
             fontWeight={700}
             sx={{ color: quote.color, letterSpacing: '0.1em', textTransform: 'uppercase', fontSize: '0.75rem' }}
           >
-            — {quote.author}
+            — {quoteAuthor}
           </Typography>
         </motion.div>
       </AnimatePresence>
@@ -114,7 +119,7 @@ const MotivationalQuotes = () => {
             key={i}
             onClick={() => setCurrent(i)}
             role="button"
-            aria-label={`Quote ${i + 1}`}
+            aria-label={t('dashboard.quotes.dotAriaLabel', { number: i + 1 })}
             sx={{
               width: i === current ? 20 : 6,
               height: 6,

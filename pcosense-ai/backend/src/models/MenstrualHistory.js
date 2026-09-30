@@ -35,19 +35,18 @@ const menstrualHistorySchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
-    // Family History of PCOS
+    // Family History of PMOS
     familyHistory: {
       type: Boolean,
       default: false,
-      comment: 'Has PCOS been diagnosed in mother, aunt, siblings, cousins, or grandmother',
+      comment: 'Has PMOS been diagnosed in mother, aunt, siblings, cousins, or grandmother',
     },
-    // Optional Ultrasound Scan parameters
-    follicleNoL: { type: Number, default: null },
-    follicleNoR: { type: Number, default: null },
-    avgFsizeL: { type: Number, default: null },
-    avgFsizeR: { type: Number, default: null },
-    ovaryVolume: { type: Number, default: null },
-    endometrium: { type: Number, default: null },
+    // Optional Ultrasound Scan parameters — exact dataset field names used by the RF model
+    follicleNoLeft:       { type: Number, default: null, comment: 'Follicle No. (L) — number of follicles in the left ovary' },
+    follicleNoRight:      { type: Number, default: null, comment: 'Follicle No. (R) — number of follicles in the right ovary' },
+    avgFollicleSizeLeft:  { type: Number, default: null, comment: 'Avg. F size (L) (mm) — average follicle size in the left ovary' },
+    avgFollicleSizeRight: { type: Number, default: null, comment: 'Avg. F size (R) (mm) — average follicle size in the right ovary' },
+    endometrium:          { type: Number, default: null, comment: 'Endometrium (mm) — thickness of the endometrium' },
   },
   { timestamps: true }
 );

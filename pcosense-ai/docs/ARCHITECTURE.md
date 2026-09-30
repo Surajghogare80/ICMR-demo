@@ -1,8 +1,8 @@
-# PCOSense AI – Documentation
+# PMOSense AI – Documentation
 
 ## Architecture Overview
 
-PCOSense AI follows a clean, layered MERN architecture:
+PMOSense AI follows a clean, layered MERN architecture:
 
 ```
 Client (React)  →  REST API (Express)  →  Service Layer  →  Repository Layer  →  MongoDB Atlas

@@ -5,9 +5,26 @@ import {
   LinearProgress, Chip, Alert, List, ListItem, ListItemIcon, ListItemText,
   Divider,
 } from '@mui/material';
-import { CheckCircle, Home, History, Science, Warning } from '@mui/icons-material';
+import { CheckCircle, Home, History, Science, PictureAsPdf } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../constants/index.js';
+import { RISK_BANDS } from '../../theme/index.js';
+import RiskIcon from '../../components/common/RiskIcon.jsx';
+import PredictionReport, { printReport } from './PredictionReport.jsx';
+
+// ─── 3-band risk scale, driven by the model probability (0–100) ───────────
+//   0–30   Low PMOS Risk        → green,  check icon
+//   30–60  Moderate PMOS Risk   → yellow, info icon
+//   60–100 High PMOS Risk       → red,    cancel icon
+// Each band gets its own color AND its own icon shape (see RISK_BANDS), so
+// severity is never conveyed by color alone.
+const getRiskBand = (probability) => {
+  const v = Number(probability) || 0;
+  if (v < 30) return { key: 'low',      ...RISK_BANDS.low };
+  if (v < 60) return { key: 'moderate', ...RISK_BANDS.moderate };
+  return               { key: 'high',     ...RISK_BANDS.high };
+};
 
 // ─── Helper: one labelled blood value row ─────────────────────────────────
 const BloodRow = ({ label, value, unit }) => {
@@ -23,21 +40,22 @@ const BloodRow = ({ label, value, unit }) => {
 const PredictionResult = () => {
   const location  = useLocation();
   const navigate  = useNavigate();
+  const { t }      = useTranslation();
   const result     = location.state?.result;
   const prediction = location.state?.prediction; // full DB record with populated personalMetricId
 
   if (!result) {
     return (
       <Box sx={{ textAlign: 'center', py: 10 }}>
-        <Typography>No result found. Please complete the screening first.</Typography>
-        <Button onClick={() => navigate(ROUTES.PREDICTION)} sx={{ mt: 2 }}>Start Screening</Button>
+        <Typography>{t('predictionResult.noResult.message')}</Typography>
+        <Button onClick={() => navigate(ROUTES.PREDICTION)} sx={{ mt: 2 }}>{t('predictionResult.noResult.startButton')}</Button>
       </Box>
     );
   }
 
-  const isHighRisk = result.result === 'High Risk';
-  const color      = isHighRisk ? '#EF5350' : '#66BB6A';
-  const bgColor    = isHighRisk ? 'rgba(239, 83, 80, 0.12)' : 'rgba(102, 187, 106, 0.12)';
+  const band       = getRiskBand(result.probability);
+  const color      = band.color;
+  const bgColor    = `${color}1F`;
 
   // Personal metric data for blood report section
   const pm = prediction?.personalMetricId || {};
@@ -62,18 +80,18 @@ const PredictionResult = () => {
                 transition={{ type: 'spring', stiffness: 200, delay: 0.3 }}
               >
                 <Box sx={{ width: 80, height: 80, borderRadius: '50%', bgcolor: bgColor, display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 'auto', mb: 2, border: `3px solid ${color}` }}>
-                  {isHighRisk ? <Warning sx={{ fontSize: 40, color }} /> : <CheckCircle sx={{ fontSize: 40, color }} />}
+                  <RiskIcon icon={band.icon} sx={{ fontSize: 40, color }} />
                 </Box>
               </motion.div>
               <Chip
-                label={result.result}
+                label={t(`predictionResult.riskBands.${band.key}.chip`)}
                 sx={{ bgcolor: bgColor, color, fontWeight: 800, fontSize: '1rem', px: 2, py: 0.5, mb: 2, border: `1px solid ${color}40` }}
               />
               <Typography variant="h4" fontWeight={800} sx={{ color }}>
-                {isHighRisk ? 'High PCOS Risk Detected' : 'Low PCOS Risk Detected'}
+                {t(`predictionResult.riskBands.${band.key}.headline`)}
               </Typography>
               <Typography color="text.secondary" sx={{ mt: 1 }}>
-                Based on your submitted clinical and lifestyle data
+                {t('predictionResult.subheading')}
               </Typography>
             </Box>
 
@@ -81,8 +99,11 @@ const PredictionResult = () => {
             <CardContent sx={{ p: 4 }}>
               <Grid container spacing={4}>
                 {/* Probability Meter */}
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle2" color="text.secondary" gutterBottom>Risk Probability</Typography>
+                <Grid item xs={12}>
+                  <Alert severity="info" variant="outlined" sx={{ mb: 2.5 }}>
+                    {t('predictionResult.screeningDisclaimer')}
+                  </Alert>
+                  <Typography variant="subtitle2" color="text.secondary" gutterBottom>{t('predictionResult.metrics.riskProbability')}</Typography>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
                     <Typography variant="h3" fontWeight={900} sx={{ color }}>{result.probability}%</Typography>
                   </Box>
@@ -97,23 +118,6 @@ const PredictionResult = () => {
                     <Typography variant="caption" color="text.secondary">100%</Typography>
                   </Box>
                 </Grid>
-
-                {/* Confidence */}
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle2" color="text.secondary" gutterBottom>Model Confidence</Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
-                    <Typography variant="h3" fontWeight={900} color="text.primary">{result.confidence}%</Typography>
-                  </Box>
-                  <LinearProgress
-                    variant="determinate"
-                    value={result.confidence}
-                    color="secondary"
-                    sx={{ height: 12, borderRadius: 6 }}
-                  />
-                  <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
-                    AI model certainty score
-                  </Typography>
-                </Grid>
               </Grid>
             </CardContent>
           </Card>
@@ -127,21 +131,21 @@ const PredictionResult = () => {
             >
               <Card sx={{ mb: 4 }}>
                 <CardContent sx={{ p: 4 }}>
-                  <Typography variant="h6" fontWeight={700} gutterBottom>🔬 Blood Report Summary</Typography>
+                  <Typography variant="h6" fontWeight={700} gutterBottom>{t('predictionResult.bloodReport.title')}</Typography>
                   <Divider sx={{ mb: 2 }} />
                   <Grid container spacing={3}>
                     {/* Standard markers */}
                     {hasStandardBlood && (
                       <Grid item xs={12} sm={6}>
                         <Typography variant="subtitle2" fontWeight={700} color="primary.main" sx={{ mb: 1 }}>
-                          Standard Markers
+                          {t('predictionResult.bloodReport.standardMarkers')}
                         </Typography>
-                        <BloodRow label="FSH"         value={pm.fsh}  unit="mIU/mL" />
-                        <BloodRow label="LH"          value={pm.lh}   unit="mIU/mL" />
-                        <BloodRow label="TSH"         value={pm.tsh}  unit="mIU/L"  />
-                        <BloodRow label="AMH"         value={pm.amh}  unit="ng/mL"  />
-                        <BloodRow label="Haemoglobin" value={pm.hb}   unit="g/dL"   />
-                        <BloodRow label="Random Blood Sugar" value={pm.rbs} unit="mg/dL" />
+                        <BloodRow label={t('predictionResult.bloodReport.labels.fsh')} value={pm.fsh}  unit={t('predictionResult.units.mIU_mL')} />
+                        <BloodRow label={t('predictionResult.bloodReport.labels.lh')}  value={pm.lh}   unit={t('predictionResult.units.mIU_mL')} />
+                        <BloodRow label={t('predictionResult.bloodReport.labels.tsh')} value={pm.tsh}  unit={t('units.mIU_L')}  />
+                        <BloodRow label={t('predictionResult.bloodReport.labels.amh')} value={pm.amh}  unit={t('units.ng_mL')}  />
+                        <BloodRow label={t('predictionResult.bloodReport.labels.hb')}  value={pm.hb}   unit={t('predictionResult.units.g_dL')}   />
+                        <BloodRow label={t('predictionResult.bloodReport.labels.rbs')} value={pm.rbs}  unit={t('predictionResult.units.mg_dL')} />
                       </Grid>
                     )}
 
@@ -149,12 +153,12 @@ const PredictionResult = () => {
                     {hasExtendedBlood && (
                       <Grid item xs={12} sm={6}>
                         <Typography variant="subtitle2" fontWeight={700} color="secondary.main" sx={{ mb: 1 }}>
-                          Extended Markers
+                          {t('predictionResult.bloodReport.extendedMarkers')}
                         </Typography>
-                        <BloodRow label="Vitamin D3"              value={pm.vitD3}            unit="ng/mL"  />
-                        <BloodRow label="SHBG"                    value={pm.shbg}             unit="nmol/L" />
-                        <BloodRow label="Fasting Insulin"         value={pm.fastingInsulin}   unit="µIU/mL" />
-                        <BloodRow label="Insulin Resistance (HOMA-IR)" value={pm.insulinResistance} />
+                        <BloodRow label={t('predictionResult.bloodReport.labels.vitD3')}  value={pm.vitD3}            unit={t('units.ng_mL')}  />
+                        <BloodRow label={t('predictionResult.bloodReport.labels.shbg')}   value={pm.shbg}             unit={t('predictionResult.units.nmol_L')} />
+                        <BloodRow label={t('predictionResult.bloodReport.labels.fastingInsulin')} value={pm.fastingInsulin} unit={t('predictionResult.units.uIU_mL')} />
+                        <BloodRow label={t('predictionResult.bloodReport.labels.insulinResistance')} value={pm.insulinResistance} />
                       </Grid>
                     )}
                   </Grid>
@@ -166,7 +170,7 @@ const PredictionResult = () => {
           {/* Recommendations */}
           <Card sx={{ mb: 4 }}>
             <CardContent sx={{ p: 4 }}>
-              <Typography variant="h6" fontWeight={700} gutterBottom>📋 Personalized Recommendations</Typography>
+              <Typography variant="h6" fontWeight={700} gutterBottom>{t('predictionResult.recommendations.title')}</Typography>
               <Divider sx={{ mb: 2 }} />
               <List disablePadding>
                 {result.recommendation?.map((rec, i) => (
@@ -189,24 +193,34 @@ const PredictionResult = () => {
             <Typography variant="body2">
               This screening result is generated by an AI model and is intended for educational purposes ONLY.
               It does NOT constitute a medical diagnosis. Please consult a licensed gynecologist or endocrinologist
-              for a formal PCOS evaluation, blood tests, and pelvic ultrasound.
+              for a formal PMOS evaluation, blood tests, and pelvic ultrasound.
             </Typography>
           </Alert> */}
 
           {/* Actions */}
           <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center' }}>
+            <Button
+              variant="contained"
+              color="secondary"
+              startIcon={<PictureAsPdf />}
+              onClick={() => printReport(`${t('predictionResult.report.fileName')}-${new Date().toISOString().slice(0, 10)}`)}
+              sx={{ px: 4 }}
+            >
+              {t('predictionResult.actions.downloadReport')}
+            </Button>
             <Button variant="contained" startIcon={<Home />} onClick={() => navigate(ROUTES.DASHBOARD)} sx={{ px: 4 }}>
-              Go to Dashboard
+              {t('predictionResult.actions.dashboard')}
             </Button>
             <Button variant="outlined" startIcon={<History />} onClick={() => navigate(ROUTES.HISTORY)} sx={{ px: 4 }}>
-              View History
+              {t('predictionResult.actions.history')}
             </Button>
             <Button variant="outlined" startIcon={<Science />} onClick={() => navigate(ROUTES.PREDICTION)} sx={{ px: 4 }}>
-              New Screening
+              {t('predictionResult.actions.newScreening')}
             </Button>
           </Box>
         </motion.div>
       </Container>
+      <PredictionReport result={result} band={band} />
     </Box>
   );
 };

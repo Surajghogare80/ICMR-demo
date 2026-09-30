@@ -5,22 +5,36 @@ import {
   useTheme, alpha,
 } from '@mui/material';
 import {
-  Science, ArrowForward, TrendingUp, TrendingDown, CalendarToday,
+  Science, ArrowForward, TrendingUp, TrendingDown, HelpOutline, CalendarToday,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../../constants/index.js';
+import { formatLocalizedDate } from '../../../utils/localeFormat.js';
+import { translateOptionValue } from '../../../utils/optionTranslation.js';
+import { COLORS } from '../../../theme/index.js';
 
+// getRiskConfig keeps comparing/storing the original backend value (result) as-is.
+// The `label` field returned here is only ever used for translated display.
+// `icon` is kept in lockstep with `color` so the row's icon never mismatches
+// its background tint (e.g. an unknown/other result never renders as if it were "Low").
 const getRiskConfig = (result) => {
-  if (!result) return { color: '#9E9E9E', label: 'Unknown', gradient: 'linear-gradient(135deg, #9E9E9E, #BDBDBD)' };
-  if (result === 'High Risk') return { color: '#EF5350', label: 'High Risk', gradient: 'linear-gradient(135deg, #EF5350, #EF9A9A)' };
-  if (result === 'Low Risk') return { color: '#66BB6A', label: 'Low Risk', gradient: 'linear-gradient(135deg, #66BB6A, #A5D6A7)' };
-  return { color: '#FFA726', label: result, gradient: 'linear-gradient(135deg, #FFA726, #FFD54F)' };
+  if (!result) return { color: COLORS.riskUnknown, label: 'Unknown', icon: HelpOutline, gradient: `linear-gradient(135deg, ${COLORS.riskUnknown}, ${COLORS.riskUnknownLight})` };
+  if (result === 'High Risk') return { color: COLORS.riskHigh, label: 'High Risk', icon: TrendingUp, gradient: `linear-gradient(135deg, ${COLORS.riskHigh}, ${COLORS.riskHighLight})` };
+  if (result === 'Low Risk') return { color: COLORS.riskLow, label: 'Low Risk', icon: TrendingDown, gradient: `linear-gradient(135deg, ${COLORS.riskLow}, ${COLORS.riskLow})` };
+  return { color: COLORS.orange, label: result, icon: HelpOutline, gradient: `linear-gradient(135deg, ${COLORS.orange}, ${COLORS.orangeLight})` };
 };
 
+// Translates a risk label for display only; falls back to the original value
+// for statuses that don't have a dedicated translation key.
+const translateStatus = (t, label) => translateOptionValue(t, 'dashboard.recentPredictions.status', label);
+
 const PredictionRow = ({ prediction, index }) => {
+  const { t, i18n } = useTranslation();
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
   const risk = getRiskConfig(prediction.result);
+  const riskLabel = translateStatus(t, risk.label);
 
   return (
     <motion.div
@@ -60,16 +74,14 @@ const PredictionRow = ({ prediction, index }) => {
             boxShadow: `0 4px 12px ${alpha(risk.color, 0.3)}`,
           }}
         >
-          {prediction.result === 'High Risk'
-            ? <TrendingUp sx={{ color: 'white', fontSize: 20 }} />
-            : <TrendingDown sx={{ color: 'white', fontSize: 20 }} />}
+          <risk.icon sx={{ color: 'white', fontSize: 20 }} />
         </Box>
 
         {/* Main info */}
         <Box sx={{ flexGrow: 1, minWidth: 0 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.8, flexWrap: 'wrap' }}>
             <Chip
-              label={risk.label}
+              label={riskLabel}
               size="small"
               sx={{
                 bgcolor: alpha(risk.color, isDark ? 0.2 : 0.1),
@@ -80,7 +92,7 @@ const PredictionRow = ({ prediction, index }) => {
               }}
             />
             <Typography variant="body2" fontWeight={600} sx={{ color: 'text.primary' }}>
-              {prediction.probability}% probability
+              {t('dashboard.recentPredictions.probabilityLabel', { value: prediction.probability })}
             </Typography>
           </Box>
 
@@ -103,13 +115,13 @@ const PredictionRow = ({ prediction, index }) => {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
             <CalendarToday sx={{ fontSize: 12, color: 'text.disabled' }} />
             <Typography variant="caption" color="text.disabled" fontWeight={500}>
-              {new Date(prediction.createdAt).toLocaleDateString('en-IN', {
+              {formatLocalizedDate(prediction.createdAt, i18n.language, {
                 day: 'numeric', month: 'short', year: 'numeric',
               })}
             </Typography>
             <Typography variant="caption" color="text.disabled" sx={{ mx: 0.5 }}>•</Typography>
             <Typography variant="caption" color="text.disabled">
-              Confidence: {prediction.confidence}%
+              {t('dashboard.recentPredictions.confidenceLabel', { value: prediction.confidence })}
             </Typography>
           </Box>
         </Box>
@@ -119,6 +131,7 @@ const PredictionRow = ({ prediction, index }) => {
 };
 
 const RecentPredictions = ({ predictions, isLoading, total }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
@@ -128,9 +141,11 @@ const RecentPredictions = ({ predictions, isLoading, total }) => {
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', mb: 3 }}>
           <Box>
-            <Typography variant="h5" fontWeight={800} sx={{ mb: 0.5 }}>Recent Predictions</Typography>
+            <Typography variant="h5" fontWeight={800} sx={{ mb: 0.5 }}>{t('dashboard.recentPredictions.heading')}</Typography>
             <Typography variant="body2" color="text.secondary">
-              {total > 0 ? `${total} total health screenings completed` : 'Your prediction history will appear here'}
+              {total > 0
+                ? t('dashboard.recentPredictions.subtitleCount', { count: total })
+                : t('dashboard.recentPredictions.subtitleEmpty')}
             </Typography>
           </Box>
           {total > 0 && (
@@ -138,9 +153,9 @@ const RecentPredictions = ({ predictions, isLoading, total }) => {
               size="small"
               endIcon={<ArrowForward sx={{ fontSize: 14 }} />}
               onClick={() => navigate(ROUTES.HISTORY)}
-              sx={{ fontWeight: 700, color: '#EC407A' }}
+              sx={{ fontWeight: 700, color: COLORS.secondaryDark }}
             >
-              View all
+              {t('common.view_all')}
             </Button>
           )}
         </Box>
@@ -150,9 +165,9 @@ const RecentPredictions = ({ predictions, isLoading, total }) => {
         sx={{
           borderRadius: 4,
           p: 3,
-          background: isDark ? alpha(theme.palette.background.paper, 0.4) : '#FFFFFF',
+          background: isDark ? alpha(theme.palette.background.paper, 0.4) : COLORS.white,
           border: `1px solid ${theme.palette.divider}`,
-          boxShadow: isDark ? `0 8px 32px ${alpha('#000', 0.3)}` : '0 4px 24px rgba(233,30,99,0.04)',
+          boxShadow: isDark ? `0 8px 32px ${alpha(COLORS.black, 0.3)}` : '0 4px 24px rgba(233,30,99,0.04)',
         }}
       >
         {isLoading ? (
@@ -188,15 +203,15 @@ const RecentPredictions = ({ predictions, isLoading, total }) => {
                 <Science sx={{ fontSize: 40, color: 'rgba(233,30,99,0.4)' }} />
               </Box>
             </motion.div>
-            <Typography variant="h6" fontWeight={700} gutterBottom>No predictions yet</Typography>
+            <Typography variant="h6" fontWeight={700} gutterBottom>{t('dashboard.recentPredictions.emptyTitle')}</Typography>
             <Typography color="text.secondary" variant="body2" sx={{ mb: 3, maxWidth: 320, mx: 'auto' }}>
-              Start your first PCOS screening to begin tracking your health journey.
+              {t('dashboard.recentPredictions.emptyText')}
             </Typography>
             <Button
               variant="contained"
               onClick={() => navigate(ROUTES.PREDICTION)}
               sx={{
-                background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
+                background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`,
                 px: 3,
                 py: 1.2,
                 borderRadius: 3,
@@ -204,7 +219,7 @@ const RecentPredictions = ({ predictions, isLoading, total }) => {
                 boxShadow: '0 8px 24px rgba(233,30,99,0.3)',
               }}
             >
-              Start First Screening →
+              {t('dashboard.recentPredictions.emptyCta')} →
             </Button>
           </Box>
         ) : (

@@ -1,5 +1,5 @@
 @echo off
-echo Starting PCOSense AI Backend...
+echo Starting PMOSense AI Backend...
 cd backend
-start "PCOSense Backend" cmd /k "npm run dev"
+start "PMOSense Backend" cmd /k "npm run dev"
 echo Backend started on http://localhost:5000

@@ -1,47 +1,55 @@
 // src/pages/Prediction/components/PersonalInfoSection.jsx
 import { useEffect } from 'react';
 import {
-  Box, Typography, Grid, IconButton,
+  Box, Typography, Grid,
   ToggleButton, ToggleButtonGroup, Stack
 } from '@mui/material';
 import {
-  Add as AddIcon,
-  Remove as RemoveIcon,
   Favorite as FavoriteIcon,
   MonitorHeart as MonitorHeartIcon,
   FamilyRestroom as FamilyRestroomIcon
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import WheelPicker from '../../../components/ui/WheelPicker.jsx';
+import { COLORS } from '../../../theme/index.js';
 
 // Color & Status helpers for BMI
-const getBMIInfo = (bmi) => {
+const getBMIInfo = (bmi, t) => {
   const b = Number(bmi);
   if (!b || isNaN(b) || b <= 0) {
-    return { status: '--', color: '#9E9E9E', desc: 'Enter weight & height' };
+    return { status: '--', color: COLORS.gray, desc: t('prediction.personal.bmi_status.enter_weight_height') };
   }
   if (b < 18.5) {
-    return { status: 'Underweight', color: '#2196F3', desc: '≤ 18.4' }; // Blue
+    return { status: t('prediction.personal.bmi_status.underweight'), color: COLORS.bmiUnderweight, desc: t('prediction.personal.bmi_status.underweight_range') }; // Blue
   }
   if (b < 25) {
-    return { status: 'Normal', color: '#4CAF50', desc: '18.5 – 24.9' };   // Green
+    return { status: t('prediction.personal.bmi_status.normal'), color: COLORS.bmiNormal, desc: t('prediction.personal.bmi_status.normal_range') };   // Green
   }
-  return { status: 'Overweight / Obese', color: '#FF9800', desc: '≥ 25.0' }; // Orange
+  if (b < 30) {
+    return { status: t('prediction.personal.bmi_status.overweight'), color: COLORS.bmiOverweight, desc: t('prediction.personal.bmi_status.overweight_range') }; // Orange
+  }
+  if (b < 35) {
+    return { status: t('prediction.personal.bmi_status.obesity_1'), color: COLORS.bmiObesity1, desc: t('prediction.personal.bmi_status.obesity_1_range') }; // Deep orange
+  }
+  if (b < 40) {
+    return { status: t('prediction.personal.bmi_status.obesity_2'), color: COLORS.bmiObesity2, desc: t('prediction.personal.bmi_status.obesity_2_range') }; // Dark orange
+  }
+  return { status: t('prediction.personal.bmi_status.obesity_3'), color: COLORS.bmiObesity3, desc: t('prediction.personal.bmi_status.obesity_3_range') }; // Red
 };
 
 // Color & Status helpers for Waist-Hip Ratio
-const getWHRInfo = (whr) => {
+const getWHRInfo = (whr, t) => {
   const w = Number(whr);
   if (!w || isNaN(w) || w <= 0) {
-    return { status: '--', color: '#9E9E9E', desc: 'Enter waist & hip' };
+    return { status: '--', color: COLORS.gray, desc: t('prediction.personal.whr_status.enter_waist_hip') };
   }
   if (w < 0.80) {
-    return { status: 'Low', color: '#4CAF50', desc: '< 0.80 Low Risk' };    // Green
+    return { status: t('prediction.personal.whr_status.low'), color: COLORS.bmiNormal, desc: t('prediction.personal.whr_status.low_desc') };    // Green
   }
   if (w < 0.85) {
-    return { status: 'Moderate', color: '#FF9800', desc: '0.80 – 0.84 Moderate Risk' }; // Orange
+    return { status: t('prediction.personal.whr_status.moderate'), color: COLORS.bmiOverweight, desc: t('prediction.personal.whr_status.moderate_desc') }; // Orange
   }
-  return { status: 'High', color: '#F44336', desc: '≥ 0.85 High Risk' };            // Red
+  return { status: t('prediction.personal.whr_status.high'), color: COLORS.bmiObesity3, desc: t('prediction.personal.whr_status.high_desc') };            // Red
 };
 
 const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
@@ -181,69 +189,47 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
   const displayedWaist = waistUnit === 'inch' ? Number((waistCm / 2.54).toFixed(2)) : Number(waistCm.toFixed(2));
   const displayedHip = hipUnit === 'inch' ? Number((hipCm / 2.54).toFixed(2)) : Number(hipCm.toFixed(2));
 
-  // Plus/Minus step handlers
-  const handleWeightStep = (isPlus) => {
-    if (weightUnit === 'lbs') {
-      const newLbs = isPlus
-        ? Math.min(440, displayedWeight + 1)
-        : Math.max(44, displayedWeight - 1);
-      const kgVal = Number((newLbs / 2.20462).toFixed(2));
-      updateMultiplePersonal({ weightKg: kgVal, weight: kgVal });
-    } else {
-      const newKg = isPlus
-        ? Math.min(200, weightKg + 0.5)
-        : Math.max(20, weightKg - 0.5);
-      const kgVal = Number(newKg.toFixed(2));
-      updateMultiplePersonal({ weightKg: kgVal, weight: kgVal });
-    }
+  // Wheel picker ranges (in the currently displayed unit) + change handlers.
+  // Values always convert back to canonical kg/cm before storing.
+  const weightWheel = weightUnit === 'lbs'
+    ? { min: 44, max: 440, step: 1 }
+    : { min: 20, max: 200, step: 0.5 };
+  const heightWheel = heightUnit === 'inch'
+    ? { min: 39, max: 98, step: 0.5 }
+    : { min: 100, max: 250, step: 0.5 };
+  const waistWheel = waistUnit === 'inch'
+    ? { min: 15, max: 70, step: 0.5 }
+    : { min: 40, max: 180, step: 0.5 };
+  const hipWheel = hipUnit === 'inch'
+    ? { min: 20, max: 80, step: 0.5 }
+    : { min: 50, max: 200, step: 0.5 };
+
+  const handleWeightWheel = (val) => {
+    const kgVal = weightUnit === 'lbs'
+      ? Number((Number(val) / 2.20462).toFixed(2))
+      : Number(Number(val).toFixed(2));
+    updateMultiplePersonal({ weightKg: kgVal, weight: kgVal });
   };
 
-  const handleHeightStep = (isPlus) => {
-    if (heightUnit === 'inch') {
-      const newInch = isPlus
-        ? Math.min(98, displayedHeight + 0.5)
-        : Math.max(39, displayedHeight - 0.5);
-      const cmVal = Number((newInch * 2.54).toFixed(2));
-      updateMultiplePersonal({ heightCm: cmVal, height: cmVal });
-    } else {
-      const newCm = isPlus
-        ? Math.min(250, heightCm + 0.5)
-        : Math.max(100, heightCm - 0.5);
-      const cmVal = Number(newCm.toFixed(2));
-      updateMultiplePersonal({ heightCm: cmVal, height: cmVal });
-    }
+  const handleHeightWheel = (val) => {
+    const cmVal = heightUnit === 'inch'
+      ? Number((Number(val) * 2.54).toFixed(2))
+      : Number(Number(val).toFixed(2));
+    updateMultiplePersonal({ heightCm: cmVal, height: cmVal });
   };
 
-  const handleWaistStep = (isPlus) => {
-    if (waistUnit === 'inch') {
-      const newInch = isPlus
-        ? Math.min(70, displayedWaist + 0.5)
-        : Math.max(15, displayedWaist - 0.5);
-      const cmVal = Number((newInch * 2.54).toFixed(2));
-      updateMultiplePersonal({ waistCm: cmVal, waist: cmVal });
-    } else {
-      const newCm = isPlus
-        ? Math.min(180, waistCm + 0.5)
-        : Math.max(40, waistCm - 0.5);
-      const cmVal = Number(newCm.toFixed(2));
-      updateMultiplePersonal({ waistCm: cmVal, waist: cmVal });
-    }
+  const handleWaistWheel = (val) => {
+    const cmVal = waistUnit === 'inch'
+      ? Number((Number(val) * 2.54).toFixed(2))
+      : Number(Number(val).toFixed(2));
+    updateMultiplePersonal({ waistCm: cmVal, waist: cmVal });
   };
 
-  const handleHipStep = (isPlus) => {
-    if (hipUnit === 'inch') {
-      const newInch = isPlus
-        ? Math.min(80, displayedHip + 0.5)
-        : Math.max(20, displayedHip - 0.5);
-      const cmVal = Number((newInch * 2.54).toFixed(2));
-      updateMultiplePersonal({ hipCm: cmVal, hip: cmVal });
-    } else {
-      const newCm = isPlus
-        ? Math.min(200, hipCm + 0.5)
-        : Math.max(50, hipCm - 0.5);
-      const cmVal = Number(newCm.toFixed(2));
-      updateMultiplePersonal({ hipCm: cmVal, hip: cmVal });
-    }
+  const handleHipWheel = (val) => {
+    const cmVal = hipUnit === 'inch'
+      ? Number((Number(val) * 2.54).toFixed(2))
+      : Number(Number(val).toFixed(2));
+    updateMultiplePersonal({ hipCm: cmVal, hip: cmVal });
   };
 
   // Shared borderless column layout style
@@ -257,8 +243,20 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
     minHeight: { xs: '115px', md: '125px' },
   };
 
-  const bmiInfo = getBMIInfo(personal.bmi);
-  const whrInfo = getWHRInfo(personal.waistHipRatio);
+  // Scaled wrapper so the age-style wheel fits inside a 3-column grid cell
+  const wheelWrapperStyle = {
+    width: '100%',
+    height: '180px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'visible',
+    my: 'auto',
+  };
+  const wheelInnerStyle = { width: '260px', transform: 'scale(0.72)', transformOrigin: 'center center' };
+
+  const bmiInfo = getBMIInfo(personal.bmi, t);
+  const whrInfo = getWHRInfo(personal.waistHipRatio, t);
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -275,7 +273,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
               fontWeight={800}
               sx={{ color: 'text.primary', textAlign: 'center', mb: 2 }}
             >
-              {t('how_old_are_you', 'How old are you?')}
+              {t('prediction.personal.how_old_are_you')}
             </Typography>
 
             {/* Wheel Picker (~20% smaller via scaled container, overflow visible so border is never cut) */}
@@ -296,9 +294,9 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                   value={age}
                   onChange={(val) => updatePersonal('age', Number(val))}
                   min={10}
-                  max={60}
+                  max={48}
                   step={1}
-                  unit={t('years', 'Years')}
+                  unit={t('prediction.personal.years_unit')}
                 />
               </Box>
             </Box>
@@ -321,14 +319,14 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
             }}
           >
             <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
-              <FamilyRestroomIcon sx={{ fontSize: 24, color: '#E91E63' }} />
+              <FamilyRestroomIcon sx={{ fontSize: 24, color: COLORS.primary }} />
               <Typography variant="h6" fontWeight={800} color="text.primary">
-                {t('family_history_of_pcos', 'Family History of PCOS')}
+                {t('prediction.personal.family_history_title')}
               </Typography>
             </Stack>
 
             <Typography variant="body2" color="text.secondary" fontWeight={600} sx={{ mb: 2.5 }}>
-              {t('mother_aunt_sister_grandmother_cousin', 'Mother / Aunt / Sister / Cousin / Grandmother')}
+              {t('prediction.personal.family_history_subtitle')}
             </Typography>
 
             {/* Yes / No Toggle */}
@@ -349,15 +347,15 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                   fontWeight: 800,
                   fontSize: '0.92rem',
                   border: '2px solid rgba(233, 30, 99, 0.35) !important',
-                  color: '#E91E63',
+                  color: COLORS.primary,
                   transition: 'all 0.22s cubic-bezier(0.4, 0, 0.2, 1)',
                   minWidth: '125px',
                   '&.Mui-selected': {
-                    bgcolor: '#E91E63',
-                    color: '#fff',
-                    borderColor: '#E91E63 !important',
+                    bgcolor: COLORS.primary,
+                    color: COLORS.white,
+                    borderColor: `${COLORS.primary} !important`,
                     boxShadow: '0 4px 16px rgba(233, 30, 99, 0.35)',
-                    '&:hover': { bgcolor: '#C2185B' },
+                    '&:hover': { bgcolor: COLORS.primaryDark },
                   },
                   '&:hover': {
                     bgcolor: 'rgba(233, 30, 99, 0.08)',
@@ -366,8 +364,8 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                 },
               }}
             >
-              <ToggleButton value="yes">{t('yes', 'Yes')}</ToggleButton>
-              <ToggleButton value="no">{t('no', 'No')}</ToggleButton>
+              <ToggleButton value="yes">{t('common.yes')}</ToggleButton>
+              <ToggleButton value="no">{t('common.no')}</ToggleButton>
             </ToggleButtonGroup>
           </Box>
         </Box>
@@ -382,7 +380,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
             fontWeight={800}
             sx={{ color: 'text.primary', textAlign: 'center', mb: 3 }}
           >
-            {t('personal_health_measurements', 'Personal Health Measurements')}
+            {t('prediction.personal.measurements_title')}
           </Typography>
 
           {/* Row 1: Weight | Height | BMI Card */}
@@ -392,7 +390,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
               <Box sx={columnStyle}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%', maxWidth: '220px', mb: 0.5 }}>
                   <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
-                    {t('weight', 'Weight')}
+                    {t('prediction.personal.weight_label')}
                   </Typography>
                   <ToggleButtonGroup
                     value={weightUnit}
@@ -401,35 +399,23 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                     size="small"
                     sx={{ '& .MuiToggleButton-root': { py: 0.2, px: 1.1, borderRadius: '12px', fontWeight: 700, fontSize: '0.7rem' } }}
                   >
-                    <ToggleButton value="kg">{t('kg', 'kg')}</ToggleButton>
-                    <ToggleButton value="lbs">{t('lbs', 'lbs')}</ToggleButton>
+                    <ToggleButton value="kg">{t('units.kg')}</ToggleButton>
+                    <ToggleButton value="lbs">{t('units.lbs')}</ToggleButton>
                   </ToggleButtonGroup>
                 </Stack>
 
-                <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} sx={{ my: 'auto', py: 0.5, width: '100%' }}>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleWeightStep(false)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
-                  >
-                    <RemoveIcon fontSize="small" />
-                  </IconButton>
-                  <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 0.6, whiteSpace: 'nowrap', px: 0.5 }}>
-                    <Typography variant="h4" fontWeight={900} sx={{ color: '#E91E63', lineHeight: 1, whiteSpace: 'nowrap' }}>
-                      {displayedWeight}
-                    </Typography>
-                    <Typography variant="subtitle1" fontWeight={700} color="text.secondary" sx={{ whiteSpace: 'nowrap', lineHeight: 1 }}>
-                      {t(weightUnit)}
-                    </Typography>
+                <Box sx={wheelWrapperStyle}>
+                  <Box sx={wheelInnerStyle}>
+                    <WheelPicker
+                      value={displayedWeight}
+                      onChange={handleWeightWheel}
+                      min={weightWheel.min}
+                      max={weightWheel.max}
+                      step={weightWheel.step}
+                      unit={t(`units.${weightUnit}`)}
+                    />
                   </Box>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleWeightStep(true)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
-                  >
-                    <AddIcon fontSize="small" />
-                  </IconButton>
-                </Stack>
+                </Box>
               </Box>
             </Grid>
 
@@ -438,7 +424,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
               <Box sx={columnStyle}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%', maxWidth: '220px', mb: 0.5 }}>
                   <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
-                    {t('height', 'Height')}
+                    {t('prediction.personal.height_label')}
                   </Typography>
                   <ToggleButtonGroup
                     value={heightUnit}
@@ -447,35 +433,23 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                     size="small"
                     sx={{ '& .MuiToggleButton-root': { py: 0.2, px: 1.1, borderRadius: '12px', fontWeight: 700, fontSize: '0.7rem' } }}
                   >
-                    <ToggleButton value="cm">{t('cm', 'cm')}</ToggleButton>
-                    <ToggleButton value="inch">{t('inch', 'inch')}</ToggleButton>
+                    <ToggleButton value="cm">{t('units.cm')}</ToggleButton>
+                    <ToggleButton value="inch">{t('units.inch')}</ToggleButton>
                   </ToggleButtonGroup>
                 </Stack>
 
-                <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} sx={{ my: 'auto', py: 0.5, width: '100%' }}>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleHeightStep(false)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
-                  >
-                    <RemoveIcon fontSize="small" />
-                  </IconButton>
-                  <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 0.6, whiteSpace: 'nowrap', px: 0.5 }}>
-                    <Typography variant="h4" fontWeight={900} sx={{ color: '#E91E63', lineHeight: 1, whiteSpace: 'nowrap' }}>
-                      {displayedHeight}
-                    </Typography>
-                    <Typography variant="subtitle1" fontWeight={700} color="text.secondary" sx={{ whiteSpace: 'nowrap', lineHeight: 1 }}>
-                      {t(heightUnit)}
-                    </Typography>
+                <Box sx={wheelWrapperStyle}>
+                  <Box sx={wheelInnerStyle}>
+                    <WheelPicker
+                      value={displayedHeight}
+                      onChange={handleHeightWheel}
+                      min={heightWheel.min}
+                      max={heightWheel.max}
+                      step={heightWheel.step}
+                      unit={t(`units.${heightUnit}`)}
+                    />
                   </Box>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleHeightStep(true)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
-                  >
-                    <AddIcon fontSize="small" />
-                  </IconButton>
-                </Stack>
+                </Box>
               </Box>
             </Grid>
 
@@ -490,7 +464,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                 <Stack direction="row" alignItems="center" justifyContent="center" spacing={0.8} sx={{ width: '100%', mb: 0.5 }}>
                   {/* <FavoriteIcon sx={{ fontSize: 18, color: '#E91E63' }} /> */}
                   <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
-                    {t('bmi', 'BMI')} · {t('body_mass_index', 'Body Mass Index')}
+                    {t('prediction.personal.bmi_label')} · {t('prediction.personal.body_mass_index')}
                   </Typography>
                 </Stack>
 
@@ -529,7 +503,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
               <Box sx={columnStyle}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%', maxWidth: '220px', mb: 0.5 }}>
                   <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
-                    {t('waist', 'Waist')}
+                    {t('prediction.personal.waist_label')}
                   </Typography>
                   <ToggleButtonGroup
                     value={waistUnit}
@@ -538,35 +512,23 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                     size="small"
                     sx={{ '& .MuiToggleButton-root': { py: 0.2, px: 1.1, borderRadius: '12px', fontWeight: 700, fontSize: '0.7rem' } }}
                   >
-                    <ToggleButton value="cm">{t('cm', 'cm')}</ToggleButton>
-                    <ToggleButton value="inch">{t('inch', 'inch')}</ToggleButton>
+                    <ToggleButton value="cm">{t('units.cm')}</ToggleButton>
+                    <ToggleButton value="inch">{t('units.inch')}</ToggleButton>
                   </ToggleButtonGroup>
                 </Stack>
 
-                <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} sx={{ my: 'auto', py: 0.5, width: '100%' }}>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleWaistStep(false)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
-                  >
-                    <RemoveIcon fontSize="small" />
-                  </IconButton>
-                  <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 0.6, whiteSpace: 'nowrap', px: 0.5 }}>
-                    <Typography variant="h4" fontWeight={900} sx={{ color: '#E91E63', lineHeight: 1, whiteSpace: 'nowrap' }}>
-                      {displayedWaist}
-                    </Typography>
-                    <Typography variant="subtitle1" fontWeight={700} color="text.secondary" sx={{ whiteSpace: 'nowrap', lineHeight: 1 }}>
-                      {t(waistUnit)}
-                    </Typography>
+                <Box sx={wheelWrapperStyle}>
+                  <Box sx={wheelInnerStyle}>
+                    <WheelPicker
+                      value={displayedWaist}
+                      onChange={handleWaistWheel}
+                      min={waistWheel.min}
+                      max={waistWheel.max}
+                      step={waistWheel.step}
+                      unit={t(`units.${waistUnit}`)}
+                    />
                   </Box>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleWaistStep(true)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
-                  >
-                    <AddIcon fontSize="small" />
-                  </IconButton>
-                </Stack>
+                </Box>
               </Box>
             </Grid>
 
@@ -575,7 +537,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
               <Box sx={columnStyle}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ width: '100%', maxWidth: '220px', mb: 0.5 }}>
                   <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
-                    {t('hip', 'Hip')}
+                    {t('prediction.personal.hip_label')}
                   </Typography>
                   <ToggleButtonGroup
                     value={hipUnit}
@@ -584,35 +546,23 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                     size="small"
                     sx={{ '& .MuiToggleButton-root': { py: 0.2, px: 1.1, borderRadius: '12px', fontWeight: 700, fontSize: '0.7rem' } }}
                   >
-                    <ToggleButton value="cm">{t('cm', 'cm')}</ToggleButton>
-                    <ToggleButton value="inch">{t('inch', 'inch')}</ToggleButton>
+                    <ToggleButton value="cm">{t('units.cm')}</ToggleButton>
+                    <ToggleButton value="inch">{t('units.inch')}</ToggleButton>
                   </ToggleButtonGroup>
                 </Stack>
 
-                <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} sx={{ my: 'auto', py: 0.5, width: '100%' }}>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleHipStep(false)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
-                  >
-                    <RemoveIcon fontSize="small" />
-                  </IconButton>
-                  <Box sx={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 0.6, whiteSpace: 'nowrap', px: 0.5 }}>
-                    <Typography variant="h4" fontWeight={900} sx={{ color: '#E91E63', lineHeight: 1, whiteSpace: 'nowrap' }}>
-                      {displayedHip}
-                    </Typography>
-                    <Typography variant="subtitle1" fontWeight={700} color="text.secondary" sx={{ whiteSpace: 'nowrap', lineHeight: 1 }}>
-                      {t(hipUnit)}
-                    </Typography>
+                <Box sx={wheelWrapperStyle}>
+                  <Box sx={wheelInnerStyle}>
+                    <WheelPicker
+                      value={displayedHip}
+                      onChange={handleHipWheel}
+                      min={hipWheel.min}
+                      max={hipWheel.max}
+                      step={hipWheel.step}
+                      unit={t(`units.${hipUnit}`)}
+                    />
                   </Box>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleHipStep(true)}
-                    sx={{ bgcolor: 'rgba(233,30,99,0.1)', color: '#E91E63', '&:hover': { bgcolor: '#E91E63', color: '#fff' }, width: 34, height: 34, flexShrink: 0 }}
-                  >
-                    <AddIcon fontSize="small" />
-                  </IconButton>
-                </Stack>
+                </Box>
               </Box>
             </Grid>
 
@@ -627,7 +577,7 @@ const PersonalInfoSection = ({ formData, setFormData, subStep = 1 }) => {
                 <Stack direction="row" alignItems="center" justifyContent="center" spacing={0.8} sx={{ width: '100%', mb: 0.5 }}>
                   {/* <MonitorHeartIcon sx={{ fontSize: 18, color: '#E91E63' }} /> */}
                   <Typography variant="subtitle2" fontWeight={700} color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.8 }}>
-                    {t('waist_hip_ratio', 'WHR')} · {t('body_fat_distribution', 'Ratio')}
+                    {t('prediction.personal.whr_label')} · {t('prediction.personal.ratio_label')}
                   </Typography>
                 </Stack>
 

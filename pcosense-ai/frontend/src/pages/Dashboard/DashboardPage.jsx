@@ -8,10 +8,11 @@ import {
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation, Trans } from 'react-i18next';
 import { predictionService } from '../../services/predictionService.js';
-import { useAuth } from '../../contexts/AuthContext.jsx';
 import { ROUTES } from '../../constants/index.js';
 import { APP_NAME } from '../../config/appConfig.js';
+import { COLORS } from '../../theme/index.js';
 
 // Sub-components
 import HeroSlider from './components/HeroSlider.jsx';
@@ -24,11 +25,17 @@ import RecentPredictions from './components/RecentPredictions.jsx';
 import HealthArticles from './components/HealthArticles.jsx';
 import HealthProgressSection from './components/HealthProgressSection.jsx';
 
-const getGreeting = () => {
+const GREETING_META = {
+  morning: { Icon: WbSunny, color: COLORS.orange },
+  afternoon: { Icon: WbCloudy, color: COLORS.teal },
+  evening: { Icon: NightsStay, color: COLORS.purple },
+};
+
+const getGreetingKey = () => {
   const h = new Date().getHours();
-  if (h < 12) return { text: 'Good morning', Icon: WbSunny, color: '#FFA726' };
-  if (h < 18) return { text: 'Good afternoon', Icon: WbCloudy, color: '#26C6DA' };
-  return { text: 'Good evening', Icon: NightsStay, color: '#7E57C2' };
+  if (h < 12) return 'morning';
+  if (h < 18) return 'afternoon';
+  return 'evening';
 };
 
 // Floating decorative blob
@@ -45,12 +52,13 @@ const Blob = ({ sx }) => (
 );
 
 const DashboardPage = () => {
-  const { user } = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
-  const greeting = getGreeting();
-  const firstName = user?.name?.split(' ')[0] || 'there';
+  const greetingKey = getGreetingKey();
+  const greeting = { text: t(`dashboard.greeting.${greetingKey}`), ...GREETING_META[greetingKey] };
+  const firstName = t('dashboard.greeting.guest');
 
   const { data: predictionsData, isLoading } = useQuery({
     queryKey: ['predictions'],
@@ -107,9 +115,9 @@ const DashboardPage = () => {
               borderRadius: 4,
               p: { xs: 3, md: 4 },
               background: isDark
-                ? `linear-gradient(135deg, ${alpha('#EC407A', 0.2)} 0%, ${alpha('#7E57C2', 0.1)} 100%)`
-                : 'linear-gradient(135deg, #FFF0F5 0%, #F3E5F5 100%)',
-              border: `1px solid ${isDark ? alpha('#EC407A', 0.2) : alpha('#EC407A', 0.1)}`,
+                ? `linear-gradient(135deg, ${alpha(COLORS.secondaryDark, 0.2)} 0%, ${alpha(COLORS.purple, 0.1)} 100%)`
+                : `linear-gradient(135deg, ${COLORS.lightBgAlt} 0%, ${COLORS.purpleBgLight} 100%)`,
+              border: `1px solid ${isDark ? alpha(COLORS.secondaryDark, 0.2) : alpha(COLORS.secondaryDark, 0.1)}`,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
@@ -157,11 +165,11 @@ const DashboardPage = () => {
                   sx={{
                     width: { xs: 56, md: 72 },
                     height: { xs: 56, md: 72 },
-                    background: 'linear-gradient(135deg, #EC407A, #F48FB1)',
+                    background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.accentRose})`,
                     fontSize: { xs: '1.4rem', md: '1.8rem' },
                     fontWeight: 900,
                     boxShadow: '0 12px 32px rgba(233,30,99,0.35)',
-                    border: `3px solid ${isDark ? alpha('#EC407A', 0.3) : 'rgba(255,255,255,0.8)'}`,
+                    border: `3px solid ${isDark ? alpha(COLORS.secondaryDark, 0.3) : 'rgba(255,255,255,0.8)'}`,
                   }}
                 >
                   {firstName.charAt(0).toUpperCase()}
@@ -189,8 +197,8 @@ const DashboardPage = () => {
                   fontWeight={900}
                   sx={{
                     background: isDark
-                      ? 'linear-gradient(135deg, #FCE4EC, #F48FB1)'
-                      : 'linear-gradient(135deg, #C2185B, #EC407A)',
+                      ? `linear-gradient(135deg, ${COLORS.secondaryPale}, ${COLORS.accentRose})`
+                      : `linear-gradient(135deg, ${COLORS.primaryDark}, ${COLORS.secondaryDark})`,
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     lineHeight: 1.2,
@@ -208,9 +216,9 @@ const DashboardPage = () => {
                     maxWidth: 420,
                   }}
                 >
-                  Welcome back to{' '}
-                  <Box component="span" sx={{ color: '#EC407A', fontWeight: 700 }}>{APP_NAME}</Box>
-                  . Your health journey starts with awareness and early detection.
+                  <Trans i18nKey="dashboard.welcome.subtitle" values={{ appName: APP_NAME }}>
+                    Welcome back to <Box component="span" sx={{ color: COLORS.secondaryDark, fontWeight: 700 }}>{{ appName: APP_NAME }}</Box>. Your health journey starts with awareness and early detection.
+                  </Trans>
                 </Typography>
               </Box>
             </Box>
@@ -222,7 +230,7 @@ const DashboardPage = () => {
                 endIcon={<ArrowForward />}
                 onClick={() => navigate(ROUTES.PREDICTION)}
                 sx={{
-                  background: 'linear-gradient(135deg, #EC407A, #C2185B)',
+                  background: `linear-gradient(135deg, ${COLORS.secondaryDark}, ${COLORS.primaryDark})`,
                   px: { xs: 2.5, md: 3.5 },
                   py: { xs: 1, md: 1.3 },
                   borderRadius: 3,
@@ -231,13 +239,13 @@ const DashboardPage = () => {
                   boxShadow: '0 8px 24px rgba(233,30,99,0.35)',
                   whiteSpace: 'nowrap',
                   '&:hover': {
-                    background: 'linear-gradient(135deg, #C2185B, #AD1457)',
+                    background: `linear-gradient(135deg, ${COLORS.primaryDark}, ${COLORS.primaryDarker})`,
                     boxShadow: '0 12px 32px rgba(233,30,99,0.45)',
                   },
                 }}
-                aria-label="Start new PCOS screening"
+                aria-label={t('dashboard.welcome.ctaAriaLabel')}
               >
-                New Screening
+                {t('dashboard.welcome.cta')}
               </Button>
             </motion.div>
           </Box>
@@ -261,7 +269,7 @@ const DashboardPage = () => {
         {/* ── Recent Predictions ─────────────────────────── */}
         <RecentPredictions predictions={predictions} isLoading={isLoading} total={total} />
 
-        {/* ── PCOS Awareness ───────────────────────────── */}
+        {/* ── PMOS Awareness ───────────────────────────── */}
         <AwarenessSection />
 
         {/* ── Health Tips ──────────────────────────────── */}
@@ -281,7 +289,7 @@ const DashboardPage = () => {
               borderRadius: 4,
               p: { xs: 4, md: 6 },
               textAlign: 'center',
-              background: 'linear-gradient(135deg, #EC407A 0%, #F48FB1 50%, #CE93D8 100%)',
+              background: `linear-gradient(135deg, ${COLORS.secondaryDark} 0%, ${COLORS.accentRose} 50%, ${COLORS.purpleSoft} 100%)`,
               position: 'relative',
               overflow: 'hidden',
               mb: 2,
@@ -306,13 +314,13 @@ const DashboardPage = () => {
               gutterBottom
               sx={{ fontSize: { xs: '1.5rem', md: '2rem' } }}
             >
-              Your Health, Your Story
+              {t('dashboard.footerBanner.title')}
             </Typography>
             <Typography
               variant="body1"
               sx={{ color: 'rgba(255,255,255,0.88)', mb: 3, maxWidth: 520, mx: 'auto', lineHeight: 1.7 }}
             >
-              Every screening brings you closer to understanding your body. Take the next step in your health journey today.
+              {t('dashboard.footerBanner.subtitle')}
             </Typography>
             <Button
               variant="contained"
@@ -320,7 +328,7 @@ const DashboardPage = () => {
               onClick={() => navigate(ROUTES.PREDICTION)}
               sx={{
                 bgcolor: 'white',
-                color: '#E91E63',
+                color: COLORS.primary,
                 fontWeight: 800,
                 px: 4,
                 py: 1.5,
@@ -329,9 +337,9 @@ const DashboardPage = () => {
                 boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
                 '&:hover': { bgcolor: 'rgba(255,255,255,0.92)', transform: 'translateY(-2px)' },
               }}
-              aria-label="Start new PCOS screening assessment"
+              aria-label={t('dashboard.footerBanner.ctaAriaLabel')}
             >
-              Start Screening →
+              {t('dashboard.footerBanner.cta')} →
             </Button>
           </Box>
         </motion.div>
