@@ -5,13 +5,16 @@
 # This script converts missing features (null in JSON) to NA and relies
 # entirely on the randomForest model's native capability to handle NAs.
 
+# Packages must already be installed (see backend/ai/setup.R) — a request
+# handler must never attempt a network install.packages() call mid-request,
+# since that can hang or fail depending on network/CRAN mirror availability
+# and would otherwise silently make only the very first prediction slow/fail.
+if (!suppressPackageStartupMessages(requireNamespace("jsonlite", quietly = TRUE) &&
+                                     requireNamespace("randomForest", quietly = TRUE))) {
+  cat('{"error":"Prediction engine misconfigured on the server: required R packages (jsonlite, randomForest) are not installed."}')
+  quit(status = 1)
+}
 suppressPackageStartupMessages({
-  if (!requireNamespace("jsonlite", quietly = TRUE)) {
-    install.packages("jsonlite", repos = "https://cloud.r-project.org")
-  }
-  if (!requireNamespace("randomForest", quietly = TRUE)) {
-    install.packages("randomForest", repos = "https://cloud.r-project.org")
-  }
   library(jsonlite)
   library(randomForest)
 })

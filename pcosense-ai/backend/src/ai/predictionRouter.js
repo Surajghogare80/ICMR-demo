@@ -103,7 +103,10 @@ const executeRPrediction = async (predictionMode, mappedFeatures) => {
   if (fs.existsSync(rFallback)) rCmd = `"${rFallback}"`;
 
   try {
-    const { stdout, stderr } = await execPromise(`${rCmd} "${scriptPath}" "${tempPath}"`, { cwd: aiDir });
+    // A hard cap so a stuck/hung Rscript process (e.g. a broken R install) can
+    // never hang the request indefinitely — execPromise/exec kills the child
+    // process (SIGTERM) once this elapses and rejects instead.
+    const { stdout, stderr } = await execPromise(`${rCmd} "${scriptPath}" "${tempPath}"`, { cwd: aiDir, timeout: 45000 });
 
     // Clean up temp file
     try { fs.unlinkSync(tempPath); } catch (_) {}
@@ -137,6 +140,33 @@ const executeRPrediction = async (predictionMode, mappedFeatures) => {
     // Best-effort cleanup on failure
     try { if (fs.existsSync(tempPath)) fs.unlinkSync(tempPath); } catch (_) {}
     throw new Error(`Prediction execution failed: ${err.message}`);
+  }
+};
+
+/**
+ * Warms up the R prediction engine by loading its packages once in a
+ * throwaway Rscript process. Every predict_*.R script spawns a brand-new
+ * Rscript process per request with no persistent/warm R runtime, so the very
+ * first invocation after the Node server starts pays the full cost of the R
+ * interpreter starting up and jsonlite/randomForest/xgboost being loaded from
+ * disk (and, on Windows, antivirus scanning those DLLs for the first time) —
+ * which can be slow enough to exceed the frontend's request timeout. Calling
+ * this once at server startup (see server.js) pays that cost during
+ * deployment instead of during a user's first real screening submission.
+ */
+export const warmUpRPredictionEngine = async () => {
+  let rCmd = "Rscript";
+  const rFallback = "C:\\Program Files\\R\\R-4.6.1\\bin\\Rscript.exe";
+  if (fs.existsSync(rFallback)) rCmd = `"${rFallback}"`;
+
+  const warmUpExpr = "suppressPackageStartupMessages({library(jsonlite);library(randomForest);library(xgboost)})";
+  try {
+    await execPromise(`${rCmd} -e "${warmUpExpr}"`, { cwd: aiDir, timeout: 30000 });
+    console.log("[Prediction Router] R prediction engine warmed up.");
+  } catch (err) {
+    // Non-fatal: the engine will just cold-start on the first real request,
+    // same as before this warm-up existed.
+    console.warn(`[Prediction Router] R warm-up failed (will cold-start on first request): ${err.message}`);
   }
 };
 

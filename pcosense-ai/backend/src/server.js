@@ -4,6 +4,7 @@ import 'dotenv/config';
 import app from './app.js';
 import connectDB from './config/db.js';
 import logger from './utils/logger.js';
+import { warmUpRPredictionEngine } from './ai/predictionRouter.js';
 
 const PORT = process.env.PORT || 5000;
 
@@ -11,6 +12,11 @@ const startServer = async () => {
   try {
     // Connect to MongoDB Atlas
     await connectDB();
+
+    // Pre-load the R prediction engine's packages (jsonlite/randomForest/
+    // xgboost) once now, so the first real screening submission doesn't pay
+    // that cold-start cost and risk exceeding the frontend's request timeout.
+    await warmUpRPredictionEngine();
 
     // Start HTTP server
     const server = app.listen(PORT, () => {

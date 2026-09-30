@@ -36,10 +36,15 @@
 # DS3 is type = "mixed_onehot": its trees split on positional keys "f0".."f8"
 # that index $output_feature_names (num__Age + the BMI and Acne one-hot columns).
 
+# Packages must already be installed (see backend/ai/setup.R) — a request
+# handler must never attempt a network install.packages() call mid-request,
+# since that can hang or fail depending on network/CRAN mirror availability
+# and would otherwise silently make only the very first prediction slow/fail.
+if (!suppressPackageStartupMessages(requireNamespace("jsonlite", quietly = TRUE))) {
+  cat('{"error":"Prediction engine misconfigured on the server: required R package (jsonlite) is not installed."}')
+  quit(status = 1)
+}
 suppressPackageStartupMessages({
-  if (!requireNamespace("jsonlite", quietly = TRUE)) {
-    install.packages("jsonlite", repos = "https://cloud.r-project.org")
-  }
   library(jsonlite)
 })
 
